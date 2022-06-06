@@ -34,6 +34,10 @@ $lebar-logo: 150px;
 
 $tinggi-navbar: 60px;
 
+
+//RADIUS
+$border-panel: 10px;
+
 //SHADOW
 body {
     font-family: "Nunito";
@@ -433,6 +437,48 @@ input.form-control {
     }
 }
 
+.btn-link-maps{
+    all: unset;
+    transition: all 0.5s;
+    display: flex;
+    text-align: center;
+    border: none;
+    background-color: $background-primary-color;
+    color: $primary-color;
+    border-radius: 5px;
+    padding: 10px;
+    font-weight: bold;
+    align-items: center;
+    position: absolute;
+    right: 20px;
+    bottom: 20px;
+    min-width: 100px;
+
+    // box-shadow: 1px 1px 5px $shadow-primary-color;
+    cursor: pointer;
+
+    a {
+        display: block;
+    }
+
+    &.sml {
+        padding: 3px 10px;
+        font-size: 0.8rem;
+        line-height: 0.8rem;
+    }
+
+    &.rnd {
+        border-radius: 50px;
+    }
+
+    &:hover {
+        transition: all 0.5s;
+        color: $primary-soft-color1;
+        // box-shadow: 2px 2px 20px $shadow-primary-color;
+    }
+    
+}
+
 .btn-utama-soft {
     all: unset;
     transition: all 0.5s;
@@ -643,6 +689,39 @@ input.form-control {
     font-size: 3rem;
 }
 
+//PETA
+.panel-peta{
+    position: relative;
+    min-height: 500px;
+    width: 100%;
+    text-align: center;
+    border: 1px solid #ccc;
+    border-radius: $border-panel;
+
+    
+}
+
+.panel-streetview{
+    position: relative;
+    min-height: 500px;
+    width: 100%;
+    text-align: center;
+    text-align: center;
+    border: 1px solid #ccc;
+    border-radius: $border-panel;
+}
+
+.panel-gambar{
+    position: relative;
+    min-height: 800px;
+    width: 100%;
+
+    img{
+        object-fit: scale-down;
+        width: 100%;
+        height: 100%;
+    }
+}
 //ICON
 
 .material-symbols-outlined {
@@ -677,4 +756,19 @@ input.form-control {
 //TABLES
 table{
     font-size: 00.8rem;
+}
+
+//TAB
+.nav-pills .nav-link.genostab.active , .nav-pills .show>.nav-link {
+ background-color: $primary-color;   
+}
+
+.nav-pills .nav-link.genostab {
+    margin: 5px;
+    display: block;
+    padding: 0.5rem 1rem;
+    background-color: $background-primary-color;
+    color: $primary-color;
+    text-decoration: none;
+    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out;
 }
