@@ -18,7 +18,7 @@
     {{-- ICON --}}
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="{{ asset('datatable/datatables.min.css') }}" />
-
+    @yield('css')
 </head>
 
 <body>

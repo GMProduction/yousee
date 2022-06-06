@@ -41,3 +41,6 @@ Route::get('/admin/masterpelanggan', [MasterPelangganController::class, 'index']
 Route::get('/login', [LoginController::class, 'index']);
 Route::get('/daftar', [DaftarController::class, 'index']);
 Route::post('/daftar', [DaftarController::class, 'store']);
+
+Route::get('/cek-map', [\App\Http\Controllers\MapController::class, 'index']);
+Route::get('/cek-map/data', [\App\Http\Controllers\MapController::class, 'get_map_json']);
