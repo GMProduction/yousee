@@ -116,7 +116,7 @@
                     <div class="modal-body">
 
                         <div class="row">
-                            <div class="col-md-6 col-sm-6">
+                            <div class="col-md-6 col-sm-12">
                                 <label for="provinsi" class="form-label">Provinsi</label>
                                 <select class="form-select mb-3" aria-label="Default select example" id="provinsi"
                                     name="provinsi">
@@ -126,7 +126,7 @@
                                 </select>
                             </div>
 
-                            <div class="col-md-6 col-sm-6">
+                            <div class="col-md-6 col-sm-12">
                                 <label for="kota" class="form-label">Kota</label>
                                 <select class="form-select mb-3" aria-label="Default select example" id="kota" name="kota">
                                     <option selected>Pilih Kota</option>
@@ -154,14 +154,14 @@
                         </div>
 
                         <div class="row mb-3">
-                            <div class="col-md-6 col-sm-6">
+                            <div class="col-md-6 col-sm-12">
                                 <div class="form-floating mb-3">
                                     <input type="text" class="form-control" id="latitude" name="latitude"
                                         placeholder="latitude">
                                     <label for="latitude" class="form-label">Latitude</label>
                                 </div>
                             </div>
-                            <div class="col-md-6 col-sm-6">
+                            <div class="col-md-6 col-sm-12">
                                 <div class="form-floating mb-3">
                                     <input type="text" class="form-control" id="longitude" name="longitude"
                                         placeholder="0">
@@ -172,7 +172,7 @@
 
 
                         <div class="row">
-                            <div class="col-md-6 col-sm-6">
+                            <div class="col-md-6 col-sm-12">
                                 <label for="tipe" class="form-label">Tipe</label>
                                 <select class="form-select mb-3" aria-label="Default select example" id="tipe" name="tipe">
                                     <option selected>Pilih Tipe</option>
@@ -181,7 +181,7 @@
                                 </select>
                             </div>
 
-                            <div class="col-md-6 col-sm-6">
+                            <div class="col-md-6 col-sm-12">
                                 <label for="posisi" class="form-label">Posisi</label>
                                 <select class="form-select mb-3" aria-label="Default select example" id="posisi"
                                     name="posisi">
@@ -193,20 +193,46 @@
 
                         </div>
                         <div class="row">
-                            <div class="col-6">
+                            <div class="col-md-6 col-sm-12">
                                 <div class="form-floating mb-3">
                                     <input type="text" class="form-control" id="panjang" type="number" name="panjang"
                                         placeholder="0">
                                     <label for="panjang" class="form-label">Panjang/Tinggi</label>
                                 </div>
                             </div>
-                            <div class="col-6">
+                            <div class="col-md-6 col-sm-12">
                                 <div class="form-floating mb-3">
                                     <input type="text" class="form-control" id="lebar" name="lebar" placeholder="lebar">
                                     <label for="lebar" class="form-label">Lebar</label>
                                 </div>
                             </div>
                         </div>
+
+                        <div class="row">
+                            <div class="col-md-4 col-sm-12">
+                                <div class="mb-3">
+                                    <label for="gambar1" class="form-label">Gambar 1</label>
+                                    <input class="form-control form-control-sm" id="gambar1" type="file">
+                                </div>
+                            </div>
+
+                            <div class="col-md-4 col-sm-12">
+                                <div class="mb-3">
+                                    <label for="gambar2" class="form-label">Gambar 2</label>
+                                    <input class="form-control form-control-sm" id="gambar2" type="file">
+                                </div>
+                            </div>
+
+                            <div class="col-md-4 col-sm-12">
+                                <div class="mb-3">
+                                    <label for="gambar3" class="form-label">Gambar 3</label>
+                                    <input class="form-control form-control-sm" id="gambar3" type="file">
+                                </div>
+                            </div>
+                        </div>
+
+
+
 
 
 
@@ -392,7 +418,8 @@
                                 aria-labelledby="pills-gambar2-tab">
 
                                 <div class="panel-gambar">
-                                    <img src="https://cdns.klimg.com/merdeka.com/i/w/news/2021/09/18/1354258/content_images/670x335/20210918101425-1-jagalah-kebersihan-004-jevi-nugraha.png" />
+                                    <img
+                                        src="https://cdns.klimg.com/merdeka.com/i/w/news/2021/09/18/1354258/content_images/670x335/20210918101425-1-jagalah-kebersihan-004-jevi-nugraha.png" />
                                 </div>
 
                             </div>
@@ -401,7 +428,8 @@
                                 aria-labelledby="pills-gambar3-tab">
 
                                 <div class="panel-gambar">
-                                    <img src="https://assets.pikiran-rakyat.com/crop/0x0:0x0/x/photo/2021/08/19/1012556311.jpg" />
+                                    <img
+                                        src="https://assets.pikiran-rakyat.com/crop/0x0:0x0/x/photo/2021/08/19/1012556311.jpg" />
                                 </div>
 
                             </div>
