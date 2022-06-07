@@ -23,18 +23,20 @@ Route::get('/', function () {
     return view('auth.login');
 });
 
-Route::get('/admin', function () {
-    return view('login.beranda');
+Route::prefix('admin')->group(function (){
+    Route::get('', [BerandaController::class, 'index']);
+
+    Route::prefix('item')->group(function (){
+        Route::get('datatable', [\App\Http\Controllers\ItemController::class,'datatable']);
+        Route::get('card', [\App\Http\Controllers\ItemController::class,'cardItem']);
+        Route::get('type', [\App\Http\Controllers\ItemController::class,'getType']);
+    });
+    Route::get('user', [UserController::class, 'index']);
+
 });
 
 
-Route::get('/admin/user', function () {
-    return view('admin.user');
-});
-
-Route::get('/admin', [BerandaController::class, 'index']);
 Route::get('/admin/beranda', [BerandaController::class, 'index']);
-Route::get('/admin/user', [UserController::class, 'index']);
 Route::get('/admin/masterbarang', [MasterBarangController::class, 'index']);
 Route::get('/admin/masterpelanggan', [MasterPelangganController::class, 'index']);
 
