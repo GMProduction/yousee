@@ -1,46 +1,45 @@
 @extends('admin.base')
 
 @section('content')
-    <div>
 
 
-        <div class="panel">
-            <div class="title">
-                <p>Portfolio</p>
-            </div>
+    <div class="panel">
+        <div class="title">
+            <p>Portfolio</p>
+        </div>
 
-            <div class="isi">
-                <div class="row" id="cardType">
-{{--                    <div class="col-4">--}}
-{{--                        <div class="panel-peformace">--}}
-{{--                            <img src="{{ asset('images/local/contoh-logo-bunder.png') }}"/>--}}
-{{--                            <div class="content">--}}
-{{--                                <p class="nama">Baliho</p>--}}
-{{--                                <p class="nilai">100 Titik</p>--}}
-{{--                            </div>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
+        <div class="isi">
+            <div class="row" id="cardType">
+                {{--                    <div class="col-4">--}}
+                {{--                        <div class="panel-peformace">--}}
+                {{--                            <img src="{{ asset('images/local/contoh-logo-bunder.png') }}"/>--}}
+                {{--                            <div class="content">--}}
+                {{--                                <p class="nama">Baliho</p>--}}
+                {{--                                <p class="nilai">100 Titik</p>--}}
+                {{--                            </div>--}}
+                {{--                        </div>--}}
+                {{--                    </div>--}}
 
-{{--                    <div class="col-4">--}}
-{{--                        <div class="panel-peformace">--}}
-{{--                            <img src="{{ asset('images/local/contoh-logo-bunder.png') }}"/>--}}
-{{--                            <div class="content">--}}
-{{--                                <p class="nama">Videotron</p>--}}
-{{--                                <p class="nilai">20 Titik</p>--}}
-{{--                            </div>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
+                {{--                    <div class="col-4">--}}
+                {{--                        <div class="panel-peformace">--}}
+                {{--                            <img src="{{ asset('images/local/contoh-logo-bunder.png') }}"/>--}}
+                {{--                            <div class="content">--}}
+                {{--                                <p class="nama">Videotron</p>--}}
+                {{--                                <p class="nilai">20 Titik</p>--}}
+                {{--                            </div>--}}
+                {{--                        </div>--}}
+                {{--                    </div>--}}
 
-{{--                    <div class="col-4">--}}
-{{--                        <div class="panel-peformace">--}}
-{{--                            <img src="{{ asset('images/local/contoh-logo-bunder.png') }}"/>--}}
-{{--                            <div class="content">--}}
-{{--                                <p class="nama">Bando Baliho</p>--}}
-{{--                                <p class="nilai">50 Titik</p>--}}
-{{--                            </div>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
+                {{--                    <div class="col-4">--}}
+                {{--                        <div class="panel-peformace">--}}
+                {{--                            <img src="{{ asset('images/local/contoh-logo-bunder.png') }}"/>--}}
+                {{--                            <div class="content">--}}
+                {{--                                <p class="nama">Bando Baliho</p>--}}
+                {{--                                <p class="nilai">50 Titik</p>--}}
+                {{--                            </div>--}}
+                {{--                        </div>--}}
+                {{--                    </div>--}}
+                {{--                </div>--}}
 
             </div>
 
@@ -455,7 +454,7 @@
             getCard();
             $('#table_piutang').DataTable();
             datatableItem();
-            getSelect('tipe',window.location.pathname+'/item/type')
+            getSelect('tipe', window.location.pathname + '/item/type')
         });
 
         function datatableItem() {
@@ -525,26 +524,22 @@
             $.get('/admin/item/card', function (data, status, response) {
                 let card = $('#cardType');
                 card.empty;
-                if (response.status === 200){
-                   $.each(data, function (k,v) {
-                       let img = "{{ asset('images/local/contoh-logo-bunder.png') }}"
-                       card.append('<div class="col-4">\n' +
-                           '                        <div class="panel-peformace">\n' +
-                           '                            <img src="'+img+'"/>\n' +
-                           '                            <div class="content">\n' +
-                           '                                <p class="nama">'+v.name+'</p>\n' +
-                           '                                <p class="nilai">'+v.count+' Titik</p>\n' +
-                           '                            </div>\n' +
-                           '                        </div>\n' +
-                           '                    </div>')
-                   })
+                if (response.status === 200) {
+                    $.each(data, function (k, v) {
+                        let img = "{{ asset('images/local/contoh-logo-bunder.png') }}"
+                        card.append('<div class="col-4">\n' +
+                            '                        <div class="panel-peformace">\n' +
+                            '                            <img src="' + img + '"/>\n' +
+                            '                            <div class="content">\n' +
+                            '                                <p class="nama">' + v.name + '</p>\n' +
+                            '                                <p class="nilai">' + v.count + ' Titik</p>\n' +
+                            '                            </div>\n' +
+                            '                        </div>\n' +
+                            '                    </div>')
+                    })
                 }
             })
         }
     </script>
-    @endsection
+@endsection
 
-
-    </body>
-
-    </html>
