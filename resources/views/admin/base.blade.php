@@ -104,62 +104,18 @@
                     </a>
                 </li>
 
-
-                <li class="nav-item has-submenu">
-                    <a class="nav-link menu @if ($sidebar == 'master') active @endif" href="#">
-                        <i class="material-icons menu-icon">content_paste</i>
-                        <p class="menu-text">Master</p>
+                <li class="nav-item">
+                    <a class="nav-link menu @if ($sidebar == 'tipe') active @endif" href="/admin/tipe">
+                        <i class="material-icons menu-icon">open_in_new</i>
+                        <p class="menu-text">Tipe Iklan</p>
                     </a>
-                    <ul class="submenu  collapse ">
-                        <li><a class="nav-link menu @if ($sidebar == 'masterbarang') active @endif" href="/admin/masterbarang">
-                                <i class="material-icons menu-icon">inventory</i>
-                                <p class="menu-text">Barang</p>
-                            </a></li>
-                        <li><a class="nav-link menu @if ($sidebar == 'masterpelanggan') active @endif" href="/admin/masterpelanggan">
-                                <i class="material-icons menu-icon">account_box</i>
-                                <p class="menu-text">Pelanggan</p>
-                            </a></li>
-
-                    </ul>
                 </li>
 
-                <li class="nav-item has-submenu">
-                    <a class="nav-link menu" href="#">
-                        <i class="material-icons menu-icon">sync</i>
-                        <p class="menu-text">Transaksi</p>
+                <li class="nav-item">
+                    <a class="nav-link menu @if ($sidebar == 'titik') active @endif" href="/admin/titik">
+                        <i class="material-icons menu-icon">width_full</i>
+                        <p class="menu-text">Titik Iklan</p>
                     </a>
-                    <ul class="submenu  collapse">
-                        <li><a class="nav-link menu" href="#">
-                                <i class="material-icons menu-icon">arrow_downward</i>
-                                <p class="menu-text">Pesanan</p>
-                            </a></li>
-                        <li><a class="nav-link menu" href="#">
-                                <i class="material-icons menu-icon">arrow_upward</i>
-                                <p class="menu-text">Pengeluaran</p>
-                            </a></li>
-
-                    </ul>
-                </li>
-
-                <li class="nav-item has-submenu">
-                    <a class="nav-link menu" href="#">
-                        <i class="material-icons menu-icon">insights</i>
-                        <p class="menu-text">Laporan</p>
-                    </a>
-                    <ul class="submenu  collapse">
-                        <li><a class="nav-link menu" href="#"><i class="material-icons menu-icon">analytics</i>
-                                <p class="menu-text">Pesanan</p>
-                            </a></li>
-                        <li><a class="nav-link menu" href="#">
-                                <i class="material-icons menu-icon">insert_chart</i>
-                                <p class="menu-text">Pengeluaran</p>
-                            </a></li>
-                        <li><a class="nav-link menu" href="#">
-                                <i class="material-icons menu-icon">add_chart</i>
-                                <p class="menu-text">Pemasukan</p>
-                            </a></li>
-
-                    </ul>
                 </li>
             </ul>
         </nav>
