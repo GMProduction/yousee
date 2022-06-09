@@ -24,6 +24,7 @@ class DatabaseSeeder extends Seeder
 //            'password' => Hash::make('admin'),
 //        ]);
         $this->call([
+            UserSeeder::class,
             provinsiSeeder::class,
             citySeeder::class
         ]);

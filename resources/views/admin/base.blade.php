@@ -18,6 +18,10 @@
     {{-- ICON --}}
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="{{ asset('datatable/datatables.min.css') }}" />
+    <link href="{{ asset('css/dropify/css/dropify.css') }}" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="{{ asset('js/swal.js') }}"></script>
+
     @yield('css')
 </head>
 
@@ -104,6 +108,13 @@
                     </a>
                 </li>
 
+                <li class="nav-item">
+                    <a class="nav-link menu @if ($sidebar == 'history') active @endif" href="/admin/history">
+                        <i class="material-icons menu-icon">person</i>
+                        <p class="menu-text">History</p>
+                    </a>
+                </li>
+
 
                 <li class="nav-item has-submenu">
                     <a class="nav-link menu @if ($sidebar == 'master') active @endif" href="#">
@@ -161,6 +172,12 @@
 
                     </ul>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link menu" href="/logout">
+                        <i class="material-icons menu-icon">person</i>
+                        <p class="menu-text">Logout</p>
+                    </a>
+                </li>
             </ul>
         </nav>
 
@@ -177,10 +194,15 @@
     </script>
 
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
     <script src="{{ asset('js/base.js') }}"></script>
     <script src="{{ asset('js/dialog.js') }}"></script>
     <script type="text/javascript" src="{{ asset('datatable/datatables.min.js') }}"></script>
+    <script type="text/javascript"
+            src="https://cdn.jsdelivr.net/npm/browser-image-compression@latest/dist/browser-image-compression.js"></script>
+    <script src="{{ asset('css/dropify/js/dropify.js') }}"></script>
+    <script src="{{ asset('js/handler_image.js') }}"></script>
 
     <script>
         jQuery.fn.dataTableExt.oApi.fnPagingInfo = function (oSettings) {

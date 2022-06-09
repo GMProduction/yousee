@@ -13,6 +13,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <!-- Styles -->
+    <script src="{{ asset('js/swal.js') }}"></script>
 
     <style>
         body {
@@ -23,31 +24,44 @@
 </head>
 
 <body class="bg-accent-color">
+@if ($errors->any())
+    {{-- <h4>{{$errors}}</h4> --}}
+    {{-- <h4>{{$errors->first()}}</h4> --}}
+    {{-- <h4>{{$errors->first() == 'The password field is required.' ? 'swal' : 'input'}}</h4> --}}
+    @if ($errors->first())
+        <script>
+            swal('{{ $errors->first() }}', {
+                icon: 'warning',
+                buttons: false,
+                timer: 2000
+            })
+        </script>
+    @endif
+@endif
     <div style="height: 100vh">
         <div class="login">
             <div class="panel-login pinggiran-bunder-10 bayangan-accent ">
                 <p class="text-center mt-3 h2 fw-bold">Login</p>
-                <p class="text-center huruf-abu-5">Jika belum mempunyai akun bisa daftar <a class="link"
-                        href="/daftar">disini</a></p>
 
-                <form class="p-3">
+                <form class="p-3" method="POST">
+                    @csrf
                     <div class="mb-3">
                         <label for="username" class="form-label">Username</label>
-                        <input type="text" class="form-control login" id="username">
+                        <input type="text" class="form-control login" id="username" name="username">
                     </div>
                     <div class="mb-3">
                         <label for="password" class="form-label">Password</label>
-                        <input type="password" class="form-control login" id="password">
+                        <input type="password" class="form-control login" id="password" name="password">
                     </div>
 
-                    <a class="btn-utama ms-auto   mt-4 d-block mb-3">LOGIN</a>
-                    <div class="d-flex w-100 mt-3 ">
-                        <hr class="garis-horizontal huruf-abu-3">
-                        <p class="mb-0 me-2 ms-2 huruf-abu-5">atau</p>
-                        <hr class="garis-horizontal huruf-abu-3">
-                    </div>
-                    <a class="btn-google ms-auto   mt-2 d-block mb-3"><img
-                            src="{{ asset('images/local/logo-google.png') }} ">Login dengan google</a>
+                    <button class="btn-utama ms-auto   mt-4 d-block mb-3" type="submit" style="width: 100%">LOGIN</button>
+{{--                    <div class="d-flex w-100 mt-3 ">--}}
+{{--                        <hr class="garis-horizontal huruf-abu-3">--}}
+{{--                        <p class="mb-0 me-2 ms-2 huruf-abu-5">atau</p>--}}
+{{--                        <hr class="garis-horizontal huruf-abu-3">--}}
+{{--                    </div>--}}
+{{--                    <a class="btn-google ms-auto   mt-2 d-block mb-3"><img--}}
+{{--                            src="{{ asset('images/local/logo-google.png') }} ">Login dengan google</a>--}}
                 </form>
             </div>
         </div>

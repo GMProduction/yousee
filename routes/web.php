@@ -19,18 +19,19 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('auth.login');
-});
+Route::match(['POST','GET'],'/', [LoginController::class, 'index'])->middleware('guest');
 
-Route::prefix('admin')->group(function (){
+Route::prefix('admin')->middleware(\App\Http\Middleware\AdminMiddleware::class)->group(function (){
     Route::get('', [BerandaController::class, 'index']);
 
     Route::prefix('item')->group(function (){
         Route::get('datatable', [\App\Http\Controllers\ItemController::class,'datatable']);
         Route::get('card', [\App\Http\Controllers\ItemController::class,'cardItem']);
         Route::get('type', [\App\Http\Controllers\ItemController::class,'getType']);
+        Route::post('post-item', [\App\Http\Controllers\ItemController::class,'postItem']);
     });
+    Route::get('province', [\App\Http\Controllers\ProvinceController::class, 'province']);
+    Route::get('province/{id}/city', [\App\Http\Controllers\ProvinceController::class, 'city']);
     Route::get('user', [UserController::class, 'index']);
 
 });
@@ -40,7 +41,7 @@ Route::get('/admin/beranda', [BerandaController::class, 'index']);
 Route::get('/admin/masterbarang', [MasterBarangController::class, 'index']);
 Route::get('/admin/masterpelanggan', [MasterPelangganController::class, 'index']);
 
-Route::get('/login', [LoginController::class, 'index']);
+Route::get('/logout', [LoginController::class, 'logout']);
 Route::get('/daftar', [DaftarController::class, 'index']);
 Route::post('/daftar', [DaftarController::class, 'store']);
 

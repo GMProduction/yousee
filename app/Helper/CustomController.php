@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
+use Ramsey\Uuid\Uuid;
 use Yajra\DataTables\DataTables;
 
 class CustomController extends Controller
@@ -160,5 +161,22 @@ class CustomController extends Controller
         }
 
         return $text;
+    }
+    public function generateImageName($field = '')
+    {
+        $value = '';
+        if ($this->request->hasFile($field)) {
+            $files     = $this->request->file($field);
+            $extension = $files->getClientOriginalExtension();
+            $name      = $this->uuidGenerator();
+            $value     = $name . '.' . $extension;
+        }
+
+        return $value;
+    }
+
+    public function uuidGenerator()
+    {
+        return Uuid::uuid1()->toString();
     }
 }
