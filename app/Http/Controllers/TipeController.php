@@ -2,17 +2,42 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\type;
 use Illuminate\Http\Request;
+use Yajra\DataTables\DataTables;
 
 class TipeController extends Controller
 {
+
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @return mixed
+     * @throws \Exception
+     */
+    public function datatable(){
+        return DataTables::of(type::query())->make(true);
+    }
+
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function index()
     {
+        if (\request()->isMethod('POST')){
+            $field = \request()->validate([
+                'name' => 'required',
+                'icon' => 'required'
+            ]);
+
+
+
+            if (\request('id')){
+                $type = type::find(\request('id'));
+
+            }else{
+                type::create($field);
+            }
+
+        }
         return view('admin.tipe', ['sidebar' => 'tipe']);
     }
 

@@ -15,14 +15,18 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $user = User::create([
-            'username' => 'admin',
-            'nama' => 'admin',
-            'no_hp' => 'admin',
-            'role'    => 'admin',
-            'email'    => 'admin@gmail.com',
-            'password' => Hash::make('admin'),
+//        $user = User::create([
+//            'username' => 'admin',
+//            'nama' => 'admin',
+//            'no_hp' => 'admin',
+//            'role'    => 'admin',
+//            'email'    => 'admin@gmail.com',
+//            'password' => Hash::make('admin'),
+//        ]);
+        $this->call([
+            UserSeeder::class,
+            provinsiSeeder::class,
+            citySeeder::class
         ]);
-
     }
 }
