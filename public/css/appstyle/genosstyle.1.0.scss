@@ -408,7 +408,7 @@ input.form-control {
 .btn-utama {
     all: unset;
     transition: all 0.5s;
-    display: block;
+    display: flex;
     text-align: center;
     border: none;
     background-color: $primary-color;
@@ -708,6 +708,11 @@ input.form-control {
     text-align: center;
     border: 1px solid #ccc;
     border-radius: $border-panel;
+}
+
+.filter-panel{
+    padding: 10px;
+    min-width: 300px;
 }
 
 .panel-gambar {

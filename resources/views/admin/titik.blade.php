@@ -3,26 +3,84 @@
 @section('content')
     <div>
 
-        <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
-            <li class="nav-item" role="presentation">
-                <button class="nav-link genostab active" id="pills-tabel-tab" data-bs-toggle="pill"
-                    data-bs-target="#pills-tabel" type="button" role="tab" aria-controls="pills-tabel"
-                    aria-selected="true">Tabel</button>
-            </li>
-            <li class="nav-item" role="presentation">
-                <button class="nav-link genostab" id="pills-peta-tab" data-bs-toggle="pill" data-bs-target="#pills-peta"
-                    type="button" role="tab" aria-controls="pills-peta" aria-selected="false">Maps</button>
-            </li>
+        <div class="d-flex justify-content-between">
+            <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link genostab active" id="pills-tabel-tab" data-bs-toggle="pill"
+                        data-bs-target="#pills-tabel" type="button" role="tab" aria-controls="pills-tabel"
+                        aria-selected="true">Tabel</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link genostab" id="pills-peta-tab" data-bs-toggle="pill" data-bs-target="#pills-peta"
+                        type="button" role="tab" aria-controls="pills-peta" aria-selected="false">Maps</button>
+                </li>
 
-        </ul>
+            </ul>
+
+            <div>
+                <a class="btn-utama sml rnd " href="#" role="button" id="dropdownprofile" data-bs-toggle="dropdown">Filter <i
+                        class="material-icons menu-icon ms-2 ">filter_list</i></a>
+
+
+
+                <ul class="dropdown-menu custom" aria-labelledby="dropdownprofile">
+                    <div class="filter-panel">
+                        <div class="form-group">
+                            <label for="f-provinsi" class="form-label">Provinsi</label>
+                            <select class="form-select mb-3" aria-label="Default select example" id="f-provinsi"
+                                name="f-provinsi">
+                                <option selected>Pilih Provinsi</option>
+                                <option value="jateng">Jawa Tengah</option>
+                                <option value="jakarta">Jakarta</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="f-kota" class="form-label">Kota</label>
+                            <select class="form-select mb-3" aria-label="Default select example" id="f-kota" name="f-kota">
+                                <option selected>Pilih Kota</option>
+                                <option value="solo">Solo</option>
+                                <option value="jakarta">Jakarta</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="f-tipe" class="form-label">Tipe</label>
+                            <select class="form-select mb-3" aria-label="Default select example" id="f-tipe" name="f-tipe">
+                                <option selected value="semua">Semua</option>
+                                <option value="billboard">Billboard</option>
+                                <option value="baliho">baliho</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="f-posisi" class="form-label">Psisi</label>
+                            <select class="form-select mb-3" aria-label="Default select example" id="f-posisi"
+                                name="f-posisi">
+                                <option selected value="semua">Semua</option>
+                                <option value="horz">Horizontal</option>
+                                <option value="vert">Vertical</option>
+                            </select>
+                        </div>
+
+                    </div>
+                </ul>
+            </div>
+        </div>
 
         <div class="tab-content" id="pills-tabContent">
             <div class="tab-pane fade show active" id="pills-tabel" role="tabpanel" aria-labelledby="pills-tabel-tab">
                 <div class="panel">
                     <div class="title">
                         <p>Data Titik</p>
-                        <a class="btn-utama-soft sml rnd " data-bs-toggle="modal" data-bs-target="#modaltambahtitik">Titik
-                            Baru <i class="material-icons menu-icon ms-2">add_circle</i></a>
+                        <div class="d-flex">
+                            <a class="btn-utama-soft sml rnd me-2" data-bs-toggle="modal"
+                                data-bs-target="#modaltambahtitik">Titik
+                                Baru <i class="material-icons menu-icon ms-2">add_circle</i></a>
+
+
+
+                        </div>
                     </div>
 
                     <div class="isi">
@@ -83,9 +141,15 @@
                 <div class="panel">
                     <div class="title">
                         <p>Data Titik</p>
-                        <a class="btn-utama-soft sml rnd " data-bs-toggle="modal" data-bs-target="#modaltambahtitik">Titik
-                            Baru <i class="material-icons menu-icon ms-2">add_circle</i></a>
+                        <div class="d-flex">
+                            <a class="btn-utama-soft sml rnd me-2" data-bs-toggle="modal"
+                                data-bs-target="#modaltambahtitik">Titik
+                                Baru <i class="material-icons menu-icon ms-2">add_circle</i></a>
+
+
+                        </div>
                     </div>
+
 
                     <div class="isi">
                         <div class="panel-peta full mb-3">
