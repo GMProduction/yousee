@@ -108,14 +108,14 @@
                 </a>
             </li>
 
-            <li class="nav-item">
+            {{-- <li class="nav-item">
                 <a class="nav-link menu @if ($sidebar == 'history') active @endif" href="/admin/history">
                     <i class="material-icons menu-icon">person</i>
                     <p class="menu-text">History</p>
                 </a>
-            </li>
+            </li> --}}
 
-
+{{-- 
             <li class="nav-item has-submenu">
                 <a class="nav-link menu @if ($sidebar == 'master') active @endif" href="#">
                     <i class="material-icons menu-icon">content_paste</i>
@@ -132,7 +132,7 @@
                         </a></li>
 
                 </ul>
-            </li>
+            </li> --}}
 
             <li class="nav-item has-submenu">
                 <a class="nav-link menu" href="#">
@@ -152,12 +152,12 @@
                     <p class="menu-text">Titik Iklan</p>
                 </a>
             </li>
-            <li class="nav-item">
+            {{-- <li class="nav-item">
                 <a class="nav-link menu" href="/logout">
                     <i class="material-icons menu-icon">person</i>
                     <p class="menu-text">Logout</p>
                 </a>
-            </li>
+            </li> --}}
         </ul>
     </nav>
 
