@@ -5,6 +5,8 @@ use App\Http\Controllers\DaftarController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\MasterBarangController;
 use App\Http\Controllers\MasterPelangganController;
+use App\Http\Controllers\TipeController;
+use App\Http\Controllers\TitikController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -33,11 +35,18 @@ Route::prefix('admin')->middleware(\App\Http\Middleware\AdminMiddleware::class)-
     Route::get('province', [\App\Http\Controllers\ProvinceController::class, 'province']);
     Route::get('province/{id}/city', [\App\Http\Controllers\ProvinceController::class, 'city']);
     Route::get('user', [UserController::class, 'index']);
+    Route::prefix('type')->group(function (){
+        Route::get('', [TipeController::class, 'index']);
+        Route::get('datatable', [TipeController::class, 'datatable']);
+    });
+    Route::get('titik', [TitikController::class, 'index']);
 
 });
 
 
 Route::get('/admin/beranda', [BerandaController::class, 'index']);
+Route::get('/admin/user', [UserController::class, 'index']);
+
 Route::get('/admin/masterbarang', [MasterBarangController::class, 'index']);
 Route::get('/admin/masterpelanggan', [MasterPelangganController::class, 'index']);
 

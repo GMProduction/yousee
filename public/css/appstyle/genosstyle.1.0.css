@@ -625,6 +625,16 @@ table {
   font-size: 0.8rem;
 }
 
+.icon-table {
+  height: 25px;
+  -o-object-fit: scale-down;
+     object-fit: scale-down;
+}
+
+.table {
+  width: 100%;
+}
+
 .nav-pills .nav-link.genostab.active, .nav-pills .show > .nav-link {
   background-color: #4e28f7;
 }

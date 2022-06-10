@@ -758,6 +758,14 @@ table{
     font-size: 00.8rem;
 }
 
+.icon-table{
+    height: 25px;
+    object-fit: scale-down;
+}
+
+.table{
+    width: 100%;
+}
 //TAB
 .nav-pills .nav-link.genostab.active , .nav-pills .show>.nav-link {
  background-color: $primary-color;   
@@ -772,3 +780,4 @@ table{
     text-decoration: none;
     transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out;
 }
+

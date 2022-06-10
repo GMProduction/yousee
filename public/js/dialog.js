@@ -311,3 +311,25 @@ function currency(field) {
         }
     });
 }
+
+function setImgDropify(img,text ='Masukkan Image Event',   file = null, height = 400) {
+    img = $('#' + img).dropify({
+        messages: {
+            'default': text,
+            'replace': 'Drag and drop or click to replace',
+            'remove': 'Remove',
+            'error': 'Ooops, something wrong happended.'
+        }
+    });
+    img = img.data('dropify');
+    img.resetPreview();
+    img.clearElement();
+
+    if (file) {
+        img.settings.defaultFile = file;
+        img.destroy();
+        img.init();
+    }
+    $('.dropify-wrapper').height(height).width(300);
+
+}

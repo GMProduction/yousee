@@ -10,6 +10,7 @@
             height: 36px !important;
             border: 1px solid #ddd;
         }
+
         .select2-selection__arrow {
             height: 36px !important;
         }
@@ -477,27 +478,7 @@
             });
         });
 
-        function setImgDropify(img, file = null) {
-            img = $('#' + img).dropify({
-                messages: {
-                    'default': 'Masukkan Image Event',
-                    'replace': 'Drag and drop or click to replace',
-                    'remove': 'Remove',
-                    'error': 'Ooops, something wrong happended.'
-                }
-            });
-            img = img.data('dropify');
-            img.resetPreview();
-            img.clearElement();
 
-            if (file) {
-                img.settings.defaultFile = file;
-                img.destroy();
-                img.init();
-            }
-            $('.dropify-wrapper').height(400).width(300);
-
-        }
 
         $(document).on('change', '#province', function () {
             let id = $(this).val();
