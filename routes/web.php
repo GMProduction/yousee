@@ -21,28 +21,38 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::match(['POST','GET'],'/', [LoginController::class, 'index'])->middleware('guest');
+Route::match(['POST', 'GET'], '/', [LoginController::class, 'index'])->middleware('guest');
 
-Route::prefix('admin')->middleware(\App\Http\Middleware\AdminMiddleware::class)->group(function (){
-    Route::get('', [BerandaController::class, 'index']);
+Route::prefix('admin')->middleware(\App\Http\Middleware\AdminMiddleware::class)->group(
+    function () {
+        Route::get('', [BerandaController::class, 'index']);
 
-    Route::prefix('item')->group(function (){
-        Route::get('datatable', [\App\Http\Controllers\ItemController::class,'datatable']);
-        Route::get('card', [\App\Http\Controllers\ItemController::class,'cardItem']);
-        Route::get('type', [\App\Http\Controllers\ItemController::class,'getType']);
-        Route::post('post-item', [\App\Http\Controllers\ItemController::class,'postItem']);
-    });
-    Route::get('province', [\App\Http\Controllers\ProvinceController::class, 'province']);
-    Route::get('province/{id}/city', [\App\Http\Controllers\ProvinceController::class, 'city']);
-    Route::get('user', [UserController::class, 'index']);
-    Route::prefix('type')->group(function (){
-        Route::get('', [TipeController::class, 'index']);
-        Route::get('datatable', [TipeController::class, 'datatable']);
-    });
-    Route::get('titik', [TitikController::class, 'index']);
+        Route::prefix('item')->group(
+            function () {
+                Route::get('datatable', [\App\Http\Controllers\ItemController::class, 'datatable']);
 
-});
+            }
+        );
+        Route::get('province', [\App\Http\Controllers\ProvinceController::class, 'province']);
+        Route::get('province/{id}/city', [\App\Http\Controllers\ProvinceController::class, 'city']);
+        Route::get('/city', [\App\Http\Controllers\ProvinceController::class, 'cityAll']);
+        Route::get('user', [UserController::class, 'index']);
+        Route::prefix('type')->group(
+            function () {
+                Route::match(['POST', 'GET'], '', [TipeController::class, 'index']);
+                Route::get('datatable', [TipeController::class, 'datatable']);
+            }
+        );
+        Route::prefix('titik')->group(function (){
+            Route::get('', [TitikController::class, 'index']);
+            Route::get('card', [\App\Http\Controllers\ItemController::class, 'cardItem']);
+            Route::get('type', [\App\Http\Controllers\ItemController::class, 'getType']);
+            Route::post('post-item', [\App\Http\Controllers\ItemController::class, 'postItem']);
+            Route::get('datatable', [\App\Http\Controllers\ItemController::class, 'datatable']);
+        });
 
+    }
+);
 
 Route::get('/admin/beranda', [BerandaController::class, 'index']);
 Route::get('/admin/user', [UserController::class, 'index']);

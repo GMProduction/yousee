@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Helper\CustomController;
 use App\Models\type;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use Yajra\DataTables\DataTables;
 
-class TipeController extends Controller
+class TipeController extends CustomController
 {
 
     /**
@@ -18,92 +20,41 @@ class TipeController extends Controller
     }
 
     /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\JsonResponse
      */
     public function index()
     {
         if (\request()->isMethod('POST')){
             $field = \request()->validate([
                 'name' => 'required',
-                'icon' => 'required'
             ]);
 
-
+            $image = \request('icon');
+            if ($image){
+                $image     = $this->generateImageName('icon');
+                $stringImg = '/images/type/'.$image;
+                $this->uploadImage('icon', $image, 'imageType');
+                Arr::set($field, 'icon', $stringImg);
+            }
 
             if (\request('id')){
                 $type = type::find(\request('id'));
-
+                if ($image && $type->icon){
+                    if (file_exists('../public'.$type->icon)) {
+                        unlink('../public'.$type->icon);
+                    }
+                }
+                $type->update($field);
             }else{
                 type::create($field);
             }
-
+            return response()->json(
+                [
+                    'msg' => 'berhasil',
+                ],
+                200
+            );
         }
         return view('admin.tipe', ['sidebar' => 'tipe']);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
     }
 }

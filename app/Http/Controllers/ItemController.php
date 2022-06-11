@@ -19,8 +19,25 @@ class ItemController extends CustomController
      */
     public function datatable()
     {
-        $item = Item::all();
-
+        $province = \request('province');
+        $city = \request('city');
+        $type = \request('type');
+        $position = \request('position');
+        $item = Item::with('city');
+        if ($city){
+            $item = $item->where('city_id', $city);
+        }
+        if ($province){
+            $item = $item->whereHas('city', function ($q) use ($province) {
+                return $q->where('province_id',$province);
+            });
+        }
+        if ($type){
+            $item = $item->where('type_id', $type);
+        }
+        if ($position){
+            $item = $item->where('position', $position);
+        }
         return DataTables::of($item)->make(true);
     }
 
@@ -30,6 +47,7 @@ class ItemController extends CustomController
         $data = [];
         foreach ($type as $typ) {
             $param    = $typ->name;
+            $icon    = $typ->icon;
             $item     = Item::whereHas(
                 'type',
                 function ($q) use ($param) {
@@ -38,6 +56,7 @@ class ItemController extends CustomController
             )->count('*');
             $typeItem = [
                 'name'  => $param,
+                'icon'  => $icon,
                 'count' => $item,
             ];
             array_push($data, $typeItem);

@@ -163,6 +163,7 @@ function saveDataAjaxWImage(title, form, form_data, url, resposeSuccess) {
             }
         })
     }
+    console.log(dataForm.get('icon'));
     swal({
         title: title,
         text: "Apa kamu yakin ?",
@@ -286,10 +287,14 @@ function deleteData(text, url,data, resposeSuccess) {
     return false;
 }
 
-function getSelect(id, url, nameValue = 'name', idValue) {
+function getSelect(id, url, nameValue = 'name', idValue, text = null) {
     var select = $('#' + id);
     select.empty();
-    select.append('<option value="" disabled selected>Pilih Data</option>')
+    if (text){
+        select.append('<option value="" selected>'+text+'</option>')
+    }else {
+        select.append('<option value="" disabled selected>Pilih Data</option>')
+    }
     $.get(url, function (data) {
         $.each(data, function (key, value) {
             if (idValue === value['id']) {
@@ -312,7 +317,7 @@ function currency(field) {
     });
 }
 
-function setImgDropify(img,text ='Masukkan Image Event',   file = null, height = 400) {
+function setImgDropify(img,text ='Masukkan Image Item',   file = null, height = 400) {
     img = $('#' + img).dropify({
         messages: {
             'default': text,

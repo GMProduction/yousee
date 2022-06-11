@@ -25,4 +25,11 @@ class ProvinceController extends Controller
     public function city($id){
         return City::where('province_id',$id)->get();
     }
+
+    /**
+     * @return City[]|\Illuminate\Database\Eloquent\Collection
+     */
+    public function cityAll(){
+        return City::all();
+    }
 }

@@ -63,14 +63,14 @@
                             @csrf
                             <input id="id" name="id" hidden>
                             <div class="form-floating mb-3">
-                                <input type="text" class="form-control" id="name" name="name" placeholder="Nama Tipe">
+                                <input type="text" class="form-control" id="name" name="name" required placeholder="Nama Tipe">
                                 <label for="name" class="form-label">Nama Tipe</label>
                             </div>
 
                             <div class="mb-3">
                                 <label for="icontipe" class="form-label">Icon Tipe</label>
 {{--                                <input class="form-control form-control-sm" id="icontipe" type="file">--}}
-                                <input type="file" id="icon" name="" class="image" data-min-height="10"
+                                <input type="file" id="icon" name="" class="image" required data-min-height="10"
                                        accept="image/jpeg, image/jpg, image/png"
                                        data-allowed-file-extensions="jpg jpeg png"/>
                             </div>
@@ -99,7 +99,8 @@
     <script>
         $(document).ready(function() {
             $('#table_piutang').DataTable();
-            datatable()
+            datatable();
+            saveData();
         });
 
         $(document).on('click', '#addData, #editData', function () {
@@ -162,6 +163,28 @@
                 ]
             });
 
+        }
+
+        function saveData() {
+            let form = $('#form');
+            form.submit(async function (e) {
+                e.preventDefault(e);
+                let formData = new FormData(this);
+                console.log(formData);
+                let data = {
+                    'form_data': formData,
+                    'image': {
+                        'icon': 'icon',
+                    }
+                };
+                saveDataAjaxWImage('Simpan Data', 'form', data, window.location.pathname, afterSave);
+                return false;
+            })
+        }
+
+        function afterSave() {
+            $('#modaltambahtitik').modal('hide')
+            datatable();
         }
     </script>
 @endsection

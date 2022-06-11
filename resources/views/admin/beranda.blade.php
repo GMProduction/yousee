@@ -26,37 +26,6 @@
 
         <div class="isi">
             <div class="row" id="cardType">
-                {{--                    <div class="col-4">--}}
-                {{--                        <div class="panel-peformace">--}}
-                {{--                            <img src="{{ asset('images/local/contoh-logo-bunder.png') }}"/>--}}
-                {{--                            <div class="content">--}}
-                {{--                                <p class="nama">Baliho</p>--}}
-                {{--                                <p class="nilai">100 Titik</p>--}}
-                {{--                            </div>--}}
-                {{--                        </div>--}}
-                {{--                    </div>--}}
-
-                {{--                    <div class="col-4">--}}
-                {{--                        <div class="panel-peformace">--}}
-                {{--                            <img src="{{ asset('images/local/contoh-logo-bunder.png') }}"/>--}}
-                {{--                            <div class="content">--}}
-                {{--                                <p class="nama">Videotron</p>--}}
-                {{--                                <p class="nilai">20 Titik</p>--}}
-                {{--                            </div>--}}
-                {{--                        </div>--}}
-                {{--                    </div>--}}
-
-                {{--                    <div class="col-4">--}}
-                {{--                        <div class="panel-peformace">--}}
-                {{--                            <img src="{{ asset('images/local/contoh-logo-bunder.png') }}"/>--}}
-                {{--                            <div class="content">--}}
-                {{--                                <p class="nama">Bando Baliho</p>--}}
-                {{--                                <p class="nilai">50 Titik</p>--}}
-                {{--                            </div>--}}
-                {{--                        </div>--}}
-                {{--                    </div>--}}
-                {{--                </div>--}}
-
             </div>
 
         </div>
@@ -622,9 +591,9 @@
                 card.empty;
                 if (response.status === 200) {
                     $.each(data, function (k, v) {
-                        let img = "{{ asset('images/local/contoh-logo-bunder.png') }}"
-                        card.append('<div class="col-4">\n' +
-                            '                        <div class="panel-peformace">\n' +
+                        let img = v.icon;
+                        card.append('<div class="col-4 my-2 ">\n' +
+                            '                        <div class="panel-peformace p-2 rounded shadow">\n' +
                             '                            <img src="' + img + '"/>\n' +
                             '                            <div class="content">\n' +
                             '                                <p class="nama">' + v.name + '</p>\n' +
