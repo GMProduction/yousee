@@ -22,7 +22,26 @@ class MapController extends CustomController
     public function get_map_json()
     {
         try {
-            $data = Item::all();
+            $province = \request('province');
+            $city = \request('city');
+            $type = \request('type');
+            $position = \request('position');
+            $item = Item::with('city');
+            if ($city && $city !== 'undefined'){
+                $item = $item->where('city_id', $city);
+            }
+            if ($province && $province !== 'undefined'){
+                $item = $item->whereHas('city', function ($q) use ($province) {
+                    return $q->where('province_id',$province);
+                });
+            }
+            if ($type && $type !== 'undefined'){
+                $item = $item->where('type_id', $type);
+            }
+            if ($position && $position !== 'undefined'){
+                $item = $item->where('position', $position);
+            }
+            $data = $item->get();
             $geo_json_data = $data->map(function ($place) {
                 return [
                     'type' => 'Feature',
