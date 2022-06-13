@@ -5,6 +5,8 @@ use App\Http\Controllers\DaftarController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\MasterBarangController;
 use App\Http\Controllers\MasterPelangganController;
+use App\Http\Controllers\TipeController;
+use App\Http\Controllers\TitikController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -19,29 +21,46 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('auth.login');
-});
+Route::match(['POST', 'GET'], '/', [LoginController::class, 'index'])->middleware('guest');
 
-Route::prefix('admin')->group(function (){
-    Route::get('', [BerandaController::class, 'index']);
+Route::prefix('admin')->middleware(\App\Http\Middleware\AdminMiddleware::class)->group(
+    function () {
+        Route::get('', [BerandaController::class, 'index']);
 
-    Route::prefix('item')->group(function (){
-        Route::get('datatable', [\App\Http\Controllers\ItemController::class,'datatable']);
-        Route::get('card', [\App\Http\Controllers\ItemController::class,'cardItem']);
-        Route::get('type', [\App\Http\Controllers\ItemController::class,'getType']);
-    });
-    Route::get('user', [UserController::class, 'index']);
+        Route::prefix('item')->group(
+            function () {
+                Route::get('datatable', [\App\Http\Controllers\ItemController::class, 'datatable']);
 
-});
+            }
+        );
+        Route::get('province', [\App\Http\Controllers\ProvinceController::class, 'province']);
+        Route::get('province/{id}/city', [\App\Http\Controllers\ProvinceController::class, 'city']);
+        Route::get('/city', [\App\Http\Controllers\ProvinceController::class, 'cityAll']);
+        Route::get('user', [UserController::class, 'index']);
+        Route::prefix('type')->group(
+            function () {
+                Route::match(['POST', 'GET'], '', [TipeController::class, 'index']);
+                Route::get('datatable', [TipeController::class, 'datatable']);
+            }
+        );
+        Route::prefix('titik')->group(function (){
+            Route::get('', [TitikController::class, 'index']);
+            Route::get('card', [\App\Http\Controllers\ItemController::class, 'cardItem']);
+            Route::get('type', [\App\Http\Controllers\ItemController::class, 'getType']);
+            Route::post('post-item', [\App\Http\Controllers\ItemController::class, 'postItem']);
+            Route::get('datatable', [\App\Http\Controllers\ItemController::class, 'datatable']);
+        });
 
+    }
+);
 
 Route::get('/admin/beranda', [BerandaController::class, 'index']);
+Route::get('/admin/user', [UserController::class, 'index']);
+
 Route::get('/admin/masterbarang', [MasterBarangController::class, 'index']);
 Route::get('/admin/masterpelanggan', [MasterPelangganController::class, 'index']);
 
-Route::get('/login', [LoginController::class, 'index']);
-Route::get('/login', [LoginController::class, 'index']);
+Route::get('/logout', [LoginController::class, 'logout']);
 Route::get('/daftar', [DaftarController::class, 'index']);
 Route::post('/daftar', [DaftarController::class, 'store']);
 

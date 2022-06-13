@@ -1,6 +1,8 @@
 @extends('admin.base')
-
 @section('css')
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css" integrity="sha512-hoalWLoI8r4UszCkZ5kL8vayOGVae1oxXe/2A4AO6J9+580uKHDO3JdHb7NzwwzK5xr/Fs0W40kiNHxM9vyTtQ=="
+          crossorigin=""/>
+
     <style>
         .select2-selection__rendered {
             line-height: 36px !important;
@@ -14,78 +16,132 @@
         .select2-selection__arrow {
             height: 36px !important;
         }
+
+        /*.leaflet-container {*/
+        /*    height: 400px;*/
+        /*    width: 600px;*/
+        /*    max-width: 100%;*/
+        /*    max-height: 100%;*/
+        /*}*/
+        #map {
+            height: 500px;
+            width: 100%
+        }
     </style>
 @endsection
 @section('content')
+    <div>
 
+        <div class="d-flex justify-content-between">
+            <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link genostab active" id="pills-tabel-tab" data-bs-toggle="pill"
+                            data-bs-target="#pills-tabel" type="button" role="tab" aria-controls="pills-tabel"
+                            aria-selected="true">Tabel
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link genostab" id="pills-peta-tab" data-bs-toggle="pill" data-bs-target="#pills-peta"
+                            type="button" role="tab" aria-controls="pills-peta" aria-selected="false">Maps
+                    </button>
+                </li>
 
-    <div class="panel">
-        <div class="title">
-            <p>Portfolio</p>
+            </ul>
+            <div>
+                <a class="btn-utama sml rnd " href="#" role="button" id="dropdownprofile" data-bs-toggle="dropdown">Filter <i
+                        class="material-icons menu-icon ms-2 ">filter_list</i></a>
+                <ul id="dropSearch" class="dropdown-menu custom" aria-labelledby="dropdownprofile">
+                    <div class="filter-panel">
+                        <div class="form-group">
+                            <label for="f-provinsi" class="form-label">Provinsi</label>
+                            <select class="form-select mb-3" aria-label="Default select example" id="f-provinsi"
+                                    name="f-provinsi">
+
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="f-kota" class="form-label">Kota</label>
+                            <select class="form-select mb-3" aria-label="Default select example" id="f-kota" name="f-kota">
+                                <option selected value="">Semua Kota</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="f-tipe" class="form-label">Tipe</label>
+                            <select class="form-select mb-3" aria-label="Default select example" id="f-tipe" name="f-tipe">
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="f-posisi" class="form-label">Psisi</label>
+                            <select class="form-select mb-3" aria-label="Default select example" id="f-posisi"
+                                    name="f-posisi">
+                                <option selected value="">Semua Posisi</option>
+                                <option value="Horizontal">Horizontal</option>
+                                <option value="Vertical">Vertical</option>
+                            </select>
+                        </div>
+
+                    </div>
+                </ul>
+            </div>
+        </div>
+        <div class="mb-2" id="pillSearch">
+            {{--             <span id="pillProvince" class="badge bg-primary " style="border-radius: 200px; align-items: center"><span id="text" class="text">asdasd</span>  <a role="button"><i class="material-icons" style="font-size: 12px">close</i></a></span>--}}
+
         </div>
 
-        <div class="isi">
-            <div class="row" id="cardType">
-            </div>
+        <div class="tab-content">
+            <div class="tab-pane fade show active" id="pills-tabel" role="tabpanel"
+                 aria-labelledby="pills-tabel-tab">
+                <div class="panel">
+                    <div class="title">
+                        <p>Titik yang baru dimasukan</p>
+                        <a class="btn-utama-soft sml rnd " id="addData">Titik Baru <i
+                                class="material-icons menu-icon ms-2">add_circle</i></a>
+                    </div>
 
-        </div>
-
-        <div class="panel">
-            <div class="title">
-                <p>Titik yang baru dimasukan</p>
-                <a class="btn-utama-soft sml rnd " id="addData">Titik Baru <i
-                        class="material-icons menu-icon ms-2">add_circle</i></a>
-            </div>
-
-            <div class="isi">
-                <div class="table">
-                    <table id="table_id" class="table table-striped" style="width:100%">
-                        <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Area</th>
-                            <th>Kode</th>
-                            <th>Alamat</th>
-                            <th>Panjang / Tinggi</th>
-                            <th>Lebar</th>
-                            <th>Type</th>
-                            <th>Posisi</th>
-                            <th>Action</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>Solo</td>
-                            <td>001</td>
-                            <td>Jalan A Yani, Manahan, Banjarsari, surakarta, jawa tengah</td>
-                            <td>5</td>
-                            <td>10</td>
-                            <td>Billboard</td>
-                            <td>Horizontal</td>
-                            <td class="d-flex"><a class="btn-utama-soft sml rnd me-1" data-bs-toggle="modal"
-                                                  data-bs-target="#modaldetail"> <i class="material-icons menu-icon ">map</i></a>
-                                <a class="btn-success-soft sml rnd "> <i class="material-icons menu-icon ">edit</i></a>
-                            </td>
-                        </tr>
-                        </tbody>
-                        <tfoot>
-                        <tr>
-                            <th>#</th>
-                            <th>Area</th>
-                            <th>Kode</th>
-                            <th>Alamat</th>
-                            <th>Panjang / Tinggi</th>
-                            <th>Lebar</th>
-                            <th>Type</th>
-                            <th>Posisi</th>
-                            <th>Action</th>
-                        </tr>
-                        </tfoot>
-                    </table>
+                    <div class="isi">
+                        <div class="table">
+                            <table id="table_id" class="table table-striped" style="width:100%">
+                                <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Area</th>
+                                    <th>Kode</th>
+                                    <th>Alamat</th>
+                                    <th>Panjang / Tinggi</th>
+                                    <th>Lebar</th>
+                                    <th>Type</th>
+                                    <th>Posisi</th>
+                                    <th>Action</th>
+                                </tr>
+                                </thead>
+                                <tfoot>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Area</th>
+                                    <th>Kode</th>
+                                    <th>Alamat</th>
+                                    <th>Panjang / Tinggi</th>
+                                    <th>Lebar</th>
+                                    <th>Type</th>
+                                    <th>Posisi</th>
+                                    <th>Action</th>
+                                </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
                 </div>
-            </div>
 
+            </div>
+            <div class="tab-pane fade" id="pills-peta" role="tabpanel"
+                 aria-labelledby="pills-peta-tab">
+{{--                @include('admin.map', ['data' => 'content'])--}}
+
+            </div>
         </div>
 
         <!-- Modal -->
@@ -379,6 +435,9 @@
 
                                 <div class="panel-streetview">
                                     Tampil Streetview
+                                    <div class="panel">
+                                        <div id="map"></div>
+                                    </div>
 
                                     <a class="btn-link-maps sml rnd ">Buka di Google Maps <i
                                             class="material-icons menu-icon ms-2">arrow_outward</i></a>
@@ -427,14 +486,35 @@
 
 @section('morejs')
     <script src="{{ asset('js/number_formater.js') }}"></script>
+    <script src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js" integrity="sha512-BB3hKbKWOc9Ez/TAwyWxNXeoV9c1v6FIeYiBieIWkpLjauysF18NzgR1MBNBXf8/KABdlkX68nAhlwcDFLGPCQ==" crossorigin=""></script>
+
+{{--    @include('admin.map', ['data' => 'script'])--}}
+
 
     <script>
+        var map = L.map('map').setView([48.86, 2.35], 11);
+
+        L.marker([48.86, 2.35]).addTo(map);
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        // Comment out the below code to see the difference.
+        $('#myModal').on('shown.bs.modal', function() {
+            map.invalidateSize();
+        });
+
         let image1, image2, image3;
+        var s_provinsi, s_kota, s_tipe, s_posisi;
         $(document).ready(function () {
-            getCard();
             $('#table_piutang').DataTable();
             datatableItem();
-            getSelect('type', window.location.pathname + '/item/type')
+            getSelect('f-provinsi', '/admin/province', 'name', null, 'Semua Provinsi');
+            getSelect('type', window.location.pathname + '/type')
+            getSelect('f-tipe', window.location.pathname + '/type', 'name', null, 'Semua Type');
+            getSelect('f-kota', '/admin/city', 'name', null, 'Semua Kota');
+
             setImgDropify('image1');
             setImgDropify('image2');
             setImgDropify('image3');
@@ -445,14 +525,72 @@
             $('#city').select2({
                 dropdownParent: $("#modaltambahtitik")
             });
+            // $('#f-provinsi').select2({
+            //     dropdownParent: $("#dropSearch")
+            // });
+            // $('#f-tipe').select2();
         });
-
-
 
         $(document).on('change', '#province', function () {
             let id = $(this).val();
-            getSelect('city', window.location.pathname + '/province/' + id + '/city');
+            getSelect('city', '/admin/province/' + id + '/city');
         });
+
+        $(document).on('change', '#f-provinsi', function (ev) {
+            s_provinsi = $(this).val();
+            if (s_provinsi === '') {
+                getSelect('f-kota', '/admin/city', 'name', null, 'Semua Kota');
+            } else {
+                getSelect('f-kota', '/admin/province/' + s_provinsi + '/city', 'name', null, 'Semua Kota');
+            }
+            let text = ev.currentTarget.options[ev.currentTarget.selectedIndex].text;
+            pillSearch('provinsi', text);
+            datatableItem();
+        });
+        $(document).on('change', '#f-kota', function (ev) {
+            s_kota = $(this).val();
+            let text = ev.currentTarget.options[ev.currentTarget.selectedIndex].text;
+            pillSearch('kota', text);
+            datatableItem();
+        });
+
+        $(document).on('change', '#f-tipe', function (ev) {
+            s_tipe = $(this).val();
+            let text = ev.currentTarget.options[ev.currentTarget.selectedIndex].text;
+            pillSearch('tipe', text);
+            datatableItem();
+        });
+
+        $(document).on('change', '#f-posisi', function (ev) {
+            s_posisi = $(this).val();
+            let text = ev.currentTarget.options[ev.currentTarget.selectedIndex].text;
+            pillSearch('posisi', text);
+            datatableItem();
+        });
+
+        function pillSearch(a, text) {
+            let pill = $('#pillSearch');
+            let child = document.getElementById('pill' + a);
+            console.log('aaa', a);
+            console.log('text', text);
+            if (child) {
+                $('#pill' + a + ' #text').html(text)
+            } else {
+                pill.append('<span class="badge bg-primary me-2 " id="pill' + a + '" style="border-radius: 200px; align-items: center"><span id="text">' + text + '</span>  <a role="button" id="removePill" data-id="' + a + '"><i class="material-icons" style="font-size: 12px">close</i></a></span>')
+            }
+            //
+
+        }
+
+        $(document).on('click', '#removePill', function () {
+            let id = $(this).data('id');
+            let parent = document.getElementById('pillSearch');
+            let child = document.getElementById('pill' + id);
+            parent.removeChild(child);
+            $('#f-' + id).val('');
+            window['s_' + id] = '';
+            datatableItem();
+        })
 
         $(document).on('click', '#addData, #editData', function () {
             let id = $(this).data('id');
@@ -477,20 +615,24 @@
                 $('#form #type').val(data.type);
                 $('#form #height').val(data.height);
                 $('#form #width').val(data.width);
-                getSelect('city', window.location.pathname + '/province/' + data.city.province.id + '/city', 'name', data.city.id);
+                getSelect('city', '/admin/province/' + data.city.province.id + '/city', 'name', data.city.id);
 
                 fileImg1 = data.image1;
                 fileImg2 = data.image2;
                 fileImg3 = data.image3;
             }
-            getSelect('province', window.location.pathname + '/province', 'name', prov);
+            getSelect('province', '/admin/province', 'name', prov);
 
-            setImgDropify('image1', fileImg1);
-            setImgDropify('image2', fileImg2);
-            setImgDropify('image3', fileImg3);
+            setImgDropify('image1', null, fileImg1);
+            setImgDropify('image2', null, fileImg2);
+            setImgDropify('image3', null, fileImg3);
             $('#modaltambahtitik').modal('show');
         })
 
+        $('#modaldetail').on('shown.bs.modal', function() {
+            console.log('asdasdas')
+            map.invalidateSize();
+        });
         $(document).on('click', '#detailData', function () {
             let data = $(this).data('row');
             $('#d-name').html(data.name);
@@ -522,12 +664,23 @@
         });
 
         function datatableItem() {
-            var url = '/admin/item/datatable';
+            let formData = {
+                'province': s_provinsi,
+                'city': s_kota,
+                'type': s_tipe,
+                'position': s_posisi
+            };
+            let stringData = JSON.stringify(formData);
+            var url = '/admin/titik/datatable';
+
             $('#table_id').DataTable({
                 destroy: true,
                 processing: true,
                 serverSide: true,
-                ajax: url,
+                ajax: {
+                    'url': url,
+                    "data": formData
+                },
                 "fnRowCallback": function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
                     // debugger;
                     var numStart = this.fnPagingInfo().iStart;
@@ -585,27 +738,6 @@
 
         }
 
-        function getCard() {
-            $.get('/admin/item/card', function (data, status, response) {
-                let card = $('#cardType');
-                card.empty;
-                if (response.status === 200) {
-                    $.each(data, function (k, v) {
-                        let img = v.icon;
-                        card.append('<div class="col-4 my-2 ">\n' +
-                            '                        <div class="panel-peformace p-2 rounded shadow">\n' +
-                            '                            <img src="' + img + '"/>\n' +
-                            '                            <div class="content">\n' +
-                            '                                <p class="nama">' + v.name + '</p>\n' +
-                            '                                <p class="nilai">' + v.count + ' Titik</p>\n' +
-                            '                            </div>\n' +
-                            '                        </div>\n' +
-                            '                    </div>')
-                    })
-                }
-            })
-        }
-
         function saveItem() {
             let form = $('#form');
             form.submit(async function (e) {
@@ -632,7 +764,7 @@
                         'image3': 'image3',
                     }
                 }
-                saveDataAjaxWImage('Simpan Data', 'form', data, window.location.pathname + '/item/post-item', afterSave);
+                saveDataAjaxWImage('Simpan Data', 'form', data, window.location.pathname + '/post-item', afterSave);
                 return false;
             })
         }
@@ -642,5 +774,9 @@
             datatableItem();
         }
     </script>
-@endsection
+    @endsection
 
+
+    </body>
+
+    </html>

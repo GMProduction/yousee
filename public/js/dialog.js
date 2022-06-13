@@ -92,7 +92,7 @@ async function saveData(title, form, url, resposeSuccess, image = null) {
     return false;
 }
 
-function saveDataObject(title, form_data, url, resposeSuccess) {
+function saveDataObjectFormData(title, form_data, url, resposeSuccess) {
 
     swal({
         title: title,
@@ -108,6 +108,8 @@ function saveDataObject(title, form_data, url, resposeSuccess) {
                     data: form_data,
                     url: url ?? window.location.pathname,
                     async: true,
+                    processData: false,
+                    contentType: false,
                     headers: {
                         'Accept': "application/json"
                     },
@@ -148,6 +150,76 @@ function saveDataObject(title, form_data, url, resposeSuccess) {
             }
         });
     return false;
+}
+
+function saveDataAjaxWImage(title, form, form_data, url, resposeSuccess) {
+    var dataForm = form_data['form_data'];
+    console.log(form_data);
+    if (form_data['image']){
+        $.each(form_data['image'], async function (k,v) {
+            if ($('#'+form+' #'+v).val()) {
+                let icon = await handleImageUpload($('#'+v));
+                dataForm.append(v, icon, icon.name);
+            }
+        })
+    }
+    console.log(dataForm.get('icon'));
+    swal({
+        title: title,
+        text: "Apa kamu yakin ?",
+        icon: "info",
+        buttons: true,
+        primariMode: true,
+    })
+        .then((res) => {
+            if (res) {
+                $.ajax({
+                    type: "POST",
+                    data: dataForm,
+                    url: url ?? window.location.pathname,
+                    async: true,
+                    processData: false,
+                    contentType: false,
+                    headers: {
+                        'Accept': "application/json"
+                    },
+                    success: function (data, textStatus, xhr) {
+                        console.log(data);
+
+                        if (xhr.status === 200) {
+                            swal("Data created ", {
+                                icon: "success",
+                                buttons: false,
+                                timer: 1000
+                            }).then((dat) => {
+                                if (resposeSuccess) {
+                                    resposeSuccess(data)
+                                } else {
+                                    window.location.reload()
+                                }
+                            });
+                        } else {
+                            swal(data['msg'])
+                        }
+                    },
+                    complete: function (xhr, textStatus) {
+                        console.log(xhr.status);
+                        console.log(textStatus);
+                    },
+                    error: function (error, xhr, textStatus) {
+                        // console.log("LOG ERROR", error.responseJSON.errors);
+                        // console.log("LOG ERROR", error.responseJSON.errors[Object.keys(error.responseJSON.errors)[0]][0]);
+                        console.log(xhr.status);
+                        console.log(textStatus);
+                        console.log(error.responseJSON);
+                        swal(error.responseJSON.errors ? error.responseJSON.errors[Object.keys(error.responseJSON.errors)[0]][0] : error.responseJSON['message'] ? error.responseJSON['message'] : error.responseJSON['msg'] )
+
+                    }
+                })
+            }
+        });
+    return false;
+
 }
 
 function deleteData(text, url,data, resposeSuccess) {
@@ -215,10 +287,14 @@ function deleteData(text, url,data, resposeSuccess) {
     return false;
 }
 
-function getSelect(id, url, nameValue = 'name', idValue) {
+function getSelect(id, url, nameValue = 'name', idValue, text = null) {
     var select = $('#' + id);
     select.empty();
-    select.append('<option value="" disabled selected>Pilih Data</option>')
+    if (text){
+        select.append('<option value="" selected>'+text+'</option>')
+    }else {
+        select.append('<option value="" disabled selected>Pilih Data</option>')
+    }
     $.get(url, function (data) {
         $.each(data, function (key, value) {
             if (idValue === value['id']) {
@@ -239,4 +315,26 @@ function currency(field) {
             formatCurrency($(this), "blur");
         }
     });
+}
+
+function setImgDropify(img,text ='Masukkan Image Item',   file = null, height = 400) {
+    img = $('#' + img).dropify({
+        messages: {
+            'default': text,
+            'replace': 'Drag and drop or click to replace',
+            'remove': 'Remove',
+            'error': 'Ooops, something wrong happended.'
+        }
+    });
+    img = img.data('dropify');
+    img.resetPreview();
+    img.clearElement();
+
+    if (file) {
+        img.settings.defaultFile = file;
+        img.destroy();
+        img.init();
+    }
+    $('.dropify-wrapper').height(height).width(300);
+
 }

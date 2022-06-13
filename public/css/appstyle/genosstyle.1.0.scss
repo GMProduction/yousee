@@ -34,7 +34,6 @@ $lebar-logo: 150px;
 
 $tinggi-navbar: 60px;
 
-
 //RADIUS
 $border-panel: 10px;
 
@@ -44,7 +43,7 @@ body {
 }
 
 //LOGIN
-.login{
+.login {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -59,7 +58,6 @@ body {
     width: $panel-login;
     position: relative; /* or absolute */
     display: block;
-   
 }
 
 .logo-login {
@@ -171,20 +169,20 @@ input.form-control {
 }
 
 input.form-control {
-        display: block;
-        padding: 0.375rem 0.75rem;
-        font-size: 1rem;
-        font-weight: 400;
-        line-height: 1.5;
-        color: #212529;
-        background-color: #fff;
-        background-clip: padding-box;
-        border: 1px solid #ddd;
-        -webkit-appearance: none;
-        -moz-appearance: none;
-        appearance: none;
-        border-radius: 0.25rem;
-        transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    display: block;
+    padding: 0.375rem 0.75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #212529;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ddd;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border-radius: 0.25rem;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 
 .sidebar {
@@ -410,7 +408,7 @@ input.form-control {
 .btn-utama {
     all: unset;
     transition: all 0.5s;
-    display: block;
+    display: flex;
     text-align: center;
     border: none;
     background-color: $primary-color;
@@ -437,7 +435,7 @@ input.form-control {
     }
 }
 
-.btn-link-maps{
+.btn-link-maps {
     all: unset;
     transition: all 0.5s;
     display: flex;
@@ -476,7 +474,6 @@ input.form-control {
         color: $primary-soft-color1;
         // box-shadow: 2px 2px 20px $shadow-primary-color;
     }
-    
 }
 
 .btn-utama-soft {
@@ -690,7 +687,7 @@ input.form-control {
 }
 
 //PETA
-.panel-peta{
+.panel-peta {
     position: relative;
     min-height: 500px;
     width: 100%;
@@ -698,10 +695,12 @@ input.form-control {
     border: 1px solid #ccc;
     border-radius: $border-panel;
 
-    
+    .full {
+        height: 100%;
+    }
 }
 
-.panel-streetview{
+.panel-streetview {
     position: relative;
     min-height: 500px;
     width: 100%;
@@ -711,12 +710,17 @@ input.form-control {
     border-radius: $border-panel;
 }
 
-.panel-gambar{
+.filter-panel{
+    padding: 10px;
+    min-width: 300px;
+}
+
+.panel-gambar {
     position: relative;
     min-height: 800px;
     width: 100%;
 
-    img{
+    img {
         object-fit: scale-down;
         width: 100%;
         height: 100%;
@@ -752,15 +756,23 @@ input.form-control {
     font-size: 1rem;
 }
 
-
 //TABLES
-table{
+table {
     font-size: 00.8rem;
 }
 
+.icon-table {
+    height: 25px;
+    object-fit: scale-down;
+}
+
+.table {
+    width: 100%;
+}
 //TAB
-.nav-pills .nav-link.genostab.active , .nav-pills .show>.nav-link {
- background-color: $primary-color;   
+.nav-pills .nav-link.genostab.active,
+.nav-pills .show > .nav-link {
+    background-color: $primary-color;
 }
 
 .nav-pills .nav-link.genostab {
@@ -770,5 +782,6 @@ table{
     background-color: $background-primary-color;
     color: $primary-color;
     text-decoration: none;
-    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out;
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
+        border-color 0.15s ease-in-out;
 }
