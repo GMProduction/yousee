@@ -30,6 +30,7 @@ Route::prefix('admin')->middleware(\App\Http\Middleware\AdminMiddleware::class)-
         Route::prefix('item')->group(
             function () {
                 Route::get('datatable', [\App\Http\Controllers\ItemController::class, 'datatable']);
+                Route::get('card', [\App\Http\Controllers\ItemController::class, 'cardItem']);
 
             }
         );
@@ -45,7 +46,6 @@ Route::prefix('admin')->middleware(\App\Http\Middleware\AdminMiddleware::class)-
         );
         Route::prefix('titik')->group(function (){
             Route::get('', [TitikController::class, 'index']);
-            Route::get('card', [\App\Http\Controllers\ItemController::class, 'cardItem']);
             Route::get('type', [\App\Http\Controllers\ItemController::class, 'getType']);
             Route::post('post-item', [\App\Http\Controllers\ItemController::class, 'postItem']);
             Route::get('datatable', [\App\Http\Controllers\ItemController::class, 'datatable']);
