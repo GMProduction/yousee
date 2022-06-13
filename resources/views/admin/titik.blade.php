@@ -1,5 +1,8 @@
 @extends('admin.base')
 @section('css')
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css" integrity="sha512-hoalWLoI8r4UszCkZ5kL8vayOGVae1oxXe/2A4AO6J9+580uKHDO3JdHb7NzwwzK5xr/Fs0W40kiNHxM9vyTtQ=="
+          crossorigin=""/>
+
     <style>
         .select2-selection__rendered {
             line-height: 36px !important;
@@ -12,6 +15,17 @@
 
         .select2-selection__arrow {
             height: 36px !important;
+        }
+
+        /*.leaflet-container {*/
+        /*    height: 400px;*/
+        /*    width: 600px;*/
+        /*    max-width: 100%;*/
+        /*    max-height: 100%;*/
+        /*}*/
+        #map {
+            height: 500px;
+            width: 100%
         }
     </style>
 @endsection
@@ -33,8 +47,6 @@
                 </li>
 
             </ul>
-
-
             <div>
                 <a class="btn-utama sml rnd " href="#" role="button" id="dropdownprofile" data-bs-toggle="dropdown">Filter <i
                         class="material-icons menu-icon ms-2 ">filter_list</i></a>
@@ -80,46 +92,56 @@
 
         </div>
 
-        <div class="panel">
-            <div class="title">
-                <p>Titik yang baru dimasukan</p>
-                <a class="btn-utama-soft sml rnd " id="addData">Titik Baru <i
-                        class="material-icons menu-icon ms-2">add_circle</i></a>
-            </div>
+        <div class="tab-content">
+            <div class="tab-pane fade show active" id="pills-tabel" role="tabpanel"
+                 aria-labelledby="pills-tabel-tab">
+                <div class="panel">
+                    <div class="title">
+                        <p>Titik yang baru dimasukan</p>
+                        <a class="btn-utama-soft sml rnd " id="addData">Titik Baru <i
+                                class="material-icons menu-icon ms-2">add_circle</i></a>
+                    </div>
 
-            <div class="isi">
-                <div class="table">
-                    <table id="table_id" class="table table-striped" style="width:100%">
-                        <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Area</th>
-                            <th>Kode</th>
-                            <th>Alamat</th>
-                            <th>Panjang / Tinggi</th>
-                            <th>Lebar</th>
-                            <th>Type</th>
-                            <th>Posisi</th>
-                            <th>Action</th>
-                        </tr>
-                        </thead>
-                        <tfoot>
-                        <tr>
-                            <th>#</th>
-                            <th>Area</th>
-                            <th>Kode</th>
-                            <th>Alamat</th>
-                            <th>Panjang / Tinggi</th>
-                            <th>Lebar</th>
-                            <th>Type</th>
-                            <th>Posisi</th>
-                            <th>Action</th>
-                        </tr>
-                        </tfoot>
-                    </table>
+                    <div class="isi">
+                        <div class="table">
+                            <table id="table_id" class="table table-striped" style="width:100%">
+                                <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Area</th>
+                                    <th>Kode</th>
+                                    <th>Alamat</th>
+                                    <th>Panjang / Tinggi</th>
+                                    <th>Lebar</th>
+                                    <th>Type</th>
+                                    <th>Posisi</th>
+                                    <th>Action</th>
+                                </tr>
+                                </thead>
+                                <tfoot>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Area</th>
+                                    <th>Kode</th>
+                                    <th>Alamat</th>
+                                    <th>Panjang / Tinggi</th>
+                                    <th>Lebar</th>
+                                    <th>Type</th>
+                                    <th>Posisi</th>
+                                    <th>Action</th>
+                                </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
                 </div>
-            </div>
 
+            </div>
+            <div class="tab-pane fade" id="pills-peta" role="tabpanel"
+                 aria-labelledby="pills-peta-tab">
+{{--                @include('admin.map', ['data' => 'content'])--}}
+
+            </div>
         </div>
 
         <!-- Modal -->
@@ -413,6 +435,9 @@
 
                                 <div class="panel-streetview">
                                     Tampil Streetview
+                                    <div class="panel">
+                                        <div id="map"></div>
+                                    </div>
 
                                     <a class="btn-link-maps sml rnd ">Buka di Google Maps <i
                                             class="material-icons menu-icon ms-2">arrow_outward</i></a>
@@ -461,8 +486,25 @@
 
 @section('morejs')
     <script src="{{ asset('js/number_formater.js') }}"></script>
+    <script src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js" integrity="sha512-BB3hKbKWOc9Ez/TAwyWxNXeoV9c1v6FIeYiBieIWkpLjauysF18NzgR1MBNBXf8/KABdlkX68nAhlwcDFLGPCQ==" crossorigin=""></script>
+
+{{--    @include('admin.map', ['data' => 'script'])--}}
+
 
     <script>
+        var map = L.map('map').setView([48.86, 2.35], 11);
+
+        L.marker([48.86, 2.35]).addTo(map);
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        // Comment out the below code to see the difference.
+        $('#myModal').on('shown.bs.modal', function() {
+            map.invalidateSize();
+        });
+
         let image1, image2, image3;
         var s_provinsi, s_kota, s_tipe, s_posisi;
         $(document).ready(function () {
@@ -496,9 +538,9 @@
 
         $(document).on('change', '#f-provinsi', function (ev) {
             s_provinsi = $(this).val();
-            if (s_provinsi === ''){
+            if (s_provinsi === '') {
                 getSelect('f-kota', '/admin/city', 'name', null, 'Semua Kota');
-            }else{
+            } else {
                 getSelect('f-kota', '/admin/province/' + s_provinsi + '/city', 'name', null, 'Semua Kota');
             }
             let text = ev.currentTarget.options[ev.currentTarget.selectedIndex].text;
@@ -545,7 +587,7 @@
             let parent = document.getElementById('pillSearch');
             let child = document.getElementById('pill' + id);
             parent.removeChild(child);
-            $('#f-'+id).val('');
+            $('#f-' + id).val('');
             window['s_' + id] = '';
             datatableItem();
         })
@@ -587,6 +629,10 @@
             $('#modaltambahtitik').modal('show');
         })
 
+        $('#modaldetail').on('shown.bs.modal', function() {
+            console.log('asdasdas')
+            map.invalidateSize();
+        });
         $(document).on('click', '#detailData', function () {
             let data = $(this).data('row');
             $('#d-name').html(data.name);
