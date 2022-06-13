@@ -1,6 +1,7 @@
 @extends('admin.base')
 @section('css')
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css" integrity="sha512-hoalWLoI8r4UszCkZ5kL8vayOGVae1oxXe/2A4AO6J9+580uKHDO3JdHb7NzwwzK5xr/Fs0W40kiNHxM9vyTtQ=="
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css"
+          integrity="sha512-hoalWLoI8r4UszCkZ5kL8vayOGVae1oxXe/2A4AO6J9+580uKHDO3JdHb7NzwwzK5xr/Fs0W40kiNHxM9vyTtQ=="
           crossorigin=""/>
 
     <style>
@@ -41,14 +42,16 @@
                     </button>
                 </li>
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link genostab" id="pills-peta-tab" data-bs-toggle="pill" data-bs-target="#pills-peta"
+                    <button class="nav-link genostab" id="pills-peta-tab" data-bs-toggle="pill"
+                            data-bs-target="#pills-peta"
                             type="button" role="tab" aria-controls="pills-peta" aria-selected="false">Maps
                     </button>
                 </li>
 
             </ul>
             <div>
-                <a class="btn-utama sml rnd " href="#" role="button" id="dropdownprofile" data-bs-toggle="dropdown">Filter <i
+                <a class="btn-utama sml rnd " href="#" role="button" id="dropdownprofile" data-bs-toggle="dropdown">Filter
+                    <i
                         class="material-icons menu-icon ms-2 ">filter_list</i></a>
                 <ul id="dropSearch" class="dropdown-menu custom" aria-labelledby="dropdownprofile">
                     <div class="filter-panel">
@@ -62,14 +65,16 @@
 
                         <div class="form-group">
                             <label for="f-kota" class="form-label">Kota</label>
-                            <select class="form-select mb-3" aria-label="Default select example" id="f-kota" name="f-kota">
+                            <select class="form-select mb-3" aria-label="Default select example" id="f-kota"
+                                    name="f-kota">
                                 <option selected value="">Semua Kota</option>
                             </select>
                         </div>
 
                         <div class="form-group">
                             <label for="f-tipe" class="form-label">Tipe</label>
-                            <select class="form-select mb-3" aria-label="Default select example" id="f-tipe" name="f-tipe">
+                            <select class="form-select mb-3" aria-label="Default select example" id="f-tipe"
+                                    name="f-tipe">
                             </select>
                         </div>
 
@@ -139,8 +144,8 @@
             </div>
             <div class="tab-pane fade" id="pills-peta" role="tabpanel"
                  aria-labelledby="pills-peta-tab">
-{{--                @include('admin.map', ['data' => 'content'])--}}
-
+                {{--                @include('admin.map', ['data' => 'content'])--}}
+                <div id="main-map" style="width: 100%; height: 500px"></div>
             </div>
         </div>
 
@@ -179,12 +184,14 @@
                             </div>
 
                             <div class="form-floating mb-3">
-                                <input type="text" class="form-control" id="address" name="address" placeholder="Alamat">
+                                <input type="text" class="form-control" id="address" name="address"
+                                       placeholder="Alamat">
                                 <label for="alamat" class="form-label">Alamat</label>
                             </div>
 
                             <div class="form-floating mb-3">
-                                <input type="text" class="form-control" id="location" name="location" placeholder="Lokasi">
+                                <input type="text" class="form-control" id="location" name="location"
+                                       placeholder="Lokasi">
                                 <label for="location" class="form-label">Lokasi</label>
                             </div>
 
@@ -215,7 +222,8 @@
                             <div class="row">
                                 <div class="col-md-6 col-sm-12">
                                     <label for="type" class="form-label">Tipe</label>
-                                    <select class="form-select mb-3" aria-label="Default select example" id="type" name="type_id">
+                                    <select class="form-select mb-3" aria-label="Default select example" id="type"
+                                            name="type_id">
                                     </select>
                                 </div>
 
@@ -240,7 +248,8 @@
                                 </div>
                                 <div class="col-md-6 col-sm-12">
                                     <div class="form-floating mb-3">
-                                        <input type="text" class="form-control" id="width" name="width" placeholder="lebar">
+                                        <input type="text" class="form-control" id="width" name="width"
+                                               placeholder="lebar">
                                         <label for="width" class="form-label">Lebar</label>
                                     </div>
                                 </div>
@@ -304,7 +313,8 @@
                         <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
                             <li class="nav-item" role="presentation">
                                 <button class="nav-link genostab active" id="pills-detail-tab" data-bs-toggle="pill"
-                                        data-bs-target="#pills-detail" type="button" role="tab" aria-controls="pills-detail"
+                                        data-bs-target="#pills-detail" type="button" role="tab"
+                                        aria-controls="pills-detail"
                                         aria-selected="true">Detail
                                 </button>
                             </li>
@@ -316,19 +326,22 @@
                             </li>
                             <li class="nav-item" role="presentation">
                                 <button class="nav-link genostab" id="pills-gambar1-tab" data-bs-toggle="pill"
-                                        data-bs-target="#pills-gambar1" type="button" role="tab" aria-controls="pills-gambar1"
+                                        data-bs-target="#pills-gambar1" type="button" role="tab"
+                                        aria-controls="pills-gambar1"
                                         aria-selected="false">Gambar 1
                                 </button>
                             </li>
                             <li class="nav-item" role="presentation">
                                 <button class="nav-link genostab" id="pills-gambar2-tab" data-bs-toggle="pill"
-                                        data-bs-target="#pills-gambar2" type="button" role="tab" aria-controls="pills-gambar2"
+                                        data-bs-target="#pills-gambar2" type="button" role="tab"
+                                        aria-controls="pills-gambar2"
                                         aria-selected="false">Gambar 2
                                 </button>
                             </li>
                             <li class="nav-item" role="presentation">
                                 <button class="nav-link genostab" id="pills-gambar3-tab" data-bs-toggle="pill"
-                                        data-bs-target="#pills-gambar3" type="button" role="tab" aria-controls="pills-gambar3"
+                                        data-bs-target="#pills-gambar3" type="button" role="tab"
+                                        aria-controls="pills-gambar3"
                                         aria-selected="false">Gambar 3
                                 </button>
                             </li>
@@ -412,7 +425,8 @@
                                 <div class="row">
                                     <div class="col-md-6 col-sm-6">
                                         <div class="form-floating mb-3">
-                                            <input type="text" class="form-control" id="d-panjang" type="number" disabled
+                                            <input type="text" class="form-control" id="d-panjang" type="number"
+                                                   disabled
                                                    name="d-panjang" placeholder="0">
                                             <label for="d-panjang" class="form-label">Panjang/Tinggi</label>
                                         </div>
@@ -486,29 +500,91 @@
 
 @section('morejs')
     <script src="{{ asset('js/number_formater.js') }}"></script>
-    <script src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js" integrity="sha512-BB3hKbKWOc9Ez/TAwyWxNXeoV9c1v6FIeYiBieIWkpLjauysF18NzgR1MBNBXf8/KABdlkX68nAhlwcDFLGPCQ==" crossorigin=""></script>
+    <script src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js"
+            integrity="sha512-BB3hKbKWOc9Ez/TAwyWxNXeoV9c1v6FIeYiBieIWkpLjauysF18NzgR1MBNBXf8/KABdlkX68nAhlwcDFLGPCQ=="
+            crossorigin=""></script>
 
-{{--    @include('admin.map', ['data' => 'script'])--}}
+    {{--    @include('admin.map', ['data' => 'script'])--}}
 
 
     <script>
-        var map = L.map('map').setView([48.86, 2.35], 11);
-
-        L.marker([48.86, 2.35]).addTo(map);
-
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-        }).addTo(map);
-
-        // Comment out the below code to see the difference.
-        $('#myModal').on('shown.bs.modal', function() {
-            map.invalidateSize();
-        });
+        // var map = L.map('map').setView([48.86, 2.35], 11);
+        //
+        // L.marker([48.86, 2.35]).addTo(map);
+        //
+        // L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        //     attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+        // }).addTo(map);
+        //
+        // // Comment out the below code to see the difference.
+        // $('#myModal').on('shown.bs.modal', function() {
+        //     map.invalidateSize();
+        // });
 
         let image1, image2, image3;
         var s_provinsi, s_kota, s_tipe, s_posisi;
+
+        var center = {
+            lat: -7.57797433093528, lng: 110.80924297710521
+        };
+
+
+        var tmp_map_data = [];
+
+        function onTabChange() {
+            $('#pills-tab').on('shown.bs.tab', function (e) {
+                if (e.target.id === 'pills-peta-tab') {
+                    generateMap();
+                }
+            })
+        }
+
+        var main_map;
+        function generateMap() {
+            var center_indonesia = {
+                lat: -0.4029326, lng: 110.5938779
+            };
+
+            main_map = L.map('main-map').setView([center_indonesia['lat'], center_indonesia['lng']], 5);
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                maxZoom: 19,
+                attribution: '© OpenStreetMap'
+            }).addTo(main_map);
+            getPlacesData(main_map);
+        }
+        async function getPlacesData(map) {
+            try {
+                let province = s_provinsi;
+                let city = s_kota;
+                let type = s_tipe;
+                let pst = s_posisi;
+                let response = await $.get('/cek-map/data?province=' + province + '&city=' + city + '&type=' + type + '&position=' + pst);
+                console.log(response)
+                L.geoJSON(response.payload, {
+                    pointToLayer: function (geoJsonPoint, latlng) {
+                        return L.marker(latlng);
+                    }
+                }).bindPopup(function (layer) {
+                    return ('<div class="my-2"><strong>Place Name</strong> :<br>' + layer.feature.properties.name + '</div> <div class="my-2"><strong>Description</strong>:<br>' + layer.feature.properties.address + '</div><div class="my-2"><strong>Address</strong>:<br>' + layer.feature.properties.address + '</div>');
+                }).addTo(map);
+                let t_data = response['payload']['features'];
+                tmp_map_data = [];
+                $.each(t_data, function (k, v) {
+                    tmp_map_data.push([
+                        v['properties']['latitude'],
+                        v['properties']['longitude'],
+                    ]);
+                });
+                map.fitBounds(tmp_map_data);
+            } catch (e) {
+                console.log(e)
+            }
+        }
+
+        // var marker = L.marker([center['lat'], center['lng']]).addTo(map);
         $(document).ready(function () {
             $('#table_piutang').DataTable();
+            onTabChange();
             datatableItem();
             getSelect('f-provinsi', '/admin/province', 'name', null, 'Semua Provinsi');
             getSelect('type', window.location.pathname + '/type')
@@ -546,12 +622,14 @@
             let text = ev.currentTarget.options[ev.currentTarget.selectedIndex].text;
             pillSearch('provinsi', text);
             datatableItem();
+            getPlacesData(main_map);
         });
         $(document).on('change', '#f-kota', function (ev) {
             s_kota = $(this).val();
             let text = ev.currentTarget.options[ev.currentTarget.selectedIndex].text;
             pillSearch('kota', text);
             datatableItem();
+            getPlacesData(main_map);
         });
 
         $(document).on('change', '#f-tipe', function (ev) {
@@ -559,6 +637,7 @@
             let text = ev.currentTarget.options[ev.currentTarget.selectedIndex].text;
             pillSearch('tipe', text);
             datatableItem();
+            getPlacesData(main_map);
         });
 
         $(document).on('change', '#f-posisi', function (ev) {
@@ -566,6 +645,7 @@
             let text = ev.currentTarget.options[ev.currentTarget.selectedIndex].text;
             pillSearch('posisi', text);
             datatableItem();
+            getPlacesData(main_map);
         });
 
         function pillSearch(a, text) {
@@ -590,6 +670,7 @@
             $('#f-' + id).val('');
             window['s_' + id] = '';
             datatableItem();
+            getPlacesData(main_map);
         })
 
         $(document).on('click', '#addData, #editData', function () {
@@ -629,7 +710,7 @@
             $('#modaltambahtitik').modal('show');
         })
 
-        $('#modaldetail').on('shown.bs.modal', function() {
+        $('#modaldetail').on('shown.bs.modal', function () {
             console.log('asdasdas')
             map.invalidateSize();
         });
@@ -773,6 +854,8 @@
             $('#modaltambahtitik').modal('hide');
             datatableItem();
         }
+
+
     </script>
     @endsection
 
