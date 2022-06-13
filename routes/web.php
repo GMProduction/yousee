@@ -31,7 +31,8 @@ Route::prefix('admin')->middleware(\App\Http\Middleware\AdminMiddleware::class)-
             function () {
                 Route::get('datatable', [\App\Http\Controllers\ItemController::class, 'datatable']);
                 Route::get('card', [\App\Http\Controllers\ItemController::class, 'cardItem']);
-
+                Route::get('type', [\App\Http\Controllers\ItemController::class, 'getType']);
+                Route::post('post-item', [\App\Http\Controllers\ItemController::class, 'postItem']);
             }
         );
         Route::get('province', [\App\Http\Controllers\ProvinceController::class, 'province']);
@@ -50,7 +51,7 @@ Route::prefix('admin')->middleware(\App\Http\Middleware\AdminMiddleware::class)-
             Route::post('post-item', [\App\Http\Controllers\ItemController::class, 'postItem']);
             Route::get('datatable', [\App\Http\Controllers\ItemController::class, 'datatable']);
         });
-
+        Route::get('history/{id}', [\App\Http\Controllers\HistoryController::class, 'getHistory']);
     }
 );
 

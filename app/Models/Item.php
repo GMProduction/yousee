@@ -25,9 +25,10 @@ class Item extends Model
         'image2',
         'image3',
         'created_by',
+        'last_update_by'
     ];
 
-    protected $with = ['type','city','createdBy'];
+    protected $with = ['type','city','createdBy','lastUpdate'];
 
     public function type(){
         return $this->belongsTo(type::class);
@@ -39,5 +40,13 @@ class Item extends Model
 
     public function createdBy(){
         return $this->belongsTo(User::class, 'created_by');
+    }
+
+    public function lastUpdate(){
+        return $this->belongsTo(User::class, 'last_update_by');
+    }
+
+    public function history(){
+        return $this->belongsToMany(User::class, 'histories','item_id','user_id');
     }
 }

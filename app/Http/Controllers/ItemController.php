@@ -112,6 +112,8 @@ class ItemController extends CustomController
 
         if (\request('id')) {
             $item = Item::find(\request('id'));
+            Arr::set($data, 'last_update_by', auth()->id());
+
             if ($image1 && $item->image1){
                 if (file_exists('../public'.$item->image1)) {
                     unlink('../public'.$item->image1);
@@ -129,8 +131,12 @@ class ItemController extends CustomController
             }
             $item->update($data);
         } else {
-            Item::create($data);
+            Arr::set($data, 'created_by', auth()->id());
+            $item = Item::create($data);
         }
+
+        $history = new HistoryController();
+        $history->postHistory($item->id);
 
         return response()->json(
             [

@@ -100,13 +100,15 @@
                     <p class="menu-text">Beranda</p>
                 </a>
             </li>
+            @if(auth()->user()->role == 'pimpinan')
+                <li class="nav-item">
+                    <a class="nav-link menu @if ($sidebar == 'user') active @endif" href="/admin/user">
+                        <i class="material-icons menu-icon">person</i>
+                        <p class="menu-text">User</p>
+                    </a>
+                </li>
+            @endif
 
-            <li class="nav-item">
-                <a class="nav-link menu @if ($sidebar == 'user') active @endif" href="/admin/user">
-                    <i class="material-icons menu-icon">person</i>
-                    <p class="menu-text">User</p>
-                </a>
-            </li>
 
             {{-- <li class="nav-item">
                 <a class="nav-link menu @if ($sidebar == 'history') active @endif" href="/admin/history">
@@ -115,24 +117,24 @@
                 </a>
             </li> --}}
 
-{{-- 
-            <li class="nav-item has-submenu">
-                <a class="nav-link menu @if ($sidebar == 'master') active @endif" href="#">
-                    <i class="material-icons menu-icon">content_paste</i>
-                    <p class="menu-text">Master</p>
-                </a>
-                <ul class="submenu  collapse ">
-                    <li><a class="nav-link menu @if ($sidebar == 'masterbarang') active @endif" href="/admin/masterbarang">
-                            <i class="material-icons menu-icon">inventory</i>
-                            <p class="menu-text">Barang</p>
-                        </a></li>
-                    <li><a class="nav-link menu @if ($sidebar == 'masterpelanggan') active @endif" href="/admin/masterpelanggan">
-                            <i class="material-icons menu-icon">account_box</i>
-                            <p class="menu-text">Pelanggan</p>
-                        </a></li>
+            {{--
+                        <li class="nav-item has-submenu">
+                            <a class="nav-link menu @if ($sidebar == 'master') active @endif" href="#">
+                                <i class="material-icons menu-icon">content_paste</i>
+                                <p class="menu-text">Master</p>
+                            </a>
+                            <ul class="submenu  collapse ">
+                                <li><a class="nav-link menu @if ($sidebar == 'masterbarang') active @endif" href="/admin/masterbarang">
+                                        <i class="material-icons menu-icon">inventory</i>
+                                        <p class="menu-text">Barang</p>
+                                    </a></li>
+                                <li><a class="nav-link menu @if ($sidebar == 'masterpelanggan') active @endif" href="/admin/masterpelanggan">
+                                        <i class="material-icons menu-icon">account_box</i>
+                                        <p class="menu-text">Pelanggan</p>
+                                    </a></li>
 
-                </ul>
-            </li> --}}
+                            </ul>
+                        </li> --}}
 
             <li class="nav-item has-submenu">
                 <a class="nav-link menu" href="#">
@@ -165,7 +167,6 @@
     <div class="w-100 p-4">
         @yield('content')
     </div>
-
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
@@ -183,6 +184,7 @@
 <script type="text/javascript"
         src="https://cdn.jsdelivr.net/npm/browser-image-compression@latest/dist/browser-image-compression.js"></script>
 <script src="{{ asset('js/handler_image.js') }}"></script>
+<script src="{{ asset('js/moment.min.js') }}"></script>
 
 <script>
     jQuery.fn.dataTableExt.oApi.fnPagingInfo = function (oSettings) {

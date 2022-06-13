@@ -477,17 +477,17 @@
                 $('#form #type').val(data.type);
                 $('#form #height').val(data.height);
                 $('#form #width').val(data.width);
-                getSelect('city', window.location.pathname + '/province/' + data.city.province.id + '/city', 'name', data.city.id);
+                getSelect('city', '/admin/province/' + data.city.province.id + '/city', 'name', data.city.id);
 
                 fileImg1 = data.image1;
                 fileImg2 = data.image2;
                 fileImg3 = data.image3;
             }
-            getSelect('province', window.location.pathname + '/province', 'name', prov);
+            getSelect('province', '/admin/province', 'name', prov);
 
-            setImgDropify('image1', fileImg1);
-            setImgDropify('image2', fileImg2);
-            setImgDropify('image3', fileImg3);
+            setImgDropify('image1', null, fileImg1);
+            setImgDropify('image2', null, fileImg2);
+            setImgDropify('image3', null, fileImg3);
             $('#modaltambahtitik').modal('show');
         })
 

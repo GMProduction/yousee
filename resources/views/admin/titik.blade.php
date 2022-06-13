@@ -120,6 +120,8 @@
                                     <th>Lebar</th>
                                     <th>Type</th>
                                     <th>Posisi</th>
+                                    <th>Created By</th>
+                                    <th>Last Updated By</th>
                                     <th>Action</th>
                                 </tr>
                                 </thead>
@@ -133,6 +135,8 @@
                                     <th>Lebar</th>
                                     <th>Type</th>
                                     <th>Posisi</th>
+                                    <th>Created By</th>
+                                    <th>Last Updated By</th>
                                     <th>Action</th>
                                 </tr>
                                 </tfoot>
@@ -285,16 +289,12 @@
                             </div>
                             <div class="my-3">
                                 <div class="d-flex">
-                                    <button type="submit" class="btn-utama" style="width: 100%">Simpan</button>
+                                    <button type="submit" class="btn-utama" style="width: 100%; justify-content: center">Simpan</button>
                                 </div>
 
                             </div>
                         </form>
-
-
                     </div>
-
-
                 </div>
             </div>
         </div>
@@ -495,6 +495,29 @@
                 </div>
             </div>
         </div>
+
+
+        <div class="modal fade" id="modalHistory" tabindex="-1" aria-labelledby="modaltambahtitik"
+             aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modaltambahuser">History Update <span id="titleHistory"></span></h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <table class="table table">
+                            <tr>
+                                <th>#</th>
+                                <th class="text-center">Admin</th>
+                                <th class="text-center">Tanggal</th>
+                            </tr>
+                            <tbody id="bodyHistory"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 @endsection
 
@@ -528,7 +551,6 @@
             lat: -7.57797433093528, lng: 110.80924297710521
         };
 
-
         var tmp_map_data = [];
 
         function onTabChange() {
@@ -540,6 +562,7 @@
         }
 
         var main_map;
+
         function generateMap() {
             var center_indonesia = {
                 lat: -0.4029326, lng: 110.5938779
@@ -552,6 +575,7 @@
             }).addTo(main_map);
             getPlacesData(main_map);
         }
+
         async function getPlacesData(map) {
             try {
                 let province = s_provinsi;
@@ -806,6 +830,18 @@
                         "name": "position"
                     },
                     {
+                        "data": "created_by.nama",
+                        "name": "created_by.nama"
+                    },
+                    {
+                        "data": "last_update.nama",
+                        "render": function (data, type, row) {
+                            return '<div class="d-flex">' +
+                                '<span class="me-2">' + data + '</span>' +
+                                '<a class="btn-sm btn-danger-soft" data-name="'+row.name+'" data-id="' + row.id + '" id="btnHistory" style="width: 10px"><i class="material-icons" style="font-size: 12px">history</i></a></div>'
+                        }
+                    },
+                    {
                         "data": "id",
                         "render": function (data, type, row) {
                             let string = JSON.stringify(row);
@@ -855,6 +891,31 @@
             datatableItem();
         }
 
+        $(document).on('click', '#btnHistory', function () {
+
+            var id = $(this).data('id');
+            var name = $(this).data('name');
+            let tabel = $('#bodyHistory');
+            tabel.empty();
+            $.get('/admin/history/' + id, function (data) {
+                if (data.length > 0) {
+                    $.each(data, function (k, v) {
+                        let string = k === parseInt(data.length-1) ? v.user.nama+' ( create )' : v.user.nama;
+                        moment.locale('id');
+
+                        tabel.append('<tr>' +
+                            '             <td>' + parseInt(k + 1) + '</td>' +
+                            '             <td>' + string + '</td>' +
+                            '             <td>' + moment(v.created_at).format('LLLL') + '</td>' +
+                            '         </tr>');
+
+                    })
+                }
+            })
+
+            $('#modalHistory #titleHistory').html(name);
+            $('#modalHistory').modal('show');
+        })
 
     </script>
     @endsection
