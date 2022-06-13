@@ -41,6 +41,7 @@ Route::get('/admin/masterbarang', [MasterBarangController::class, 'index']);
 Route::get('/admin/masterpelanggan', [MasterPelangganController::class, 'index']);
 
 Route::get('/login', [LoginController::class, 'index']);
+Route::get('/login', [LoginController::class, 'index']);
 Route::get('/daftar', [DaftarController::class, 'index']);
 Route::post('/daftar', [DaftarController::class, 'store']);
 
