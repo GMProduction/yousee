@@ -531,7 +531,7 @@
 
     {{--    @include('admin.map', ['data' => 'script'])--}}
 
-
+    <script src="{{ asset('js/map-control.js') }}"></script>
     <script>
         // var map = L.map('map').setView([48.86, 2.35], 11);
         //
@@ -553,69 +553,14 @@
             lat: -7.57797433093528, lng: 110.80924297710521
         };
 
-        var tmp_map_data = [];
-
         function onTabChange() {
             $('#pills-tab').on('shown.bs.tab', function (e) {
                 if (e.target.id === 'pills-peta-tab') {
-                    generateMap();
+                    generateMap('main-map', false);
                 }
             })
         }
 
-        var main_map;
-
-        function generateMap() {
-            var center_indonesia = {
-                lat: -0.4029326, lng: 110.5938779
-            };
-
-            main_map = L.map('main-map').setView([center_indonesia['lat'], center_indonesia['lng']], 5);
-            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                maxZoom: 19,
-                attribution: '© OpenStreetMap'
-            }).addTo(main_map);
-            getPlacesData(main_map);
-        }
-
-        async function getPlacesData(map) {
-            try {
-                let province = s_provinsi;
-                let city = s_kota;
-                let type = s_tipe;
-                let pst = s_posisi;
-                let response = await $.get('/cek-map/data?province=' + province + '&city=' + city + '&type=' + type + '&position=' + pst);
-                console.log(response)
-                L.geoJSON(response.payload, {
-                    pointToLayer: function (geoJsonPoint, latlng) {
-                        let icon_url = geoJsonPoint['properties']['type'] !== null ? window.location.origin + geoJsonPoint['properties']['type']['icon'] : '';
-                        var greenIcon = L.icon({
-                            iconUrl: icon_url,
-
-                            iconSize:     [40, 40], // size of the icon
-                            iconAnchor:   [40, 40], // point of the icon which will correspond to marker's location
-                            popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
-                        });
-                        return L.marker(latlng, {icon: greenIcon});
-                    }
-                }).bindPopup(function (layer) {
-                    return ('<div class="my-2"><strong>Place Name</strong> :<br>' + layer.feature.properties.name + '</div> <div class="my-2"><strong>Description</strong>:<br>' + layer.feature.properties.address + '</div><div class="my-2"><strong>Address</strong>:<br>' + layer.feature.properties.address + '</div>');
-                }).addTo(map);
-                let t_data = response['payload']['features'];
-                tmp_map_data = [];
-                $.each(t_data, function (k, v) {
-                    tmp_map_data.push([
-                        v['properties']['latitude'],
-                        v['properties']['longitude'],
-                    ]);
-                });
-                map.fitBounds(tmp_map_data);
-            } catch (e) {
-                console.log(e)
-            }
-        }
-
-        // var marker = L.marker([center['lat'], center['lng']]).addTo(map);
         $(document).ready(function () {
             $('#table_piutang').DataTable();
             onTabChange();
@@ -656,14 +601,14 @@
             let text = ev.currentTarget.options[ev.currentTarget.selectedIndex].text;
             pillSearch('provinsi', text);
             datatableItem();
-            getPlacesData(main_map);
+            getPlacesData();
         });
         $(document).on('change', '#f-kota', function (ev) {
             s_kota = $(this).val();
             let text = ev.currentTarget.options[ev.currentTarget.selectedIndex].text;
             pillSearch('kota', text);
             datatableItem();
-            getPlacesData(main_map);
+            getPlacesData();
         });
 
         $(document).on('change', '#f-tipe', function (ev) {
@@ -671,7 +616,7 @@
             let text = ev.currentTarget.options[ev.currentTarget.selectedIndex].text;
             pillSearch('tipe', text);
             datatableItem();
-            getPlacesData(main_map);
+            getPlacesData();
         });
 
         $(document).on('change', '#f-posisi', function (ev) {
@@ -679,7 +624,7 @@
             let text = ev.currentTarget.options[ev.currentTarget.selectedIndex].text;
             pillSearch('posisi', text);
             datatableItem();
-            getPlacesData(main_map);
+            getPlacesData();
         });
 
         function pillSearch(a, text) {
@@ -704,7 +649,7 @@
             $('#f-' + id).val('');
             window['s_' + id] = '';
             datatableItem();
-            getPlacesData(main_map);
+            getPlacesData();
         })
 
         $(document).on('click', '#addData, #editData', function () {
