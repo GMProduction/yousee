@@ -75,4 +75,4 @@ Route::post('/daftar', [DaftarController::class, 'store']);
 
 Route::get('/cek-map', [\App\Http\Controllers\MapController::class, 'index']);
 Route::get('/cek-map/data', [\App\Http\Controllers\MapController::class, 'get_map_json']);
-Route::get('/cek-map/data/{id}', [\App\Http\Controllers\MapController::class, 'get_map_by_id']);
+Route::get('/cek-map/data-detail/{id}', [\App\Http\Controllers\MapController::class, 'get_map_by_id']);

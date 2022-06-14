@@ -1,21 +1,21 @@
 var map_container;
+var map_container_single;
+var center_indonesia = {
+    lat: -0.4029326, lng: 110.5938779
+};
 
-function generateMap(element, single = false) {
-    var center_indonesia = {
-        lat: -0.4029326, lng: 110.5938779
-    };
-    map_container = L.map(element).setView([center_indonesia['lat'], center_indonesia['lng']], 5);
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        maxZoom: 19,
-        attribution: '© OpenStreetMap'
-    }).addTo(map_container);
-    if (single) {
-
-    } else {
-        getPlacesData().then(r => {
-        });
+function generateMap(element) {
+    if (map_container === undefined) {
+        map_container = L.map(element).setView([center_indonesia['lat'], center_indonesia['lng']], 5);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: '© OpenStreetMap'
+        }).addTo(map_container);
     }
+    getPlacesData().then(r => {
+    });
 }
+
 
 function createMarker(geoJsonPayload) {
     L.geoJSON(geoJsonPayload, {
@@ -53,6 +53,44 @@ async function getPlacesData() {
     }
 }
 
-function createSingleMarker() {
+function generateSingleMap(element, id) {
+    if (map_container_single === undefined) {
+        map_container_single = L.map(element).setView([center_indonesia['lat'], center_indonesia['lng']], 13);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: '© OpenStreetMap'
+        }).addTo(map_container_single);
+    }
+    getDetailPlace(id).then(r => {
+    })
+}
 
+async function getDetailPlace(id) {
+    try {
+        let response = await $.get('/cek-map/data-detail/' + id);
+        createSingleMarker(response['payload'])
+    } catch (e) {
+        console.log(e);
+    }
+}
+
+function createSingleMarker(payload) {
+    let coordinate = [payload['latitude'], payload['longitude']];
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '© OpenStreetMap'
+    }).addTo(map_container_single);
+    var layerGroup = L.layerGroup();
+    let marker = L.marker(coordinate);
+    marker.bindPopup(
+        '<div class="my-2"><strong>Place Name</strong> :<br>' + payload.name + '</div> <div class="my-2"><strong>Description</strong>:<br>' + payload.address + '</div><div class="my-2"><strong>Address</strong>:<br>' + payload.address + '</div>');
+    layerGroup.addLayer(marker)
+    map_container_single.addLayer(layerGroup);
+    map_container_single.panTo(new L.LatLng(payload['latitude'], payload['longitude']));
+}
+
+function removeSingleMarkerLayer() {
+    map_container_single.eachLayer(function (layer) {
+        map_container_single.removeLayer(layer);
+    });
 }

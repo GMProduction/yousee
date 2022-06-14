@@ -312,7 +312,7 @@
                     </div>
                     <div class="modal-body">
 
-                        <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                        <ul class="nav nav-pills mb-3" id="pills-tab-detail" role="tablist">
                             <li class="nav-item" role="presentation">
                                 <button class="nav-link genostab active" id="pills-detail-tab" data-bs-toggle="pill"
                                     data-bs-target="#pills-detail" type="button" role="tab" aria-controls="pills-detail"
@@ -320,7 +320,7 @@
                                 </button>
                             </li>
                             <li class="nav-item" role="presentation">
-                                <button class="nav-link genostab" id="pills-maps-tab" data-bs-toggle="pill"
+                                <button class="nav-link genostab" id="pills-maps-tab-detail" data-bs-toggle="pill"
                                     data-bs-target="#pills-maps" type="button" role="tab" aria-controls="pills-maps"
                                     aria-selected="false">Maps
                                 </button>
@@ -349,7 +349,7 @@
                             <div class="tab-pane fade show active" id="pills-detail" role="tabpanel"
                                 aria-labelledby="pills-detail-tab">
                                 <div class="row">
-
+                                    <input type="hidden" id="d-id" name="d-id">
                                     <div class="col-md-4 col-sm-12">
                                         <div class="form-floating mb-3">
                                             <input type="text" class="form-control" id="d-Vendor" name="d-Vendor"
@@ -449,7 +449,7 @@
                                 </div>
                             </div>
                             <div class="tab-pane fade" id="pills-maps" role="tabpanel" aria-labelledby="pills-maps-tab">
-                                <div class="panel-peta mb-3">
+                                <div class="panel-peta mb-3" id="map-detail">
                                     Tampil Peta
                                     <a class="btn-link-maps sml rnd ">Buka di Google Maps <i
                                             class="material-icons menu-icon ms-2">arrow_outward</i></a>
@@ -562,7 +562,16 @@
         function onTabChange() {
             $('#pills-tab').on('shown.bs.tab', function(e) {
                 if (e.target.id === 'pills-peta-tab') {
-                    generateMap('main-map', false);
+                    generateMap('main-map');
+                }
+            })
+        }
+
+        function onTabDetailChange() {
+            $('#pills-tab-detail').on('shown.bs.tab', function(e) {
+                if (e.target.id === 'pills-maps-tab-detail') {
+                    let id = $('#d-id').val();
+                    generateSingleMap('map-detail', id);
                 }
             })
         }
@@ -659,7 +668,7 @@
             window['s_' + id] = '';
             datatableItem();
             getPlacesData();
-        })
+        });
 
         $(document).on('click', '#addData, #editData', function() {
             let id = $(this).data('id');
@@ -702,11 +711,21 @@
         })
 
         $('#modaldetail').on('shown.bs.modal', function() {
-            console.log('asdasdas')
-            map.invalidateSize();
+            $('#pills-detail-tab').tab('show');
+            onTabDetailChange();
         });
+
+        $('#modaldetail').on('show.bs.modal', function() {
+            $('#pills-detail-tab').tab('show');
+        });
+
+        $('#modaldetail').on('hidden.bs.modal', function() {
+            removeSingleMarkerLayer();
+        });
+
         $(document).on('click', '#detailData', function() {
             let data = $(this).data('row');
+            $('#d-id').val(data.id);
             $('#d-name').html(data.name);
             $('#d-provinsi').val(data.city.province.name);
             $('#d-kota').val(data.city.name);
