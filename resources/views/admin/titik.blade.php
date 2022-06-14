@@ -289,7 +289,9 @@
                             </div>
                             <div class="my-3">
                                 <div class="d-flex">
-                                    <button type="submit" class="btn-utama" style="width: 100%; justify-content: center">Simpan</button>
+                                    <button type="submit" class="btn-utama"
+                                            style="width: 100%; justify-content: center">Simpan
+                                    </button>
                                 </div>
 
                             </div>
@@ -586,7 +588,15 @@
                 console.log(response)
                 L.geoJSON(response.payload, {
                     pointToLayer: function (geoJsonPoint, latlng) {
-                        return L.marker(latlng);
+                        let icon_url = geoJsonPoint['properties']['type'] !== null ? window.location.origin + geoJsonPoint['properties']['type']['icon'] : '';
+                        var greenIcon = L.icon({
+                            iconUrl: icon_url,
+
+                            iconSize:     [40, 40], // size of the icon
+                            iconAnchor:   [40, 40], // point of the icon which will correspond to marker's location
+                            popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+                        });
+                        return L.marker(latlng, {icon: greenIcon});
                     }
                 }).bindPopup(function (layer) {
                     return ('<div class="my-2"><strong>Place Name</strong> :<br>' + layer.feature.properties.name + '</div> <div class="my-2"><strong>Description</strong>:<br>' + layer.feature.properties.address + '</div><div class="my-2"><strong>Address</strong>:<br>' + layer.feature.properties.address + '</div>');
@@ -838,7 +848,7 @@
                         "render": function (data, type, row) {
                             return '<div class="d-flex">' +
                                 '<span class="me-2">' + data + '</span>' +
-                                '<a class="btn-sm btn-danger-soft" data-name="'+row.name+'" data-id="' + row.id + '" id="btnHistory" style="width: 10px"><i class="material-icons" style="font-size: 12px">history</i></a></div>'
+                                '<a class="btn-sm btn-danger-soft" data-name="' + row.name + '" data-id="' + row.id + '" id="btnHistory" style="width: 10px"><i class="material-icons" style="font-size: 12px">history</i></a></div>'
                         }
                     },
                     {
@@ -900,7 +910,7 @@
             $.get('/admin/history/' + id, function (data) {
                 if (data.length > 0) {
                     $.each(data, function (k, v) {
-                        let string = k === parseInt(data.length-1) ? v.user.nama+' ( create )' : v.user.nama;
+                        let string = k === parseInt(data.length - 1) ? v.user.nama + ' ( create )' : v.user.nama;
                         moment.locale('id');
 
                         tabel.append('<tr>' +
