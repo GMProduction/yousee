@@ -42,6 +42,15 @@ body {
     font-family: "Nunito";
 }
 
+.bg-primary{
+    background-color: $primary-color;
+}
+
+.bg-primary-soft{
+    background-color: $background-primary-color;
+}
+
+
 //LOGIN
 .login {
     display: flex;
@@ -408,7 +417,7 @@ input.form-control {
 .btn-utama {
     all: unset;
     transition: all 0.5s;
-    display: flex;
+    display: block;
     text-align: center;
     border: none;
     background-color: $primary-color;
@@ -418,6 +427,9 @@ input.form-control {
     // box-shadow: 1px 1px 5px $shadow-primary-color;
     cursor: pointer;
 
+    &.flex{
+        display: flex;
+    }
     &.sml {
         padding: 3px 10px;
         font-size: 0.8rem;

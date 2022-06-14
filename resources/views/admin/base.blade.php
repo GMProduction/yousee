@@ -137,9 +137,9 @@
                         </li> --}}
 
             <li class="nav-item has-submenu">
-                <a class="nav-link menu" href="#">
-                    <i class="material-icons menu-icon">sync</i>
-                    <p class="menu-text">Transaksi</p>
+                <a class="nav-link menu @if ($sidebar == 'vendor') active @endif" href="/admin/vendor">
+                    <i class="material-icons menu-icon">handshake</i>
+                    <p class="menu-text">Vendor</p>
                 </a>
             </li>
             <li class="nav-item">

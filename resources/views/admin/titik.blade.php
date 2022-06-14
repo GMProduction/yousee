@@ -1,8 +1,8 @@
 @extends('admin.base')
 @section('css')
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css"
-          integrity="sha512-hoalWLoI8r4UszCkZ5kL8vayOGVae1oxXe/2A4AO6J9+580uKHDO3JdHb7NzwwzK5xr/Fs0W40kiNHxM9vyTtQ=="
-          crossorigin=""/>
+        integrity="sha512-hoalWLoI8r4UszCkZ5kL8vayOGVae1oxXe/2A4AO6J9+580uKHDO3JdHb7NzwwzK5xr/Fs0W40kiNHxM9vyTtQ=="
+        crossorigin="" />
 
     <style>
         .select2-selection__rendered {
@@ -37,51 +37,47 @@
             <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
                 <li class="nav-item" role="presentation">
                     <button class="nav-link genostab active" id="pills-tabel-tab" data-bs-toggle="pill"
-                            data-bs-target="#pills-tabel" type="button" role="tab" aria-controls="pills-tabel"
-                            aria-selected="true">Tabel
+                        data-bs-target="#pills-tabel" type="button" role="tab" aria-controls="pills-tabel"
+                        aria-selected="true">Tabel
                     </button>
                 </li>
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link genostab" id="pills-peta-tab" data-bs-toggle="pill"
-                            data-bs-target="#pills-peta"
-                            type="button" role="tab" aria-controls="pills-peta" aria-selected="false">Maps
+                    <button class="nav-link genostab" id="pills-peta-tab" data-bs-toggle="pill" data-bs-target="#pills-peta"
+                        type="button" role="tab" aria-controls="pills-peta" aria-selected="false">Maps
                     </button>
                 </li>
 
             </ul>
             <div>
-                <a class="btn-utama sml rnd " href="#" role="button" id="dropdownprofile" data-bs-toggle="dropdown">Filter
-                    <i
-                        class="material-icons menu-icon ms-2 ">filter_list</i></a>
+                <a class="btn-utama sml rnd flex" href="#" role="button" id="dropdownprofile" data-bs-toggle="dropdown">Filter
+                    <i class="material-icons menu-icon ms-2 ">filter_list</i></a>
                 <ul id="dropSearch" class="dropdown-menu custom" aria-labelledby="dropdownprofile">
                     <div class="filter-panel">
                         <div class="form-group">
                             <label for="f-provinsi" class="form-label">Provinsi</label>
                             <select class="form-select mb-3" aria-label="Default select example" id="f-provinsi"
-                                    name="f-provinsi">
+                                name="f-provinsi">
 
                             </select>
                         </div>
 
                         <div class="form-group">
                             <label for="f-kota" class="form-label">Kota</label>
-                            <select class="form-select mb-3" aria-label="Default select example" id="f-kota"
-                                    name="f-kota">
+                            <select class="form-select mb-3" aria-label="Default select example" id="f-kota" name="f-kota">
                                 <option selected value="">Semua Kota</option>
                             </select>
                         </div>
 
                         <div class="form-group">
                             <label for="f-tipe" class="form-label">Tipe</label>
-                            <select class="form-select mb-3" aria-label="Default select example" id="f-tipe"
-                                    name="f-tipe">
+                            <select class="form-select mb-3" aria-label="Default select example" id="f-tipe" name="f-tipe">
                             </select>
                         </div>
 
                         <div class="form-group">
                             <label for="f-posisi" class="form-label">Psisi</label>
                             <select class="form-select mb-3" aria-label="Default select example" id="f-posisi"
-                                    name="f-posisi">
+                                name="f-posisi">
                                 <option selected value="">Semua Posisi</option>
                                 <option value="Horizontal">Horizontal</option>
                                 <option value="Vertical">Vertical</option>
@@ -93,13 +89,12 @@
             </div>
         </div>
         <div class="mb-2" id="pillSearch">
-            {{--             <span id="pillProvince" class="badge bg-primary " style="border-radius: 200px; align-items: center"><span id="text" class="text">asdasd</span>  <a role="button"><i class="material-icons" style="font-size: 12px">close</i></a></span>--}}
+            {{-- <span id="pillProvince" class="badge bg-primary " style="border-radius: 200px; align-items: center"><span id="text" class="text">asdasd</span>  <a role="button"><i class="material-icons" style="font-size: 12px">close</i></a></span> --}}
 
         </div>
 
         <div class="tab-content">
-            <div class="tab-pane fade show active" id="pills-tabel" role="tabpanel"
-                 aria-labelledby="pills-tabel-tab">
+            <div class="tab-pane fade show active" id="pills-tabel" role="tabpanel" aria-labelledby="pills-tabel-tab">
                 <div class="panel">
                     <div class="title">
                         <p>Titik yang baru dimasukan</p>
@@ -111,34 +106,34 @@
                         <div class="table">
                             <table id="table_id" class="table table-striped" style="width:100%">
                                 <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>Area</th>
-                                    <th>Kode</th>
-                                    <th>Alamat</th>
-                                    <th>Panjang / Tinggi</th>
-                                    <th>Lebar</th>
-                                    <th>Type</th>
-                                    <th>Posisi</th>
-                                    <th>Created By</th>
-                                    <th>Last Updated By</th>
-                                    <th>Action</th>
-                                </tr>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Area</th>
+                                        <th>Kode</th>
+                                        <th>Alamat</th>
+                                        <th>Panjang / Tinggi</th>
+                                        <th>Lebar</th>
+                                        <th>Type</th>
+                                        <th>Posisi</th>
+                                        <th>Created By</th>
+                                        <th>Last Updated By</th>
+                                        <th>Action</th>
+                                    </tr>
                                 </thead>
                                 <tfoot>
-                                <tr>
-                                    <th>#</th>
-                                    <th>Area</th>
-                                    <th>Kode</th>
-                                    <th>Alamat</th>
-                                    <th>Panjang / Tinggi</th>
-                                    <th>Lebar</th>
-                                    <th>Type</th>
-                                    <th>Posisi</th>
-                                    <th>Created By</th>
-                                    <th>Last Updated By</th>
-                                    <th>Action</th>
-                                </tr>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Area</th>
+                                        <th>Kode</th>
+                                        <th>Alamat</th>
+                                        <th>Panjang / Tinggi</th>
+                                        <th>Lebar</th>
+                                        <th>Type</th>
+                                        <th>Posisi</th>
+                                        <th>Created By</th>
+                                        <th>Last Updated By</th>
+                                        <th>Action</th>
+                                    </tr>
                                 </tfoot>
                             </table>
                         </div>
@@ -146,16 +141,15 @@
                 </div>
 
             </div>
-            <div class="tab-pane fade" id="pills-peta" role="tabpanel"
-                 aria-labelledby="pills-peta-tab">
-                {{--                @include('admin.map', ['data' => 'content'])--}}
+            <div class="tab-pane fade" id="pills-peta" role="tabpanel" aria-labelledby="pills-peta-tab">
+                {{-- @include('admin.map', ['data' => 'content']) --}}
                 <div id="main-map" style="width: 100%; height: 500px"></div>
             </div>
         </div>
 
         <!-- Modal -->
         <div class="modal fade" id="modaltambahtitik" tabindex="-1" aria-labelledby="modaltambahtitik"
-             aria-hidden="true">
+            aria-hidden="true">
             <div class="modal-dialog modal-xl">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -167,18 +161,25 @@
                             @csrf
                             <input id="id" name="id" hidden>
                             <div class="row mb-3">
-                                <div class="col-md-4 col-sm-12">
+                                <div class="col-md-3 col-sm-12">
                                     <label for="name" class="form-label">Nama</label>
                                     <input type="text" class="form-control" id="name" name="name" placeholder="Nama">
 
                                 </div>
-                                <div class="col-md-4 col-sm-12">
+
+                                <div class="col-md-3 col-sm-12">
+                                    <label for="vendor" class="form-label">Vendor</label>
+                                    <select class="form-select mb-3 w-full" style="width: 100%" id="vendor">
+                                    </select>
+                                </div>
+
+                                <div class="col-md-3 col-sm-12">
                                     <label for="province" class="form-label">Provinsi</label>
                                     <select class="form-select mb-3 w-full" style="width: 100%" id="province">
                                     </select>
                                 </div>
 
-                                <div class="col-md-4 col-sm-12">
+                                <div class="col-md-3 col-sm-12">
                                     <label for="city" class="form-label">Kota</label>
                                     <select class="form-select mb-3" style="width: 100%" id="city" name="city_id">
                                         <option>Pilih Data</option>
@@ -188,20 +189,19 @@
                             </div>
 
                             <div class="form-floating mb-3">
-                                <input type="text" class="form-control" id="address" name="address"
-                                       placeholder="Alamat">
+                                <input type="text" class="form-control" id="address" name="address" placeholder="Alamat">
                                 <label for="alamat" class="form-label">Alamat</label>
                             </div>
 
                             <div class="form-floating mb-3">
                                 <input type="text" class="form-control" id="location" name="location"
-                                       placeholder="Lokasi">
+                                    placeholder="Lokasi">
                                 <label for="location" class="form-label">Lokasi</label>
                             </div>
 
                             <div class="form-floating mb-3">
                                 <input type="text" class="form-control" id="urlstreetview" name="url"
-                                       placeholder="urlstreetview">
+                                    placeholder="urlstreetview">
                                 <label for="urlstreetview" class="form-label">URL Street View</label>
                             </div>
 
@@ -209,14 +209,14 @@
                                 <div class="col-md-6 col-sm-12">
                                     <div class="form-floating mb-3">
                                         <input type="text" class="form-control" id="latitude" name="latitude"
-                                               placeholder="latitude">
+                                            placeholder="latitude">
                                         <label for="latitude" class="form-label">Latitude</label>
                                     </div>
                                 </div>
                                 <div class="col-md-6 col-sm-12">
                                     <div class="form-floating mb-3">
                                         <input type="text" class="form-control" id="longitude" name="longitude"
-                                               placeholder="0">
+                                            placeholder="0">
                                         <label for="longitude" class="form-label">Longitude</label>
                                     </div>
                                 </div>
@@ -227,14 +227,14 @@
                                 <div class="col-md-6 col-sm-12">
                                     <label for="type" class="form-label">Tipe</label>
                                     <select class="form-select mb-3" aria-label="Default select example" id="type"
-                                            name="type_id">
+                                        name="type_id">
                                     </select>
                                 </div>
 
                                 <div class="col-md-6 col-sm-12">
                                     <label for="position" class="form-label">Posisi</label>
                                     <select class="form-select mb-3" aria-label="Default select example" id="position"
-                                            name="position">
+                                        name="position">
                                         <option selected>Pilih Posisi</option>
                                         <option value="Horizontal">Horizontal</option>
                                         <option value="Vertical">Vertical</option>
@@ -246,14 +246,14 @@
                                 <div class="col-md-6 col-sm-12">
                                     <div class="form-floating mb-3">
                                         <input class="form-control" id="height" type="number" name="height"
-                                               placeholder="0">
+                                            placeholder="0">
                                         <label for="height" class="form-label">Panjang/Tinggi</label>
                                     </div>
                                 </div>
                                 <div class="col-md-6 col-sm-12">
                                     <div class="form-floating mb-3">
                                         <input type="text" class="form-control" id="width" name="width"
-                                               placeholder="lebar">
+                                            placeholder="lebar">
                                         <label for="width" class="form-label">Lebar</label>
                                     </div>
                                 </div>
@@ -264,8 +264,8 @@
                                     <div class="mb-3">
                                         <label for="gambar1" class="form-label">Gambar 1</label>
                                         <input type="file" id="image1" name="" class="image" data-min-height="10"
-                                               data-heigh="400" accept="image/jpeg, image/jpg, image/png"
-                                               data-allowed-file-extensions="jpg jpeg png"/>
+                                            data-heigh="400" accept="image/jpeg, image/jpg, image/png"
+                                            data-allowed-file-extensions="jpg jpeg png" />
                                     </div>
                                 </div>
 
@@ -273,8 +273,8 @@
                                     <div class="mb-3">
                                         <label for="gambar2" class="form-label">Gambar 2</label>
                                         <input type="file" id="image2" name="" class="image" data-min-height="10"
-                                               data-heigh="400" accept="image/jpeg, image/jpg, image/png"
-                                               data-allowed-file-extensions="jpg jpeg png"/>
+                                            data-heigh="400" accept="image/jpeg, image/jpg, image/png"
+                                            data-allowed-file-extensions="jpg jpeg png" />
                                     </div>
                                 </div>
 
@@ -282,15 +282,15 @@
                                     <div class="mb-3">
                                         <label for="gambar3" class="form-label">Gambar 3</label>
                                         <input type="file" id="image3" name="" class="image" data-min-height="10"
-                                               data-heigh="400" accept="image/jpeg, image/jpg, image/png"
-                                               data-allowed-file-extensions="jpg jpeg png"/>
+                                            data-heigh="400" accept="image/jpeg, image/jpg, image/png"
+                                            data-allowed-file-extensions="jpg jpeg png" />
                                     </div>
                                 </div>
                             </div>
                             <div class="my-3">
                                 <div class="d-flex">
                                     <button type="submit" class="btn-utama"
-                                            style="width: 100%; justify-content: center">Simpan
+                                        style="width: 100%; justify-content: center">Simpan
                                     </button>
                                 </div>
 
@@ -315,76 +315,83 @@
                         <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
                             <li class="nav-item" role="presentation">
                                 <button class="nav-link genostab active" id="pills-detail-tab" data-bs-toggle="pill"
-                                        data-bs-target="#pills-detail" type="button" role="tab"
-                                        aria-controls="pills-detail"
-                                        aria-selected="true">Detail
+                                    data-bs-target="#pills-detail" type="button" role="tab" aria-controls="pills-detail"
+                                    aria-selected="true">Detail
                                 </button>
                             </li>
                             <li class="nav-item" role="presentation">
                                 <button class="nav-link genostab" id="pills-maps-tab" data-bs-toggle="pill"
-                                        data-bs-target="#pills-maps" type="button" role="tab" aria-controls="pills-maps"
-                                        aria-selected="false">Maps
+                                    data-bs-target="#pills-maps" type="button" role="tab" aria-controls="pills-maps"
+                                    aria-selected="false">Maps
                                 </button>
                             </li>
                             <li class="nav-item" role="presentation">
                                 <button class="nav-link genostab" id="pills-gambar1-tab" data-bs-toggle="pill"
-                                        data-bs-target="#pills-gambar1" type="button" role="tab"
-                                        aria-controls="pills-gambar1"
-                                        aria-selected="false">Gambar 1
+                                    data-bs-target="#pills-gambar1" type="button" role="tab" aria-controls="pills-gambar1"
+                                    aria-selected="false">Gambar 1
                                 </button>
                             </li>
                             <li class="nav-item" role="presentation">
                                 <button class="nav-link genostab" id="pills-gambar2-tab" data-bs-toggle="pill"
-                                        data-bs-target="#pills-gambar2" type="button" role="tab"
-                                        aria-controls="pills-gambar2"
-                                        aria-selected="false">Gambar 2
+                                    data-bs-target="#pills-gambar2" type="button" role="tab" aria-controls="pills-gambar2"
+                                    aria-selected="false">Gambar 2
                                 </button>
                             </li>
                             <li class="nav-item" role="presentation">
                                 <button class="nav-link genostab" id="pills-gambar3-tab" data-bs-toggle="pill"
-                                        data-bs-target="#pills-gambar3" type="button" role="tab"
-                                        aria-controls="pills-gambar3"
-                                        aria-selected="false">Gambar 3
+                                    data-bs-target="#pills-gambar3" type="button" role="tab" aria-controls="pills-gambar3"
+                                    aria-selected="false">Gambar 3
                                 </button>
                             </li>
                         </ul>
 
                         <div class="tab-content" id="pills-tabContent">
                             <div class="tab-pane fade show active" id="pills-detail" role="tabpanel"
-                                 aria-labelledby="pills-detail-tab">
+                                aria-labelledby="pills-detail-tab">
                                 <div class="row">
-                                    <div class="col-md-6 col-sm-6">
+
+                                    <div class="col-md-4 col-sm-12">
+                                        <div class="form-floating mb-3">
+                                            <input type="text" class="form-control" id="d-Vendor" name="d-Vendor"
+                                                disabled placeholder="Vendor">
+                                            <label for="d-Vendor" class="form-label">Vendor</label>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4 col-sm-12">
                                         <div class="form-floating mb-3">
                                             <input type="text" class="form-control" id="d-provinsi" name="d-provinsi"
-                                                   disabled placeholder="Provinsi">
+                                                disabled placeholder="Provinsi">
                                             <label for="d-provinsi" class="form-label">Provinsi</label>
                                         </div>
                                     </div>
 
-                                    <div class="col-md-6 col-sm-6">
+                                    <div class="col-md-4 col-sm-12">
                                         <div class="form-floating mb-3">
                                             <input type="text" class="form-control" id="d-kota" name="d-kota" disabled
-                                                   placeholder="Kota">
+                                                placeholder="Kota">
                                             <label for="d-kota" class="form-label">Kota</label>
                                         </div>
                                     </div>
                                 </div>
 
+
+
                                 <div class="form-floating mb-3">
                                     <input type="text" class="form-control" id="d-alamat" name="d-alamat" disabled
-                                           placeholder="alamat">
+                                        placeholder="alamat">
                                     <label for="d-alamat" class="form-label">Alamat</label>
                                 </div>
 
                                 <div class="form-floating mb-3">
                                     <input type="text" class="form-control" id="d-lokasi" name="d-lokasi" disabled
-                                           placeholder="lokasi">
+                                        placeholder="lokasi">
                                     <label for="d-lokasi" class="form-label">Lokasi</label>
                                 </div>
 
                                 <div class="form-floating mb-3">
                                     <input type="text" class="form-control" id="d-urlstreetview" name="d-urlstreetview"
-                                           disabled placeholder="urlstreetview">
+                                        disabled placeholder="urlstreetview">
                                     <label for="d-urlstreetview" class="form-label">URL Street View</label>
                                 </div>
 
@@ -392,14 +399,14 @@
                                     <div class="col-md-6 col-sm-6">
                                         <div class="form-floating mb-3">
                                             <input type="text" class="form-control" id="d-latitude" name="d-panjang"
-                                                   disabled placeholder="latitude">
+                                                disabled placeholder="latitude">
                                             <label for="d-panjang" class="form-label">Latitude</label>
                                         </div>
                                     </div>
                                     <div class="col-md-6 col-sm-6">
                                         <div class="form-floating mb-3">
                                             <input type="text" class="form-control" id="d-longitude" name="d-longitude"
-                                                   disabled placeholder="longitude">
+                                                disabled placeholder="longitude">
                                             <label for="d-longitude" class="form-label">Longitude</label>
                                         </div>
                                     </div>
@@ -410,7 +417,7 @@
                                     <div class="col-md-6 col-sm-6">
                                         <div class="form-floating mb-3">
                                             <input type="text" class="form-control" id="d-tipe" name="d-tipe" disabled
-                                                   placeholder="tipe">
+                                                placeholder="tipe">
                                             <label for="d-tipe" class="form-label">Tipe</label>
                                         </div>
                                     </div>
@@ -418,7 +425,7 @@
                                     <div class="col-md-6 col-sm-6">
                                         <div class="form-floating mb-3">
                                             <input type="text" class="form-control" id="d-posisi" name="d-posisi"
-                                                   disabled placeholder="posisi">
+                                                disabled placeholder="posisi">
                                             <label for="d-posisi" class="form-label">Posisi</label>
                                         </div>
                                     </div>
@@ -427,16 +434,15 @@
                                 <div class="row">
                                     <div class="col-md-6 col-sm-6">
                                         <div class="form-floating mb-3">
-                                            <input type="text" class="form-control" id="d-panjang" type="number"
-                                                   disabled
-                                                   name="d-panjang" placeholder="0">
+                                            <input type="text" class="form-control" id="d-panjang" type="number" disabled
+                                                name="d-panjang" placeholder="0">
                                             <label for="d-panjang" class="form-label">Panjang/Tinggi</label>
                                         </div>
                                     </div>
                                     <div class="col-md-6 col-sm-6">
                                         <div class="form-floating mb-3">
                                             <input type="text" class="form-control" id="d-lebar" name="d-lebar" disabled
-                                                   placeholder="0">
+                                                placeholder="0">
                                             <label for="d-lebar" class="form-label">Lebar</label>
                                         </div>
                                     </div>
@@ -461,30 +467,30 @@
 
                             </div>
                             <div class="tab-pane fade" id="pills-gambar1" role="tabpanel"
-                                 aria-labelledby="pills-gambar1-tab">
+                                aria-labelledby="pills-gambar1-tab">
 
                                 <div class="panel-gambar" id="showImg1">
-                                    {{--                                    <img src="https://smkperdana.sch.id/wp-content/uploads/2021/04/poster-lomba-smp.png"/>--}}
+                                    {{-- <img src="https://smkperdana.sch.id/wp-content/uploads/2021/04/poster-lomba-smp.png"/> --}}
                                 </div>
 
                             </div>
 
                             <div class="tab-pane fade" id="pills-gambar2" role="tabpanel"
-                                 aria-labelledby="pills-gambar2-tab">
+                                aria-labelledby="pills-gambar2-tab">
 
                                 <div class="panel-gambar" id="showImg2">
                                     <img
-                                        src="https://cdns.klimg.com/merdeka.com/i/w/news/2021/09/18/1354258/content_images/670x335/20210918101425-1-jagalah-kebersihan-004-jevi-nugraha.png"/>
+                                        src="https://cdns.klimg.com/merdeka.com/i/w/news/2021/09/18/1354258/content_images/670x335/20210918101425-1-jagalah-kebersihan-004-jevi-nugraha.png" />
                                 </div>
 
                             </div>
 
                             <div class="tab-pane fade" id="pills-gambar3" role="tabpanel"
-                                 aria-labelledby="pills-gambar3-tab">
+                                aria-labelledby="pills-gambar3-tab">
 
                                 <div class="panel-gambar" id="showImg3">
                                     <img
-                                        src="https://assets.pikiran-rakyat.com/crop/0x0:0x0/x/photo/2021/08/19/1012556311.jpg"/>
+                                        src="https://assets.pikiran-rakyat.com/crop/0x0:0x0/x/photo/2021/08/19/1012556311.jpg" />
                                 </div>
 
                             </div>
@@ -499,8 +505,7 @@
         </div>
 
 
-        <div class="modal fade" id="modalHistory" tabindex="-1" aria-labelledby="modaltambahtitik"
-             aria-hidden="true">
+        <div class="modal fade" id="modalHistory" tabindex="-1" aria-labelledby="modaltambahtitik" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -526,10 +531,10 @@
 @section('morejs')
     <script src="{{ asset('js/number_formater.js') }}"></script>
     <script src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js"
-            integrity="sha512-BB3hKbKWOc9Ez/TAwyWxNXeoV9c1v6FIeYiBieIWkpLjauysF18NzgR1MBNBXf8/KABdlkX68nAhlwcDFLGPCQ=="
-            crossorigin=""></script>
+        integrity="sha512-BB3hKbKWOc9Ez/TAwyWxNXeoV9c1v6FIeYiBieIWkpLjauysF18NzgR1MBNBXf8/KABdlkX68nAhlwcDFLGPCQ=="
+        crossorigin=""></script>
 
-    {{--    @include('admin.map', ['data' => 'script'])--}}
+    {{-- @include('admin.map', ['data' => 'script']) --}}
 
     <script src="{{ asset('js/map-control.js') }}"></script>
     <script>
@@ -550,11 +555,12 @@
         var s_provinsi, s_kota, s_tipe, s_posisi;
 
         var center = {
-            lat: -7.57797433093528, lng: 110.80924297710521
+            lat: -7.57797433093528,
+            lng: 110.80924297710521
         };
 
         function onTabChange() {
-            $('#pills-tab').on('shown.bs.tab', function (e) {
+            $('#pills-tab').on('shown.bs.tab', function(e) {
                 if (e.target.id === 'pills-peta-tab') {
                     generateMap('main-map', false);
                 }
@@ -586,12 +592,12 @@
             // $('#f-tipe').select2();
         });
 
-        $(document).on('change', '#province', function () {
+        $(document).on('change', '#province', function() {
             let id = $(this).val();
             getSelect('city', '/admin/province/' + id + '/city');
         });
 
-        $(document).on('change', '#f-provinsi', function (ev) {
+        $(document).on('change', '#f-provinsi', function(ev) {
             s_provinsi = $(this).val();
             if (s_provinsi === '') {
                 getSelect('f-kota', '/admin/city', 'name', null, 'Semua Kota');
@@ -603,7 +609,7 @@
             datatableItem();
             getPlacesData();
         });
-        $(document).on('change', '#f-kota', function (ev) {
+        $(document).on('change', '#f-kota', function(ev) {
             s_kota = $(this).val();
             let text = ev.currentTarget.options[ev.currentTarget.selectedIndex].text;
             pillSearch('kota', text);
@@ -611,7 +617,7 @@
             getPlacesData();
         });
 
-        $(document).on('change', '#f-tipe', function (ev) {
+        $(document).on('change', '#f-tipe', function(ev) {
             s_tipe = $(this).val();
             let text = ev.currentTarget.options[ev.currentTarget.selectedIndex].text;
             pillSearch('tipe', text);
@@ -619,7 +625,7 @@
             getPlacesData();
         });
 
-        $(document).on('change', '#f-posisi', function (ev) {
+        $(document).on('change', '#f-posisi', function(ev) {
             s_posisi = $(this).val();
             let text = ev.currentTarget.options[ev.currentTarget.selectedIndex].text;
             pillSearch('posisi', text);
@@ -635,13 +641,16 @@
             if (child) {
                 $('#pill' + a + ' #text').html(text)
             } else {
-                pill.append('<span class="badge bg-primary me-2 " id="pill' + a + '" style="border-radius: 200px; align-items: center"><span id="text">' + text + '</span>  <a role="button" id="removePill" data-id="' + a + '"><i class="material-icons" style="font-size: 12px">close</i></a></span>')
+                pill.append('<span class="badge bg-primary me-2 " id="pill' + a +
+                    '" style="border-radius: 200px; align-items: center"><span id="text">' + text +
+                    '</span>  <a role="button" id="removePill" data-id="' + a +
+                    '"><i class="material-icons" style="font-size: 12px">close</i></a></span>')
             }
             //
 
         }
 
-        $(document).on('click', '#removePill', function () {
+        $(document).on('click', '#removePill', function() {
             let id = $(this).data('id');
             let parent = document.getElementById('pillSearch');
             let child = document.getElementById('pill' + id);
@@ -652,7 +661,7 @@
             getPlacesData();
         })
 
-        $(document).on('click', '#addData, #editData', function () {
+        $(document).on('click', '#addData, #editData', function() {
             let id = $(this).data('id');
             let data = $(this).data('row');
             console.log(id);
@@ -661,7 +670,10 @@
             $('#form input[type="text"]').val('');
             $('#form input[type="number"]').val('');
             $('#form select').val('');
-            let fileImg1 = null, fileImg2 = null, fileImg3 = null, prov = null;
+            let fileImg1 = null,
+                fileImg2 = null,
+                fileImg3 = null,
+                prov = null;
             $('#city').empty();
             if (id) {
                 prov = data.city.province.id;
@@ -689,11 +701,11 @@
             $('#modaltambahtitik').modal('show');
         })
 
-        $('#modaldetail').on('shown.bs.modal', function () {
+        $('#modaldetail').on('shown.bs.modal', function() {
             console.log('asdasdas')
             map.invalidateSize();
         });
-        $(document).on('click', '#detailData', function () {
+        $(document).on('click', '#detailData', function() {
             let data = $(this).data('row');
             $('#d-name').html(data.name);
             $('#d-provinsi').val(data.city.province.name);
@@ -741,7 +753,7 @@
                     'url': url,
                     "data": formData
                 },
-                "fnRowCallback": function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+                "fnRowCallback": function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
                     // debugger;
                     var numStart = this.fnPagingInfo().iStart;
                     var index = numStart + iDisplayIndexFull + 1;
@@ -749,8 +761,7 @@
                     $("td:first", nRow).html(index);
                     return nRow;
                 },
-                columns: [
-                    {
+                columns: [{
                         "className": '',
                         "orderable": false,
                         "data": null,
@@ -790,19 +801,24 @@
                     },
                     {
                         "data": "last_update.nama",
-                        "render": function (data, type, row) {
+                        "render": function(data, type, row) {
                             return '<div class="d-flex">' +
                                 '<span class="me-2">' + data + '</span>' +
-                                '<a class="btn-sm btn-danger-soft" data-name="' + row.name + '" data-id="' + row.id + '" id="btnHistory" style="width: 10px"><i class="material-icons" style="font-size: 12px">history</i></a></div>'
+                                '<a class="btn-sm btn-danger-soft" data-name="' + row.name + '" data-id="' +
+                                row.id +
+                                '" id="btnHistory" style="width: 10px"><i class="material-icons" style="font-size: 12px">history</i></a></div>'
                         }
                     },
                     {
                         "data": "id",
-                        "render": function (data, type, row) {
+                        "render": function(data, type, row) {
                             let string = JSON.stringify(row);
-                            return "<div class='d-flex'><a class='btn-utama-soft sml rnd me-1' data-row='" + string + "'  \n" +
+                            return "<div class='d-flex'><a class='btn-utama-soft sml rnd me-1' data-row='" +
+                                string + "'  \n" +
                                 "                                                  id='detailData'> <i class='material-icons menu-icon'>map</i></a>\n" +
-                                "                                <a class='btn-success-soft sml rnd' data-id='" + data + "' data-row='" + string + "' id='editData'> <i class='material-icons menu-icon'>edit</i></a></div>";
+                                "                                <a class='btn-success-soft sml rnd' data-id='" +
+                                data + "' data-row='" + string +
+                                "' id='editData'> <i class='material-icons menu-icon'>edit</i></a></div>";
                         }
                     },
                 ]
@@ -812,7 +828,7 @@
 
         function saveItem() {
             let form = $('#form');
-            form.submit(async function (e) {
+            form.submit(async function(e) {
                 e.preventDefault(e);
                 let formData = new FormData(this);
                 console.log(formData);
@@ -836,7 +852,8 @@
                         'image3': 'image3',
                     }
                 }
-                saveDataAjaxWImage('Simpan Data', 'form', data, window.location.pathname + '/post-item', afterSave);
+                saveDataAjaxWImage('Simpan Data', 'form', data, window.location.pathname + '/post-item',
+                    afterSave);
                 return false;
             })
         }
@@ -846,22 +863,24 @@
             datatableItem();
         }
 
-        $(document).on('click', '#btnHistory', function () {
+        $(document).on('click', '#btnHistory', function() {
 
             var id = $(this).data('id');
             var name = $(this).data('name');
             let tabel = $('#bodyHistory');
             tabel.empty();
-            $.get('/admin/history/' + id, function (data) {
+            $.get('/admin/history/' + id, function(data) {
                 if (data.length > 0) {
-                    $.each(data, function (k, v) {
-                        let string = k === parseInt(data.length - 1) ? v.user.nama + ' ( create )' : v.user.nama;
+                    $.each(data, function(k, v) {
+                        let string = k === parseInt(data.length - 1) ? v.user.nama + ' ( create )' :
+                            v.user.nama;
                         moment.locale('id');
 
                         tabel.append('<tr>' +
                             '             <td>' + parseInt(k + 1) + '</td>' +
                             '             <td>' + string + '</td>' +
-                            '             <td>' + moment(v.created_at).format('LLLL') + '</td>' +
+                            '             <td>' + moment(v.created_at).format('LLLL') +
+                            '</td>' +
                             '         </tr>');
 
                     })
@@ -871,11 +890,10 @@
             $('#modalHistory #titleHistory').html(name);
             $('#modalHistory').modal('show');
         })
-
     </script>
-    @endsection
+@endsection
 
 
-    </body>
+</body>
 
-    </html>
+</html>
