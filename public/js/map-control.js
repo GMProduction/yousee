@@ -55,7 +55,7 @@ async function getPlacesData() {
 
 function generateSingleMap(element, id) {
     if (map_container_single === undefined) {
-        map_container_single = L.map(element).setView([center_indonesia['lat'], center_indonesia['lng']], 13);
+        map_container_single = L.map(element).setView([center_indonesia['lat'], center_indonesia['lng']], 16);
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             maxZoom: 19,
             attribution: '© OpenStreetMap'
@@ -68,6 +68,7 @@ function generateSingleMap(element, id) {
 async function getDetailPlace(id) {
     try {
         let response = await $.get('/cek-map/data-detail/' + id);
+        removeSingleMarkerLayer();
         createSingleMarker(response['payload'])
     } catch (e) {
         console.log(e);
@@ -81,7 +82,14 @@ function createSingleMarker(payload) {
         attribution: '© OpenStreetMap'
     }).addTo(map_container_single);
     var layerGroup = L.layerGroup();
-    let marker = L.marker(coordinate);
+    let icon_url = payload['type'] !== null ? window.location.origin + payload['type']['icon'] : '';
+    var greenIcon = L.icon({
+        iconUrl: icon_url,
+        iconSize: [40, 40], // size of the icon
+        iconAnchor: [40, 40], // point of the icon which will correspond to marker's location
+        popupAnchor: [-3, -76] // point from which the popup should open relative to the iconAnchor
+    });
+    let marker = L.marker(coordinate, {icon: greenIcon});
     marker.bindPopup(
         '<div class="my-2"><strong>Place Name</strong> :<br>' + payload.name + '</div> <div class="my-2"><strong>Description</strong>:<br>' + payload.address + '</div><div class="my-2"><strong>Address</strong>:<br>' + payload.address + '</div>');
     layerGroup.addLayer(marker)
@@ -90,7 +98,9 @@ function createSingleMarker(payload) {
 }
 
 function removeSingleMarkerLayer() {
-    map_container_single.eachLayer(function (layer) {
-        map_container_single.removeLayer(layer);
-    });
+    if(map_container_single !== undefined) {
+        map_container_single.eachLayer(function (layer) {
+            map_container_single.removeLayer(layer);
+        });
+    }
 }

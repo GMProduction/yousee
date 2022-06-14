@@ -720,7 +720,7 @@
         });
 
         $('#modaldetail').on('hidden.bs.modal', function() {
-            removeSingleMarkerLayer();
+
         });
 
         $(document).on('click', '#detailData', function() {
