@@ -22,18 +22,18 @@
                             </tr>
                         </thead>
                         <tbody>
-{{--                            <tr>--}}
-{{--                                <td>1</td>--}}
-{{--                                <td>Baliho</td>--}}
-{{--                                <td><img class="icon-table"--}}
-{{--                                        src="https://icons.iconarchive.com/icons/icons8/windows-8/128/Files-Png-icon.png" />--}}
-{{--                                </td>--}}
+                            {{-- <tr> --}}
+                            {{-- <td>1</td> --}}
+                            {{-- <td>Baliho</td> --}}
+                            {{-- <td><img class="icon-table" --}}
+                            {{-- src="https://icons.iconarchive.com/icons/icons8/windows-8/128/Files-Png-icon.png" /> --}}
+                            {{-- </td> --}}
 
-{{--                                <td class="d-flex"><a class="btn-utama-soft sml rnd me-1" data-bs-toggle="modal"--}}
-{{--                                        data-bs-target="#modaldetail"> <i class="material-icons menu-icon ">map</i></a>--}}
-{{--                                    <a class="btn-success-soft sml rnd "> <i class="material-icons menu-icon ">edit</i></a>--}}
-{{--                                </td>--}}
-{{--                            </tr>--}}
+                            {{-- <td class="d-flex"><a class="btn-utama-soft sml rnd me-1" data-bs-toggle="modal" --}}
+                            {{-- data-bs-target="#modaldetail"> <i class="material-icons menu-icon ">map</i></a> --}}
+                            {{-- <a class="btn-success-soft sml rnd "> <i class="material-icons menu-icon ">edit</i></a> --}}
+                            {{-- </td> --}}
+                            {{-- </tr> --}}
                         </tbody>
                         <tfoot>
                             <tr>
@@ -63,16 +63,16 @@
                             @csrf
                             <input id="id" name="id" hidden>
                             <div class="form-floating mb-3">
-                                <input type="text" class="form-control" id="name" name="name" required placeholder="Nama Tipe">
+                                <input type="text" class="form-control" id="name" name="name" required
+                                    placeholder="Nama Tipe">
                                 <label for="name" class="form-label">Nama Tipe</label>
                             </div>
 
                             <div class="mb-3">
                                 <label for="icontipe" class="form-label">Icon Tipe</label>
-{{--                                <input class="form-control form-control-sm" id="icontipe" type="file">--}}
+                                {{-- <input class="form-control form-control-sm" id="icontipe" type="file"> --}}
                                 <input type="file" id="icon" name="" class="image" required data-min-height="10"
-                                       accept="image/jpeg, image/jpg, image/png"
-                                       data-allowed-file-extensions="jpg jpeg png"/>
+                                    accept="image/jpeg, image/jpg, image/png" data-allowed-file-extensions="jpg jpeg png" />
                             </div>
 
                             <div class="my-3">
@@ -103,13 +103,13 @@
             saveData();
         });
 
-        $(document).on('click', '#addData, #editData', function () {
+        $(document).on('click', '#addData, #editData', function() {
             let id = $(this).data('id');
             let data = $(this).data('row');
             $('#form #name').val('');
             $('#form #id').val(id);
             let img = null;
-            if (id){
+            if (id) {
                 $('#form #name').val(data.name);
                 img = data.icon;
             }
@@ -125,7 +125,7 @@
                 processing: true,
                 serverSide: true,
                 ajax: url,
-                "fnRowCallback": function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+                "fnRowCallback": function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
                     // debugger;
                     var numStart = this.fnPagingInfo().iStart;
                     var index = numStart + iDisplayIndexFull + 1;
@@ -133,8 +133,7 @@
                     $("td:first", nRow).html(index);
                     return nRow;
                 },
-                columns: [
-                    {
+                columns: [{
                         "className": '',
                         "orderable": false,
                         "data": null,
@@ -146,18 +145,20 @@
                     },
                     {
                         "data": "icon",
-                        "render": function (data,type, row) {
+                        "render": function(data, type, row) {
                             return "<img class=\"icon-table\"\n" +
-                                "                                        src='"+data+"' />"
+                                "                                        src='" + data + "' />"
                         }
                     },
 
                     {
                         "data": "id",
-                        "render": function (data, type, row) {
+                        "render": function(data, type, row) {
                             let string = JSON.stringify(row);
                             return "<div class='d-flex'>\n" +
-                                "                                <a class='btn-success-soft sml rnd' data-id='" + data + "' data-row='" + string + "' id='editData'> <i class='material-icons menu-icon'>edit</i></a></div>";
+                                "                                <a class='btn-success-soft sml rnd' data-id='" +
+                                data + "' data-row='" + string +
+                                "' id='editData'> <i class='material-icons menu-icon'>edit</i></a></div>";
                         }
                     },
                 ]
@@ -167,7 +168,7 @@
 
         function saveData() {
             let form = $('#form');
-            form.submit(async function (e) {
+            form.submit(async function(e) {
                 e.preventDefault(e);
                 let formData = new FormData(this);
                 console.log(formData);

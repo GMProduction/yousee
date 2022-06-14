@@ -8,6 +8,7 @@ use App\Http\Controllers\MasterPelangganController;
 use App\Http\Controllers\TipeController;
 use App\Http\Controllers\TitikController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\VendorController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -45,6 +46,13 @@ Route::prefix('admin')->middleware(\App\Http\Middleware\AdminMiddleware::class)-
                 Route::get('datatable', [TipeController::class, 'datatable']);
             }
         );
+
+        Route::prefix('vendor')->group(
+            function () {
+                Route::match(['POST', 'GET'], '', [VendorController::class, 'index']);
+            }
+        );
+
         Route::prefix('titik')->group(function (){
             Route::get('', [TitikController::class, 'index']);
             Route::get('type', [\App\Http\Controllers\ItemController::class, 'getType']);
