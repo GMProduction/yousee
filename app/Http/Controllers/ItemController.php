@@ -20,24 +20,28 @@ class ItemController extends CustomController
     public function datatable()
     {
         $province = \request('province');
-        $city = \request('city');
-        $type = \request('type');
+        $city     = \request('city');
+        $type     = \request('type');
         $position = \request('position');
-        $item = Item::with('city');
-        if ($city){
+        $item     = Item::with('city');
+        if ($city) {
             $item = $item->where('city_id', $city);
         }
-        if ($province){
-            $item = $item->whereHas('city', function ($q) use ($province) {
-                return $q->where('province_id',$province);
-            });
+        if ($province) {
+            $item = $item->whereHas(
+                'city',
+                function ($q) use ($province) {
+                    return $q->where('province_id', $province);
+                }
+            );
         }
-        if ($type){
+        if ($type) {
             $item = $item->where('type_id', $type);
         }
-        if ($position){
+        if ($position) {
             $item = $item->where('position', $position);
         }
+
         return DataTables::of($item)->make(true);
     }
 
@@ -47,7 +51,7 @@ class ItemController extends CustomController
         $data = [];
         foreach ($type as $typ) {
             $param    = $typ->name;
-            $icon    = $typ->icon;
+            $icon     = $typ->icon;
             $item     = Item::whereHas(
                 'type',
                 function ($q) use ($param) {
@@ -85,6 +89,7 @@ class ItemController extends CustomController
                 'position'  => 'required',
                 'width'     => 'required',
                 'height'    => 'required',
+                'url_show'  => 'required',
             ]
         );
         $image1 = \request('image1');
@@ -114,17 +119,17 @@ class ItemController extends CustomController
             $item = Item::find(\request('id'));
             Arr::set($data, 'last_update_by', auth()->id());
 
-            if ($image1 && $item->image1){
+            if ($image1 && $item->image1) {
                 if (file_exists('../public'.$item->image1)) {
                     unlink('../public'.$item->image1);
                 }
             }
-            if ($image1 && $item->image2){
+            if ($image1 && $item->image2) {
                 if (file_exists('../public'.$item->image2)) {
                     unlink('../public'.$item->image2);
                 }
             }
-            if ($image1 && $item->image3){
+            if ($image1 && $item->image3) {
                 if (file_exists('../public'.$item->image3)) {
                     unlink('../public'.$item->image3);
                 }
@@ -144,5 +149,12 @@ class ItemController extends CustomController
             ],
             200
         );
+    }
+
+    public function getUrlStreetView($id)
+    {
+        $item = Item::findOrFail($id);
+
+        return $item->url;
     }
 }

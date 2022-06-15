@@ -34,6 +34,7 @@ Route::prefix('admin')->middleware(\App\Http\Middleware\AdminMiddleware::class)-
                 Route::get('card', [\App\Http\Controllers\ItemController::class, 'cardItem']);
                 Route::get('type', [\App\Http\Controllers\ItemController::class, 'getType']);
                 Route::post('post-item', [\App\Http\Controllers\ItemController::class, 'postItem']);
+                Route::get('url-street-view/{id}', [\App\Http\Controllers\ItemController::class, 'getUrlStreetView']);
             }
         );
         Route::get('province', [\App\Http\Controllers\ProvinceController::class, 'province']);
@@ -50,6 +51,8 @@ Route::prefix('admin')->middleware(\App\Http\Middleware\AdminMiddleware::class)-
         Route::prefix('vendor')->group(
             function () {
                 Route::match(['POST', 'GET'], '', [VendorController::class, 'index']);
+                Route::get('datatable', [\App\Http\Controllers\VendorController::class, 'datatable']);
+                Route::get('all', [\App\Http\Controllers\VendorController::class, 'getVendor']);
             }
         );
 

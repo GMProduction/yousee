@@ -25,10 +25,16 @@ class Item extends Model
         'image2',
         'image3',
         'created_by',
-        'last_update_by'
+        'last_update_by',
+        'vendor_id',
+        'url_show'
     ];
 
-    protected $with = ['type','city','createdBy','lastUpdate'];
+    protected $with = ['type','city','createdBy','lastUpdate','vendor'];
+
+//    protected $hidden = [
+//        'url',
+//    ];
 
     public function type(){
         return $this->belongsTo(type::class);
@@ -48,5 +54,9 @@ class Item extends Model
 
     public function history(){
         return $this->belongsToMany(User::class, 'histories','item_id','user_id');
+    }
+
+    public function vendor(){
+        return $this->belongsTo(Vendor::class, 'vendor_id');
     }
 }
