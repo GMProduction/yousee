@@ -116,8 +116,7 @@ $(document).on('click', '#addData, #editData',async function () {
         $('#form #location').val(data.location);
         $('#form #url_show').val(data.url_show);
         $('#form #urlstreetview').val(url);
-        $('#form #latitude').val(data.latitude);
-        $('#form #longitude').val(data.longitude);
+        $('#form #latlong').val(data.latitude+', '+data.longitude);
         $('#form #position').val(data.position);
         $('#form #type').val(data.type);
         $('#form #height').val(data.height);
@@ -162,8 +161,7 @@ $(document).on('click', '#detailData', async function () {
     $('#d-lokasi').val(data.location);
     $('#d-tipe').val(data.type?.name);
     $('#d-urlstreetview').val(url);
-    $('#d-opengmap').val(data.url_show);
-    $('#d-latitude').val(data.latitude);
+    $('#d-latlong').val(data.latitude);
     $('#d-longitude').val(data.longitude);
     $('#d-posisi').val(data.position);
     $('#d-panjang').val(data.height);

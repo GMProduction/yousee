@@ -78,23 +78,27 @@ class ItemController extends CustomController
     {
         $data   = \request()->validate(
             [
-                'name'      => 'required',
-                'address'   => 'required',
-                'latitude'  => 'required',
-                'longitude' => 'required',
-                'city_id'   => 'required',
-                'location'  => 'required',
-                'url'       => 'required',
-                'type_id'   => 'required',
-                'position'  => 'required',
-                'width'     => 'required',
-                'height'    => 'required',
-                'url_show'  => 'required',
+                'name'     => 'required',
+                'address'  => 'required',
+                'latlong'  => 'required',
+                'city_id'  => 'required',
+                'location' => 'required',
+                'url'      => 'required',
+                'type_id'  => 'required',
+                'position' => 'required',
+                'width'    => 'required',
+                'height'   => 'required',
             ]
         );
         $image1 = \request('image1');
         $image2 = \request('image2');
         $image3 = \request('image3');
+
+        $latlong = $data['latlong'];
+        $str_arr = preg_split ("/\,/", str_replace(' ','',$latlong));
+
+        Arr::set($data, 'latitude', $str_arr[0]);
+        Arr::set($data, 'longitude', $str_arr[1]);
 
         if ($image1) {
             $image     = $this->generateImageName('image1');
