@@ -1,5 +1,9 @@
 @extends('admin.base')
 
+@section('title')
+    Beranda
+@endsection
+
 @section('css')
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css"
         integrity="sha512-hoalWLoI8r4UszCkZ5kL8vayOGVae1oxXe/2A4AO6J9+580uKHDO3JdHb7NzwwzK5xr/Fs0W40kiNHxM9vyTtQ=="
@@ -36,8 +40,8 @@
     <div class="panel">
         <div class="title">
             <p>Titik yang baru dimasukan</p>
-            <a class="btn-utama-soft sml rnd " id="addData">Titik Baru <i
-                    class="material-icons menu-icon ms-2" data-toggle="modal" data-bs-backdrop="static" >add_circle</i></a>
+            <a class="btn-utama-soft sml rnd " id="addData">Titik Baru <i class="material-icons menu-icon ms-2"
+                    data-toggle="modal" data-bs-backdrop="static">add_circle</i></a>
         </div>
 
         @include('admin.item-table')
@@ -104,6 +108,6 @@
             })
         }
 
-        // $('#modaltambahtitik').modal({backdrop: 'static', keyboard: false})  
+        // $('#modaltambahtitik').modal({backdrop: 'static', keyboard: false})
     </script>
 @endsection
