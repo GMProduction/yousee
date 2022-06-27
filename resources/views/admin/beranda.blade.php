@@ -1,10 +1,9 @@
 @extends('admin.base')
 
 @section('css')
-
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css"
-          integrity="sha512-hoalWLoI8r4UszCkZ5kL8vayOGVae1oxXe/2A4AO6J9+580uKHDO3JdHb7NzwwzK5xr/Fs0W40kiNHxM9vyTtQ=="
-          crossorigin=""/>
+        integrity="sha512-hoalWLoI8r4UszCkZ5kL8vayOGVae1oxXe/2A4AO6J9+580uKHDO3JdHb7NzwwzK5xr/Fs0W40kiNHxM9vyTtQ=="
+        crossorigin="" />
 
     <style>
         .select2-selection__rendered {
@@ -32,30 +31,29 @@
             </div>
 
         </div>
+    </div>
 
-        <div class="panel">
-            <div class="title">
-                <p>Titik yang baru dimasukan</p>
-                <a class="btn-utama-soft sml rnd " id="addData">Titik Baru <i
-                        class="material-icons menu-icon ms-2">add_circle</i></a>
-            </div>
-
-            @include('admin.item-table')
-
-
+    <div class="panel">
+        <div class="title">
+            <p>Titik yang baru dimasukan</p>
+            <a class="btn-utama-soft sml rnd " id="addData">Titik Baru <i
+                    class="material-icons menu-icon ms-2" data-toggle="modal" data-bs-backdrop="static" >add_circle</i></a>
         </div>
 
-        <!-- Modal -->
-        @include('admin.item-modal')
+        @include('admin.item-table')
+
 
     </div>
+
+    <!-- Modal -->
+    @include('admin.item-modal')
 @endsection
 
 @section('morejs')
     <script src="{{ asset('js/number_formater.js') }}"></script>
     <script src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js"
-            integrity="sha512-BB3hKbKWOc9Ez/TAwyWxNXeoV9c1v6FIeYiBieIWkpLjauysF18NzgR1MBNBXf8/KABdlkX68nAhlwcDFLGPCQ=="
-            crossorigin=""></script>
+        integrity="sha512-BB3hKbKWOc9Ez/TAwyWxNXeoV9c1v6FIeYiBieIWkpLjauysF18NzgR1MBNBXf8/KABdlkX68nAhlwcDFLGPCQ=="
+        crossorigin=""></script>
 
     {{-- @include('admin.map', ['data' => 'script']) --}}
 
@@ -92,7 +90,7 @@
                     $.each(data, function(k, v) {
                         let img = v.icon;
                         card.append('<div class="col-4 my-2 ">\n' +
-                            '                        <div class="panel-peformace p-2 rounded shadow">\n' +
+                            '                        <div class="panel-peformace p-2">\n' +
                             '                            <img src="' + img + '"/>\n' +
                             '                            <div class="content">\n' +
                             '                                <p class="nama">' + v.name + '</p>\n' +
@@ -106,6 +104,6 @@
             })
         }
 
-
+        // $('#modaltambahtitik').modal({backdrop: 'static', keyboard: false})  
     </script>
 @endsection
