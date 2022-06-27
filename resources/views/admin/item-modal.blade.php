@@ -49,11 +49,6 @@
                         <label for="location" class="form-label">Lokasi</label>
                     </div>
 
-                    <div class="form-floating mb-3">
-                        <input type="text" class="form-control" id="url_show" name="url_show"
-                               placeholder="url open gmap">
-                        <label for="urlstreetview" class="form-label">URL Open Gmap</label>
-                    </div>
 
                     <div class="form-floating mb-3">
                         <input type="text" class="form-control" id="urlstreetview" name="url"
@@ -62,18 +57,11 @@
                     </div>
 
                     <div class="row mb-3">
-                        <div class="col-md-6 col-sm-12">
+                        <div class="col-sm-12">
                             <div class="form-floating mb-3">
-                                <input type="text" class="form-control" id="latitude" name="latitude"
-                                       placeholder="latitude">
-                                <label for="latitude" class="form-label">Latitude</label>
-                            </div>
-                        </div>
-                        <div class="col-md-6 col-sm-12">
-                            <div class="form-floating mb-3">
-                                <input type="text" class="form-control" id="longitude" name="longitude"
-                                       placeholder="0">
-                                <label for="longitude" class="form-label">Longitude</label>
+                                <input type="text" class="form-control" id="latlong" name="latlong"
+                                       placeholder="latitude dan longtitude">
+                                <label for="latitude" class="form-label">Latitude & Longtitude</label>
                             </div>
                         </div>
                     </div>
@@ -245,31 +233,17 @@
                         </div>
 
                         <div class="form-floating mb-3">
-                            <input type="text" class="form-control" id="d-opengmap" name="d-opengmap"
-                                   disabled placeholder="url open gmap">
-                            <label for="d-urlstreetview" class="form-label">URL Open Gmap</label>
-                        </div>
-
-
-                        <div class="form-floating mb-3">
                             <input type="text" class="form-control" id="d-urlstreetview" name="d-urlstreetview"
                                    disabled placeholder="urlstreetview">
                             <label for="d-urlstreetview" class="form-label">URL Street View</label>
                         </div>
 
                         <div class="row">
-                            <div class="col-md-6 col-sm-6">
+                            <div class="col-sm-12">
                                 <div class="form-floating mb-3">
-                                    <input type="text" class="form-control" id="d-latitude" name="d-panjang"
-                                           disabled placeholder="latitude">
-                                    <label for="d-panjang" class="form-label">Latitude</label>
-                                </div>
-                            </div>
-                            <div class="col-md-6 col-sm-6">
-                                <div class="form-floating mb-3">
-                                    <input type="text" class="form-control" id="d-longitude" name="d-longitude"
-                                           disabled placeholder="longitude">
-                                    <label for="d-longitude" class="form-label">Longitude</label>
+                                    <input type="text" class="form-control" id="d-latlong" name="d-panjang"
+                                           disabled placeholder="latlong">
+                                    <label for="d-panjang" class="form-label">Latitude & Longtitude</label>
                                 </div>
                             </div>
                         </div>
@@ -313,8 +287,7 @@
                     <div class="tab-pane fade" id="pills-maps" role="tabpanel" aria-labelledby="pills-maps-tab">
                         <div class="panel-peta mb-3" id="map-detail">
                             Tampil Peta
-                            <a class="btn-link-maps sml rnd ">Buka di Google Maps <i
-                                    class="material-icons menu-icon ms-2">arrow_outward</i></a>
+
                         </div>
 
                         <div class="panel-streetview" style="display: flex;justify-content: center;width: 100%;">
@@ -324,8 +297,7 @@
                             <div class="gmap_canvas" id="panel-street" style="align-items: center;display: flex;flex: 1;">
 
                             </div>
-                            <a class="btn-link-maps sml rnd " id="openTapGmap" target="_blank">Buka di Google Maps <i
-                                    class="material-icons menu-icon ms-2">arrow_outward</i></a>
+
                         </div>
 
                     </div>
@@ -333,7 +305,6 @@
                          aria-labelledby="pills-gambar1-tab">
 
                         <div class="panel-gambar" id="showImg1">
-                            {{-- <img src="https://smkperdana.sch.id/wp-content/uploads/2021/04/poster-lomba-smp.png"/> --}}
                         </div>
 
                     </div>
@@ -342,8 +313,6 @@
                          aria-labelledby="pills-gambar2-tab">
 
                         <div class="panel-gambar" id="showImg2">
-                            <img
-                                src="https://cdns.klimg.com/merdeka.com/i/w/news/2021/09/18/1354258/content_images/670x335/20210918101425-1-jagalah-kebersihan-004-jevi-nugraha.png"/>
                         </div>
 
                     </div>
@@ -352,8 +321,6 @@
                          aria-labelledby="pills-gambar3-tab">
 
                         <div class="panel-gambar" id="showImg3">
-                            <img
-                                src="https://assets.pikiran-rakyat.com/crop/0x0:0x0/x/photo/2021/08/19/1012556311.jpg"/>
                         </div>
 
                     </div>

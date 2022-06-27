@@ -128,24 +128,17 @@ $(document).on("click", "#addData, #editData", async function () {
 
         prov = data.city.province.id;
         vendor = data.vendor?.id;
-        $("#form #name").val(data.name);
-        $("#form #address").val(data.address);
-        $("#form #location").val(data.location);
-        $("#form #url_show").val(data.url_show);
-        $("#form #urlstreetview").val(url);
-        $("#form #latitude").val(data.latitude);
-        $("#form #longitude").val(data.longitude);
-        $("#form #position").val(data.position);
-        $("#form #type").val(data.type);
-        $("#form #height").val(data.height);
-        $("#form #width").val(data.width);
-        getSelect(
-            "city",
-            "/admin/province/" + data.city.province.id + "/city",
-            "name",
-            data.city.id,
-            "Pilih Kota"
-        );
+        $('#form #name').val(data.name);
+        $('#form #address').val(data.address);
+        $('#form #location').val(data.location);
+        $('#form #url_show').val(data.url_show);
+        $('#form #urlstreetview').val(url);
+        $('#form #latlong').val(data.latitude+', '+data.longitude);
+        $('#form #position').val(data.position);
+        $('#form #type').val(data.type);
+        $('#form #height').val(data.height);
+        $('#form #width').val(data.width);
+        getSelect('city', '/admin/province/' + data.city.province.id + '/city', 'name', data.city.id);
 
         fileImg1 = data.image1;
         fileImg2 = data.image2;
@@ -157,7 +150,7 @@ $(document).on("click", "#addData, #editData", async function () {
     setImgDropify("image1", null, fileImg1);
     setImgDropify("image2", null, fileImg2);
     setImgDropify("image3", null, fileImg3);
-    $('#modaltambahtitik').modal({backdrop: 'static', keyboard: false}) 
+    $('#modaltambahtitik').modal({backdrop: 'static', keyboard: false})
     $("#modaltambahtitik").modal("show");
 });
 
@@ -176,25 +169,24 @@ $(document).on("click", "#detailData", async function () {
     let data = $(this).data("row");
     let url = await getUrl(data.id);
 
-    $("#d-id").val(data.id);
-    $("#d-name").html(data.name);
-    $("#d-provinsi").val(data.city?.province?.name);
-    $("#d-kota").val(data.city?.name);
-    $("#d-alamat").val(data.address);
-    $("#d-lokasi").val(data.location);
-    $("#d-tipe").val(data.type?.name);
-    $("#d-urlstreetview").val(url);
-    $("#d-opengmap").val(data.url_show);
-    $("#d-latitude").val(data.latitude);
-    $("#d-longitude").val(data.longitude);
-    $("#d-posisi").val(data.position);
-    $("#d-panjang").val(data.height);
-    $("#d-lebar").val(data.width);
-    $("#d-Vendor").val(data.vendor?.name);
-    $("#openTapGmap").removeAttr("href").attr("href", data.url_show);
-    $("#showImg1").empty();
-    $("#showImg2").empty();
-    $("#showImg3").empty();
+    $('#d-id').val(data.id);
+    $('#d-name').html(data.name);
+    $('#d-provinsi').val(data.city?.province?.name);
+    $('#d-kota').val(data.city?.name);
+    $('#d-alamat').val(data.address);
+    $('#d-lokasi').val(data.location);
+    $('#d-tipe').val(data.type?.name);
+    $('#d-urlstreetview').val(url);
+    $('#d-latlong').val(data.latitude);
+    $('#d-longitude').val(data.longitude);
+    $('#d-posisi').val(data.position);
+    $('#d-panjang').val(data.height);
+    $('#d-lebar').val(data.width);
+    $('#d-Vendor').val(data.vendor?.name);
+    $('#openTapGmap').removeAttr('href').attr('href', data.url_show);
+    $('#showImg1').empty();
+    $('#showImg2').empty();
+    $('#showImg3').empty();
     if (data.image1) {
         $("#showImg1").html('<img src="' + data.image1 + '"  alt=""/>');
     }

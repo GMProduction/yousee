@@ -27,7 +27,6 @@ class Item extends Model
         'created_by',
         'last_update_by',
         'vendor_id',
-        'url_show'
     ];
 
     protected $with = ['type','city','createdBy','lastUpdate','vendor'];
