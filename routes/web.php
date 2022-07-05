@@ -24,6 +24,12 @@ use Illuminate\Support\Facades\Route;
 
 Route::match(['POST', 'GET'], '/', [LoginController::class, 'index'])->middleware('guest');
 
+Route::prefix('pimpinan')->middleware(\App\Http\Middleware\PimpinanMiddleware::class)->group(
+    function (){
+        Route::get('', [\App\Http\Controllers\PimpinanController::class, 'index']);
+    }
+);
+
 Route::prefix('admin')->middleware(\App\Http\Middleware\AdminMiddleware::class)->group(
     function () {
         Route::get('', [BerandaController::class, 'index']);

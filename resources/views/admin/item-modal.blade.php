@@ -303,7 +303,7 @@
                     </div>
                     <div class="tab-pane fade" id="pills-gambar1" role="tabpanel"
                          aria-labelledby="pills-gambar1-tab">
-
+                        <a class="btn-success-soft sml rnd" id="downlodShowImg1" ><i class="material-icons menu-icon">download</i>Download</a>
                         <div class="panel-gambar" id="showImg1">
                         </div>
 
@@ -311,6 +311,7 @@
 
                     <div class="tab-pane fade" id="pills-gambar2" role="tabpanel"
                          aria-labelledby="pills-gambar2-tab">
+                        <a class="btn-success-soft sml rnd" id="downlodShowImg2" ><i class="material-icons menu-icon">download</i>Download</a>
 
                         <div class="panel-gambar" id="showImg2">
                         </div>
@@ -319,6 +320,7 @@
 
                     <div class="tab-pane fade" id="pills-gambar3" role="tabpanel"
                          aria-labelledby="pills-gambar3-tab">
+                        <a class="btn-success-soft sml rnd" id="downlodShowImg3" ><i class="material-icons menu-icon">download</i>Download</a>
 
                         <div class="panel-gambar" id="showImg3">
                         </div>

@@ -161,8 +161,7 @@ $(document).on('click', '#detailData', async function () {
     $('#d-lokasi').val(data.location);
     $('#d-tipe').val(data.type?.name);
     $('#d-urlstreetview').val(url);
-    $('#d-latlong').val(data.latitude);
-    $('#d-longitude').val(data.longitude);
+    $('#d-latlong').val(data.latitude+', '+data.longitude);
     $('#d-posisi').val(data.position);
     $('#d-panjang').val(data.height);
     $('#d-lebar').val(data.width);
@@ -171,14 +170,20 @@ $(document).on('click', '#detailData', async function () {
     $('#showImg1').empty();
     $('#showImg2').empty();
     $('#showImg3').empty();
+    $('#downlodShowImg1').removeAttr('href').removeAttr('download');
+    $('#downlodShowImg2').removeAttr('href').removeAttr('download');
+    $('#downlodShowImg2').removeAttr('href').removeAttr('download');
     if (data.image1) {
         $('#showImg1').html('<img src="' + data.image1 + '"  alt=""/>')
+        $('#downlodShowImg1').attr('href',data.image1 ).attr('download','image1')
     }
     if (data.image2) {
         $('#showImg2').html('<img src="' + data.image2 + '"  alt=""/>')
+        $('#downlodShowImg2').attr('href',data.image2 ).attr('download','image2')
     }
     if (data.image3) {
         $('#showImg3').html('<img src="' + data.image3 + '"  alt=""/>')
+        $('#downlodShowImg3').attr('href',data.image3 ).attr('download','image3')
     }
     showStreetView(url);
     $('#modaldetail').modal('show')

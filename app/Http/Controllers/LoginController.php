@@ -25,7 +25,8 @@ class LoginController extends CustomController
 //                return redirect('/admin');
 //            }
             if ($this->isAuth($field)) {
-                $redirect = '/admin';
+                $role = \auth()->user()->role;
+                $redirect = "/$role";
 
 //            return response()->json();
 

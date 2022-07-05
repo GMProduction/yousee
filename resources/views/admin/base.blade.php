@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Skripsi || Admin</title>
+    <title>Yousee || {{auth()->user()->role}}</title>
 
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
@@ -35,7 +35,7 @@
         </a>
 
         <p class="title">
-            Nama Perusahaan
+            Yousee
         </p>
     </div>
 
@@ -50,7 +50,7 @@
         </a>
 
         <ul class="dropdown-menu custom" aria-labelledby="dropdownprofile">
-            <li><a class="dropdown-item disabled" href="#">pradanamahendra@gmail.com</a></li>
+            <li><a class="dropdown-item disabled" href="#">{{auth()->user()->nama}}</a></li>
             <hr>
             {{-- <li><a class="dropdown-item" href="#">Another action</a></li> --}}
             <li><a class="dropdown-item text-danger" href="/logout">Logout</a></li>

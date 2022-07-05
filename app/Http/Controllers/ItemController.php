@@ -88,6 +88,7 @@ class ItemController extends CustomController
                 'position' => 'required',
                 'width'    => 'required',
                 'height'   => 'required',
+                'vendor_id' => 'required'
             ]
         );
         $image1 = \request('image1');
