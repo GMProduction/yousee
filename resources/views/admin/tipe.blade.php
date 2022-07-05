@@ -1,5 +1,9 @@
 @extends('admin.base')
 
+@section('title')
+    Tipe Iklan
+@endsection
+
 @section('content')
     <div>
 

@@ -24,8 +24,6 @@ function createMarker(geoJsonPayload) {
             var greenIcon = L.icon({
                 iconUrl: icon_url,
                 iconSize: [40, 40], // size of the icon
-                iconAnchor: [40, 40], // point of the icon which will correspond to marker's location
-                popupAnchor: [-3, -76] // point from which the popup should open relative to the iconAnchor
             });
             return L.marker(latlng, {icon: greenIcon});
         }
@@ -86,8 +84,6 @@ function createSingleMarker(payload) {
     var greenIcon = L.icon({
         iconUrl: icon_url,
         iconSize: [40, 40], // size of the icon
-        iconAnchor: [40, 40], // point of the icon which will correspond to marker's location
-        popupAnchor: [-3, -76] // point from which the popup should open relative to the iconAnchor
     });
     let marker = L.marker(coordinate, {icon: greenIcon});
     marker.bindPopup(

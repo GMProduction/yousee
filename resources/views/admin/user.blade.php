@@ -1,5 +1,9 @@
 @extends('admin.base')
 
+@section('title')
+    User
+@endsection
+
 @section('content')
     <div>
 
