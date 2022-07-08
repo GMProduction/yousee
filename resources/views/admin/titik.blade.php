@@ -33,8 +33,26 @@
             width: 100%
         }
 
+        #main-map {
+            height: 500px;
+            width: 100%
+        }
+
+        #single-map-container {
+            height: 350px;
+            width: 50%
+        }
+
+        .marker-position {
+            top: -25px;
+            left: 0;
+            position: relative;
+            color: aqua;
+            font-weight: bold;
+        }
 
     </style>
+    <script src="{{ asset('js/map-control.js') }}"></script>
 @endsection
 @section('content')
     <div>
@@ -48,7 +66,8 @@
                     </button>
                 </li>
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link genostab" id="pills-peta-tab" data-bs-toggle="pill" data-bs-target="#pills-peta"
+                    <button class="nav-link genostab" id="pills-peta-tab" data-bs-toggle="pill"
+                            data-bs-target="#pills-peta"
                             type="button" role="tab" aria-controls="pills-peta" aria-selected="false">Maps
                     </button>
                 </li>
@@ -69,14 +88,16 @@
 
                         <div class="form-group">
                             <label for="f-kota" class="form-label">Kota</label>
-                            <select class="form-select mb-3" aria-label="Default select example" id="f-kota" name="f-kota">
+                            <select class="form-select mb-3" aria-label="Default select example" id="f-kota"
+                                    name="f-kota">
                                 <option selected value="">Semua Kota</option>
                             </select>
                         </div>
 
                         <div class="form-group">
                             <label for="f-tipe" class="form-label">Tipe</label>
-                            <select class="form-select mb-3" aria-label="Default select example" id="f-tipe" name="f-tipe">
+                            <select class="form-select mb-3" aria-label="Default select example" id="f-tipe"
+                                    name="f-tipe">
                             </select>
                         </div>
 
@@ -119,39 +140,32 @@
         </div>
 
         <!-- Modal -->
-         @include('admin.item-modal')
+        @include('admin.item-modal')
 
     </div>
 @endsection
 
 @section('morejs')
+    <script
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA1MgLuZuyqR_OGY3ob3M52N46TDBRI_9k&callback=initMap&v=weekly"
+        async
+    ></script>
     <script src="{{ asset('js/number_formater.js') }}"></script>
-    <script src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js"
-            integrity="sha512-BB3hKbKWOc9Ez/TAwyWxNXeoV9c1v6FIeYiBieIWkpLjauysF18NzgR1MBNBXf8/KABdlkX68nAhlwcDFLGPCQ=="
-            crossorigin=""></script>
+    {{--    <script src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js"--}}
+    {{--            integrity="sha512-BB3hKbKWOc9Ez/TAwyWxNXeoV9c1v6FIeYiBieIWkpLjauysF18NzgR1MBNBXf8/KABdlkX68nAhlwcDFLGPCQ=="--}}
+    {{--            crossorigin=""></script>--}}
 
     {{-- @include('admin.map', ['data' => 'script']) --}}
 
-    <script src="{{ asset('js/map-control.js') }}"></script>
+    {{--    <script src="{{ asset('js/map-control.js') }}"></script>--}}
     <script src="{{ asset('js/item.js') }}"></script>
     <script>
-        // var map = L.map('map').setView([48.86, 2.35], 11);
-        //
-        // L.marker([48.86, 2.35]).addTo(map);
-        //
-        // L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        //     attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-        // }).addTo(map);
-        //
-        // // Comment out the below code to see the difference.
-        // $('#myModal').on('shown.bs.modal', function() {
-        //     map.invalidateSize();
-        // });
-
-
-
         $(document).ready(function () {
+            // generateGoogleMapData().then(r => {})
             onTabChange();
+            $("#simple-modal-detail").on("shown.bs.modal", function () {
+                generateSingleGoogleMapData(1);
+            });
             datatableItem();
             getSelect('f-provinsi', '/admin/province', 'name', null, 'Semua Provinsi');
             getSelect('type', window.location.pathname + '/type')

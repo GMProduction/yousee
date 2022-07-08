@@ -4,99 +4,188 @@ var center_indonesia = {
     lat: -0.4029326, lng: 110.5938779
 };
 
-function generateMap(element) {
-    if (map_container === undefined) {
-        map_container = L.map(element).setView([center_indonesia['lat'], center_indonesia['lng']], 5);
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            maxZoom: 19,
-            attribution: '© OpenStreetMap'
-        }).addTo(map_container);
-    }
-    getPlacesData().then(r => {
+// function generateMap(element) {
+//     if (map_container === undefined) {
+//         map_container = L.map(element).setView([center_indonesia['lat'], center_indonesia['lng']], 5);
+//         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+//             maxZoom: 19,
+//             attribution: '© OpenStreetMap'
+//         }).addTo(map_container);
+//     }
+//     getPlacesData().then(r => {
+//     });
+// }
+//
+//
+// function createMarker(geoJsonPayload) {
+//     L.geoJSON(geoJsonPayload, {
+//         pointToLayer: function (geoJsonPoint, latlng) {
+//             let icon_url = geoJsonPoint['properties']['type'] !== null ? window.location.origin + geoJsonPoint['properties']['type']['icon'] : '';
+//             var greenIcon = L.icon({
+//                 iconUrl: icon_url,
+//                 iconSize: [40, 40], // size of the icon
+//             });
+//             return L.marker(latlng, {icon: greenIcon});
+//         }
+//     }).bindPopup(function (layer) {
+//         return ('<div class="my-2"><strong>Place Name</strong> :<br>' + layer.feature.properties.name + '</div> <div class="my-2"><strong>Description</strong>:<br>' + layer.feature.properties.address + '</div><div class="my-2"><strong>Address</strong>:<br>' + layer.feature.properties.address + '</div>');
+//     }).addTo(map_container);
+// }
+//
+// async function getPlacesData() {
+//     try {
+//         let response = await $.get('/cek-map/data?province=' + s_provinsi + '&city=' + s_kota + '&type=' + s_tipe + '&position=' + s_posisi);
+//         let geoJSONPayload = response['payload'];
+//         createMarker(geoJSONPayload);
+//         let tmp_bound = [];
+//         let features_data = response['payload']['features'];
+//         $.each(features_data, function (k, v) {
+//             tmp_bound.push([
+//                 v['properties']['latitude'],
+//                 v['properties']['longitude'],
+//             ]);
+//         });
+//         map_container.fitBounds(tmp_bound);
+//     } catch (e) {
+//         console.log(e);
+//     }
+// }
+//
+// function generateSingleMap(element, id) {
+//     if (map_container_single === undefined) {
+//         map_container_single = L.map(element).setView([center_indonesia['lat'], center_indonesia['lng']], 16);
+//         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+//             maxZoom: 19,
+//             attribution: '© OpenStreetMap'
+//         }).addTo(map_container_single);
+//     }
+//     getDetailPlace(id).then(r => {
+//     })
+// }
+//
+// async function getDetailPlace(id) {
+//     try {
+//         let response = await $.get('/cek-map/data-detail/' + id);
+//         removeSingleMarkerLayer();
+//         createSingleMarker(response['payload'])
+//     } catch (e) {
+//         console.log(e);
+//     }
+// }
+//
+// function createSingleMarker(payload) {
+//     let coordinate = [payload['latitude'], payload['longitude']];
+//     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+//         maxZoom: 19,
+//         attribution: '© OpenStreetMap'
+//     }).addTo(map_container_single);
+//     var layerGroup = L.layerGroup();
+//     let icon_url = payload['type'] !== null ? window.location.origin + payload['type']['icon'] : '';
+//     var greenIcon = L.icon({
+//         iconUrl: icon_url,
+//         iconSize: [40, 40], // size of the icon
+//     });
+//     let marker = L.marker(coordinate, {icon: greenIcon});
+//     marker.bindPopup(
+//         '<div class="my-2"><strong>Place Name</strong> :<br>' + payload.name + '</div> <div class="my-2"><strong>Description</strong>:<br>' + payload.address + '</div><div class="my-2"><strong>Address</strong>:<br>' + payload.address + '</div>');
+//     layerGroup.addLayer(marker)
+//     map_container_single.addLayer(layerGroup);
+//     map_container_single.panTo(new L.LatLng(payload['latitude'], payload['longitude']));
+// }
+//
+// function removeSingleMarkerLayer() {
+//     if(map_container_single !== undefined) {
+//         map_container_single.eachLayer(function (layer) {
+//             map_container_single.removeLayer(layer);
+//         });
+//     }
+// }
+
+function initMap() {
+    const myLatLng = {lat: -7.5589494045543475, lng: 110.85658809673708};
+    map_container = new google.maps.Map(document.getElementById("main-map"), {
+        zoom: 14,
+        center: myLatLng,
     });
 }
 
+async function generateGoogleMapData() {
+    try {
+        let response = await $.get('/map/data?province=' + s_provinsi + '&city=' + s_kota + '&type=' + s_tipe + '&position=' + s_posisi);
+        let payload = response['payload'];
+        createGoogleMapMarker(payload);
+    } catch (e) {
+        console.log(e);
+    }
+}
 
-function createMarker(geoJsonPayload) {
-    L.geoJSON(geoJsonPayload, {
-        pointToLayer: function (geoJsonPoint, latlng) {
-            let icon_url = geoJsonPoint['properties']['type'] !== null ? window.location.origin + geoJsonPoint['properties']['type']['icon'] : '';
-            var greenIcon = L.icon({
-                iconUrl: icon_url,
-                iconSize: [40, 40], // size of the icon
+async function generateSingleGoogleMapData(id) {
+    try {
+        let response = await $.get('/map/data/'+id);
+        let payload = response['payload'];
+        console.log(payload)
+        const location = {lat: payload['latitude'], lng: payload['longitude']};
+        map_container_single = new google.maps.Map(document.getElementById("single-map-container"), {
+            zoom: 14,
+            center: location,
+        });
+        // createGoogleMapMarker(payload);
+    } catch (e) {
+        console.log(e);
+    }
+    // const myLatLng = {lat: -7.5589494045543475, lng: 110.85658809673708};
+
+}
+
+function createGoogleMapMarker(payload = []) {
+    var bounds = new google.maps.LatLngBounds();
+    payload.forEach(function (v, k) {
+        var marker = new google.maps.Marker({
+            position: new google.maps.LatLng(v['latitude'], v['longitude']),
+            map: map_container,
+            icon: v['type']['icon'],
+            title: v['name'],
+            // label: {
+            //     text: v['name'],
+            //     className: 'marker-position',
+            //     color: "#377D71"
+            // }
+        });
+        let infowindow = new google.maps.InfoWindow({
+            content: windowContent(v, k),
+        });
+
+        marker.addListener('click', function () {
+            infowindow.open({
+                anchor: marker,
+                map_container,
+                shouldFocus: false,
             });
-            return L.marker(latlng, {icon: greenIcon});
-        }
-    }).bindPopup(function (layer) {
-        return ('<div class="my-2"><strong>Place Name</strong> :<br>' + layer.feature.properties.name + '</div> <div class="my-2"><strong>Description</strong>:<br>' + layer.feature.properties.address + '</div><div class="my-2"><strong>Address</strong>:<br>' + layer.feature.properties.address + '</div>');
-    }).addTo(map_container);
-}
 
-async function getPlacesData() {
-    try {
-        let response = await $.get('/cek-map/data?province=' + s_provinsi + '&city=' + s_kota + '&type=' + s_tipe + '&position=' + s_posisi);
-        let geoJSONPayload = response['payload'];
-        createMarker(geoJSONPayload);
-        let tmp_bound = [];
-        let features_data = response['payload']['features'];
-        $.each(features_data, function (k, v) {
-            tmp_bound.push([
-                v['properties']['latitude'],
-                v['properties']['longitude'],
-            ]);
         });
-        map_container.fitBounds(tmp_bound);
-    } catch (e) {
-        console.log(e);
-    }
-}
-
-function generateSingleMap(element, id) {
-    if (map_container_single === undefined) {
-        map_container_single = L.map(element).setView([center_indonesia['lat'], center_indonesia['lng']], 16);
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            maxZoom: 19,
-            attribution: '© OpenStreetMap'
-        }).addTo(map_container_single);
-    }
-    getDetailPlace(id).then(r => {
-    })
-}
-
-async function getDetailPlace(id) {
-    try {
-        let response = await $.get('/cek-map/data-detail/' + id);
-        removeSingleMarkerLayer();
-        createSingleMarker(response['payload'])
-    } catch (e) {
-        console.log(e);
-    }
-}
-
-function createSingleMarker(payload) {
-    let coordinate = [payload['latitude'], payload['longitude']];
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        maxZoom: 19,
-        attribution: '© OpenStreetMap'
-    }).addTo(map_container_single);
-    var layerGroup = L.layerGroup();
-    let icon_url = payload['type'] !== null ? window.location.origin + payload['type']['icon'] : '';
-    var greenIcon = L.icon({
-        iconUrl: icon_url,
-        iconSize: [40, 40], // size of the icon
+        bounds.extend(marker.position);
     });
-    let marker = L.marker(coordinate, {icon: greenIcon});
-    marker.bindPopup(
-        '<div class="my-2"><strong>Place Name</strong> :<br>' + payload.name + '</div> <div class="my-2"><strong>Description</strong>:<br>' + payload.address + '</div><div class="my-2"><strong>Address</strong>:<br>' + payload.address + '</div>');
-    layerGroup.addLayer(marker)
-    map_container_single.addLayer(layerGroup);
-    map_container_single.panTo(new L.LatLng(payload['latitude'], payload['longitude']));
+    map_container.fitBounds(bounds);
+
 }
 
-function removeSingleMarkerLayer() {
-    if(map_container_single !== undefined) {
-        map_container_single.eachLayer(function (layer) {
-            map_container_single.removeLayer(layer);
-        });
+function windowContent(data, key) {
+    let vendor = '-';
+    if (data['vendor'] !== null) {
+        vendor = data['vendor']['name'];
     }
+    return '<div>' +
+        '<p class="fw-bold">' + data['location'] + '</p>' +
+        '<p>' + data['address'] + '</p>' +
+        '<p>Vendor : <span class="fw-bold">' + vendor + '</span></p>' +
+        '<a onclick="openDetail(this)"  href="#" style="font-size: 10px;" class="btn-detail-item" data-id="' + data['id'] + '">Lihat Detail</a>' +
+        '</div>';
+
+}
+
+function openDetail(element) {
+    event.preventDefault()
+    let id = element.dataset.id;
+    console.log(id)
+    $('#simple-modal-detail').modal('show');
 }

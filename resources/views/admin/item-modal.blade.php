@@ -357,3 +357,14 @@
         </div>
     </div>
 </div>
+
+<div class="modal fade" id="simple-modal-detail" tabindex="-1" aria-labelledby="simple-modal-detail" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-fullscreen-md-down" style="height: 90%">
+        <div class="modal-content ps-3 pe-3 pb-3 pt-3">
+            <p class="fw-bold">Detail</p>
+            <div class="d-flex align-items-center">
+                <div id="single-map-container"></div>
+            </div>
+        </div>
+    </div>
+</div>

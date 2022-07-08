@@ -9,7 +9,8 @@ var center = {
 function onTabChange() {
     $("#pills-tab").on("shown.bs.tab", function (e) {
         if (e.target.id === "pills-peta-tab") {
-            generateMap("main-map");
+            // generateMap("main-map");
+            generateGoogleMapData().then(r => {})
         }
     });
 }
