@@ -112,10 +112,10 @@
     <script src="{{ asset('js/item.js') }}"></script>
     <script>
         $(document).ready(function () {
-            getSelect('f-provinsi', '/pimpinan/province', 'name', null, 'Semua Provinsi');
-            getSelect('type', window.location.pathname + '/type')
-            getSelect('f-tipe', window.location.pathname + '/type', 'name', null, 'Semua Type');
-            getSelect('f-kota', '/pimpinan/city', 'name', null, 'Semua Kota');
+            getSelect('f-provinsi', '/data/province', 'name', null, 'Semua Provinsi');
+            getSelect('type', '/data/type')
+            getSelect('f-tipe', '/data/type', 'name', null, 'Semua Type');
+            getSelect('f-kota', '/data/city', 'name', null, 'Semua Kota');
             generateGoogleMapData().then(r => {})
         });
     </script>
