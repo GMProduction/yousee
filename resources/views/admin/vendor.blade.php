@@ -20,9 +20,13 @@
                         <thead>
                             <tr>
                                 <th>#</th>
-                                <th>Nama</th>
+                                <th>Nama CV / PT</th>
+                                <th>Brand Vendor</th>
                                 <th>Alamat</th>
+                                <th>Email</th>
                                 <th>No. Telp</th>
+                                <th>Nama PIC</th>
+                                <th>Nomor PIC</th>
                                 <th>Titik</th>
                                 <th>Action</th>
                             </tr>
@@ -30,9 +34,13 @@
                         <tfoot>
                             <tr>
                                 <th>#</th>
-                                <th>Nama</th>
+                                <th>Nama CV / PT</th>
+                                <th>Brand Vendor</th>
                                 <th>Alamat</th>
+                                <th>Email</th>
                                 <th>No. Telp</th>
+                                <th>Nama PIC</th>
+                                <th>Nomor PIC</th>
                                 <th>Titik</th>
                                 <th>Action</th>
                             </tr>
@@ -59,20 +67,38 @@
                             <div class="form-floating mb-3">
                                 <input type="text" class="form-control" id="name" name="name" required
                                     placeholder="Nama Tipe">
-                                <label for="name" class="form-label">Nama Vendor</label>
+                                <label for="name" class="form-label">Nama CV / PT</label>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control" id="brand" name="brand" required
+                                       placeholder="Nama Tipe">
+                                <label for="brand" class="form-label">Brand</label>
                             </div>
 
                             <div class="mb-3">
                                 <label for="alamat" class="form-label">Alamat</label>
                                 <textarea type="text" class="form-control" id="address" name="address" rows="5" required placeholder="Alamat Vendor"></textarea>
                             </div>
-
+                            <div class="form-floating mb-3">
+                                <input type="email" class="form-control" id="email" name="email" required
+                                       placeholder="Nama Tipe">
+                                <label for="email" class="form-label">Email</label>
+                            </div>
                             <div class="form-floating mb-3">
                                 <input type="text" class="form-control" id="phone" name="phone" required
                                     placeholder="Nomor Telepon">
-                                <label for="notelp" class="form-label">No. Telp</label>
+                                <label for="notelp" class="form-label">No. Telp Kantor</label>
                             </div>
-
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control" id="picName" name="picName" required
+                                       placeholder="Nama Tipe">
+                                <label for="picName" class="form-label">Nama PIC</label>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control" id="picPhone" name="picPhone" required
+                                       placeholder="Nama Tipe">
+                                <label for="picPhone" class="form-label">Nomor PIC</label>
+                            </div>
                             <div class="my-3">
                                 <div class="d-flex">
                                     <button type="submit" class="btn-utama" style="width: 100%">Simpan</button>
@@ -109,6 +135,10 @@
                     $('#form #name').val(data.name);
                     $('#form #address').val(data.address);
                     $('#form #phone').val(data.phone);
+                    $('#form #brand').val(data.brand);
+                    $('#form #email').val(data.email);
+                    $('#form #picName').val(data.picName);
+                    $('#form #picPhone').val(data.picPhone);
 
                 }
 
@@ -142,12 +172,28 @@
                             "name": "name"
                         },
                         {
+                            "data": "brand",
+                            "name": "brand"
+                        },
+                        {
                             "data": "address",
                             "name": "address"
                         },
                         {
+                            "data": "email",
+                            "name": "email"
+                        },
+                        {
                             "data": "phone",
                             "name": "phone"
+                        },
+                        {
+                            "data": "picName",
+                            "name": "picName"
+                        },
+                        {
+                            "data": "picPhone",
+                            "name": "picPhone"
                         },
                         {
                             "data": "item",

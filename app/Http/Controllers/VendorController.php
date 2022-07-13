@@ -20,10 +20,11 @@ class VendorController extends CustomController
     public function datatable()
     {
         $vendor = Vendor::all();
-        foreach ($vendor as $key =>  $ven){
-            $item = Item::where('vendor_id',$ven->id)->count('id');
-            Arr::add($vendor[$key],'item', $item);
+        foreach ($vendor as $key => $ven) {
+            $item = Item::where('vendor_id', $ven->id)->count('id');
+            Arr::add($vendor[$key], 'item', $item);
         }
+
         return DataTables::of($vendor)->make(true);
     }
 
@@ -33,9 +34,10 @@ class VendorController extends CustomController
     public function index()
     {
 
-        if (\request()->isMethod('POST')){
+        if (\request()->isMethod('POST')) {
             return $this->postItem();
         }
+
         return view('admin.vendor', ['sidebar' => 'vendor']);
     }
 
@@ -43,16 +45,20 @@ class VendorController extends CustomController
     {
         $field = \request()->validate(
             [
-                'name'    => 'required',
-                'address' => 'required',
-                'phone'   => 'required',
+                'name'     => 'required',
+                'address'  => 'required',
+                'phone'    => 'required',
+                'brand'    => 'required',
+                'email'    => 'required',
+                'picName'  => 'required',
+                'picPhone' => 'required',
             ]
         );
 
-        if (\request('id')){
+        if (\request('id')) {
             $vendor = Vendor::find(\request('id'));
             $vendor->update($field);
-        }else{
+        } else {
             Vendor::create($field);
         }
 
@@ -64,7 +70,8 @@ class VendorController extends CustomController
         );
     }
 
-    public function getVendor(){
+    public function getVendor()
+    {
         return Vendor::all();
     }
 }

@@ -28,7 +28,7 @@ $(document).on("change", "#province", function () {
     let id = $(this).val();
     getSelect(
         "city",
-        "/admin/province/" + id + "/city",
+        "/data/province/" + id + "/city",
         "name",
         null,
         "Pilih Kota"
@@ -38,11 +38,11 @@ $(document).on("change", "#province", function () {
 $(document).on("change", "#f-provinsi", function (ev) {
     s_provinsi = $(this).val();
     if (s_provinsi === "") {
-        getSelect("f-kota", "/admin/city", "name", null, "Semua Kota");
+        getSelect("f-kota", "/data/city", "name", null, "Semua Kota");
     } else {
         getSelect(
             "f-kota",
-            "/admin/province/" + s_provinsi + "/city",
+            "/data/province/" + s_provinsi + "/city",
             "name",
             null,
             "Semua Kota"
@@ -139,13 +139,13 @@ $(document).on("click", "#addData, #editData", async function () {
         $('#form #type').val(data.type);
         $('#form #height').val(data.height);
         $('#form #width').val(data.width);
-        getSelect('city', '/admin/province/' + data.city.province.id + '/city', 'name', data.city.id);
+        getSelect('city', '/data/province/' + data.city.province.id + '/city', 'name', data.city.id);
 
         fileImg1 = data.image1;
         fileImg2 = data.image2;
         fileImg3 = data.image3;
     }
-    getSelect("province", "/admin/province", "name", prov, "Pilih Provinsi");
+    getSelect("province", "/data/province", "name", prov, "Pilih Provinsi");
     getSelect("vendor", "/admin/vendor/all", "name", vendor, "Pilih Vendor");
 
     setImgDropify("image1", null, fileImg1);

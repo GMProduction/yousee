@@ -12,7 +12,11 @@ class Vendor extends Model
     protected $fillable = [
         'name',
         'address',
-        'phone'
+        'phone',
+        'brand',
+        'email',
+        'picName',
+        'picPhone',
     ];
 
 //    protected $with = 'items';

@@ -167,10 +167,10 @@
 
             });
             datatableItem();
-            getSelect('f-provinsi', '/admin/province', 'name', null, 'Semua Provinsi');
-            getSelect('type', window.location.pathname + '/type')
-            getSelect('f-tipe', window.location.pathname + '/type', 'name', null, 'Semua Type');
-            getSelect('f-kota', '/admin/city', 'name', null, 'Semua Kota');
+            getSelect('f-provinsi', '/data/province', 'name', null, 'Semua Provinsi');
+            getSelect('type', '/data/type')
+            getSelect('f-tipe','/data/type', 'name', null, 'Semua Type');
+            getSelect('f-kota', '/data/city', 'name', null, 'Semua Kota');
 
             setImgDropify('image1');
             setImgDropify('image2');
