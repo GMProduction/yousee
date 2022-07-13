@@ -19,7 +19,7 @@ function onTabDetailChange() {
     $("#pills-tab-detail").on("shown.bs.tab", function (e) {
         if (e.target.id === "pills-maps-tab-detail") {
             let id = $("#d-id").val();
-            generateSingleMap("map-detail", id);
+            // generateSingleMap("map-detail", id);
         }
     });
 }
@@ -51,14 +51,14 @@ $(document).on("change", "#f-provinsi", function (ev) {
     let text = ev.currentTarget.options[ev.currentTarget.selectedIndex].text;
     pillSearch("provinsi", text);
     datatableItem();
-    getPlacesData();
+    generateGoogleMapData().then(r => {})
 });
 $(document).on("change", "#f-kota", function (ev) {
     s_kota = $(this).val();
     let text = ev.currentTarget.options[ev.currentTarget.selectedIndex].text;
     pillSearch("kota", text);
     datatableItem();
-    getPlacesData();
+    generateGoogleMapData().then(r => {})
 });
 
 $(document).on("change", "#f-tipe", function (ev) {
@@ -66,7 +66,7 @@ $(document).on("change", "#f-tipe", function (ev) {
     let text = ev.currentTarget.options[ev.currentTarget.selectedIndex].text;
     pillSearch("tipe", text);
     datatableItem();
-    getPlacesData();
+    generateGoogleMapData().then(r => {})
 });
 
 $(document).on("change", "#f-posisi", function (ev) {
@@ -74,7 +74,7 @@ $(document).on("change", "#f-posisi", function (ev) {
     let text = ev.currentTarget.options[ev.currentTarget.selectedIndex].text;
     pillSearch("posisi", text);
     datatableItem();
-    getPlacesData();
+    generateGoogleMapData().then(r => {})
 });
 
 function pillSearch(a, text) {
@@ -106,7 +106,7 @@ $(document).on("click", "#removePill", function () {
     $("#f-" + id).val("");
     window["s_" + id] = "";
     datatableItem();
-    getPlacesData();
+    generateGoogleMapData().then(r => {})
 });
 
 $(document).on("click", "#addData, #editData", async function () {
@@ -168,42 +168,46 @@ $("#modaldetail").on("hidden.bs.modal", function () {});
 
 $(document).on("click", "#detailData", async function () {
     let data = $(this).data("row");
-    let url = await getUrl(data.id);
-
-    $('#d-id').val(data.id);
-    $('#d-name').html(data.name);
-    $('#d-provinsi').val(data.city?.province?.name);
-    $('#d-kota').val(data.city?.name);
-    $('#d-alamat').val(data.address);
-    $('#d-lokasi').val(data.location);
-    $('#d-tipe').val(data.type?.name);
-    $('#d-urlstreetview').val(url);
-    $('#d-latlong').val(data.latitude+', '+data.longitude);
-    $('#d-posisi').val(data.position);
-    $('#d-panjang').val(data.height);
-    $('#d-lebar').val(data.width);
-    $('#d-Vendor').val(data.vendor?.name);
-    $('#openTapGmap').removeAttr('href').attr('href', data.url_show);
-    $('#showImg1').empty();
-    $('#showImg2').empty();
-    $('#showImg3').empty();
-    $('#downlodShowImg1').removeAttr('href').removeAttr('download');
-    $('#downlodShowImg2').removeAttr('href').removeAttr('download');
-    $('#downlodShowImg2').removeAttr('href').removeAttr('download');
-    if (data.image1) {
-        $('#showImg1').html('<img src="' + data.image1 + '"  alt=""/>')
-        $('#downlodShowImg1').attr('href',data.image1 ).attr('download','image1')
-    }
-    if (data.image2) {
-        $('#showImg2').html('<img src="' + data.image2 + '"  alt=""/>')
-        $('#downlodShowImg2').attr('href',data.image2 ).attr('download','image2')
-    }
-    if (data.image3) {
-        $('#showImg3').html('<img src="' + data.image3 + '"  alt=""/>')
-        $('#downlodShowImg3').attr('href',data.image3 ).attr('download','image3')
-    }
-    showStreetView(url);
-    $("#modaldetail").modal("show");
+    let id = data.id;
+    await generateSingleGoogleMapData(id);
+    $('#simple-modal-detail').modal('show');
+    //
+    // let url = await getUrl(data.id);
+    //
+    // $('#d-id').val(data.id);
+    // $('#d-name').html(data.name);
+    // $('#d-provinsi').val(data.city?.province?.name);
+    // $('#d-kota').val(data.city?.name);
+    // $('#d-alamat').val(data.address);
+    // $('#d-lokasi').val(data.location);
+    // $('#d-tipe').val(data.type?.name);
+    // $('#d-urlstreetview').val(url);
+    // $('#d-latlong').val(data.latitude+', '+data.longitude);
+    // $('#d-posisi').val(data.position);
+    // $('#d-panjang').val(data.height);
+    // $('#d-lebar').val(data.width);
+    // $('#d-Vendor').val(data.vendor?.name);
+    // $('#openTapGmap').removeAttr('href').attr('href', data.url_show);
+    // $('#showImg1').empty();
+    // $('#showImg2').empty();
+    // $('#showImg3').empty();
+    // $('#downlodShowImg1').removeAttr('href').removeAttr('download');
+    // $('#downlodShowImg2').removeAttr('href').removeAttr('download');
+    // $('#downlodShowImg2').removeAttr('href').removeAttr('download');
+    // if (data.image1) {
+    //     $('#showImg1').html('<img src="' + data.image1 + '"  alt=""/>')
+    //     $('#downlodShowImg1').attr('href',data.image1 ).attr('download','image1')
+    // }
+    // if (data.image2) {
+    //     $('#showImg2').html('<img src="' + data.image2 + '"  alt=""/>')
+    //     $('#downlodShowImg2').attr('href',data.image2 ).attr('download','image2')
+    // }
+    // if (data.image3) {
+    //     $('#showImg3').html('<img src="' + data.image3 + '"  alt=""/>')
+    //     $('#downlodShowImg3').attr('href',data.image3 ).attr('download','image3')
+    // }
+    // showStreetView(url);
+    // $("#modaldetail").modal("show");
 });
 
 function datatableItem() {

@@ -22,7 +22,30 @@
         .select2-selection__arrow {
             height: 36px !important;
         }
+        #map {
+            height: 500px;
+            width: 100%
+        }
+
+        #main-map {
+            height: 500px;
+            width: 100%
+        }
+
+        #single-map-container {
+            height: 450px;
+            width: 50%
+        }
+
+        .marker-position {
+            top: -25px;
+            left: 0;
+            position: relative;
+            color: aqua;
+            font-weight: bold;
+        }
     </style>
+    <script src="{{ asset('js/map-control.js') }}"></script>
 @endsection
 @section('content')
     <div class="panel">
@@ -55,13 +78,13 @@
 
 @section('morejs')
     <script src="{{ asset('js/number_formater.js') }}"></script>
-    <script src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js"
-        integrity="sha512-BB3hKbKWOc9Ez/TAwyWxNXeoV9c1v6FIeYiBieIWkpLjauysF18NzgR1MBNBXf8/KABdlkX68nAhlwcDFLGPCQ=="
-        crossorigin=""></script>
+    <script
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA1MgLuZuyqR_OGY3ob3M52N46TDBRI_9k&callback=initMap&v=weekly"
+        async
+    ></script>
 
     {{-- @include('admin.map', ['data' => 'script']) --}}
 
-    <script src="{{ asset('js/map-control.js') }}"></script>
     <script src="{{ asset('js/item.js') }}"></script>
     <script>
         $(document).ready(function() {

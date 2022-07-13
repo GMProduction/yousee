@@ -113,28 +113,23 @@ async function generateGoogleMapData() {
     try {
         let response = await $.get('/map/data?province=' + s_provinsi + '&city=' + s_kota + '&type=' + s_tipe + '&position=' + s_posisi);
         let payload = response['payload'];
-        createGoogleMapMarker(payload);
+        removeMultiMarker();
+        if (payload.length > 0) {
+            createGoogleMapMarker(payload);
+        }
+
     } catch (e) {
         console.log(e);
     }
 }
 
-async function generateSingleGoogleMapData(id) {
-    try {
-        let response = await $.get('/map/data/'+id);
-        let payload = response['payload'];
-        console.log(payload)
-        const location = {lat: payload['latitude'], lng: payload['longitude']};
-        map_container_single = new google.maps.Map(document.getElementById("single-map-container"), {
-            zoom: 14,
-            center: location,
-        });
-        // createGoogleMapMarker(payload);
-    } catch (e) {
-        console.log(e);
-    }
-    // const myLatLng = {lat: -7.5589494045543475, lng: 110.85658809673708};
 
+var multi_marker = [];
+
+function removeMultiMarker() {
+    for (i = 0; i < multi_marker.length; i++) {
+        multi_marker[i].setMap(null);
+    }
 }
 
 function createGoogleMapMarker(payload = []) {
@@ -151,6 +146,7 @@ function createGoogleMapMarker(payload = []) {
             //     color: "#377D71"
             // }
         });
+        multi_marker.push(marker);
         let infowindow = new google.maps.InfoWindow({
             content: windowContent(v, k),
         });
@@ -183,9 +179,53 @@ function windowContent(data, key) {
 
 }
 
-function openDetail(element) {
+async function openDetail(element) {
     event.preventDefault()
     let id = element.dataset.id;
-    console.log(id)
+    await generateSingleGoogleMapData(id);
     $('#simple-modal-detail').modal('show');
+}
+
+async function generateSingleGoogleMapData(id) {
+    try {
+        let response = await $.get('/map/data/' + id);
+        let payload = response['payload'];
+        console.log(payload);
+        console.log(payload['latitude'], payload['longitude']);
+        const location = {lat: payload['latitude'], lng: payload['longitude']};
+        map_container_single = new google.maps.Map(document.getElementById("single-map-container"), {
+            zoom: 16,
+            center: location,
+        });
+
+        new google.maps.Marker({
+            position: new google.maps.LatLng(payload['latitude'], payload['longitude']),
+            map: map_container_single,
+            icon: payload['type']['icon'],
+            title: payload['name'],
+        });
+        generateDetail(payload);
+    } catch (e) {
+        console.log(e);
+    }
+}
+
+function generateDetail(data) {
+    $('#detail-title-tipe').html(data['type']['name']);
+    $('#detail-title-nama').html('( ' + data['name'] + ' )');
+    $('#single-map-container-street-view').html(data['url']);
+    $('#detail-vendor').val(data['vendor']['name']);
+    $('#detail-provinsi').val(data['city']['province']['name']);
+    $('#detail-kota').val(data['city']['name']);
+    $('#detail-alamat').val(data['address']);
+    $('#detail-lokasi').val(data['location']);
+    $('#detail-coordinate').val(data['latitude'] + ', ' + data['longitude']);
+    $('#detail-tipe').val(data['type']['name']);
+    $('#detail-posisi').val(data['position']);
+    $('#detail-panjang').val(data['height']);
+    $('#detail-lebar').val(data['width']);
+    $('#single-map-container-street-view').html(data['url']);
+    $('#detail-gambar-1').attr('src', data['image1']);
+    $('#detail-gambar-2').attr('src', data['image2']);
+    $('#detail-gambar-3').attr('src', data['image3']);
 }

@@ -668,3 +668,20 @@ table {
   text-decoration: none;
   transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out;
 }
+
+.nav-pills .nav-link.genostab-custom.active,
+.nav-pills .show > .nav-link {
+    background-color: #4e28f7;
+}
+
+.nav-pills .nav-link.genostab-custom {
+    margin: 5px;
+    display: block;
+    padding: 0.5rem 1rem;
+    background-color: white;
+    border: #4e28f7 1px solid;
+    border-radius: 5px;
+    color: #4e28f7;
+    text-decoration: none;
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out;
+}

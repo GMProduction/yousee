@@ -294,7 +294,8 @@
                             {{--                                    <div class="panel">--}}
                             {{--                                        <div id="map"></div>--}}
                             {{--                                    </div>--}}
-                            <div class="gmap_canvas" id="panel-street" style="align-items: center;display: flex;flex: 1;">
+                            <div class="gmap_canvas" id="panel-street"
+                                 style="align-items: center;display: flex;flex: 1;">
 
                             </div>
 
@@ -303,7 +304,7 @@
                     </div>
                     <div class="tab-pane fade" id="pills-gambar1" role="tabpanel"
                          aria-labelledby="pills-gambar1-tab">
-                        <a class="btn-success-soft sml rnd" id="downlodShowImg1" ><i class="material-icons menu-icon">download</i>Download</a>
+                        <a class="btn-success-soft sml rnd" id="downlodShowImg1"><i class="material-icons menu-icon">download</i>Download</a>
                         <div class="panel-gambar" id="showImg1">
                         </div>
 
@@ -311,7 +312,7 @@
 
                     <div class="tab-pane fade" id="pills-gambar2" role="tabpanel"
                          aria-labelledby="pills-gambar2-tab">
-                        <a class="btn-success-soft sml rnd" id="downlodShowImg2" ><i class="material-icons menu-icon">download</i>Download</a>
+                        <a class="btn-success-soft sml rnd" id="downlodShowImg2"><i class="material-icons menu-icon">download</i>Download</a>
 
                         <div class="panel-gambar" id="showImg2">
                         </div>
@@ -320,7 +321,7 @@
 
                     <div class="tab-pane fade" id="pills-gambar3" role="tabpanel"
                          aria-labelledby="pills-gambar3-tab">
-                        <a class="btn-success-soft sml rnd" id="downlodShowImg3" ><i class="material-icons menu-icon">download</i>Download</a>
+                        <a class="btn-success-soft sml rnd" id="downlodShowImg3"><i class="material-icons menu-icon">download</i>Download</a>
 
                         <div class="panel-gambar" id="showImg3">
                         </div>
@@ -359,11 +360,141 @@
 </div>
 
 <div class="modal fade" id="simple-modal-detail" tabindex="-1" aria-labelledby="simple-modal-detail" aria-hidden="true">
-    <div class="modal-dialog modal-xl modal-fullscreen-md-down" style="height: 90%">
-        <div class="modal-content ps-3 pe-3 pb-3 pt-3">
-            <p class="fw-bold">Detail</p>
-            <div class="d-flex align-items-center">
-                <div id="single-map-container"></div>
+    <div class="modal-dialog modal-xl modal-fullscreen-lg-down" style="min-height: 900px !important;">
+        <div class="modal-content ps-3 pe-3 pb-3 pt-3" style="min-height: 900px !important;">
+            <p class="fw-bold">Detail <span id="detail-title-tipe"></span> <span id="detail-title-nama"></span></p>
+            <div class="d-flex">
+                <div class="w-50">
+                    <div id="single-map-container" style="width: 100%"></div>
+                    <div id="single-map-container-street-view"
+                         class="d-flex align-items-center justify-content-center mt-2"
+                         style="height: 450px; border: 1px darkgray solid; border-radius: 10px">
+                        <div class="fw-bold">Street View Container</div>
+                    </div>
+                </div>
+
+                <div id="single-map-container-information" class="ms-2 w-50">
+                    <ul class="nav nav-pills mb-3" id="pills-single-tab-detail" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link genostab-custom active" id="pills-single-detail-tab"
+                                    data-bs-toggle="pill"
+                                    data-bs-target="#pills-single-detail" type="button" role="tab"
+                                    aria-controls="pills-single-detail"
+                                    aria-selected="true">Detail
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link genostab-custom" id="pills-single-gambar1-tab" data-bs-toggle="pill"
+                                    data-bs-target="#pills-single-gambar1" type="button" role="tab"
+                                    aria-controls="pills-single-gambar1"
+                                    aria-selected="false">Gambar 1
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link genostab-custom" id="pills-single-gambar2-tab" data-bs-toggle="pill"
+                                    data-bs-target="#pills-single-gambar2" type="button" role="tab"
+                                    aria-controls="pills-single-gambar2"
+                                    aria-selected="false">Gambar 2
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link genostab-custom" id="pills-single-gambar3-tab" data-bs-toggle="pill"
+                                    data-bs-target="#pills-single-gambar3" type="button" role="tab"
+                                    aria-controls="pills-single-gambar3"
+                                    aria-selected="false">Gambar 3
+                            </button>
+                        </li>
+                    </ul>
+
+                    <div class="tab-content" id="pills-single-tabContent">
+                        <div class="tab-pane fade show active" id="pills-single-detail" role="tabpanel"
+                             aria-labelledby="pills-single-detail-tab">
+                            <div class="form-floating mb-3 w-100">
+                                <input type="text" class="form-control" id="detail-vendor" name="detail-vendor"
+                                       readonly="readonly" placeholder="Vendor">
+                                <label for="detail-vendor" class="form-label">Vendor</label>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6 col-md-12">
+                                    <div class="form-floating mb-3 w-100">
+                                        <input type="text" class="form-control" id="detail-provinsi"
+                                               name="detail-provinsi"
+                                               readonly="readonly" placeholder="Provinsi">
+                                        <label for="detail-provinsi" class="form-label">Provinsi</label>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12">
+                                    <div class="form-floating mb-3 w-100">
+                                        <input type="text" class="form-control" id="detail-kota" name="detail-kota"
+                                               readonly="readonly" placeholder="Kota">
+                                        <label for="detail-kota" class="form-label">Kota</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-floating mb-3 w-100">
+                        <textarea rows="3" class="form-control" id="detail-alamat" name="detail-alamat"
+                                  readonly="readonly" placeholder="Alamat" style="height: 100px"></textarea>
+                                <label for="detail-alamat" class="form-label">Alamat</label>
+                            </div>
+                            <div class="form-floating mb-3 w-100">
+                        <textarea rows="3" class="form-control" id="detail-lokasi" name="detail-lokasi"
+                                  readonly="readonly" placeholder="Lokasi" style="height: 100px"></textarea>
+                                <label for="detail-lokasi" class="form-label">Lokasi</label>
+                            </div>
+                            <div class="form-floating mb-3 w-100">
+                                <input type="text" class="form-control" id="detail-coordinate" name="detail-coordinate"
+                                       readonly="readonly" placeholder="Koordinat">
+                                <label for="detail-coordinate" class="form-label">Koordinat</label>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6 col-md-12">
+                                    <div class="form-floating mb-3 w-100">
+                                        <input type="text" class="form-control" id="detail-tipe" name="detail-tipe"
+                                               readonly="readonly" placeholder="Tipe">
+                                        <label for="detail-tipe" class="form-label">Tipe</label>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12">
+                                    <div class="form-floating mb-3 w-100">
+                                        <input type="text" class="form-control" id="detail-posisi" name="detail-posisi"
+                                               readonly="readonly" placeholder="Posisi">
+                                        <label for="detail-posisi" class="form-label">Posisi</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6 col-md-12">
+                                    <div class="form-floating mb-3 w-100">
+                                        <input type="text" class="form-control" id="detail-panjang"
+                                               name="detail-panjang"
+                                               readonly="readonly" placeholder="Panjang/Tinggi">
+                                        <label for="detail-panjang" class="form-label">Panjang/Tinggi</label>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12">
+                                    <div class="form-floating mb-3 w-100">
+                                        <input type="text" class="form-control" id="detail-lebar" name="detail-lebar"
+                                               readonly="readonly" placeholder="Lebar">
+                                        <label for="detail-lebar" class="form-label">Lebar</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade show" id="pills-single-gambar1" role="tabpanel"
+                             aria-labelledby="pills-single-gambar1-tab">
+                            <img id="detail-gambar-1" src="" height="450" width="" alt="Gambar-1" style="width: 100%">
+                        </div>
+                        <div class="tab-pane fade show" id="pills-single-gambar2" role="tabpanel"
+                             aria-labelledby="pills-single-gambar2-tab">
+                            <img id="detail-gambar-2" src="" height="450" width="" alt="Gambar-2" style="width: 100%">
+                        </div>
+                        <div class="tab-pane fade show" id="pills-single-gambar3" role="tabpanel"
+                             aria-labelledby="pills-single-gambar3-tab">
+                            <img id="detail-gambar-3" src="" height="450" width="" alt="Gambar-3" style="width: 100%">
+                        </div>
+                    </div>
+
+                </div>
             </div>
         </div>
     </div>

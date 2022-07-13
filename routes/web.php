@@ -27,7 +27,18 @@ Route::match(['POST', 'GET'], '/', [LoginController::class, 'index'])->middlewar
 Route::prefix('pimpinan')->middleware(\App\Http\Middleware\PimpinanMiddleware::class)->group(
     function (){
         Route::get('', [\App\Http\Controllers\PimpinanController::class, 'index']);
+        Route::get('province', [\App\Http\Controllers\ProvinceController::class, 'province']);
+        Route::get('province/{id}/city', [\App\Http\Controllers\ProvinceController::class, 'city']);
+        Route::get('/city', [\App\Http\Controllers\ProvinceController::class, 'cityAll']);
+        Route::get('user', [UserController::class, 'index']);
+        Route::prefix('type')->group(
+            function () {
+                Route::match(['POST', 'GET'], '', [TipeController::class, 'index']);
+                Route::get('datatable', [TipeController::class, 'datatable']);
+            }
+        );
     }
+
 );
 
 Route::prefix('admin')->middleware(\App\Http\Middleware\AdminMiddleware::class)->group(

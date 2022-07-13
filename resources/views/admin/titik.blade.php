@@ -39,7 +39,7 @@
         }
 
         #single-map-container {
-            height: 350px;
+            height: 450px;
             width: 50%
         }
 
@@ -164,7 +164,7 @@
             // generateGoogleMapData().then(r => {})
             onTabChange();
             $("#simple-modal-detail").on("shown.bs.modal", function () {
-                generateSingleGoogleMapData(1);
+
             });
             datatableItem();
             getSelect('f-provinsi', '/admin/province', 'name', null, 'Semua Provinsi');
