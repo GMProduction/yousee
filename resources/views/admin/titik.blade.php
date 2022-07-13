@@ -102,7 +102,7 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="f-posisi" class="form-label">Psisi</label>
+                            <label for="f-posisi" class="form-label">Posisi</label>
                             <select class="form-select mb-3" aria-label="Default select example" id="f-posisi"
                                     name="f-posisi">
                                 <option selected value="">Semua Posisi</option>
@@ -120,7 +120,7 @@
 
         </div>
 
-        <div class="tab-content">
+        <div class="tab-content" >
             <div class="tab-pane fade show active" id="pills-tabel" role="tabpanel" aria-labelledby="pills-tabel-tab">
                 <div class="panel">
                     <div class="title">
@@ -133,9 +133,9 @@
                 </div>
 
             </div>
-            <div class="tab-pane fade" id="pills-peta" role="tabpanel" aria-labelledby="pills-peta-tab">
+            <div class="tab-pane fade" id="pills-peta" role="tabpanel" aria-labelledby="pills-peta-tab" >
                 {{-- @include('admin.map', ['data' => 'content']) --}}
-                <div id="main-map" style="width: 100%; height: 500px"></div>
+                <div id="main-map" style="width: 100%; height: 500px; height: calc(100% - 70px)"></div>
             </div>
         </div>
 
