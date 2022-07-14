@@ -8,50 +8,40 @@
     <div>
 
 
-
         <div class="panel">
             <div class="title">
                 <p>Data User</p>
-                <a class="btn-utama-soft sml rnd " data-bs-toggle="modal" data-bs-target="#modaltambahuser">User Baru <i
+                <a class="btn-utama-soft sml rnd " id="addData">User Baru <i
                         class="material-icons menu-icon ms-2">add_circle</i></a>
             </div>
 
             <div class="isi">
                 <div class="table">
-                    <table id="table_piutang" class="table table-striped" style="width:100%">
+                    <table id="table_id" class="table table-striped" style="width:100%">
                         <thead>
-                            <tr>
-                                <th>Nama</th>
-                                <th>Role</th>
-                                <th>No Hp</th>
-                                <th>Action</th>
-                            </tr>
+                        <tr>
+                            <th>#</th>
+                            <th>Nama</th>
+                            <th>Role</th>
+                            <th>Email</th>
+                            <th>No Hp</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>Tiger Nixon</td>
-                                <td>Admin</td>
-                                <td>089 750 505 20</td>
-                                <td class="d-flex">
-                                    <a class="btn-success-soft sml rnd me-1">Edit <i
-                                            class="material-icons menu-icon ms-2">edit</i></a>
-                                    <a class="btn-danger-soft sml rnd ">Hapus <i
-                                            class="material-icons menu-icon ms-2">delete</i></a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Garrett Winters</td>
-                                <td>Admin</td>
-                                <td>089 750 505 20</td>
-                                <td class="d-flex"><a class="btn-success-soft sml rnd me-1">Edit <i
-                                            class="material-icons menu-icon ms-2">edit</i></a>
-                                    <a class="btn-danger-soft sml rnd ">Hapus <i
-                                            class="material-icons menu-icon ms-2">delete</i></a>
-                                </td>
-                            </tr>
-
                         </tbody>
-
+                        <tfoot>
+                        <tr>
+                            <th>#</th>
+                            <th>Nama</th>
+                            <th>Role</th>
+                            <th>Email</th>
+                            <th>No Hp</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                        </tfoot>
                     </table>
                 </div>
             </div>
@@ -66,74 +56,189 @@
                         <h5 class="modal-title" id="modaltambahuser">Tambah User</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <div class="modal-body">
+                    <form id="form" onsubmit="return saveUser()">
+                        @csrf
+                        <input id="id" name="id" class=" formData" hidden>
+                        <div class="modal-body">
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control formData" id="nama" name="nama" placeholder="Jhony">
+                                <label for="nama" class="form-label">Nama</label>
+                            </div>
 
-                        <div class="form-floating mb-3">
-                            <input type="text" class="form-control" id="nama" name="nama" placeholder="Jhony">
-                            <label for="nama" class="form-label">Nama</label>
+                            <label for="role" class="form-label">Role</label>
+                            <select class="form-select mb-3 formData" aria-label="Default select example" id="role" name="role">
+                                <option selected>Pilih Role</option>
+                                <option value="pimpinan">Pimpinan</option>
+                                <option value="admin">Admin</option>
+                                <option value="presence">Presence</option>
+                            </select>
+
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control  formData" id="no_hp" name="no_hp" placeholder="08712345678">
+                                <label for="nohp" class="form-label">No. Hp</label>
+                            </div>
+
+                            <div class="form-floating mb-3">
+                                <input type="email" class="form-control formData" id="email" name="email"
+                                       placeholder="name@example.com">
+                                <label for="floatingInput">Email</label>
+                            </div>
+
+                            <hr>
+
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control formData" id="username" name="username" placeholder="Jhony">
+                                <label for="nama" class="form-label">Username</label>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <input type="password" class="form-control formData " id="password" name="password" placeholder="Jhony">
+                                <label for="password" class="form-label">Password</label>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <input type="password" class="form-control formData " id="password_confirmation"
+                                       name="password_confirmation" placeholder="Jhony">
+                                <label for="password_confirmation" class="form-label">Konfirmasi Password</label>
+                            </div>
+
+
                         </div>
 
-                        <label for="role" class="form-label">Role</label>
-                        <select class="form-select mb-3" aria-label="Default select example" id="role" name="role">
-                            <option selected>Pilih Role</option>
-                            <option value="admin">Admin</option>
-                            <option value="user">User</option>
-                        </select>
+                        <div class=" m-3">
 
-                        <div class="form-floating mb-3">
-                            <input type="text" class="form-control " id="nohp" name="nohp" placeholder="08712345678">
-                            <label for="nohp" class="form-label">No. Hp</label>
+                            <div class="text-center">
+                                <button type="submit" class="btn-utama">Simpan</button>
+                            </div>
+
+
                         </div>
-
-                        <div class="form-floating mb-3">
-                            <input type="email" class="form-control" id="floatingInput" name=""
-                                placeholder="name@example.com">
-                            <label for="floatingInput">Email</label>
-                        </div>
-
-                        <hr>
-
-                        <div class="form-floating mb-3">
-                            <input type="text" class="form-control" id="nama" name="username" placeholder="Jhony">
-                            <label for="nama" class="form-label">Username</label>
-                        </div>
-                        <div class="form-floating mb-3">
-                            <input type="password" class="form-control " id="password" name="password" placeholder="Jhony">
-                            <label for="password" class="form-label">Password</label>
-                        </div>
-                        <div class="form-floating mb-3">
-                            <input type="password" class="form-control " id="password_confirmation"
-                                name="password_confirmation" placeholder="Jhony">
-                            <label for="password_confirmation" class="form-label">Konfirmasi Password</label>
-                        </div>
-
-
-                    </div>
-
-                    <div class=" m-3">
-
-                        <div class="text-center">
-                            <a class="btn-utama">Simpan</a>
-                        </div>
-
-
-                    </div>
+                    </form>
 
                 </div>
             </div>
         </div>
     </div>
-    @endsection
+@endsection
 
-    @section('morejs')
-        <script src="{{ asset('js/number_formater.js') }}"></script>
+@section('morejs')
+    <script src="{{ asset('js/number_formater.js') }}"></script>
 
-        <script>
-            $(document).ready(function() {
-                $('#table_id').DataTable();
-                $('#table_piutang').DataTable();
+    <script>
+        $(document).ready(function () {
+            datatable();
+        });
+
+        $(document).on('click', '#editData, #addData', function () {
+            var data = $(this).data('row');
+            $('form .formData').val('')
+            if (data) {
+                $.each(data, function (v, k) {
+                    $('#' + v).val(data[v])
+                })
+
+                $('#password').val('*******');
+                $('#password_confirmation').val('*******');
+            }
+            $('#modaltambahuser').modal('show')
+        })
+
+        function saveUser() {
+            saveData('Simpan Data', 'form', window.location.pathname, afterSave);
+            return false;
+        }
+
+        function afterSave() {
+            $('#modaltambahuser').modal('hide')
+            datatable();
+        }
+
+        $(document).on('click','#activeData', function () {
+            let id = $(this).data('id');
+            let active = $(this).data('status');
+            let _token = '{{csrf_token()}}';
+            let name = $(this).data('name');
+            let status = 'Aktifkan';
+            if (active == 1){
+                status = 'Non Aktifkan';
+            }
+            let form = {
+                '_token':_token,
+                'id':id,
+                'isActive':active
+            }
+
+            saveDataObjectFormData(status+' user '+name, form, window.location.pathname+'/status', afterSave);
+
+
+        })
+
+        function datatable() {
+            var url = window.location.pathname + '/datatable';
+            $('#table_id').DataTable({
+                destroy: true,
+                processing: true,
+                serverSide: true,
+                ajax: url,
+                "fnRowCallback": function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+                    // debugger;
+                    var numStart = this.fnPagingInfo().iStart;
+                    var index = numStart + iDisplayIndexFull + 1;
+                    // var index = iDisplayIndexFull + 1;
+                    $("td:first", nRow).html(index);
+                    return nRow;
+                },
+                columns: [
+                    {
+                        "className": '',
+                        "orderable": false,
+                        "data": null,
+                        "defaultContent": ''
+                    },
+                    {
+                        "data": "nama",
+                        "name": "nama"
+                    },
+                    {
+                        "data": "role",
+                        "name": "role"
+                    },
+                    {
+                        "data": "email",
+                        "name": "email"
+                    },
+                    {
+                        "data": "no_hp",
+                        "name": "no_hp"
+                    },
+                    {
+                        "data": "isActive",
+                        "name": "isActive",
+                        "render": function (data) {
+                            return data === 1 ? 'Aktif' : 'Non Aktif'
+                        }
+                    },
+
+                    {
+                        "data": "id",
+                        "render": function (data, type, row) {
+                            let string = JSON.stringify(row);
+                            var icon = 'visibility_off';
+                            if (row.isActive){
+                                icon = 'remove_red_eye';
+                            }
+                            return "<div class='d-flex'>\n" +
+                                "<a class='btn-success-soft sml rnd me-2' data-id='" +
+                                data + "' data-row='" + string +
+                                "' id='editData'> <i class='material-icons menu-icon'>edit</i></a>" +
+                                "<a class='btn-danger-soft sml rnd' data-id='" +
+                                data + "' data-name='"+row.nama+"' data-status='"+row.isActive+"' id='activeData'> <i class='material-icons menu-icon'>"+icon+"</i></a>" +
+                                "</div>";
+                        }
+                    },
+                ]
             });
-        </script>
+
+        }
+    </script>
     @endsection
 
 

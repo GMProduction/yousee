@@ -218,8 +218,7 @@ function datatableItem() {
         position: s_posisi,
     };
     let stringData = JSON.stringify(formData);
-    var url = "/admin/item/datatable";
-
+    var url = "/data/item/datatable";
     $("#table_id").DataTable({
         destroy: true,
         processing: true,
@@ -325,6 +324,90 @@ function datatableItem() {
     });
 }
 
+
+function datatableItemPresence() {
+    let formData = {
+        province: s_provinsi,
+        city: s_kota,
+        type: s_tipe,
+        position: s_posisi,
+    };
+    let stringData = JSON.stringify(formData);
+    var url = "/data/item/datatable";
+    $("#table_presence").DataTable({
+        destroy: true,
+        processing: true,
+        serverSide: true,
+        ajax: {
+            url: url,
+            data: formData,
+        },
+        fnRowCallback: function (
+            nRow,
+            aData,
+            iDisplayIndex,
+            iDisplayIndexFull
+        ) {
+            // debugger;
+            var numStart = this.fnPagingInfo().iStart;
+            var index = numStart + iDisplayIndexFull + 1;
+            // var index = iDisplayIndexFull + 1;
+            $("td:first", nRow).html(index);
+            return nRow;
+        },
+        columns: [
+            {
+                className: "",
+                orderable: false,
+                data: null,
+                defaultContent: "",
+            },
+            {
+                data: "city.name",
+                name: "city.name",
+            },
+            {
+                data: "name",
+                name: "name",
+            },
+            {
+                data: "address",
+                name: "address",
+            },
+            {
+                data: "height",
+                name: "height",
+            },
+            {
+                data: "width",
+                name: "width",
+            },
+            {
+                data: "type.name",
+                name: "type.name",
+            },
+            {
+                data: "position",
+                name: "position",
+            },
+            {
+                data: "id",
+                render: function (data, type, row) {
+                    delete row["url"];
+                    let string = JSON.stringify(row);
+                    return (
+                        "<div class='d-flex'><a class='btn-utama-soft sml rnd me-1' data-row='" +
+                        string +
+                        "'  \n" +
+                        "                                                  id='detailData'> <i class='material-icons menu-icon'>map</i></a>\n" +
+                        "                                </div>"
+                    );
+                },
+            },
+        ],
+    });
+}
+
 function saveItem() {
     let form = $("#form");
     form.submit(async function (e) {
@@ -355,7 +438,7 @@ function saveItem() {
             "Simpan Data",
             "form",
             data,
-            "/admin/item/post-item",
+            "/data/item/post-item",
             afterSave
         );
         return false;
@@ -418,7 +501,7 @@ async function showStreetView(url) {
 
 async function getUrl(id) {
     let url;
-    await $.get("/admin/item/url-street-view/" + id, function (data) {
+    await $.get("/data/item/url-street-view/" + id, function (data) {
         url = data;
     });
     return url;

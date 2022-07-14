@@ -18,21 +18,29 @@ class UserSeeder extends Seeder
         //
 
         User::insert([
+//            [
+//                'nama' => 'admin',
+//                'role' => 'admin',
+//                'no_hp' => '121212',
+//                'email' => 'admin1@gmail.com',
+//                'username' => 'admin1',
+//                'password' => Hash::make('admin'),
+//            ],
+//            [
+//                'nama' => 'pimpinan',
+//                'role' => 'pimpinan',
+//                'no_hp' => '121212',
+//                'email' => 'pimpinan@gmail.com',
+//                'username' => 'pimpinan',
+//                'password' => Hash::make('pimpinan'),
+//            ],
             [
-                'nama' => 'admin',
-                'role' => 'admin',
+                'nama' => 'presence',
+                'role' => 'presence',
                 'no_hp' => '121212',
-                'email' => 'admin1@gmail.com',
-                'username' => 'admin1',
-                'password' => Hash::make('admin'),
-            ],
-            [
-                'nama' => 'pimpinan',
-                'role' => 'pimpinan',
-                'no_hp' => '121212',
-                'email' => 'pimpinan@gmail.com',
-                'username' => 'pimpinan',
-                'password' => Hash::make('pimpinan'),
+                'email' => 'presence@gmail.com',
+                'username' => 'presence',
+                'password' => Hash::make('presence'),
             ]
         ]);
     }

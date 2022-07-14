@@ -25,7 +25,14 @@ class LoginController extends CustomController
 //                return redirect('/admin');
 //            }
             if ($this->isAuth($field)) {
+                if (\auth()->user()->isActive == false){
+                    Auth::logout();
+                    return Redirect::back()->withErrors(['username' => 'User non aktif'])->with(['username' => request('username')]);
+                }
                 $role = \auth()->user()->role;
+                if ($role == 'pimpinan'){
+                    $role = 'admin';
+                }
                 $redirect = "/$role";
 
 //            return response()->json();

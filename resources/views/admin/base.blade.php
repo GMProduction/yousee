@@ -50,7 +50,7 @@
             </a>
 
             <ul class="dropdown-menu custom" aria-labelledby="dropdownprofile">
-                <li><a class="dropdown-item disabled" href="#">pradanamahendra@gmail.com</a></li>
+                <li><a class="dropdown-item disabled" href="#">{{auth()->user()->email}}</a></li>
                 <hr>
                 {{-- <li><a class="dropdown-item" href="#">Another action</a></li> --}}
                 <li><a class="dropdown-item text-danger" href="/logout">Logout</a></li>

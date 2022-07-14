@@ -91,7 +91,7 @@
             onTabChange();
             getCard();
             datatableItem();
-            getSelect('type', window.location.pathname + '/item/type')
+            getSelect('type', '/data/type')
             setImgDropify('image1');
             setImgDropify('image2');
             setImgDropify('image3');
@@ -110,7 +110,7 @@
 
 
         function getCard() {
-            $.get('/admin/item/card', function(data, status, response) {
+            $.get('/data/item/card', function(data, status, response) {
                 let card = $('#cardType');
                 card.empty;
                 if (response.status === 200) {

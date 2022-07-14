@@ -80,11 +80,10 @@ async function saveData(title, form, url, resposeSuccess, image = null) {
                         // console.log("LOG ERROR", error.responseJSON.errors);
                         // console.log("LOG ERROR", error.responseJSON.errors[Object.keys(error.responseJSON.errors)[0]][0]);
                         $('#progressbar div').removeClass('bg-success').addClass('bg-danger');
-                        console.log();
                         console.log(xhr);
                         console.log(textStatus);
-                        // swal(error.responseJSON.errors ? error.responseJSON.errors[Object.keys(error.responseJSON.errors)[0]][0] : error.responseJSON['message'] ? error.responseJSON['message'] : error.responseJSON['msg'] )
-                        swal(error.responseText ? JSON.parse(error.responseText).message : error.responseJSON['msg'] )
+                        swal(JSON.parse(error.responseText).errors ? JSON.parse(error.responseText).errors[Object.keys(JSON.parse(error.responseText).errors)[0]][0] : JSON.parse(error.responseText)?.message ? JSON.parse(error.responseText).message : error.responseJSON['msg'] )
+                        // swal(error.responseText ? JSON.parse(error.responseText).message : error.responseJSON['msg'] )
                     }
                 })
             }
@@ -93,7 +92,7 @@ async function saveData(title, form, url, resposeSuccess, image = null) {
 }
 
 function saveDataObjectFormData(title, form_data, url, resposeSuccess) {
-
+    console.log('asdasd', form_data)
     swal({
         title: title,
         text: "Apa kamu yakin ?",
@@ -108,8 +107,8 @@ function saveDataObjectFormData(title, form_data, url, resposeSuccess) {
                     data: form_data,
                     url: url ?? window.location.pathname,
                     async: true,
-                    processData: false,
-                    contentType: false,
+                    // processData: false,
+                    // contentType: false,
                     headers: {
                         'Accept': "application/json"
                     },
@@ -143,7 +142,9 @@ function saveDataObjectFormData(title, form_data, url, resposeSuccess) {
                         console.log(xhr.status);
                         console.log(textStatus);
                         console.log(error.responseJSON);
-                        swal(error.responseJSON.errors ? error.responseJSON.errors[Object.keys(error.responseJSON.errors)[0]][0] : error.responseJSON['message'] ? error.responseJSON['message'] : error.responseJSON['msg'] )
+                        swal(JSON.parse(error.responseText).errors ? JSON.parse(error.responseText).errors[Object.keys(JSON.parse(error.responseText).errors)[0]][0] : JSON.parse(error.responseText)?.message ? JSON.parse(error.responseText).message : error.responseJSON['msg'] )
+
+                        // swal(error.responseJSON.errors ? error.responseJSON.errors[Object.keys(error.responseJSON.errors)[0]][0] : error.responseJSON['message'] ? error.responseJSON['message'] : error.responseJSON['msg'] )
 
                     }
                 })

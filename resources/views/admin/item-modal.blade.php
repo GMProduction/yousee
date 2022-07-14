@@ -383,25 +383,27 @@
                                     aria-selected="true">Detail
                             </button>
                         </li>
-                        <li class="nav-item" role="presentation">
-                            <button class="nav-link genostab-custom" id="pills-single-gambar1-tab" data-bs-toggle="pill"
-                                    data-bs-target="#pills-single-gambar1" type="button" role="tab"
-                                    aria-controls="pills-single-gambar1"
-                                    aria-selected="false">Gambar 1
-                            </button>
-                        </li>
-                        <li class="nav-item" role="presentation">
-                            <button class="nav-link genostab-custom" id="pills-single-gambar2-tab" data-bs-toggle="pill"
-                                    data-bs-target="#pills-single-gambar2" type="button" role="tab"
-                                    aria-controls="pills-single-gambar2"
-                                    aria-selected="false">Gambar 2
-                            </button>
-                        </li>
+                        @if(auth()->user()->role != 'presence')
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link genostab-custom" id="pills-single-gambar1-tab" data-bs-toggle="pill"
+                                        data-bs-target="#pills-single-gambar1" type="button" role="tab"
+                                        aria-controls="pills-single-gambar1"
+                                        aria-selected="false">Gambar 1
+                                </button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link genostab-custom" id="pills-single-gambar2-tab" data-bs-toggle="pill"
+                                        data-bs-target="#pills-single-gambar2" type="button" role="tab"
+                                        aria-controls="pills-single-gambar2"
+                                        aria-selected="false">Gambar 2
+                                </button>
+                            </li>
+                        @endif
                         <li class="nav-item" role="presentation">
                             <button class="nav-link genostab-custom" id="pills-single-gambar3-tab" data-bs-toggle="pill"
                                     data-bs-target="#pills-single-gambar3" type="button" role="tab"
                                     aria-controls="pills-single-gambar3"
-                                    aria-selected="false">Gambar 3
+                                    aria-selected="false">{{auth()->user()->role == 'presence' ? 'Gambar' : 'Gambar 3'}}
                             </button>
                         </li>
                     </ul>
@@ -409,11 +411,13 @@
                     <div class="tab-content" id="pills-single-tabContent">
                         <div class="tab-pane fade show active" id="pills-single-detail" role="tabpanel"
                              aria-labelledby="pills-single-detail-tab">
-                            <div class="form-floating mb-3 w-100">
-                                <input type="text" class="form-control" id="detail-vendor" name="detail-vendor"
-                                       readonly="readonly" placeholder="Vendor">
-                                <label for="detail-vendor" class="form-label">Vendor</label>
-                            </div>
+                            @if(auth()->user()->role != 'presence')
+                                <div class="form-floating mb-3 w-100">
+                                    <input type="text" class="form-control" id="detail-vendor" name="detail-vendor"
+                                           readonly="readonly" placeholder="Vendor">
+                                    <label for="detail-vendor" class="form-label">Vendor</label>
+                                </div>
+                            @endif
                             <div class="row">
                                 <div class="col-lg-6 col-md-12">
                                     <div class="form-floating mb-3 w-100">

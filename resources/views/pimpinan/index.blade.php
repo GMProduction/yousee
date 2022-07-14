@@ -69,6 +69,7 @@
 
 
             </ul>
+
             <div class="ms-auto">
                 <a class="btn-utama sml rnd flex" href="#" role="button" id="dropdownprofile"
                     data-bs-toggle="dropdown" style="padding-top: 5px; padding-bottom: 5px; border-radius: 10px">Filter
@@ -111,19 +112,15 @@
                     </div>
                 </ul>
             </div>
-            <div class="mb-2" id="pillSearch">
-            </div>
+
+        </div>
+        <div class="mb-2" id="pillSearch">
         </div>
         <div class="mt-2">
             <div class="tab-content">
                 <div class="tab-pane fade " id="pills-tabel" role="tabpanel" aria-labelledby="pills-tabel-tab">
                     <div class="panel">
-                        <div class="title">
-                            <p>Titik yang baru dimasukan</p>
-                            <a class="btn-utama-soft sml rnd " id="addData">Titik Baru <i
-                                    class="material-icons menu-icon ms-2">add_circle</i></a>
-                        </div>
-                        @include('admin.item-table')
+                        @include('admin.item-table',['tabel' => 'presence'])
 
                     </div>
 
@@ -153,6 +150,7 @@
             getSelect('f-tipe', '/data/type', 'name', null, 'Semua Type');
             getSelect('f-kota', '/data/city', 'name', null, 'Semua Kota');
             generateGoogleMapData().then(r => {})
+            datatableItemPresence();
         });
     </script>
 @endsection
