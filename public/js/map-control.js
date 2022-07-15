@@ -133,6 +133,7 @@ function removeMultiMarker() {
 }
 
 function createGoogleMapMarker(payload = []) {
+    console.log(role);
     var bounds = new google.maps.LatLngBounds();
     payload.forEach(function (v, k) {
         var marker = new google.maps.Marker({
@@ -148,7 +149,7 @@ function createGoogleMapMarker(payload = []) {
         });
         multi_marker.push(marker);
         let infowindow = new google.maps.InfoWindow({
-            content: windowContent(v, k),
+            content: windowContent(v, k, role),
         });
 
         marker.addListener('click', function () {
@@ -165,15 +166,20 @@ function createGoogleMapMarker(payload = []) {
 
 }
 
-function windowContent(data, key) {
+function windowContent(data, key, role = 'presence') {
+
     let vendor = '-';
     if (data['vendor'] !== null) {
         vendor = data['vendor']['name'];
     }
+
+    let vendorElement = '';
+    if (role !== 'presence') {
+        vendorElement = '<p>Vendor : <span class="fw-bold">' + vendor + '</span></p>';
+    }
     return '<div>' +
         '<p class="fw-bold">' + data['location'] + '</p>' +
-        '<p>' + data['address'] + '</p>' +
-        '<p>Vendor : <span class="fw-bold">' + vendor + '</span></p>' +
+        '<p>' + data['address'] + '</p>' + vendorElement +
         '<a onclick="openDetail(this)"  href="#" style="font-size: 10px;" class="btn-detail-item" data-id="' + data['id'] + '">Lihat Detail</a>' +
         '</div>';
 
