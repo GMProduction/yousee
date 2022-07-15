@@ -234,4 +234,13 @@ function generateDetail(data) {
     $('#detail-gambar-1').attr('src', data['image1']);
     $('#detail-gambar-2').attr('src', data['image2']);
     $('#detail-gambar-3').attr('src', data['image3']);
+    $('#link-gbr1').attr('href', data['image3']);
+    $('#dwnld-gbr1').attr('href', data['image3']);
+    $('#dwnld-gbr1').attr('download', data['image3']);
+    $('#link-gbr2').attr('href', data['image3']);
+    $('#dwnld-gbr2').attr('href', data['image3']);
+    $('#dwnld-gbr2').attr('download', data['image3']);
+    $('#link-gbr3').attr('href', data['image3']);
+    $('#dwnld-gbr3').attr('href', data['image3']);
+    $('#dwnld-gbr3').attr('download', data['image3']);
 }
