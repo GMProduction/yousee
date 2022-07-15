@@ -85,7 +85,7 @@ class UserController extends Controller
                     'password' => 'required|confirmed',
                     'no_hp'    => 'required',
                     'role'     => 'required',
-                    'username' => 'required',
+                    'username' => 'required|string|unique:users,username',
                 ]
             );
             $password = Hash::make($field['password']);
