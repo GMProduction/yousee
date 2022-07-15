@@ -137,7 +137,7 @@ function createGoogleMapMarker(payload = []) {
     var bounds = new google.maps.LatLngBounds();
     payload.forEach(function (v, k) {
         var marker = new google.maps.Marker({
-            position: new google.maps.LatLng(parseFloat(v['latitude']), parseFloat(v['longitude'])),
+            position: new google.maps.LatLng(v['latitude'], v['longitude']),
             map: map_container,
             icon: v['type']['icon'],
             title: v['name'],
@@ -197,8 +197,8 @@ async function generateSingleGoogleMapData(id) {
         let response = await $.get('/map/data/' + id);
         let payload = response['payload'];
         console.log(payload);
-        console.log(payload['latitude'], payload['longitude']);
-        const location = {lat: parseFloat(payload['latitude']), lng: parseFloat(payload['longitude'])};
+        console.log(payload['latitude'] + typeof payload['latitude'], payload['longitude']);
+        const location = {lat: payload['latitude'], lng: payload['longitude']};
         map_container_single = new google.maps.Map(document.getElementById("single-map-container"), {
             zoom: 16,
             center: location,

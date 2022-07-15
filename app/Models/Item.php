@@ -31,6 +31,10 @@ class Item extends Model
 
     protected $with = ['type','city','createdBy','lastUpdate','vendor'];
 
+    protected $casts = [
+        'latitude' => 'float',
+        'longitude' => 'float',
+    ];
 //    protected $hidden = [
 //        'url',
 //    ];
