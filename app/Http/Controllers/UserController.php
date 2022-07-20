@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Yajra\DataTables\DataTables;
 
@@ -17,7 +18,8 @@ class UserController extends Controller
      */
     public function datatable()
     {
-        return DataTables::of(User::query())->make(true);
+        $user = User::withCount('items')->get();
+        return DataTables::of($user)->make(true);
     }
 
     /**

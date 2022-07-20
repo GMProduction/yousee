@@ -140,12 +140,11 @@
                 columns: [{
                         "className": '',
                         "orderable": false,
-                        "data": null,
                         "defaultContent": ''
                     },
                     {
                         "data": "name",
-                        "name": "nama"
+                        "name": "name"
                     },
                     {
                         "data": "icon",

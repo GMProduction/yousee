@@ -25,6 +25,7 @@
                             <th>Role</th>
                             <th>Email</th>
                             <th>No Hp</th>
+                            <th>Jumlah</th>
                             <th>Status</th>
                             <th>Action</th>
                         </tr>
@@ -38,6 +39,7 @@
                             <th>Role</th>
                             <th>Email</th>
                             <th>No Hp</th>
+                            <th>Jumlah</th>
                             <th>Status</th>
                             <th>Action</th>
                         </tr>
@@ -190,7 +192,6 @@
                     {
                         "className": '',
                         "orderable": false,
-                        "data": null,
                         "defaultContent": ''
                     },
                     {
@@ -210,10 +211,14 @@
                         "name": "no_hp"
                     },
                     {
+                        "data": "items_count",
+                        "name": "items_count"
+                    },
+                    {
                         "data": "isActive",
-                        "name": "isActive",
+                        // "name": "isActive",
                         "render": function (data) {
-                            return data === 1 ? 'Aktif' : 'Non Aktif'
+                            return data == 1 ? 'Aktif' : 'Non Aktif'
                         }
                     },
 

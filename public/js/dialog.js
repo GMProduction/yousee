@@ -80,9 +80,9 @@ async function saveData(title, form, url, resposeSuccess, image = null) {
                         // console.log("LOG ERROR", error.responseJSON.errors);
                         // console.log("LOG ERROR", error.responseJSON.errors[Object.keys(error.responseJSON.errors)[0]][0]);
                         $('#progressbar div').removeClass('bg-success').addClass('bg-danger');
-                        console.log(xhr);
+                        console.log(error);
                         console.log(textStatus);
-                        swal(JSON.parse(error.responseText).errors ? JSON.parse(error.responseText).errors[Object.keys(JSON.parse(error.responseText).errors)[0]][0] : JSON.parse(error.responseText)?.message ? JSON.parse(error.responseText).message : error.responseJSON['msg'] )
+                        swal(JSON.parse(error.responseText).errors ? JSON.parse(error.responseText).errors[Object.keys(JSON.parse(error.responseText).errors)[0]][0] : JSON.parse(error.responseText)?.message ? JSON.parse(error.responseText).message : JSON.parse(error.responseText).msg ? JSON.parse(error.responseText).msg : error.responseJSON['msg'] )
                         // swal(error.responseText ? JSON.parse(error.responseText).message : error.responseJSON['msg'] )
                     }
                 })

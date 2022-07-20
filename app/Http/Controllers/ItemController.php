@@ -41,6 +41,9 @@ class ItemController extends CustomController
         if ($position) {
             $item = $item->where('position', $position);
         }
+        if (auth()->user()->role == 'admin') {
+            $item = $item->where('created_by', '=', auth()->id());
+        }
 
         return DataTables::of($item)->make(true);
     }
@@ -78,17 +81,20 @@ class ItemController extends CustomController
     {
         $data   = \request()->validate(
             [
-                'name'     => 'required',
-                'address'  => 'required',
-                'latlong'  => 'required',
-                'city_id'  => 'required',
-                'location' => 'required',
-                'url'      => 'required',
-                'type_id'  => 'required',
-                'position' => 'required',
-                'width'    => 'required',
-                'height'   => 'required',
-                'vendor_id' => 'required'
+                'name'      => '',
+                'address'   => 'required',
+                'latlong'   => 'required',
+                'city_id'   => 'required',
+                'location'  => 'required',
+                'url'       => 'required',
+                'type_id'   => 'required',
+                'position'  => 'required',
+                'width'     => 'required',
+                'height'    => 'required',
+                'vendor_id' => 'required',
+                'qty'       => 'required',
+                'side'      => 'required',
+                'trafic'    => 'required',
             ]
         );
         $image1 = \request('image1');
@@ -96,7 +102,7 @@ class ItemController extends CustomController
         $image3 = \request('image3');
 
         $latlong = $data['latlong'];
-        $str_arr = preg_split ("/\,/", str_replace(' ','',$latlong));
+        $str_arr = preg_split("/\,/", str_replace(' ', '', $latlong));
 
         Arr::set($data, 'latitude', $str_arr[0]);
         Arr::set($data, 'longitude', $str_arr[1]);

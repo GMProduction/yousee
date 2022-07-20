@@ -194,16 +194,17 @@ async function openDetail(element) {
 
 async function generateSingleGoogleMapData(id) {
     try {
-        let response = await $.get('/map/data/' + id);
-        let payload = response['payload'];
-        console.log(payload);
+        // let response = await $.get('/map/data/' + id.id);
+        const url = await getUrl(id.id);
+
+        let payload = id;
         console.log(payload['latitude'] + typeof payload['latitude'], payload['longitude']);
         const location = {lat: payload['latitude'], lng: payload['longitude']};
         map_container_single = new google.maps.Map(document.getElementById("single-map-container"), {
             zoom: 16,
             center: location,
         });
-
+        payload.url = url;
         new google.maps.Marker({
             position: new google.maps.LatLng(payload['latitude'], payload['longitude']),
             map: map_container_single,
@@ -220,7 +221,12 @@ function generateDetail(data) {
     $('#detail-title-tipe').html(data['type']['name']);
     $('#detail-title-nama').html('( ' + data['name'] + ' )');
     $('#single-map-container-street-view').html(data['url']);
-    $('#detail-vendor').val(data['vendor']['name']);
+    $('#detail-vendor').val(data['vendor']['name']+' ('+data['vendor']['brand']+')');
+    $('#detail-vendor-address').val(data['vendor']['address']);
+    $('#detail-vendor-email').val(data['vendor']['email']);
+    $('#detail-vendor-phone').val(data['vendor']['phone']);
+    $('#detail-vendor-phone-pic').val(data['vendor']['picPhone']);
+    $('#detail-vendor-pic').val(data['vendor']['picName']);
     $('#detail-provinsi').val(data['city']['province']['name']);
     $('#detail-kota').val(data['city']['name']);
     $('#detail-alamat').val(data['address']);
@@ -230,6 +236,9 @@ function generateDetail(data) {
     $('#detail-posisi').val(data['position']);
     $('#detail-panjang').val(data['height']);
     $('#detail-lebar').val(data['width']);
+    $('#detail-qty').val(data['qty']);
+    $('#detail-side').val(data['side']);
+    $('#detail-trafic').val(data['trafic']);
     $('#single-map-container-street-view').html(data['url']);
     $('#detail-gambar-1').attr('src', data['image1']);
     $('#detail-gambar-2').attr('src', data['image2']);

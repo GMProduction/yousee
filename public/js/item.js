@@ -10,7 +10,8 @@ function onTabChange() {
     $("#pills-tab").on("shown.bs.tab", function (e) {
         if (e.target.id === "pills-peta-tab") {
             // generateMap("main-map");
-            generateGoogleMapData().then(r => {})
+            generateGoogleMapData().then(r => {
+            })
         }
     });
 }
@@ -51,14 +52,16 @@ $(document).on("change", "#f-provinsi", function (ev) {
     let text = ev.currentTarget.options[ev.currentTarget.selectedIndex].text;
     pillSearch("provinsi", text);
     datatableItem();
-    generateGoogleMapData().then(r => {})
+    generateGoogleMapData().then(r => {
+    })
 });
 $(document).on("change", "#f-kota", function (ev) {
     s_kota = $(this).val();
     let text = ev.currentTarget.options[ev.currentTarget.selectedIndex].text;
     pillSearch("kota", text);
     datatableItem();
-    generateGoogleMapData().then(r => {})
+    generateGoogleMapData().then(r => {
+    })
 });
 
 $(document).on("change", "#f-tipe", function (ev) {
@@ -66,7 +69,8 @@ $(document).on("change", "#f-tipe", function (ev) {
     let text = ev.currentTarget.options[ev.currentTarget.selectedIndex].text;
     pillSearch("tipe", text);
     datatableItem();
-    generateGoogleMapData().then(r => {})
+    generateGoogleMapData().then(r => {
+    })
 });
 
 $(document).on("change", "#f-posisi", function (ev) {
@@ -74,7 +78,8 @@ $(document).on("change", "#f-posisi", function (ev) {
     let text = ev.currentTarget.options[ev.currentTarget.selectedIndex].text;
     pillSearch("posisi", text);
     datatableItem();
-    generateGoogleMapData().then(r => {})
+    generateGoogleMapData().then(r => {
+    })
 });
 
 function pillSearch(a, text) {
@@ -87,15 +92,27 @@ function pillSearch(a, text) {
     } else {
         pill.append(
             '<span class="badge bg-primary me-2 " id="pill' +
-                a +
-                '" style="border-radius: 200px; align-items: center"><span id="text">' +
-                text +
-                '</span>  <a role="button" id="removePill" data-id="' +
-                a +
-                '"><i class="material-icons" style="font-size: 12px">close</i></a></span>'
+            a +
+            '" style="border-radius: 200px; align-items: center"><span id="text">' +
+            text +
+            '</span>  <a role="button" id="removePill" data-id="' +
+            a +
+            '"><i class="material-icons" style="font-size: 12px">close</i></a></span>'
         );
     }
     //
+}
+
+$(document).on('change', '.selectType', function (ev) {
+    var text = $(this).find(":selected").text();
+    changeSelectType(text);
+})
+
+function changeSelectType(text){
+    $('#form #qty').removeAttr('disabled');
+    if (text.toLowerCase().includes('led banneer') == false) {
+        $('#form #qty').attr('disabled', '').val('1');
+    }
 }
 
 $(document).on("click", "#removePill", function () {
@@ -106,7 +123,8 @@ $(document).on("click", "#removePill", function () {
     $("#f-" + id).val("");
     window["s_" + id] = "";
     datatableItem();
-    generateGoogleMapData().then(r => {})
+    generateGoogleMapData().then(r => {
+    })
 });
 
 $(document).on("click", "#addData, #editData", async function () {
@@ -117,6 +135,8 @@ $(document).on("click", "#addData, #editData", async function () {
     $("#form #id").val(id);
     $('#form input[type="text"]').val("");
     $('#form input[type="number"]').val("");
+    $('#form #qty').val("1").attr('disabled','');
+    $('#form #side').val("1");
     $("#form select").val("");
     let fileImg1 = null,
         fileImg2 = null,
@@ -126,7 +146,7 @@ $(document).on("click", "#addData, #editData", async function () {
     $("#city").empty();
     if (id) {
         let url = await getUrl(data.id);
-
+        changeSelectType(data.type.name);
         prov = data.city.province.id;
         vendor = data.vendor?.id;
         $('#form #name').val(data.name);
@@ -134,9 +154,12 @@ $(document).on("click", "#addData, #editData", async function () {
         $('#form #location').val(data.location);
         $('#form #url_show').val(data.url_show);
         $('#form #urlstreetview').val(url);
-        $('#form #latlong').val(data.latitude+', '+data.longitude);
+        $('#form #latlong').val(data.latitude + ', ' + data.longitude);
         $('#form #position').val(data.position);
-        $('#form #type').val(data.type);
+        $('#form #type').val(data.type.id);
+        $('#form #qty').val(data.qty);
+        $('#form #side').val(data.side);
+        $('#form #trafic').val(data.trafic);
         $('#form #height').val(data.height);
         $('#form #width').val(data.width);
         getSelect('city', '/data/province/' + data.city.province.id + '/city', 'name', data.city.id);
@@ -164,12 +187,14 @@ $("#modaldetail").on("show.bs.modal", function () {
     $("#pills-detail-tab").tab("show");
 });
 
-$("#modaldetail").on("hidden.bs.modal", function () {});
+$("#modaldetail").on("hidden.bs.modal", function () {
+});
 
 $(document).on("click", "#detailData", async function () {
     let data = $(this).data("row");
+    console.log('sssssssssss',data);
     let id = data.id;
-    await generateSingleGoogleMapData(id);
+    await generateSingleGoogleMapData(data);
     $('#simple-modal-detail').modal('show');
     //
     // let url = await getUrl(data.id);
@@ -244,8 +269,8 @@ function datatableItem() {
             {
                 className: "",
                 orderable: false,
-                data: null,
                 defaultContent: "",
+                searchable: false
             },
             {
                 data: "city.name",
@@ -254,6 +279,9 @@ function datatableItem() {
             {
                 data: "name",
                 name: "name",
+                render: function (data) {
+                    return data ?? '-';
+                }
             },
             {
                 data: "address",
@@ -284,26 +312,29 @@ function datatableItem() {
             },
             {
                 data: "created_by.nama",
-                name: "created_by.nama",
+                name: "createdBy.nama",
             },
             {
                 data: "last_update.nama",
+                name: "lastUpdate.nama",
                 render: function (data, type, row) {
+                    var update = data ?? '-';
                     return (
                         '<div class="d-flex">' +
                         '<span class="me-2">' +
-                        data +
+                        update +
                         "</span>" +
-                        '<a class="btn-sm btn-danger-soft" data-name="' +
+                        '<div><a class="btn-sm btn-danger-soft" data-name="' +
                         row.name +
                         '" data-id="' +
                         row.id +
-                        '" id="btnHistory" style="width: 10px"><i class="material-icons" style="font-size: 12px">history</i></a></div>'
+                        '" id="btnHistory" style="width: 10px"><i class="material-icons" style="font-size: 12px">history</i></a></div></div>'
                     );
                 },
             },
             {
                 data: "id",
+                searchable: false,
                 render: function (data, type, row) {
                     delete row["url"];
                     let string = JSON.stringify(row);
@@ -323,7 +354,6 @@ function datatableItem() {
         ],
     });
 }
-
 
 function datatableItemPresence() {
     let formData = {
@@ -359,7 +389,6 @@ function datatableItemPresence() {
             {
                 className: "",
                 orderable: false,
-                data: null,
                 defaultContent: "",
             },
             {
@@ -466,16 +495,16 @@ $(document).on("click", "#btnHistory", function () {
 
                 tabel.append(
                     "<tr>" +
-                        "             <td>" +
-                        parseInt(k + 1) +
-                        "</td>" +
-                        "             <td>" +
-                        string +
-                        "</td>" +
-                        "             <td>" +
-                        moment(v.created_at).format("LLLL") +
-                        "</td>" +
-                        "         </tr>"
+                    "             <td>" +
+                    parseInt(k + 1) +
+                    "</td>" +
+                    "             <td>" +
+                    string +
+                    "</td>" +
+                    "             <td>" +
+                    moment(v.created_at).format("LLLL") +
+                    "</td>" +
+                    "         </tr>"
                 );
             });
         }
