@@ -109,9 +109,9 @@ $(document).on('change', '.selectType', function (ev) {
 })
 
 function changeSelectType(text){
-    $('#form #qty').removeAttr('disabled');
+    $('#form #qty').removeAttr('readonly');
     if (text.toLowerCase().includes('led banneer') == false) {
-        $('#form #qty').attr('disabled', '').val('1');
+        $('#form #qty').attr('readonly', '').val('1');
     }
 }
 
@@ -135,7 +135,7 @@ $(document).on("click", "#addData, #editData", async function () {
     $("#form #id").val(id);
     $('#form input[type="text"]').val("");
     $('#form input[type="number"]').val("");
-    $('#form #qty').val("1").attr('disabled','');
+    $('#form #qty').val("1").attr('readonly','');
     $('#form #side').val("1");
     $("#form select").val("");
     let fileImg1 = null,
