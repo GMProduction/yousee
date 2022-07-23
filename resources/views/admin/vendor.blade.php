@@ -212,11 +212,14 @@
                         {
                             "data": "id",
                             "render": function (data, type, row) {
+                                let role = $('meta[name="role"]').attr('content');
+                                var dlt = '';
+                                if (role == 'pimpinan'){
+                                    dlt = "<a class='btn-danger-soft sml rnd' data-id='" + data + "' data-name='" + row.name + "' id='deleteData'> <i class='material-icons menu-icon'>delete</i></a>";
+                                }
                                 let string = JSON.stringify(row);
                                 return "<div class='d-flex'>\n" +
-                                    " <a class='btn-success-soft sml rnd' data-id='" + data + "' data-row='" + string + "' id='editData'> <i class='material-icons menu-icon'>edit</i></a>" +
-                                    " <a class='btn-danger-soft sml rnd' data-id='" + data + "' data-name='" + row.name + "' id='deleteData'> <i class='material-icons menu-icon'>delete</i></a>" +
-                                    "</div>";
+                                    " <a class='btn-success-soft sml rnd' data-id='" + data + "' data-row='" + string + "' id='editData'> <i class='material-icons menu-icon'>edit</i></a>"+dlt+"</div>";
                             }
                         },
                     ]
