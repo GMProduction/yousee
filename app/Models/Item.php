@@ -4,10 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Item extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     protected $fillable = [
         'name',
@@ -32,7 +33,7 @@ class Item extends Model
         'trafic'
     ];
 
-    protected $with = ['type','city','createdBy','lastUpdate','vendor'];
+    protected $with = ['type','city','createdBy','lastUpdate'];
 
     protected $casts = [
         'latitude' => 'float',
@@ -64,5 +65,9 @@ class Item extends Model
 
     public function vendor(){
         return $this->belongsTo(Vendor::class, 'vendor_id');
+    }
+
+    public function vendorAll(){
+        return $this->belongsTo(Vendor::class, 'vendor_id')->withTrashed();
     }
 }

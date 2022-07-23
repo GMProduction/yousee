@@ -375,7 +375,7 @@
                 <table class="table table">
                     <tr>
                         <th>#</th>
-                        <th class="text-center">Admin</th>
+                        <th class="text-center">User</th>
                         <th class="text-center">Tanggal</th>
                     </tr>
                     <tbody id="bodyHistory"></tbody>

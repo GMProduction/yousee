@@ -74,4 +74,9 @@ class VendorController extends CustomController
     {
         return Vendor::all();
     }
+
+    public function delete($id){
+        Vendor::where('id','=',$id)->delete();
+        return 'berhasil';
+    }
 }

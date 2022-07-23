@@ -169,8 +169,8 @@ function createGoogleMapMarker(payload = []) {
 function windowContent(data, key, role = 'presence') {
 
     let vendor = '-';
-    if (data['vendor'] !== null) {
-        vendor = data['vendor']['name'];
+    if (data['vendor_all'] !== null) {
+        vendor = data['vendor_all']['name'];
     }
 
     let vendorElement = '';
@@ -221,12 +221,12 @@ function generateDetail(data) {
     $('#detail-title-tipe').html(data['type']['name']);
     $('#detail-title-nama').html('( ' + data['name'] + ' )');
     $('#single-map-container-street-view').html(data['url']);
-    $('#detail-vendor').val(data['vendor']['name']+' ('+data['vendor']['brand']+')');
-    $('#detail-vendor-address').val(data['vendor']['address']);
-    $('#detail-vendor-email').val(data['vendor']['email']);
-    $('#detail-vendor-phone').val(data['vendor']['phone']);
-    $('#detail-vendor-phone-pic').val(data['vendor']['picPhone']);
-    $('#detail-vendor-pic').val(data['vendor']['picName']);
+    $('#detail-vendor').val(data['vendor_all']['name']+' ('+data['vendor_all']['brand']+')');
+    $('#detail-vendor-address').val(data['vendor_all']['address']);
+    $('#detail-vendor-email').val(data['vendor_all']['email']);
+    $('#detail-vendor-phone').val(data['vendor_all']['phone']);
+    $('#detail-vendor-phone-pic').val(data['vendor_all']['picPhone']);
+    $('#detail-vendor-pic').val(data['vendor_all']['picName']);
     $('#detail-provinsi').val(data['city']['province']['name']);
     $('#detail-kota').val(data['city']['name']);
     $('#detail-alamat').val(data['address']);

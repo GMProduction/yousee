@@ -23,7 +23,7 @@ class ItemController extends CustomController
         $city     = \request('city');
         $type     = \request('type');
         $position = \request('position');
-        $item     = Item::with('city');
+        $item     = Item::with('vendorAll');
         if ($city) {
             $item = $item->where('city_id', $city);
         }
@@ -167,5 +167,10 @@ class ItemController extends CustomController
         $item = Item::findOrFail($id);
 
         return $item->url;
+    }
+
+    public function delete($id){
+        Item::where('id','=',$id)->delete();
+        return 'berhasil';
     }
 }

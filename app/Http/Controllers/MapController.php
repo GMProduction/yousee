@@ -26,7 +26,7 @@ class MapController extends CustomController
             $city = \request('city');
             $type = \request('type');
             $position = \request('position');
-            $item = Item::with('city');
+            $item = Item::with('vendorAll');
             if ($city && $city !== 'undefined'){
                 $item = $item->where('city_id', $city);
             }
