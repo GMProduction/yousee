@@ -145,6 +145,16 @@
                 $('#modaltambahtitik').modal('show')
             });
 
+            $(document).on('click','#deleteData', function () {
+                let id = $(this).data('id');
+                let name = $(this).data('name');
+                let data = {
+                  '_token': '{{csrf_token()}}'
+                };
+                deleteData(name,window.location.pathname+'/delete/'+id,data,datatable);
+                return false;
+            })
+
             function datatable() {
                 var url = window.location.pathname+'/datatable';
                 $('#table_id').DataTable({
@@ -204,7 +214,9 @@
                             "render": function (data, type, row) {
                                 let string = JSON.stringify(row);
                                 return "<div class='d-flex'>\n" +
-                                    "                                <a class='btn-success-soft sml rnd' data-id='" + data + "' data-row='" + string + "' id='editData'> <i class='material-icons menu-icon'>edit</i></a></div>";
+                                    " <a class='btn-success-soft sml rnd' data-id='" + data + "' data-row='" + string + "' id='editData'> <i class='material-icons menu-icon'>edit</i></a>" +
+                                    " <a class='btn-danger-soft sml rnd' data-id='" + data + "' data-name='" + row.name + "' id='deleteData'> <i class='material-icons menu-icon'>delete</i></a>" +
+                                    "</div>";
                             }
                         },
                     ]

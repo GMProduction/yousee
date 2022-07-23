@@ -51,6 +51,7 @@ Route::prefix('data')->middleware('auth')->group(
             function () {
                 Route::get('datatable', [\App\Http\Controllers\ItemController::class, 'datatable']);
                 Route::get('card', [\App\Http\Controllers\ItemController::class, 'cardItem']);
+                Route::post('delete/{id}', [\App\Http\Controllers\ItemController::class, 'delete']);
                 Route::post('post-item', [\App\Http\Controllers\ItemController::class, 'postItem']);
                 Route::get('url-street-view/{id}', [\App\Http\Controllers\ItemController::class, 'getUrlStreetView']);
             }
@@ -80,6 +81,7 @@ Route::prefix('admin')->middleware(\App\Http\Middleware\AdminMiddleware::class)-
             function () {
                 Route::match(['POST', 'GET'], '', [VendorController::class, 'index']);
                 Route::get('datatable', [\App\Http\Controllers\VendorController::class, 'datatable']);
+                Route::post('delete/{id}', [\App\Http\Controllers\VendorController::class, 'delete']);
                 Route::get('all', [\App\Http\Controllers\VendorController::class, 'getVendor']);
             }
         );

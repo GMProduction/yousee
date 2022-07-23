@@ -85,8 +85,6 @@ $(document).on("change", "#f-posisi", function (ev) {
 function pillSearch(a, text) {
     let pill = $("#pillSearch");
     let child = document.getElementById("pill" + a);
-    console.log("aaa", a);
-    console.log("text", text);
     if (child) {
         $("#pill" + a + " #text").html(text);
     } else {
@@ -132,8 +130,6 @@ $(document).on("click", "#removePill", function () {
 $(document).on("click", "#addData, #editData", async function () {
     let id = $(this).data("id");
     let data = $(this).data("row");
-    console.log(id);
-    console.log(data);
     $("#form #id").val(id);
     $('#form input[type="text"]').val("");
     $('#form input[type="number"]').val("");
@@ -151,7 +147,7 @@ $(document).on("click", "#addData, #editData", async function () {
         let url = await getUrl(data.id);
         changeSelectType(data.type.name);
         prov = data.city.province.id;
-        vendor = data.vendor?.id;
+        vendor = data.vendor_all?.id;
         $('#form #name').val(data.name);
         $('#form #address').val(data.address);
         $('#form #location').val(data.location);
@@ -195,7 +191,6 @@ $("#modaldetail").on("hidden.bs.modal", function () {
 
 $(document).on("click", "#detailData", async function () {
     let data = $(this).data("row");
-    console.log('sssssssssss',data);
     let id = data.id;
     await generateSingleGoogleMapData(data);
     $('#simple-modal-detail').modal('show');
@@ -291,10 +286,14 @@ function datatableItem() {
                 name: "address",
             },
             {
-                data: "vendor.name",
-                name: "vendor.name",
-                render: function (data) {
-                    return data ?? "-";
+                data: "vendor_all.name",
+                name: "vendorAll.name",
+                render: function (data,type,row) {
+                    let delet = '';
+                    if (row.vendor_all.deleted_at){
+                        delet = '<br><span style="color: red">( deleted )</span>'
+                    }
+                    return data +" "+delet;
                 },
             },
             {
@@ -342,21 +341,33 @@ function datatableItem() {
                     delete row["url"];
                     let string = JSON.stringify(row);
                     return (
-                        "<div class='d-flex'><a class='btn-utama-soft sml rnd me-1' data-row='" +
-                        string +
-                        "'  \n" +
-                        "                                                  id='detailData'> <i class='material-icons menu-icon'>map</i></a>\n" +
-                        "                                <a class='btn-success-soft sml rnd' data-id='" +
-                        data +
-                        "' data-row='" +
-                        string +
-                        "' id='editData'> <i class='material-icons menu-icon'>edit</i></a></div>"
+                        "<div class='d-flex'>" +
+                        "       <a class='btn-utama-soft sml rnd me-1' data-row='" +string +"' id='detailData'> <i class='material-icons menu-icon'>map</i></a>\n" +
+                        "       <a class='btn-success-soft sml rnd' data-id='" + data +"' data-row='" + string +"' id='editData'> <i class='material-icons menu-icon'>edit</i></a>" +
+                        "       <a class='btn-danger-soft sml rnd' data-id='" + data +"' data-row='" + string +"' id='deteleData'> <i class='material-icons menu-icon'>delete</i></a>" +
+                        "</div>"
                     );
                 },
             },
         ],
     });
 }
+
+$(document).on('click','#deteleData', function () {
+    let row = $(this).data('row');
+    let id = row.id;
+    let type = row.type.name;
+    let area = row.city.name;
+    let address = row.address;
+    let location = row.location;
+    let name = type+' '+area+', '+address+' ( '+location+' )';
+    let data = {
+        '_token':  $('meta[name="_token"]').attr('content')
+    };
+    deleteData(name, '/data/item/delete/'+id,data, datatableItem)
+    return false
+
+})
 
 function datatableItemPresence() {
     let formData = {
@@ -445,7 +456,6 @@ function saveItem() {
     form.submit(async function (e) {
         e.preventDefault(e);
         let formData = new FormData(this);
-        console.log(formData);
         // if ($('#image1').val()) {
         //     let img = await handleImageUpload($('#image1'));
         //     formData.append('image1', img, img.name)
