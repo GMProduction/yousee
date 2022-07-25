@@ -339,13 +339,16 @@ function datatableItem() {
                 searchable: false,
                 render: function (data, type, row) {
                     delete row["url"];
+                    let role = $('meta[name="role"]').attr('content');
                     let string = JSON.stringify(row);
+                    var dlt = '';
+                    if (role == 'pimpinan'){
+                        dlt = "<a class='btn-danger-soft sml rnd' data-id='" + data +"' data-row='" + string +"' id='deteleData'> <i class='material-icons menu-icon'>delete</i></a>";
+                    }
                     return (
                         "<div class='d-flex'>" +
                         "       <a class='btn-utama-soft sml rnd me-1' data-row='" +string +"' id='detailData'> <i class='material-icons menu-icon'>map</i></a>\n" +
-                        "       <a class='btn-success-soft sml rnd' data-id='" + data +"' data-row='" + string +"' id='editData'> <i class='material-icons menu-icon'>edit</i></a>" +
-                        "       <a class='btn-danger-soft sml rnd' data-id='" + data +"' data-row='" + string +"' id='deteleData'> <i class='material-icons menu-icon'>delete</i></a>" +
-                        "</div>"
+                        "       <a class='btn-success-soft sml rnd' data-id='" + data +"' data-row='" + string +"' id='editData'> <i class='material-icons menu-icon'>edit</i></a>"+dlt+"</div>"
                     );
                 },
             },
