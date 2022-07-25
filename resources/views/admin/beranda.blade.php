@@ -45,7 +45,7 @@
             font-weight: bold;
         }
     </style>
-    <script src="{{ asset('js/map-control.js') }}"></script>
+    <script src="{{ asset('js/map-control.js?v=2') }}"></script>
 @endsection
 @section('content')
     <div class="panel">
@@ -85,7 +85,11 @@
 
     {{-- @include('admin.map', ['data' => 'script']) --}}
 
+<<<<<<< HEAD
     <script src="{{ asset('js/item.js?v=1') }}"></script>
+=======
+    <script src="{{ asset('js/item.js?v=2') }}"></script>
+>>>>>>> 1bfaa888a6f4dc710be23828b5d7cf9ced7d9c91
     <script>
         $(document).ready(function() {
             onTabChange();
