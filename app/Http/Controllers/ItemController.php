@@ -92,9 +92,6 @@ class ItemController extends CustomController
                 'width'     => 'required',
                 'height'    => 'required',
                 'vendor_id' => 'required',
-                'qty'       => 'required',
-                'side'      => 'required',
-                'trafic'    => 'required',
             ]
         );
         $image1 = \request('image1');
@@ -106,6 +103,9 @@ class ItemController extends CustomController
 
         Arr::set($data, 'latitude', $str_arr[0]);
         Arr::set($data, 'longitude', $str_arr[1]);
+        Arr::set($data, 'qty', \request('qty'));
+        Arr::set($data, 'side', \request('side'));
+        Arr::set($data, 'trafic', \request('trafic'));
 
         if ($image1) {
             $image     = $this->generateImageName('image1');
