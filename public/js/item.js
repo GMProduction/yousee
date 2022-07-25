@@ -133,6 +133,7 @@ $(document).on("click", "#addData, #editData", async function () {
     $('#form input[type="number"]').val("");
     $('#form #qty').val("1").attr('readonly','');
     $('#form #side').val("1");
+    $('#form #trafic').val("0");
     $("#form select").val("");
     let fileImg1 = null,
         fileImg2 = null,

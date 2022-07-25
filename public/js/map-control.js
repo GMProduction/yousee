@@ -194,17 +194,22 @@ async function openDetail(element) {
 
 async function generateSingleGoogleMapData(id) {
     try {
-        // let response = await $.get('/map/data/' + id.id);
-        const url = await getUrl(id.id);
-
         let payload = id;
+
+        if (typeof id == 'string'){
+            let response = await $.get('/map/data/' + id);
+            payload = response.payload;
+        }else{
+            const url = await getUrl(id.id);
+            payload.url = url;
+        }
+
         console.log(payload['latitude'] + typeof payload['latitude'], payload['longitude']);
         const location = {lat: payload['latitude'], lng: payload['longitude']};
         map_container_single = new google.maps.Map(document.getElementById("single-map-container"), {
             zoom: 16,
             center: location,
         });
-        payload.url = url;
         new google.maps.Marker({
             position: new google.maps.LatLng(payload['latitude'], payload['longitude']),
             map: map_container_single,

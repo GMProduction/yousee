@@ -210,10 +210,10 @@ function saveDataAjaxWImage(title, form, form_data, url, resposeSuccess) {
                     error: function (error, xhr, textStatus) {
                         // console.log("LOG ERROR", error.responseJSON.errors);
                         // console.log("LOG ERROR", error.responseJSON.errors[Object.keys(error.responseJSON.errors)[0]][0]);
-                        console.log(xhr.status);
+                        $('#progressbar div').removeClass('bg-success').addClass('bg-danger');
+                        console.log(error);
                         console.log(textStatus);
-                        console.log(error.responseJSON);
-                        swal(error.responseJSON.errors ? error.responseJSON.errors[Object.keys(error.responseJSON.errors)[0]][0] : error.responseJSON['message'] ? error.responseJSON['message'] : error.responseJSON['msg'] )
+                        swal(JSON.parse(error.responseText).errors ? JSON.parse(error.responseText).errors[Object.keys(JSON.parse(error.responseText).errors)[0]][0] : JSON.parse(error.responseText)?.message ? JSON.parse(error.responseText).message : JSON.parse(error.responseText).msg ? JSON.parse(error.responseText).msg : error.responseJSON['msg'] )
 
                     }
                 })

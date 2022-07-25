@@ -158,7 +158,7 @@
     {{-- @include('admin.map', ['data' => 'script']) --}}
 
     {{--    <script src="{{ asset('js/map-control.js') }}"></script>--}}
-    <script src="{{ asset('js/item.js') }}"></script>
+    <script src="{{ asset('js/item.js?v=2') }}"></script>
     <script>
         $(document).ready(function () {
             // generateGoogleMapData().then(r => {})
