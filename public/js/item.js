@@ -290,7 +290,7 @@ function datatableItem() {
                 name: "vendorAll.name",
                 render: function (data,type,row) {
                     let delet = '';
-                    if (row.vendor_all.deleted_at){
+                    if (row.vendor_all?.deleted_at){
                         delet = '<br><span style="color: red">( deleted )</span>'
                     }
                     return data +" "+delet;
