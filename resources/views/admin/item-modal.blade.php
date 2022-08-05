@@ -76,7 +76,7 @@
                             <label for="position" class="form-label">Posisi</label>
                             <select class="form-select mb-3" aria-label="Default select example" id="position" required
                                     name="position">
-                                <option selected>Pilih Posisi</option>
+                                <option value="" selected>Pilih Posisi</option>
                                 <option value="Horizontal">Horizontal</option>
                                 <option value="Vertical">Vertical</option>
                             </select>
