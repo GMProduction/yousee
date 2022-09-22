@@ -112,14 +112,14 @@
                     <div class="row">
                         <div class="col-md-6 col-sm-12">
                             <div class="form-floating mb-3">
-                                <input class="form-control" id="height" type="number" name="height"
+                                <input class="form-control" id="height" type="text" name="height"
                                        placeholder="0">
                                 <label for="height" class="form-label">Panjang/Tinggi</label>
                             </div>
                         </div>
                         <div class="col-md-6 col-sm-12">
                             <div class="form-floating mb-3">
-                                <input type="number" class="form-control" id="width" name="width"
+                                <input type="text" class="form-control" id="width" name="width"
                                        placeholder="lebar">
                                 <label for="width" class="form-label">Lebar</label>
                             </div>

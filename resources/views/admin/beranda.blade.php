@@ -77,11 +77,12 @@
 @endsection
 
 @section('morejs')
-    <script src="{{ asset('js/number_formater.js') }}"></script>
+{{--    <script src="{{ asset('js/number_formater.js') }}"></script>--}}
     <script
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA1MgLuZuyqR_OGY3ob3M52N46TDBRI_9k&callback=initMap&v=weekly"
         async
     ></script>
+    <script src="{{ asset('js/currency.js') }}"></script>
 
     {{-- @include('admin.map', ['data' => 'script']) --}}
 
@@ -91,11 +92,13 @@
             onTabChange();
             getCard();
             datatableItem();
-            getSelect('type', '/data/type')
+            getSelect('type', '/data/type');
             setImgDropify('image1');
             setImgDropify('image2');
             setImgDropify('image3');
             saveItem();
+            currency('height');
+            currency('width');
             $('#province').select2({
                 dropdownParent: $("#modaltambahtitik")
             });

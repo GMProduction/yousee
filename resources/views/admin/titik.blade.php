@@ -150,7 +150,9 @@
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA1MgLuZuyqR_OGY3ob3M52N46TDBRI_9k&callback=initMap&v=weekly"
         async
     ></script>
-    <script src="{{ asset('js/number_formater.js') }}"></script>
+{{--    <script src="{{ asset('js/number_formater.js') }}"></script>--}}
+    <script src="{{ asset('js/currency.js') }}"></script>
+
     {{--    <script src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js"--}}
     {{--            integrity="sha512-BB3hKbKWOc9Ez/TAwyWxNXeoV9c1v6FIeYiBieIWkpLjauysF18NzgR1MBNBXf8/KABdlkX68nAhlwcDFLGPCQ=="--}}
     {{--            crossorigin=""></script>--}}
@@ -176,6 +178,8 @@
             setImgDropify('image2');
             setImgDropify('image3');
             saveItem();
+            currency('height');
+            currency('width');
             $('#province').select2({
                 dropdownParent: $("#modaltambahtitik")
             });
