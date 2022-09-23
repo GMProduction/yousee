@@ -434,6 +434,14 @@ function datatableItemPresence() {
                 name: "type.name",
             },
             {
+                data: "qty",
+                name: "qty",
+            },
+            {
+                data: "side",
+                name: "side",
+            },
+            {
                 data: "position",
                 name: "position",
             },

@@ -11,6 +11,8 @@
                     <th>Panjang / Tinggi</th>
                     <th>Lebar</th>
                     <th>Type</th>
+                    <th>Qty</th>
+                    <th>Side</th>
                     <th>Posisi</th>
                     <th>Action</th>
                 </tr>
@@ -24,6 +26,8 @@
                     <th>Panjang / Tinggi</th>
                     <th>Lebar</th>
                     <th>Type</th>
+                    <th>Qty</th>
+                    <th>Side</th>
                     <th>Posisi</th>
                     <th>Action</th>
                 </tr>
