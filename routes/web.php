@@ -5,6 +5,7 @@ use App\Http\Controllers\DaftarController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\MasterBarangController;
 use App\Http\Controllers\MasterPelangganController;
+use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\TipeController;
 use App\Http\Controllers\TitikController;
 use App\Http\Controllers\UserController;
@@ -27,16 +28,16 @@ Route::match(['POST', 'GET'], '/', [LoginController::class, 'index'])->middlewar
 Route::prefix('presence')->middleware(\App\Http\Middleware\PresenceMiddleware::class)->group(
     function () {
         Route::get('', [\App\Http\Controllers\PimpinanController::class, 'index']);
-//        Route::get('province', [\App\Http\Controllers\ProvinceController::class, 'province']);
-//        Route::get('province/{id}/city', [\App\Http\Controllers\ProvinceController::class, 'city']);
-//        Route::get('/city', [\App\Http\Controllers\ProvinceController::class, 'cityAll']);
-//        Route::get('user', [UserController::class, 'index']);
-//        Route::prefix('type')->group(
-//            function () {
-//                Route::match(['POST', 'GET'], '', [TipeController::class, 'index']);
-//                Route::get('datatable', [TipeController::class, 'datatable']);
-//            }
-//        );
+        //        Route::get('province', [\App\Http\Controllers\ProvinceController::class, 'province']);
+        //        Route::get('province/{id}/city', [\App\Http\Controllers\ProvinceController::class, 'city']);
+        //        Route::get('/city', [\App\Http\Controllers\ProvinceController::class, 'cityAll']);
+        //        Route::get('user', [UserController::class, 'index']);
+        //        Route::prefix('type')->group(
+        //            function () {
+        //                Route::match(['POST', 'GET'], '', [TipeController::class, 'index']);
+        //                Route::get('datatable', [TipeController::class, 'datatable']);
+        //            }
+        //        );
     }
 
 );
@@ -59,11 +60,10 @@ Route::prefix('data')->middleware('auth')->group(
     }
 );
 
-Route::prefix('admin/user')->middleware(\App\Http\Middleware\PimpinanMiddleware::class)->group(function (){
-    Route::match(['POST','GET'],'', [UserController::class, 'index']);
+Route::prefix('admin/user')->middleware(\App\Http\Middleware\PimpinanMiddleware::class)->group(function () {
+    Route::match(['POST', 'GET'], '', [UserController::class, 'index']);
     Route::post('status', [UserController::class, 'updateActive']);
     Route::get('datatable', [UserController::class, 'datatable']);
-
 });
 
 Route::prefix('admin')->middleware(\App\Http\Middleware\AdminMiddleware::class)->group(
@@ -94,6 +94,15 @@ Route::prefix('admin')->middleware(\App\Http\Middleware\AdminMiddleware::class)-
                 Route::get('datatable', [\App\Http\Controllers\ItemController::class, 'datatable']);
             }
         );
+
+        Route::prefix('project')->group(
+            function () {
+                Route::get('', [ProjectController::class, 'index']);
+                Route::get('/addproject', [ProjectController::class, 'indexTambahProject']);
+            }
+        );
+
+
         Route::get('history/{id}', [\App\Http\Controllers\HistoryController::class, 'getHistory']);
     }
 );

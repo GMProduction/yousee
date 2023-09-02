@@ -11,7 +11,7 @@
             <div class="title">
                 <p>Tipe Iklan</p>
                 <a class="btn-utama-soft sml rnd " id="addData">Vendor Baru <i
-                        class="material-icons menu-icon ms-2">add_circle</i></a>
+                        class="material-symbols-outlined menu-icon ms-2">add_circle</i></a>
             </div>
 
             <div class="isi">
@@ -52,8 +52,7 @@
         </div>
 
         <!-- Modal -->
-        <div class="modal fade" id="modaltambahtitik" tabindex="-1" aria-labelledby="modaltambahtitik"
-            aria-hidden="true">
+        <div class="modal fade" id="modaltambahtitik" tabindex="-1" aria-labelledby="modaltambahtitik" aria-hidden="true">
             <div class="modal-dialog ">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -71,17 +70,18 @@
                             </div>
                             <div class="form-floating mb-3">
                                 <input type="text" class="form-control" id="brand" name="brand" required
-                                       placeholder="Nama Tipe">
+                                    placeholder="Nama Tipe">
                                 <label for="brand" class="form-label">Brand</label>
                             </div>
 
                             <div class="mb-3">
                                 <label for="alamat" class="form-label">Alamat</label>
-                                <textarea type="text" class="form-control" id="address" name="address" rows="5" required placeholder="Alamat Vendor"></textarea>
+                                <textarea type="text" class="form-control" id="address" name="address" rows="5" required
+                                    placeholder="Alamat Vendor"></textarea>
                             </div>
                             <div class="form-floating mb-3">
                                 <input type="email" class="form-control" id="email" name="email" required
-                                       placeholder="Nama Tipe">
+                                    placeholder="Nama Tipe">
                                 <label for="email" class="form-label">Email</label>
                             </div>
                             <div class="form-floating mb-3">
@@ -91,12 +91,12 @@
                             </div>
                             <div class="form-floating mb-3">
                                 <input type="text" class="form-control" id="picName" name="picName" required
-                                       placeholder="Nama Tipe">
+                                    placeholder="Nama Tipe">
                                 <label for="picName" class="form-label">Nama PIC</label>
                             </div>
                             <div class="form-floating mb-3">
                                 <input type="text" class="form-control" id="picPhone" name="picPhone" required
-                                       placeholder="Nama Tipe">
+                                    placeholder="Nama Tipe">
                                 <label for="picPhone" class="form-label">Nomor PIC</label>
                             </div>
                             <div class="my-3">
@@ -131,7 +131,7 @@
                 $('#form .form-control').val('');
                 $('#form textarea').val('');
                 $('#form #id').val(id);
-                if (id){
+                if (id) {
                     $('#form #name').val(data.name);
                     $('#form #address').val(data.address);
                     $('#form #phone').val(data.phone);
@@ -145,24 +145,24 @@
                 $('#modaltambahtitik').modal('show')
             });
 
-            $(document).on('click','#deleteData', function () {
+            $(document).on('click', '#deleteData', function() {
                 let id = $(this).data('id');
                 let name = $(this).data('name');
                 let data = {
-                  '_token': '{{csrf_token()}}'
+                    '_token': '{{ csrf_token() }}'
                 };
-                deleteData(name,window.location.pathname+'/delete/'+id,data,datatable);
+                deleteData(name, window.location.pathname + '/delete/' + id, data, datatable);
                 return false;
             })
 
             function datatable() {
-                var url = window.location.pathname+'/datatable';
+                var url = window.location.pathname + '/datatable';
                 $('#table_id').DataTable({
                     destroy: true,
                     processing: true,
                     serverSide: true,
                     ajax: url,
-                    "fnRowCallback": function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+                    "fnRowCallback": function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
                         // debugger;
                         var numStart = this.fnPagingInfo().iStart;
                         var index = numStart + iDisplayIndexFull + 1;
@@ -170,8 +170,7 @@
                         $("td:first", nRow).html(index);
                         return nRow;
                     },
-                    columns: [
-                        {
+                    columns: [{
                             "className": '',
                             "orderable": false,
                             "data": null,
@@ -211,15 +210,20 @@
                         },
                         {
                             "data": "id",
-                            "render": function (data, type, row) {
+                            "render": function(data, type, row) {
                                 let role = $('meta[name="role"]').attr('content');
                                 var dlt = '';
-                                if (role == 'pimpinan'){
-                                    dlt = "<a class='btn-danger-soft sml rnd' data-id='" + data + "' data-name='" + row.name + "' id='deleteData'> <i class='material-icons menu-icon'>delete</i></a>";
+                                if (role == 'pimpinan') {
+                                    dlt = "<a class='btn-danger-soft sml rnd' data-id='" + data +
+                                        "' data-name='" + row.name +
+                                        "' id='deleteData'> <i class='material-symbols-outlined menu-icon'>delete</i></a>";
                                 }
                                 let string = JSON.stringify(row);
                                 return "<div class='d-flex'>\n" +
-                                    " <a class='btn-success-soft sml rnd' data-id='" + data + "' data-row='" + string + "' id='editData'> <i class='material-icons menu-icon'>edit</i></a>"+dlt+"</div>";
+                                    " <a class='btn-success-soft sml rnd' data-id='" + data + "' data-row='" +
+                                    string +
+                                    "' id='editData'> <i class='material-symbols-outlined menu-icon'>edit</i></a>" +
+                                    dlt + "</div>";
                             }
                         },
                     ]
@@ -229,7 +233,7 @@
 
             function saveDataPage() {
                 let form = $('#form');
-                form.submit(async function (e) {
+                form.submit(async function(e) {
                     e.preventDefault(e);
                     let formData = new FormData(this);
                     console.log(formData);

@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Yousee || {{auth()->user()->role}}</title>
+    <title>Yousee || {{ auth()->user()->role }}</title>
 
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
@@ -17,7 +17,8 @@
     <meta name="_token" content="{{ csrf_token() }}">
     <meta name="role" content="{{ auth()->user()->role }}">
     {{-- ICON --}}
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <link rel="stylesheet" type="text/css" href="{{ asset('datatable/datatables.min.css') }}" />
     <link href="{{ asset('css/dropify/css/dropify.css') }}" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
@@ -31,13 +32,10 @@
     <div class="header">
         <div class="header-panel-kiri">
             <a class="btn-icon " onclick="openNav()">
-                <span class="material-icons">menu
+                <span class="material-symbols-outlined">menu
                 </span>
             </a>
 
-            <p class="title">
-                YouSee
-            </p>
         </div>
 
         <p class="text-title text-center">
@@ -51,22 +49,23 @@
             </a>
 
             <ul class="dropdown-menu custom" aria-labelledby="dropdownprofile">
-                <li><a class="dropdown-item disabled" href="#">{{auth()->user()->email}}</a></li>
+                <li><a class="dropdown-item disabled" href="#">{{ auth()->user()->email }}</a></li>
                 <hr>
                 {{-- <li><a class="dropdown-item" href="#">Another action</a></li> --}}
                 <li><a class="dropdown-item text-danger" href="/logout">Logout</a></li>
             </ul>
 
-        </a>
+            </a>
 
-        <ul class="dropdown-menu custom" aria-labelledby="dropdownprofile">
-            <li><a class="dropdown-item disabled" href="#">{{auth()->user()->nama}}</a></li>
-            <hr>
-            {{-- <li><a class="dropdown-item" href="#">Another action</a></li> --}}
-            <li><a class="dropdown-item text-danger" href="/logout">Logout</a></li>
-        </ul>
 
-    </div>
+            <ul class="dropdown-menu custom" aria-labelledby="dropdownprofile">
+                <li><a class="dropdown-item disabled" href="#">{{ auth()->user()->nama }}</a></li>
+                <hr>
+                {{-- <li><a class="dropdown-item" href="#">Another action</a></li> --}}
+                <li><a class="dropdown-item text-danger" href="/logout">Logout</a></li>
+            </ul>
+
+        </div>
 
     </div>
 
@@ -76,96 +75,92 @@
         <nav id="sidebar" class="sidebar card py-2">
             <ul class="nav flex-column" id="nav_accordion">
 
-                <li class="nav-item">
-                    <a class="title-role" href="#"> Admin </a>
-                </li>
+
 
                 {{-- <li class="nav-item">
                 <a class="title-role" href="#"> Admin </a>
             </li>
             <li class="nav-item has-submenu">
                 <a class="nav-link menu" href="#">
-                    <i class="material-icons menu-icon">perm_identity</i>
+                    <i class="material-symbols-outlined menu-icon">perm_identity</i>
                     <p class="menu-text">Admin</p>
                 </a>
                 <ul class="submenu  collapse">
-                    <li><a class="nav-link menu" href="#"><i class="material-icons menu-icon">perm_identity</i>
+                    <li><a class="nav-link menu" href="#"><i class="material-symbols-outlined menu-icon">perm_identity</i>
                             <p class="menu-text">Submenu item 4</p>
                         </a></li>
                     <li><a class="nav-link menu" href="#">
-                            <i class="material-icons menu-icon">perm_identity</i>
+                            <i class="material-symbols-outlined menu-icon">perm_identity</i>
                             <p class="menu-text">Submenu item 4</p>
                         </a></li>
                     <li><a class="nav-link menu" href="#">
-                            <i class="material-icons menu-icon">perm_identity</i>
+                            <i class="material-symbols-outlined menu-icon">perm_identity</i>
                             <p class="menu-text">Submenu item 4</p>
                         </a> </li>
                 </ul>
             </li> --}}
 
 
+                <li class="mt-4 mb-3">
+                    <img class="w-100" src="{{ asset('images/local/yousee.png') }}" />
+                </li>
+
+
+
                 <li class="nav-item">
                     <a class="nav-link menu @if ($sidebar == 'beranda') active @endif " href="/admin">
-                        <i class="material-icons menu-icon">home</i>
+                        <span class="material-symbols-outlined menu-icon">
+                            home
+                        </span>
                         <p class="menu-text">Beranda</p>
                     </a>
                 </li>
                 @if (auth()->user()->role == 'pimpinan')
                     <li class="nav-item">
                         <a class="nav-link menu @if ($sidebar == 'user') active @endif" href="/admin/user">
-                            <i class="material-icons menu-icon">person</i>
+                            <i class="material-symbols-outlined menu-icon">person</i>
                             <p class="menu-text">User</p>
                         </a>
                     </li>
                 @endif
 
 
-                {{-- <li class="nav-item">
-                <a class="nav-link menu @if ($sidebar == 'history') active @endif" href="/admin/history">
-                    <i class="material-icons menu-icon">person</i>
-                    <p class="menu-text">History</p>
-                </a>
-            </li> --}}
 
-                {{-- <li class="nav-item has-submenu">
-                            <a class="nav-link menu @if ($sidebar == 'master') active @endif" href="#">
-                                <i class="material-icons menu-icon">content_paste</i>
-                                <p class="menu-text">Master</p>
-                            </a>
-                            <ul class="submenu  collapse ">
-                                <li><a class="nav-link menu @if ($sidebar == 'masterbarang') active @endif" href="/admin/masterbarang">
-                                        <i class="material-icons menu-icon">inventory</i>
-                                        <p class="menu-text">Barang</p>
-                                    </a></li>
-                                <li><a class="nav-link menu @if ($sidebar == 'masterpelanggan') active @endif" href="/admin/masterpelanggan">
-                                        <i class="material-icons menu-icon">account_box</i>
-                                        <p class="menu-text">Pelanggan</p>
-                                    </a></li>
-
-                            </ul>
-                        </li> --}}
 
                 <li class="nav-item has-submenu">
                     <a class="nav-link menu @if ($sidebar == 'vendor') active @endif" href="/admin/vendor">
-                        <i class="material-icons menu-icon">handshake</i>
+                        <i class="material-symbols-outlined menu-icon">handshake</i>
                         <p class="menu-text">Vendor</p>
                     </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link menu @if ($sidebar == 'tipe') active @endif" href="/admin/type">
-                        <i class="material-icons menu-icon">open_in_new</i>
+                        <i class="material-symbols-outlined menu-icon">open_in_new</i>
                         <p class="menu-text">Tipe Iklan</p>
                     </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link menu @if ($sidebar == 'titik') active @endif" href="/admin/titik">
-                        <i class="material-icons menu-icon">width_full</i>
+                        <i class="material-symbols-outlined menu-icon">width_full</i>
                         <p class="menu-text">Titik Iklan</p>
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link menu @if ($sidebar == 'project') active @endif" href="/admin/project">
+                        <i class="material-symbols-outlined menu-icon">assignment</i>
+                        <p class="menu-text">Project</p>
+                    </a>
+                </li>
+
+                <li class="nav-item text-center mt-3 mb-3">
+
+                    <a class="title1-role " href="#"> Login Sebagai </a> <br>
+                    <a class="title-role " href="#"> Admin </a>
+                </li>
+
                 {{-- <li class="nav-item">
                 <a class="nav-link menu" href="/logout">
-                    <i class="material-icons menu-icon">person</i>
+                    <i class="material-symbols-outlined menu-icon">person</i>
                     <p class="menu-text">Logout</p>
                 </a>
             </li> --}}
