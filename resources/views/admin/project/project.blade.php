@@ -30,7 +30,25 @@
                             </tr>
                         </thead>
                         <tbody>
+                            <tr>
+                                <td>#</td>
+                                <td>Nama Project</td>
+                                <td>Tanggal Request</td>
+                                <td>Jumlah Titik</td>
+                                <td>PIC Client</td>
+                                <td>Berlampu</td>
+                                <td>Durasi</td>
+                                <td>
+                                    <div class='d-flex'><a class="btn-utama sml rnd  me-1" href="project/addproject"
+                                            id="addData"> <i
+                                                class='material-symbols-outlined menu-icon text-white'>info</i></a>
 
+                                        <a class="btn-danger sml rnd  me-1" href="project/addproject" id="addData"> <i
+                                                class='material-symbols-outlined menu-icon text-white'>delete</i></a>
+
+                                    </div>
+                                </td>
+                            </tr>
                         </tbody>
                         <tfoot>
                             <tr>

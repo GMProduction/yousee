@@ -360,6 +360,34 @@ input.form-control {
   box-shadow: 2px 2px 20px rgba(78, 40, 247, 0.4);
 }
 
+.btn-danger {
+  all: unset;
+  transition: all 0.5s;
+  display: block;
+  text-align: center;
+  border: none;
+  background-color: #f72828;
+  color: white;
+  border-radius: 5px;
+  padding: 10px;
+  cursor: pointer;
+}
+.btn-danger.flex {
+  display: flex;
+}
+.btn-danger.sml {
+  padding: 3px 10px;
+  font-size: 0.8rem;
+}
+.btn-danger.rnd {
+  border-radius: 10px;
+}
+.btn-danger:hover {
+  transition: all 0.5s;
+  color: white;
+  box-shadow: 2px 2px 20px rgba(78, 40, 247, 0.4);
+}
+
 .btn-link-maps {
   all: unset;
   transition: all 0.5s;

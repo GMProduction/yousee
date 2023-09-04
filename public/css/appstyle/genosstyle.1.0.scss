@@ -456,6 +456,39 @@ input.form-control {
   }
 }
 
+.btn-danger {
+  all: unset;
+  transition: all 0.5s;
+  display: block;
+  text-align: center;
+  border: none;
+  background-color: $danger-color;
+  color: white;
+  border-radius: 5px;
+  padding: 10px;
+  // box-shadow: 1px 1px 5px $shadow-primary-color;
+  cursor: pointer;
+
+  &.flex {
+    display: flex;
+  }
+  &.sml {
+    padding: 3px 10px;
+    font-size: 0.8rem;
+  }
+
+  &.rnd {
+    border-radius: $rounded;
+  }
+
+  &:hover {
+    transition: all 0.5s;
+    color: white;
+
+    box-shadow: 2px 2px 20px $shadow-primary-color;
+  }
+}
+
 .btn-link-maps {
   all: unset;
   transition: all 0.5s;
