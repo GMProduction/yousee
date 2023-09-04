@@ -154,7 +154,7 @@
                                                 <td>
                                                     <div class='d-flex'><a class="btn-utama sml rnd  me-1"
                                                             href="project/addproject" id="addData"> <i
-                                                                class='material-symbols-outlined menu-icon text-white'>arrow_forward</i></a>
+                                                                class='material-symbols-outlined menu-icon text-white'>arrow_right_alt</i></a>
 
 
                                                     </div>

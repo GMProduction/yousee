@@ -214,13 +214,14 @@
                                 let role = $('meta[name="role"]').attr('content');
                                 var dlt = '';
                                 if (role == 'pimpinan') {
-                                    dlt = "<a class='btn-danger-soft sml rnd' data-id='" + data +
+                                    dlt = "<a class='btn-danger-soft sml me-1' data-id='" + data +
                                         "' data-name='" + row.name +
                                         "' id='deleteData'> <i class='material-symbols-outlined menu-icon'>delete</i></a>";
                                 }
                                 let string = JSON.stringify(row);
                                 return "<div class='d-flex'>\n" +
-                                    " <a class='btn-success-soft sml rnd' data-id='" + data + "' data-row='" +
+                                    " <a class='btn-success-soft sml rnd me-1' data-id='" + data +
+                                    "' data-row='" +
                                     string +
                                     "' id='editData'> <i class='material-symbols-outlined menu-icon'>edit</i></a>" +
                                     dlt + "</div>";

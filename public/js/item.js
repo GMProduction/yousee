@@ -338,22 +338,22 @@ function datatableItem() {
           var dlt = "";
           if (role == "pimpinan") {
             dlt =
-              "<a class='btn-danger-soft sml rnd' data-id='" +
+              "<a class='btn-danger-soft sml rnd  me-1' data-id='" +
               data +
               "' data-row='" +
               string +
-              "' id='deteleData'> <i class='material-symbols-outlined menu-icon'>delete</i></a>";
+              "' id='deteleData'> <i class='material-symbols-outlined menu-icon  me-1'>delete</i></a>";
           }
           return (
             "<div class='d-flex'>" +
             "       <a class='btn-utama-soft sml rnd me-1' data-row='" +
             string +
             "' id='detailData'> <i class='material-symbols-outlined menu-icon'>map</i></a>\n" +
-            "       <a class='btn-success-soft sml rnd' data-id='" +
+            "       <a class='btn-success-soft sml rnd me-1' data-id='" +
             data +
             "' data-row='" +
             string +
-            "' id='editData'> <i class='material-symbols-outlined menu-icon'>edit</i></a>" +
+            "' id='editData'> <i class='material-symbols-outlined  me-1 menu-icon'>edit</i></a>" +
             dlt +
             "</div>"
           );
