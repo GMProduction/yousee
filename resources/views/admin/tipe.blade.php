@@ -11,7 +11,7 @@
             <div class="title">
                 <p>Tipe Iklan</p>
                 <a class="btn-utama-soft sml rnd " id="addData">Tipe Baru <i
-                        class="material-icons menu-icon ms-2">add_circle</i></a>
+                        class="material-symbols-outlined menu-icon ms-2">add_circle</i></a>
             </div>
 
             <div class="isi">
@@ -34,8 +34,8 @@
                             {{-- </td> --}}
 
                             {{-- <td class="d-flex"><a class="btn-utama-soft sml rnd me-1" data-bs-toggle="modal" --}}
-                            {{-- data-bs-target="#modaldetail"> <i class="material-icons menu-icon ">map</i></a> --}}
-                            {{-- <a class="btn-success-soft sml rnd "> <i class="material-icons menu-icon ">edit</i></a> --}}
+                            {{-- data-bs-target="#modaldetail"> <i class="material-symbols-outlined menu-icon ">map</i></a> --}}
+                            {{-- <a class="btn-success-soft sml rnd "> <i class="material-symbols-outlined menu-icon ">edit</i></a> --}}
                             {{-- </td> --}}
                             {{-- </tr> --}}
                         </tbody>
@@ -54,8 +54,7 @@
         </div>
 
         <!-- Modal -->
-        <div class="modal fade" id="modaltambahtitik" tabindex="-1" aria-labelledby="modaltambahtitik"
-            aria-hidden="true">
+        <div class="modal fade" id="modaltambahtitik" tabindex="-1" aria-labelledby="modaltambahtitik" aria-hidden="true">
             <div class="modal-dialog modal-sm">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -75,8 +74,9 @@
                             <div class="mb-3">
                                 <label for="icontipe" class="form-label">Icon Tipe</label>
                                 {{-- <input class="form-control form-control-sm" id="icontipe" type="file"> --}}
-                                <input type="file" id="icon" name="" class="image" required data-min-height="10"
-                                    accept="image/jpeg, image/jpg, image/png" data-allowed-file-extensions="jpg jpeg png" />
+                                <input type="file" id="icon" name="" class="image" required
+                                    data-min-height="10" accept="image/jpeg, image/jpg, image/png"
+                                    data-allowed-file-extensions="jpg jpeg png" />
                             </div>
 
                             <div class="my-3">
@@ -161,7 +161,7 @@
                             return "<div class='d-flex'>\n" +
                                 "                                <a class='btn-success-soft sml rnd' data-id='" +
                                 data + "' data-row='" + string +
-                                "' id='editData'> <i class='material-icons menu-icon'>edit</i></a></div>";
+                                "' id='editData'> <i class='material-symbols-outlined menu-icon'>edit</i></a></div>";
                         }
                     },
                 ]

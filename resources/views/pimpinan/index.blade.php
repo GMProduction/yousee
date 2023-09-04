@@ -73,7 +73,7 @@
             <div class="ms-auto">
                 <a class="btn-utama sml rnd flex" href="#" role="button" id="dropdownprofile"
                     data-bs-toggle="dropdown" style="padding-top: 5px; padding-bottom: 5px; border-radius: 10px">Filter
-                    <i class="material-icons menu-icon ms-2 ">filter_list</i></a>
+                    <i class="material-symbols-outlined menu-icon ms-2 ">filter_list</i></a>
                 <ul id="dropSearch" class="dropdown-menu custom" aria-labelledby="dropdownprofile">
                     <div class="filter-panel">
                         <div class="form-group">
@@ -120,7 +120,7 @@
             <div class="tab-content">
                 <div class="tab-pane fade " id="pills-tabel" role="tabpanel" aria-labelledby="pills-tabel-tab">
                     <div class="panel">
-                        @include('admin.item-table',['tabel' => 'presence'])
+                        @include('admin.item-table', ['tabel' => 'presence'])
 
                     </div>
 

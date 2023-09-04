@@ -22,6 +22,7 @@
         .select2-selection__arrow {
             height: 36px !important;
         }
+
         #map {
             height: 500px;
             width: 100%
@@ -63,7 +64,7 @@
     <div class="panel">
         <div class="title">
             <p>Titik yang baru dimasukan</p>
-            <a class="btn-utama-soft sml rnd " id="addData">Titik Baru <i class="material-icons menu-icon ms-2"
+            <a class="btn-utama-soft sml rnd " id="addData">Titik Baru <i class="material-symbols-outlined menu-icon ms-2"
                     data-toggle="modal" data-bs-backdrop="static">add_circle</i></a>
         </div>
 
@@ -77,11 +78,10 @@
 @endsection
 
 @section('morejs')
-{{--    <script src="{{ asset('js/number_formater.js') }}"></script>--}}
+    {{--    <script src="{{ asset('js/number_formater.js') }}"></script> --}}
     <script
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA1MgLuZuyqR_OGY3ob3M52N46TDBRI_9k&callback=initMap&v=weekly"
-        async
-    ></script>
+        async></script>
     <script src="{{ asset('js/currency.js') }}"></script>
 
     {{-- @include('admin.map', ['data' => 'script']) --}}
