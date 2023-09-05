@@ -4,6 +4,10 @@
     Tambah Project Yousee
 @endsection
 
+@section('css')
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
+@endsection
 @section('content')
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
@@ -25,10 +29,13 @@
                             <label for="inp_nama" class="form-label">Nama Project</label>
                         </div>
 
-                        <div class="form-floating mb-3">
-                            <input type="text" class="form-control" id="inp_tgl_req" name="inp_tgl_req" required
+                        <div class="form-floating mb-3 nput-group date " id="datepicker" data-provide="datepicker">
+                            <input type="text" class="form-control" id="date" name="inp_tgl_req" required
                                 placeholder="Tanggal Request">
-                            <label for="inp_tgl_req" class="form-label">Tanggal Request</label>
+                            <label for="date" class="form-label">Tanggal Request</label>
+                            <div class="input-group-addon">
+                                <span class="glyphicon glyphicon-th"></span>
+                            </div>
                         </div>
 
                         <div class="d-flex align-items-stretch mb-3 ">
@@ -351,29 +358,15 @@
 
 @section('morejs')
     <script src="{{ asset('js/number_formater.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
 
     <script>
-        $(document).on('click', '#addData, #editData', function() {
-            let id = $(this).data('id');
-            let data = $(this).data('row');
-            $('#form #name').val('');
-            $('#form #id').val(id);
-
-
-            $('#modaltambahtitik').modal('show')
-        })
-
-
-
-
-        function afterSave() {
-            $('#modaltambahtitik').modal('hide')
-            datatable();
-        }
+        $(function() {
+            $('#datepicker').datepicker({
+                format: 'dd/mm/yyyy',
+                todayHighlight: 'TRUE',
+                autoclose: true,
+            });
+        });
     </script>
 @endsection
-
-
-</body>
-
-</html>

@@ -4,11 +4,11 @@ body {
 }
 
 .text-prim {
-  color: #4e28f7;
+  color: #4e28f7 !important;
 }
 
 .text-success {
-  color: #16ca5b;
+  color: #16ca5b !important;
 }
 
 .text-grey {
@@ -501,7 +501,7 @@ input.form-control {
   text-align: center;
   border: none;
   background-color: #d0ffce;
-  color: #16ca5b;
+  color: white;
   border-radius: 5px;
   padding: 10px;
   font-weight: bold;

@@ -83,7 +83,19 @@
                     </table>
                 </div>
             </div>
+
+            <div class="pb-4 ps-4 pe-4 d-flex ">
+                <a class="btn-utama-soft sml rnd me-2 ms-auto" data-bs-toggle="modal" data-bs-target="#modaltambahtitik"
+                    id="addData">Simpan
+                    (PDF)<i class="material-symbols-outlined menu-icon ms-2 text-prim">picture_as_pdf</i></a>
+
+                <a class="btn-success-soft sml rnd " data-bs-toggle="modal" data-bs-target="#modaltambahtitik"
+                    id="addData">Simpan
+                    (Excel)<i class="material-symbols-outlined menu-icon ms-2 text-success">border_all</i></a>
+            </div>
         </div>
+
+
     </div>
 @endsection
 
@@ -110,8 +122,3 @@
         }
     </script>
 @endsection
-
-
-</body>
-
-</html>

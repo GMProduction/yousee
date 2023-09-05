@@ -45,11 +45,11 @@ body {
 }
 
 .text-prim {
-  color: $primary-color;
+  color: $primary-color !important;
 }
 
 .text-success {
-  color: $success-color;
+  color: $success-color !important;
 }
 
 .text-grey {
@@ -619,7 +619,7 @@ input.form-control {
   display: flex;
   text-align: center;
   border: none;
-  background-color: $background-success;
+  background-color: $background-success-color;
   color: white;
   border-radius: 5px;
   padding: 10px;

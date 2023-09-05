@@ -31,7 +31,7 @@
                             <label for="inp_tgl_req" class="form-label">Tanggal Request</label>
                         </div>
 
-                        <div class="form-floating me-1">
+                        <div class="form-floating mb-3">
                             <input type="text" readonly class="form-control" id="inp_durasi" name="inp_durasi" required
                                 placeholder="Nama Tipe">
                             <label for="inp_durasi" class="form-label">Durasi</label>

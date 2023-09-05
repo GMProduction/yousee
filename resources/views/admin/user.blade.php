@@ -251,8 +251,3 @@
         }
     </script>
 @endsection
-
-
-</body>
-
-</html>

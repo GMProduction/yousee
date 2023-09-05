@@ -113,29 +113,4 @@
 
 @section('morejs')
     <script src="{{ asset('js/number_formater.js') }}"></script>
-
-    <script>
-        $(document).on('click', '#addData, #editData', function() {
-            let id = $(this).data('id');
-            let data = $(this).data('row');
-            $('#form #name').val('');
-            $('#form #id').val(id);
-
-
-            $('#modaltambahtitik').modal('show')
-        })
-
-
-
-
-        function afterSave() {
-            $('#modaltambahtitik').modal('hide')
-            datatable();
-        }
-    </script>
 @endsection
-
-
-</body>
-
-</html>
