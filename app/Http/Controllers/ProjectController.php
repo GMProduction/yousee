@@ -21,4 +21,14 @@ class ProjectController extends Controller
     {
         return view('admin.project.tambahproject', ['sidebar' => 'project']);
     }
+
+    public function indexDetailProject()
+    {
+        return view('admin.project.detailproject', ['sidebar' => 'project']);
+    }
+
+    public function indexBuatHarga()
+    {
+        return view('admin.project.formharga', ['sidebar' => 'project']);
+    }
 }

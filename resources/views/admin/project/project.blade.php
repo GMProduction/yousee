@@ -39,7 +39,7 @@
                                 <td>Berlampu</td>
                                 <td>Durasi</td>
                                 <td>
-                                    <div class='d-flex'><a class="btn-utama sml rnd  me-1" href="project/addproject"
+                                    <div class='d-flex'><a class="btn-utama sml rnd  me-1" href="/admin/project/detail/1"
                                             id="addData"> <i
                                                 class='material-symbols-outlined menu-icon text-white'>info</i></a>
 

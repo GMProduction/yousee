@@ -8,7 +8,7 @@
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="/admin/project">Project</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Tambah Project</li>
+            <li class="breadcrumb-item active" aria-current="page">Detail Project</li>
         </ol>
     </nav>
 
@@ -20,74 +20,48 @@
                         @csrf
                         <input id="id" name="id" hidden>
                         <div class="form-floating mb-3">
-                            <input type="text" class="form-control" id="inp_nama" name="inp_nama" required
+                            <input type="text" readonly class="form-control" id="inp_nama" name="inp_nama" required
                                 placeholder="Nama Project">
                             <label for="inp_nama" class="form-label">Nama Project</label>
                         </div>
 
                         <div class="form-floating mb-3">
-                            <input type="text" class="form-control" id="inp_tgl_req" name="inp_tgl_req" required
+                            <input type="text" readonly class="form-control" id="inp_tgl_req" name="inp_tgl_req" required
                                 placeholder="Tanggal Request">
                             <label for="inp_tgl_req" class="form-label">Tanggal Request</label>
                         </div>
 
-                        <div class="d-flex align-items-stretch mb-3 ">
-                            <div class="form-floating me-1">
-                                <input type="text" class="form-control" id="inp_durasi" name="inp_durasi" required
-                                    placeholder="Nama Tipe">
-                                <label for="inp_durasi" class="form-label">Durasi</label>
-                            </div>
-                            <select class="form-select" aria-label="Default select example">
-                                <option selected>Pilih Durasi</option>
-                                <option value="1">Hari</option>
-                                <option value="2">Bulan</option>
-                                <option value="3">Tahun</option>
-                            </select>
+                        <div class="form-floating me-1">
+                            <input type="text" readonly class="form-control" id="inp_durasi" name="inp_durasi" required
+                                placeholder="Nama Tipe">
+                            <label for="inp_durasi" class="form-label">Durasi</label>
                         </div>
 
+
                         <div class="form-floating mb-3">
-                            <input type="text" class="form-control" id="inp_budget" name="inp_budget" required
+                            <input type="text" readonly class="form-control" id="inp_budget" name="inp_budget" required
                                 placeholder="Nama Tipe">
                             <label for="inp_budget" class="form-label">Budget</label>
                         </div>
 
                         <div class="form-floating mb-3">
-                            <input type="text" class="form-control" id="inp_pic_client" name="inp_pic_client" required
-                                placeholder="Nama PIC">
+                            <input type="text" readonly class="form-control" id="inp_pic_client" name="inp_pic_client"
+                                required placeholder="Nama PIC">
                             <label for="inp_budget" class="form-label">PIC Client</label>
                         </div>
 
-                        <div class="mb-3 ">
+                        <div class="form-floating mb-3">
+                            <input type="text" readonly class="form-control" id="inp_berlampu" name="inp_berlampu"
+                                required placeholder="Berlampu">
                             <label for="inp_berlampu" class="form-label">Berlampu</label>
-                            <div class="d-flex">
-                                <div class="form-check me-3">
-                                    <input class="form-check-input" type="radio" name="inp_berlampu" id="inp_berlampu_ya">
-                                    <label class="form-check-label" for="inp_berlampu_ya">
-                                        Ya
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="inp_berlampu"
-                                        id="inp_berlampu_tidak" checked>
-                                    <label class="form-check-label" for="inp_berlampu_tidak">
-                                        Tidak
-                                    </label>
-                                </div>
-                            </div>
                         </div>
 
                         <div class="form-floating mb-3 ">
                             <textarea style="height: auto;" type="text" class="form-control" id="name" name="name" rows="10"
-                                required placeholder="Nama Tipe"></textarea>
+                                readonly placeholder="Nama Tipe"></textarea>
                             <label for="name" class="form-label">Keterangan</label>
                         </div>
 
-                        <div class="my-3">
-                            <div class="d-flex">
-                                <button type="submit" class="btn-utama" style="width: 100%">Simpan</button>
-                            </div>
-
-                        </div>
                     </form>
                 </div>
             </div>
@@ -96,13 +70,13 @@
                     <div class="title">
                         <p>Data Titik</p>
                         <div class="d-flex">
-                            <a class="btn-success-soft sml rnd me-2" data-bs-toggle="modal"
-                                data-bs-target="#modaltambahpictitik">Tambah PIC titik<i
-                                    class="material-symbols-outlined menu-icon ms-2 text-success">add_circle</i></a>
+
+                            <a class="btn-success-soft sml rnd me-2" href="/admin/project/buatharga/1">Buat
+                                Harga<i class="material-symbols-outlined menu-icon ms-2 text-success">receipt_long</i></a>
 
                             <a class="btn-utama-soft sml rnd " data-bs-toggle="modal" data-bs-target="#modaltambahtitik"
-                                id="addData">Tambah Titik <i
-                                    class="material-symbols-outlined menu-icon ms-2 text-grey">arrow_right_alt</i></a>
+                                id="addData">Gunakan Titik Untuk Project Baru<i
+                                    class="material-symbols-outlined menu-icon ms-2 text-prim">arrow_right_alt</i></a>
                         </div>
                     </div>
                     <div class="isi">
@@ -115,7 +89,7 @@
                                         <th>Lokasi titik</th>
                                         <th>PIC /titik</th>
                                         <th>Harga Vendor</th>
-                                        <th>Action</th>
+                                        <th>Pilih</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -125,14 +99,7 @@
                                     <td>PIC /titik</td>
                                     <td>Harga Vendor</td>
                                     <td>
-                                        <div class='d-flex'><a class="btn-success sml rnd  me-1"
-                                                href="/admin/project/detail/1" id="addData"> <i
-                                                    class='material-symbols-outlined menu-icon text-white'>edit</i></a>
-
-                                            <a class="btn-danger sml rnd  me-1" href="project/addproject" id="addData">
-                                                <i class='material-symbols-outlined menu-icon text-white'>delete</i></a>
-
-                                        </div>
+                                        <input class="form-check-input" type="checkbox" value="">
                                     </td>
                                 </tbody>
                                 <tfoot>
@@ -142,7 +109,7 @@
                                         <th>Lokasi titik</th>
                                         <th>PIC /titik</th>
                                         <th>Harga Vendor</th>
-                                        <th>Action</th>
+                                        <th>Pilih</th>
                                     </tr>
                                 </tfoot>
                             </table>
@@ -174,8 +141,7 @@
 
         </div>
         <!-- Modal Tambah Titik-->
-        <div class="modal fade" id="modaltambahtitik" tabindex="-1" aria-labelledby="modaltambahtitik"
-            aria-hidden="true">
+        <div class="modal fade" id="modaltambahtitik" tabindex="-1" aria-labelledby="modaltambahtitik" aria-hidden="true">
             <div class="modal-dialog modal-xl">
                 <div class="modal-content">
                     <div class="modal-header">

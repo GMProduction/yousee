@@ -44,7 +44,7 @@ body {
   background-color: #fafcff !important;
 }
 
-.text-primary {
+.text-prim {
   color: $primary-color;
 }
 
@@ -549,7 +549,7 @@ input.form-control {
   text-align: center;
   border: none;
   background-color: $background-primary-color;
-  color: gray;
+  color: $primary-color;
   border-radius: 5px;
   padding: 10px;
   font-weight: bold;
@@ -611,6 +611,41 @@ input.form-control {
     transition: all 0.5s;
     // box-shadow: 2px 2px 20px $shadow-danger-color;
     color: $danger-soft-color1;
+  }
+}
+.btn-success {
+  all: unset;
+  transition: all 0.5s;
+  display: flex;
+  text-align: center;
+  border: none;
+  background-color: $background-success;
+  color: white;
+  border-radius: 5px;
+  padding: 10px;
+  font-weight: bold;
+  align-items: center;
+  // box-shadow: 1px 1px 5px $shadow-primary-color;
+  cursor: pointer;
+
+  a {
+    display: block;
+  }
+
+  &.sml {
+    padding: 3px 10px;
+    font-size: 0.8rem;
+    line-height: 0.8rem;
+  }
+
+  &.rnd {
+    border-radius: $rounded;
+  }
+
+  &:hover {
+    transition: all 0.5s;
+    // box-shadow: 2px 2px 20px $shadow-success-color;
+    color: $success-soft-color1;
   }
 }
 

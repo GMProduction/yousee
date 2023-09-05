@@ -3,7 +3,7 @@ body {
   background-color: #fafcff !important;
 }
 
-.text-primary {
+.text-prim {
   color: #4e28f7;
 }
 
@@ -441,7 +441,7 @@ input.form-control {
   text-align: center;
   border: none;
   background-color: #e7ceff;
-  color: gray;
+  color: #4e28f7;
   border-radius: 5px;
   padding: 10px;
   font-weight: bold;
@@ -492,6 +492,36 @@ input.form-control {
 .btn-danger-soft:hover {
   transition: all 0.5s;
   color: #be2d2d;
+}
+
+.btn-success {
+  all: unset;
+  transition: all 0.5s;
+  display: flex;
+  text-align: center;
+  border: none;
+  background-color: #d0ffce;
+  color: #16ca5b;
+  border-radius: 5px;
+  padding: 10px;
+  font-weight: bold;
+  align-items: center;
+  cursor: pointer;
+}
+.btn-success a {
+  display: block;
+}
+.btn-success.sml {
+  padding: 3px 10px;
+  font-size: 0.8rem;
+  line-height: 0.8rem;
+}
+.btn-success.rnd {
+  border-radius: 10px;
+}
+.btn-success:hover {
+  transition: all 0.5s;
+  color: #1fa552;
 }
 
 .btn-success-soft {
