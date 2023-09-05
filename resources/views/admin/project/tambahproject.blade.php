@@ -125,11 +125,10 @@
                                     <td>PIC /titik</td>
                                     <td>Harga Vendor</td>
                                     <td>
-                                        <div class='d-flex'><a class="btn-success sml rnd  me-1"
-                                                href="/admin/project/detail/1" id="addData"> <i
+                                        <div class='d-flex'><a class="btn-success sml rnd  me-1"> <i
                                                     class='material-symbols-outlined menu-icon text-white'>edit</i></a>
 
-                                            <a class="btn-danger sml rnd  me-1" href="project/addproject" id="addData">
+                                            <a class="btn-danger sml rnd  me-1" href="project/addproject">
                                                 <i class='material-symbols-outlined menu-icon text-white'>delete</i></a>
 
                                         </div>

@@ -30,16 +30,44 @@
                                 <th>PIC /titik</th>
                                 <th>Harga Vendor</th>
                                 <th>Harga Jual</th>
+                                <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <td>1</td>
-                            <td>Kota</td>
-                            <td>Lokasi titik</td>
-                            <td>PIC /titik</td>
-                            <td>Harga Vendor</td>
-                            <td>Harga Jual</td>
-
+                            <tr>
+                                <td>1</td>
+                                <td>Kota</td>
+                                <td>Lokasi titik</td>
+                                <td>PIC /titik</td>
+                                <td>Harga Vendor</td>
+                                <td>
+                                    <input type="text" class="form-control" id="in_hargajual" name="in_hargajual"
+                                        required placeholder="Harga Jual">
+                                </td>
+                                <td>
+                                    <div class='d-flex'>
+                                        <a class="btn-utama sml rnd  me-1" href="#">
+                                            <i class='material-symbols-outlined menu-icon text-white'>save</i></a>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>1</td>
+                                <td>Kota</td>
+                                <td>Lokasi titik</td>
+                                <td>PIC /titik</td>
+                                <td>Harga Vendor</td>
+                                <td>
+                                    <input type="text" class="form-control" id="in_hargajual" name="in_hargajual"
+                                        required placeholder="Harga Jual">
+                                </td>
+                                <td>
+                                    <div class='d-flex'>
+                                        <a class="btn-utama sml rnd  me-1" href="#">
+                                            <i class='material-symbols-outlined menu-icon text-white'>save</i></a>
+                                    </div>
+                                </td>
+                            </tr>
                         </tbody>
                         <tfoot>
                             <tr>
@@ -49,14 +77,13 @@
                                 <th>PIC /titik</th>
                                 <th>Harga Vendor</th>
                                 <th>Harga Jual</th>
+                                <th>Action</th>
                             </tr>
                         </tfoot>
                     </table>
                 </div>
             </div>
-
         </div>
-
     </div>
 @endsection
 
