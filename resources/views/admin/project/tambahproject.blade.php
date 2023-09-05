@@ -25,16 +25,30 @@
                             <label for="inp_tgl_req" class="form-label">Tanggal Request</label>
                         </div>
 
-                        <div class="form-floating mb-3">
-                            <input type="text" class="form-control" id="inp_durasi" name="inp_durasi" required
-                                placeholder="Nama Tipe">
-                            <label for="inp_durasi" class="form-label">Durasi</label>
+                        <div class="d-flex align-items-stretch mb-3 ">
+                            <div class="form-floating me-1">
+                                <input type="text" class="form-control" id="inp_durasi" name="inp_durasi" required
+                                    placeholder="Nama Tipe">
+                                <label for="inp_durasi" class="form-label">Durasi</label>
+                            </div>
+                            <select class="form-select" aria-label="Default select example">
+                                <option selected>Pilih Durasi</option>
+                                <option value="1">Hari</option>
+                                <option value="2">Bulan</option>
+                                <option value="3">Tahun</option>
+                            </select>
                         </div>
 
                         <div class="form-floating mb-3">
                             <input type="text" class="form-control" id="inp_budget" name="inp_budget" required
                                 placeholder="Nama Tipe">
                             <label for="inp_budget" class="form-label">Budget</label>
+                        </div>
+
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" id="inp_pic_client" name="inp_pic_client" required
+                                placeholder="Nama PIC">
+                            <label for="inp_budget" class="form-label">PIC Client</label>
                         </div>
 
                         <div class="mb-3 ">
@@ -75,11 +89,16 @@
                 <div class="panel">
                     <div class="title">
                         <p>Data Titik</p>
-                        <a class="btn-utama-soft sml rnd " data-bs-toggle="modal" data-bs-target="#modaltambahtitik"
-                            id="addData">Tambah Titik <i
-                                class="material-symbols-outlined menu-icon ms-2">add_circle</i></a>
-                    </div>
+                        <div class="d-flex">
+                            <a class="btn-success-soft sml rnd me-2" data-bs-toggle="modal"
+                                data-bs-target="#modaltambahtitik" id="addData">Tambah PIC titik<i
+                                    class="material-symbols-outlined menu-icon ms-2 text-success">add_circle</i></a>
 
+                            <a class="btn-utama-soft sml rnd " data-bs-toggle="modal" data-bs-target="#modaltambahtitik"
+                                id="addData">Tambah Titik <i
+                                    class="material-symbols-outlined menu-icon ms-2 text-grey">arrow_right_alt</i></a>
+                        </div>
+                    </div>
                     <div class="isi">
                         <div class="table">
                             <table id="table_id" class="table table-striped" style="width:100%">
@@ -115,7 +134,8 @@
 
         </div>
         <!-- Modal -->
-        <div class="modal fade" id="modaltambahtitik" tabindex="-1" aria-labelledby="modaltambahtitik" aria-hidden="true">
+        <div class="modal fade" id="modaltambahtitik" tabindex="-1" aria-labelledby="modaltambahtitik"
+            aria-hidden="true">
             <div class="modal-dialog modal-xl">
                 <div class="modal-content">
                     <div class="modal-header">

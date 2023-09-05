@@ -3,6 +3,18 @@ body {
   background-color: #fafcff !important;
 }
 
+.text-primary {
+  color: #4e28f7;
+}
+
+.text-success {
+  color: #16ca5b;
+}
+
+.text-grey {
+  color: gray !important;
+}
+
 .bg-primary {
   background-color: #4e28f7;
 }

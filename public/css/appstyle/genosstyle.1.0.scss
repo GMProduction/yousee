@@ -44,6 +44,18 @@ body {
   background-color: #fafcff !important;
 }
 
+.text-primary {
+  color: $primary-color;
+}
+
+.text-success {
+  color: $success-color;
+}
+
+.text-grey {
+  color: gray !important;
+}
+
 .bg-primary {
   background-color: $primary-color;
 }
