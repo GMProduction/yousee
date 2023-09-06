@@ -103,6 +103,10 @@
     <script src="{{ asset('js/number_formater.js') }}"></script>
 
     <script>
+        $(document).ready(function() {
+            $('#table_project').DataTable();
+        });
+
         $(document).on('click', '#addData, #editData', function() {
             let id = $(this).data('id');
             let data = $(this).data('row');

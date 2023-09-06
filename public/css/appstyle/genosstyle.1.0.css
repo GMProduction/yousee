@@ -3,6 +3,11 @@ body {
   background-color: #fafcff !important;
 }
 
+.material-symbols-outlined {
+  line-height: unset !important;
+  font-size: 18px !important;
+}
+
 .text-prim {
   color: #4e28f7 !important;
 }
@@ -424,7 +429,6 @@ input.form-control {
 .btn-link-maps.sml {
   padding: 3px 10px;
   font-size: 0.8rem;
-  line-height: 0.8rem;
 }
 .btn-link-maps.rnd {
   border-radius: 10px;
@@ -454,7 +458,6 @@ input.form-control {
 .btn-utama-soft.sml {
   padding: 3px 10px;
   font-size: 0.8rem;
-  line-height: 0.8rem;
 }
 .btn-utama-soft.rnd {
   border-radius: 10px;
@@ -484,7 +487,6 @@ input.form-control {
 .btn-danger-soft.sml {
   padding: 3px 10px;
   font-size: 0.8rem;
-  line-height: 0.8rem;
 }
 .btn-danger-soft.rnd {
   border-radius: 10px;
@@ -514,7 +516,6 @@ input.form-control {
 .btn-success.sml {
   padding: 3px 10px;
   font-size: 0.8rem;
-  line-height: 0.8rem;
 }
 .btn-success.rnd {
   border-radius: 10px;
@@ -544,7 +545,6 @@ input.form-control {
 .btn-success-soft.sml {
   padding: 3px 10px;
   font-size: 0.8rem;
-  line-height: 0.8rem;
 }
 .btn-success-soft.rnd {
   border-radius: 10px;

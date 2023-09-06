@@ -114,7 +114,7 @@
                     </div>
                     <div class="isi">
                         <div class="table">
-                            <table id="table_id" class="table table-striped" style="width:100%">
+                            <table id="titik" class="table table-striped" style="width:100%">
                                 <thead>
                                     <tr>
                                         <th>#</th>
@@ -193,7 +193,7 @@
                         <div class="row">
                             <div class="col-8">
                                 <div class="table">
-                                    <table id="table_id" class="table table-striped" style="width:100%">
+                                    <table id="tambahtitik" class="table table-striped" style="width:100%">
                                         <thead>
                                             <tr>
                                                 <th>#</th>
@@ -361,6 +361,11 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
 
     <script>
+        $(document).ready(function() {
+            $('#tambahtitik').DataTable();
+            $('#titik').DataTable();
+        });
+
         $(function() {
             $('#datepicker').datepicker({
                 format: 'dd/mm/yyyy',

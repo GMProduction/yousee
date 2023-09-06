@@ -16,7 +16,7 @@
 
             <div class="isi">
                 <div class="table">
-                    <table id="table_id" class="table table-striped" style="width:100%">
+                    <table id="table_project" class="table table-striped" style="width:100%">
                         <thead>
                             <tr>
                                 <th>#</th>
@@ -113,4 +113,10 @@
 
 @section('morejs')
     <script src="{{ asset('js/number_formater.js') }}"></script>
+
+    <script>
+        $(document).ready(function() {
+            $('#table_project').DataTable();
+        });
+    </script>
 @endsection
