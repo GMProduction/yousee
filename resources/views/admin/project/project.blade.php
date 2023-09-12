@@ -16,7 +16,7 @@
 
             <div class="isi">
                 <div class="table">
-                    <table id="table_project" class="table table-striped" style="width:100%">
+                    <table id="table_id" class="table table-striped" style="width:100%">
                         <thead>
                             <tr>
                                 <th>#</th>
@@ -25,7 +25,7 @@
                                 <th>Jumlah Titik</th>
                                 <th>PIC Client</th>
                                 <th>Berlampu</th>
-                                {{-- <th>Durasi</th> --}}
+                                <th>Durasi</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -37,9 +37,9 @@
                                 <td>Jumlah Titik</td>
                                 <td>PIC Client</td>
                                 <td>Berlampu</td>
-                                {{-- <td>Durasi</td> --}}
+                                <td>Durasi</td>
                                 <td>
-                                    <div class='d-flex'><a class="btn-utama sml rnd  me-1" href="/admin/project/detail/1"
+                                    <div class='d-flex'><a class="btn-utama sml rnd  me-1" href="project/addproject"
                                             id="addData"> <i
                                                 class='material-symbols-outlined menu-icon text-white'>info</i></a>
 
@@ -58,7 +58,7 @@
                                 <th>Jumlah Titik</th>
                                 <th>PIC Client</th>
                                 <th>Berlampu</th>
-                                {{-- <th>Durasi</th> --}}
+                                <th>Durasi</th>
                                 <th>Action</th>
                             </tr>
                         </tfoot>
@@ -115,8 +115,27 @@
     <script src="{{ asset('js/number_formater.js') }}"></script>
 
     <script>
-        $(document).ready(function() {
-            $('#table_project').DataTable();
-        });
+        $(document).on('click', '#addData, #editData', function() {
+            let id = $(this).data('id');
+            let data = $(this).data('row');
+            $('#form #name').val('');
+            $('#form #id').val(id);
+
+
+            $('#modaltambahtitik').modal('show')
+        })
+
+
+
+
+        function afterSave() {
+            $('#modaltambahtitik').modal('hide')
+            datatable();
+        }
     </script>
 @endsection
+
+
+</body>
+
+</html>

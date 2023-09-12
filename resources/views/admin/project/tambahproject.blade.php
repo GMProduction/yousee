@@ -4,19 +4,9 @@
     Tambah Project Yousee
 @endsection
 
-@section('css')
-    <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
-@endsection
 @section('content')
-    <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="/admin/project">Project</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Tambah Project</li>
-        </ol>
-    </nav>
-
     <div>
+
         <div class="row">
             <div class="col-4">
                 <div class="panel p-4">
@@ -29,44 +19,22 @@
                             <label for="inp_nama" class="form-label">Nama Project</label>
                         </div>
 
-                        <div class="form-floating mb-3 nput-group date " id="datepicker" data-provide="datepicker">
-                            <input type="text" class="form-control" id="date" name="inp_tgl_req" required
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" id="inp_tgl_req" name="inp_tgl_req" required
                                 placeholder="Tanggal Request">
-                            <label for="date" class="form-label">Tanggal Request</label>
-                            <div class="input-group-addon">
-                                <span class="glyphicon glyphicon-th"></span>
-                            </div>
+                            <label for="inp_tgl_req" class="form-label">Tanggal Request</label>
                         </div>
 
-                        {{-- <div class="form-floating mb-3">
+                        <div class="form-floating mb-3">
                             <input type="text" class="form-control" id="inp_durasi" name="inp_durasi" required
                                 placeholder="Nama Tipe">
                             <label for="inp_durasi" class="form-label">Durasi</label>
-                        </div> --}}
-                        {{-- <div class="d-flex align-items-stretch mb-3 ">
-                            <div class="form-floating me-1">
-                                <input type="text" class="form-control" id="inp_durasi" name="inp_durasi" required
-                                    placeholder="Nama Tipe">
-                                <label for="inp_durasi" class="form-label">Durasi</label>
-                            </div>
-                            <select class="form-select" aria-label="Default select example">
-                                <option selected>Pilih Durasi</option>
-                                <option value="1">Hari</option>
-                                <option value="2">Bulan</option>
-                                <option value="3">Tahun</option>
-                            </select>
-                        </div> --}}
+                        </div>
 
                         <div class="form-floating mb-3">
                             <input type="text" class="form-control" id="inp_budget" name="inp_budget" required
                                 placeholder="Nama Tipe">
                             <label for="inp_budget" class="form-label">Budget</label>
-                        </div>
-
-                        <div class="form-floating mb-3">
-                            <input type="text" class="form-control" id="inp_pic_client" name="inp_pic_client" required
-                                placeholder="Nama PIC">
-                            <label for="inp_budget" class="form-label">PIC Client</label>
                         </div>
 
                         <div class="mb-3 ">
@@ -104,26 +72,21 @@
                 </div>
             </div>
             <div class="col-8">
-                <div class="panel mb-1">
+                <div class="panel">
                     <div class="title">
                         <p>Data Titik</p>
-                        <div class="d-flex">
-                            <a class="btn-success-soft sml rnd me-2" data-bs-toggle="modal"
-                                data-bs-target="#modaltambahpictitik">Tambah PIC titik<i
-                                    class="material-symbols-outlined menu-icon ms-2 text-success">add_circle</i></a>
-
-                            <a class="btn-utama-soft sml rnd " data-bs-toggle="modal" data-bs-target="#modaltambahtitik"
-                                id="addData">Tambah Titik <i
-                                    class="material-symbols-outlined menu-icon ms-2 text-grey">arrow_right_alt</i></a>
-                        </div>
+                        <a class="btn-utama-soft sml rnd " data-bs-toggle="modal" data-bs-target="#modaltambahtitik"
+                            id="addData">Tambah Titik <i
+                                class="material-symbols-outlined menu-icon ms-2">add_circle</i></a>
                     </div>
+
                     <div class="isi">
                         <div class="table">
-                            <table id="titik" class="table table-striped" style="width:100%">
+                            <table id="table_id" class="table table-striped" style="width:100%">
                                 <thead>
                                     <tr>
                                         <th>#</th>
-                                        <th>Kota </th>
+                                        <th>Titik </th>
                                         <th>Lokasi titik</th>
                                         <th>PIC /titik</th>
                                         <th>Harga Vendor</th>
@@ -131,25 +94,12 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <td>1</td>
-                                    <td>Kota</td>
-                                    <td>Lokasi titik</td>
-                                    <td>PIC /titik</td>
-                                    <td>Harga Vendor</td>
-                                    <td>
-                                        <div class='d-flex'><a class="btn-success sml rnd  me-1"> <i
-                                                    class='material-symbols-outlined menu-icon text-white'>edit</i></a>
 
-                                            <a class="btn-danger sml rnd  me-1" href="project/addproject">
-                                                <i class='material-symbols-outlined menu-icon text-white'>delete</i></a>
-
-                                        </div>
-                                    </td>
                                 </tbody>
                                 <tfoot>
                                     <tr>
                                         <th>#</th>
-                                        <th>Kota </th>
+                                        <th>Titik </th>
                                         <th>Lokasi titik</th>
                                         <th>PIC /titik</th>
                                         <th>Harga Vendor</th>
@@ -161,32 +111,11 @@
                     </div>
 
                 </div>
-                <div class="panel p-4">
-                    <div class="d-flex">
-                        <span class="material-symbols-outlined menu-icon me-2">
-                            info
-                        </span>
-                        <div>
-                            <div>
-                                <a>Solo : 2,</a>
-                                <a>Semarang : 2,</a>
-                            </div>
-
-                            <div>
-                                <a>Agam : 2,</a>
-                                <a>Mail : 2,</a>
-                            </div>
-
-                        </div>
-
-                    </div>
-                </div>
             </div>
 
         </div>
-        <!-- Modal Tambah Titik-->
-        <div class="modal fade" id="modaltambahtitik" tabindex="-1" aria-labelledby="modaltambahtitik"
-            aria-hidden="true">
+        <!-- Modal -->
+        <div class="modal fade" id="modaltambahtitik" tabindex="-1" aria-labelledby="modaltambahtitik" aria-hidden="true">
             <div class="modal-dialog modal-xl">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -198,7 +127,7 @@
                         <div class="row">
                             <div class="col-8">
                                 <div class="table">
-                                    <table id="tambahtitik" class="table table-striped" style="width:100%">
+                                    <table id="table_id" class="table table-striped" style="width:100%">
                                         <thead>
                                             <tr>
                                                 <th>#</th>
@@ -305,78 +234,34 @@
                 </div>
             </div>
         </div>
-
-        <!-- Modal PIC Titik -->
-        <div class="modal fade" id="modaltambahpictitik" tabindex="-1" aria-labelledby="modaltambahpictitik"
-            aria-hidden="true">
-            <div class="modal-dialog modal-md">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="modaltambahuser">Tambah PIC Titik</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-
-
-                        <div class="panel p-4">
-                            <form id="form" enctype="multipart/form-data">
-                                @csrf
-                                <input id="id" name="id" hidden>
-
-                                <div class="mb-3">
-                                    <label for="in_kota" class="form-label">Pilih Kota</label>
-                                    <select id="in_kota" name="in_kota" class="form-select "
-                                        aria-label="Default select example">
-                                        <option selected>Pilih Kota</option>
-                                        <option value="1">One</option>
-                                        <option value="2">Two</option>
-                                        <option value="3">Three</option>
-                                    </select>
-                                </div>
-
-                                <div class="form-floating mb-3">
-                                    <input type="text" class="form-control" id="in_namapic" name="in_namapic"
-                                        required placeholder="Nama PIC">
-                                    <label for="in_namapic" class="form-label">Nama PIC</label>
-                                </div>
-                                <div class="form-floating mb-3">
-                                    <input type="text" class="form-control" id="in_hargavendor" name="in_hargavendor"
-                                        required placeholder="Harga Vendor">
-                                    <label for="in_hargavendor" class="form-label">Harga Vendor</label>
-                                </div>
-
-                                <div class="my-3">
-                                    <div class="d-flex">
-                                        <button type="submit" class="btn-utama" style="width: 100%">Simpan</button>
-                                    </div>
-
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
     </div>
 @endsection
 
 @section('morejs')
     <script src="{{ asset('js/number_formater.js') }}"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
 
     <script>
-        $(document).ready(function() {
-            $('#tambahtitik').DataTable();
-            $('#titik').DataTable();
-        });
+        $(document).on('click', '#addData, #editData', function() {
+            let id = $(this).data('id');
+            let data = $(this).data('row');
+            $('#form #name').val('');
+            $('#form #id').val(id);
 
-        $(function() {
-            $('#datepicker').datepicker({
-                format: 'dd/mm/yyyy',
-                todayHighlight: 'TRUE',
-                autoclose: true,
-            });
-        });
+
+            $('#modaltambahtitik').modal('show')
+        })
+
+
+
+
+        function afterSave() {
+            $('#modaltambahtitik').modal('hide')
+            datatable();
+        }
     </script>
 @endsection
+
+
+</body>
+
+</html>
