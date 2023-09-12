@@ -43,7 +43,7 @@
                                 placeholder="Nama Tipe">
                             <label for="inp_durasi" class="form-label">Durasi</label>
                         </div> --}}
-                        <div class="d-flex align-items-stretch mb-3 ">
+                        {{-- <div class="d-flex align-items-stretch mb-3 ">
                             <div class="form-floating me-1">
                                 <input type="text" class="form-control" id="inp_durasi" name="inp_durasi" required
                                     placeholder="Nama Tipe">
@@ -55,7 +55,7 @@
                                 <option value="2">Bulan</option>
                                 <option value="3">Tahun</option>
                             </select>
-                        </div>
+                        </div> --}}
 
                         <div class="form-floating mb-3">
                             <input type="text" class="form-control" id="inp_budget" name="inp_budget" required
