@@ -25,7 +25,7 @@
                                 <th>Jumlah Titik</th>
                                 <th>PIC Client</th>
                                 <th>Berlampu</th>
-                                <th>Durasi</th>
+                                {{-- <th>Durasi</th> --}}
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -37,7 +37,7 @@
                                 <td>Jumlah Titik</td>
                                 <td>PIC Client</td>
                                 <td>Berlampu</td>
-                                <td>Durasi</td>
+                                {{-- <td>Durasi</td> --}}
                                 <td>
                                     <div class='d-flex'><a class="btn-utama sml rnd  me-1" href="project/addproject"
                                             id="addData"> <i
@@ -58,7 +58,7 @@
                                 <th>Jumlah Titik</th>
                                 <th>PIC Client</th>
                                 <th>Berlampu</th>
-                                <th>Durasi</th>
+                                {{-- <th>Durasi</th> --}}
                                 <th>Action</th>
                             </tr>
                         </tfoot>

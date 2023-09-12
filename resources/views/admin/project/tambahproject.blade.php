@@ -25,11 +25,11 @@
                             <label for="inp_tgl_req" class="form-label">Tanggal Request</label>
                         </div>
 
-                        <div class="form-floating mb-3">
+                        {{-- <div class="form-floating mb-3">
                             <input type="text" class="form-control" id="inp_durasi" name="inp_durasi" required
                                 placeholder="Nama Tipe">
                             <label for="inp_durasi" class="form-label">Durasi</label>
-                        </div>
+                        </div> --}}
 
                         <div class="form-floating mb-3">
                             <input type="text" class="form-control" id="inp_budget" name="inp_budget" required
