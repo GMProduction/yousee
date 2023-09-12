@@ -196,8 +196,3 @@
         });
     </script>
 @endsection
-
-
-</body>
-
-</html>

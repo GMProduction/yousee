@@ -44,6 +44,23 @@ body {
   background-color: #fafcff !important;
 }
 
+.material-symbols-outlined {
+  line-height: unset !important;
+  font-size: 18px !important;
+}
+
+.text-prim {
+  color: $primary-color !important;
+}
+
+.text-success {
+  color: $success-color !important;
+}
+
+.text-grey {
+  color: gray !important;
+}
+
 .bg-primary {
   background-color: $primary-color;
 }
@@ -516,7 +533,6 @@ input.form-control {
   &.sml {
     padding: 3px 10px;
     font-size: 0.8rem;
-    line-height: 0.8rem;
   }
 
   &.rnd {
@@ -537,7 +553,7 @@ input.form-control {
   text-align: center;
   border: none;
   background-color: $background-primary-color;
-  color: gray;
+  color: $primary-color;
   border-radius: 5px;
   padding: 10px;
   font-weight: bold;
@@ -552,7 +568,6 @@ input.form-control {
   &.sml {
     padding: 3px 10px;
     font-size: 0.8rem;
-    line-height: 0.8rem;
   }
 
   &.rnd {
@@ -588,7 +603,6 @@ input.form-control {
   &.sml {
     padding: 3px 10px;
     font-size: 0.8rem;
-    line-height: 0.8rem;
   }
 
   &.rnd {
@@ -599,6 +613,40 @@ input.form-control {
     transition: all 0.5s;
     // box-shadow: 2px 2px 20px $shadow-danger-color;
     color: $danger-soft-color1;
+  }
+}
+.btn-success {
+  all: unset;
+  transition: all 0.5s;
+  display: flex;
+  text-align: center;
+  border: none;
+  background-color: $background-success-color;
+  color: white;
+  border-radius: 5px;
+  padding: 10px;
+  font-weight: bold;
+  align-items: center;
+  // box-shadow: 1px 1px 5px $shadow-primary-color;
+  cursor: pointer;
+
+  a {
+    display: block;
+  }
+
+  &.sml {
+    padding: 3px 10px;
+    font-size: 0.8rem;
+  }
+
+  &.rnd {
+    border-radius: $rounded;
+  }
+
+  &:hover {
+    transition: all 0.5s;
+    // box-shadow: 2px 2px 20px $shadow-success-color;
+    color: $success-soft-color1;
   }
 }
 
@@ -624,7 +672,6 @@ input.form-control {
   &.sml {
     padding: 3px 10px;
     font-size: 0.8rem;
-    line-height: 0.8rem;
   }
 
   &.rnd {

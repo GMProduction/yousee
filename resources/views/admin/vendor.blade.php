@@ -112,151 +112,147 @@
                 </div>
             </div>
         </div>
-        <!-- Modal Detail-->
-    @endsection
+    </div>
+    <!-- Modal Detail-->
+@endsection
 
-    @section('morejs')
-        <script src="{{ asset('js/number_formater.js') }}"></script>
+@section('morejs')
+    <script src="{{ asset('js/number_formater.js') }}"></script>
 
-        <script>
-            $(document).ready(function() {
-                $('#table_piutang').DataTable();
-                datatable();
-                saveDataPage();
+    <script>
+        $(document).ready(function() {
+            $('#table_piutang').DataTable();
+            datatable();
+            saveDataPage();
+        });
+
+        $(document).on('click', '#addData, #editData', function() {
+            let id = $(this).data('id');
+            let data = $(this).data('row');
+            $('#form .form-control').val('');
+            $('#form textarea').val('');
+            $('#form #id').val(id);
+            if (id) {
+                $('#form #name').val(data.name);
+                $('#form #address').val(data.address);
+                $('#form #phone').val(data.phone);
+                $('#form #brand').val(data.brand);
+                $('#form #email').val(data.email);
+                $('#form #picName').val(data.picName);
+                $('#form #picPhone').val(data.picPhone);
+
+            }
+
+            $('#modaltambahtitik').modal('show')
+        });
+
+        $(document).on('click', '#deleteData', function() {
+            let id = $(this).data('id');
+            let name = $(this).data('name');
+            let data = {
+                '_token': '{{ csrf_token() }}'
+            };
+            deleteData(name, window.location.pathname + '/delete/' + id, data, datatable);
+            return false;
+        })
+
+        function datatable() {
+            var url = window.location.pathname + '/datatable';
+            $('#table_id').DataTable({
+                destroy: true,
+                processing: true,
+                serverSide: true,
+                ajax: url,
+                "fnRowCallback": function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+                    // debugger;
+                    var numStart = this.fnPagingInfo().iStart;
+                    var index = numStart + iDisplayIndexFull + 1;
+                    // var index = iDisplayIndexFull + 1;
+                    $("td:first", nRow).html(index);
+                    return nRow;
+                },
+                columns: [{
+                        "className": '',
+                        "orderable": false,
+                        "data": null,
+                        "defaultContent": ''
+                    },
+                    {
+                        "data": "name",
+                        "name": "name"
+                    },
+                    {
+                        "data": "brand",
+                        "name": "brand"
+                    },
+                    {
+                        "data": "address",
+                        "name": "address"
+                    },
+                    {
+                        "data": "email",
+                        "name": "email"
+                    },
+                    {
+                        "data": "phone",
+                        "name": "phone"
+                    },
+                    {
+                        "data": "picName",
+                        "name": "picName"
+                    },
+                    {
+                        "data": "picPhone",
+                        "name": "picPhone"
+                    },
+                    {
+                        "data": "item",
+                        "name": "item"
+                    },
+                    {
+                        "data": "id",
+                        "render": function(data, type, row) {
+                            let role = $('meta[name="role"]').attr('content');
+                            var dlt = '';
+                            if (role == 'pimpinan') {
+                                dlt = "<a class='btn-danger-soft sml me-1' data-id='" + data +
+                                    "' data-name='" + row.name +
+                                    "' id='deleteData'> <i class='material-symbols-outlined menu-icon'>delete</i></a>";
+                            }
+                            let string = JSON.stringify(row);
+                            return "<div class='d-flex'>\n" +
+                                " <a class='btn-success-soft sml rnd me-1' data-id='" + data +
+                                "' data-row='" +
+                                string +
+                                "' id='editData'> <i class='material-symbols-outlined menu-icon'>edit</i></a>" +
+                                dlt + "</div>";
+                        }
+                    },
+                ]
             });
 
-            $(document).on('click', '#addData, #editData', function() {
-                let id = $(this).data('id');
-                let data = $(this).data('row');
-                $('#form .form-control').val('');
-                $('#form textarea').val('');
-                $('#form #id').val(id);
-                if (id) {
-                    $('#form #name').val(data.name);
-                    $('#form #address').val(data.address);
-                    $('#form #phone').val(data.phone);
-                    $('#form #brand').val(data.brand);
-                    $('#form #email').val(data.email);
-                    $('#form #picName').val(data.picName);
-                    $('#form #picPhone').val(data.picPhone);
+        }
 
-                }
-
-                $('#modaltambahtitik').modal('show')
-            });
-
-            $(document).on('click', '#deleteData', function() {
-                let id = $(this).data('id');
-                let name = $(this).data('name');
+        function saveDataPage() {
+            let form = $('#form');
+            form.submit(async function(e) {
+                e.preventDefault(e);
+                let formData = new FormData(this);
+                console.log(formData);
                 let data = {
-                    '_token': '{{ csrf_token() }}'
+                    'form_data': formData,
+                    'image': {
+                        'icon': 'icon',
+                    }
                 };
-                deleteData(name, window.location.pathname + '/delete/' + id, data, datatable);
+                saveData('Simpan Data', 'form', window.location.pathname, afterSave);
                 return false;
             })
+        }
 
-            function datatable() {
-                var url = window.location.pathname + '/datatable';
-                $('#table_id').DataTable({
-                    destroy: true,
-                    processing: true,
-                    serverSide: true,
-                    ajax: url,
-                    "fnRowCallback": function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
-                        // debugger;
-                        var numStart = this.fnPagingInfo().iStart;
-                        var index = numStart + iDisplayIndexFull + 1;
-                        // var index = iDisplayIndexFull + 1;
-                        $("td:first", nRow).html(index);
-                        return nRow;
-                    },
-                    columns: [{
-                            "className": '',
-                            "orderable": false,
-                            "data": null,
-                            "defaultContent": ''
-                        },
-                        {
-                            "data": "name",
-                            "name": "name"
-                        },
-                        {
-                            "data": "brand",
-                            "name": "brand"
-                        },
-                        {
-                            "data": "address",
-                            "name": "address"
-                        },
-                        {
-                            "data": "email",
-                            "name": "email"
-                        },
-                        {
-                            "data": "phone",
-                            "name": "phone"
-                        },
-                        {
-                            "data": "picName",
-                            "name": "picName"
-                        },
-                        {
-                            "data": "picPhone",
-                            "name": "picPhone"
-                        },
-                        {
-                            "data": "item",
-                            "name": "item"
-                        },
-                        {
-                            "data": "id",
-                            "render": function(data, type, row) {
-                                let role = $('meta[name="role"]').attr('content');
-                                var dlt = '';
-                                if (role == 'pimpinan') {
-                                    dlt = "<a class='btn-danger-soft sml me-1' data-id='" + data +
-                                        "' data-name='" + row.name +
-                                        "' id='deleteData'> <i class='material-symbols-outlined menu-icon'>delete</i></a>";
-                                }
-                                let string = JSON.stringify(row);
-                                return "<div class='d-flex'>\n" +
-                                    " <a class='btn-success-soft sml rnd me-1' data-id='" + data +
-                                    "' data-row='" +
-                                    string +
-                                    "' id='editData'> <i class='material-symbols-outlined menu-icon'>edit</i></a>" +
-                                    dlt + "</div>";
-                            }
-                        },
-                    ]
-                });
-
-            }
-
-            function saveDataPage() {
-                let form = $('#form');
-                form.submit(async function(e) {
-                    e.preventDefault(e);
-                    let formData = new FormData(this);
-                    console.log(formData);
-                    let data = {
-                        'form_data': formData,
-                        'image': {
-                            'icon': 'icon',
-                        }
-                    };
-                    saveData('Simpan Data', 'form', window.location.pathname, afterSave);
-                    return false;
-                })
-            }
-
-            function afterSave() {
-                $('#modaltambahtitik').modal('hide')
-                datatable();
-            }
-        </script>
-    @endsection
-
-
-    </body>
-
-    </html>
+        function afterSave() {
+            $('#modaltambahtitik').modal('hide')
+            datatable();
+        }
+    </script>
+@endsection

@@ -97,8 +97,10 @@ Route::prefix('admin')->middleware(\App\Http\Middleware\AdminMiddleware::class)-
 
         Route::prefix('project')->group(
             function () {
-                Route::get('', [ProjectController::class, 'index']);
-                Route::get('/addproject', [ProjectController::class, 'indexTambahProject']);
+                Route::get('', [ProjectController::class, 'index'])->name("project");
+                Route::get('/addproject', [ProjectController::class, 'indexTambahProject'])->name("tambahproject");
+                Route::get('/detail/{id}', [ProjectController::class, 'indexDetailProject'])->name("detail");
+                Route::get('/buatharga/{id}', [ProjectController::class, 'indexBuatHarga'])->name("buatharga");
             }
         );
 

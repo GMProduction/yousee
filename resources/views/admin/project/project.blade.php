@@ -16,7 +16,7 @@
 
             <div class="isi">
                 <div class="table">
-                    <table id="table_id" class="table table-striped" style="width:100%">
+                    <table id="table_project" class="table table-striped" style="width:100%">
                         <thead>
                             <tr>
                                 <th>#</th>
@@ -39,7 +39,7 @@
                                 <td>Berlampu</td>
                                 {{-- <td>Durasi</td> --}}
                                 <td>
-                                    <div class='d-flex'><a class="btn-utama sml rnd  me-1" href="project/addproject"
+                                    <div class='d-flex'><a class="btn-utama sml rnd  me-1" href="/admin/project/detail/1"
                                             id="addData"> <i
                                                 class='material-symbols-outlined menu-icon text-white'>info</i></a>
 
@@ -115,27 +115,8 @@
     <script src="{{ asset('js/number_formater.js') }}"></script>
 
     <script>
-        $(document).on('click', '#addData, #editData', function() {
-            let id = $(this).data('id');
-            let data = $(this).data('row');
-            $('#form #name').val('');
-            $('#form #id').val(id);
-
-
-            $('#modaltambahtitik').modal('show')
-        })
-
-
-
-
-        function afterSave() {
-            $('#modaltambahtitik').modal('hide')
-            datatable();
-        }
+        $(document).ready(function() {
+            $('#table_project').DataTable();
+        });
     </script>
 @endsection
-
-
-</body>
-
-</html>
