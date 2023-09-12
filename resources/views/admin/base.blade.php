@@ -72,7 +72,7 @@
     <div class="d-flex">
 
         {{-- <div class="sidebar"> --}}
-        <nav id="sidebar" class="sidebar card py-2">
+        <nav id="sidebar" class="sidebar card py-2" style="height: 100vh;">
             <ul class="nav flex-column" id="nav_accordion">
 
 
