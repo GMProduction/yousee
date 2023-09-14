@@ -62,7 +62,7 @@
                             <div class="form-floating mb-3">
                                 <input type="text" class="form-control" id="latlong" name="latlong" required
                                     placeholder="latitude dan longtitude">
-                                <label for="latitude" class="form-label">Latitude & Longtitude</label>
+                                <label for="latitude" class="form-label">Latitude & Longtitude (e.g. -123141234, 839214813)</label>
                             </div>
                         </div>
                     </div>

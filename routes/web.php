@@ -69,6 +69,7 @@ Route::prefix('admin/user')->middleware(\App\Http\Middleware\PimpinanMiddleware:
 Route::prefix('admin')->middleware(\App\Http\Middleware\AdminMiddleware::class)->group(
     function () {
         Route::get('', [BerandaController::class, 'index']);
+        Route::get('user/json', [UserController::class, 'dataJson'])->name('user.get.json');
 
         Route::prefix('type')->group(
             function () {
@@ -97,14 +98,16 @@ Route::prefix('admin')->middleware(\App\Http\Middleware\AdminMiddleware::class)-
 
         Route::prefix('project')->group(
             function () {
-                Route::get('', [ProjectController::class, 'index'])->name("project");
-                Route::get('/addproject', [ProjectController::class, 'indexTambahProject'])->name("tambahproject");
+                Route::get('datatable', [ProjectController::class, 'datatable'])->name("project.datatable");
+                Route::match(['POST','GET'],'', [ProjectController::class, 'index'])->name("project");
+                Route::prefix('addproject')->group(function (){
+                    Route::get('datatable', [\App\Http\Controllers\ProjectDetailController::class, 'datatable'])->name("tambahproject.datatable");
+                    Route::match(['POST','GET'],'/', [\App\Http\Controllers\ProjectDetailController::class, 'indexTambahProject'])->name("tambahproject");
+                });
                 Route::get('/detail/{id}', [ProjectController::class, 'indexDetailProject'])->name("detail");
                 Route::get('/buatharga/{id}', [ProjectController::class, 'indexBuatHarga'])->name("buatharga");
             }
         );
-
-
         Route::get('history/{id}', [\App\Http\Controllers\HistoryController::class, 'getHistory']);
     }
 );

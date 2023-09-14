@@ -23,7 +23,7 @@ class ItemController extends CustomController
         $city     = \request('city');
         $type     = \request('type');
         $position = \request('position');
-        $item     = Item::with('vendorAll');
+        $item     = Item::with(['vendorAll','city']);
         if ($city) {
             $item = $item->where('city_id', $city);
         }

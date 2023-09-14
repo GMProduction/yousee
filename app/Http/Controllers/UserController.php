@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
@@ -127,6 +128,13 @@ class UserController extends Controller
             ],
             $code
         );
+    }
+
+    /**
+     * @return User|Collection
+     */
+    public function dataJson(){
+        return User::all();
     }
 
     /**

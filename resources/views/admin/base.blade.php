@@ -191,6 +191,7 @@
         src="https://cdn.jsdelivr.net/npm/browser-image-compression@latest/dist/browser-image-compression.js"></script>
     <script src="{{ asset('js/handler_image.js') }}"></script>
     <script src="{{ asset('js/moment.min.js') }}"></script>
+    <script src="{{ asset('js/datatable.js') }}"></script>
 
     <script>
         jQuery.fn.dataTableExt.oApi.fnPagingInfo = function(oSettings) {
