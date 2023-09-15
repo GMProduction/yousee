@@ -112,12 +112,8 @@
             let data = $(this).data('row');
             $('#form #name').val('');
             $('#form #id').val(id);
-
-
             $('#modaltambahtitik').modal('show')
         })
-
-
 
 
         function afterSave() {
