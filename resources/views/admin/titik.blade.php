@@ -135,7 +135,7 @@
             </div>
             <div class="tab-pane fade" id="pills-peta" role="tabpanel" aria-labelledby="pills-peta-tab">
                 {{-- @include('admin.map', ['data' => 'content']) --}}
-                <div id="main-map" style="width: 100%; height: 500px; height: calc(100% - 70px)"></div>
+                <div id="main-map" style="width: 100%; height: 500px; height: calc(100vh - 70px)"></div>
             </div>
         </div>
 
