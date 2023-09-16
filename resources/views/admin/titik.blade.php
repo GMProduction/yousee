@@ -72,10 +72,10 @@
 
             </ul>
             <div>
-                <a class="btn-utama sml rnd flex" href="#" role="button" id="dropdownprofile"
-                    data-bs-toggle="dropdown">Filter
-                    <i class="material-symbols-outlined menu-icon ms-2 ">filter_list</i></a>
-                <ul id="dropSearch" class="dropdown-menu custom" aria-labelledby="dropdownprofile">
+                <a class="btn-utama sml rnd flex" href="#" role="button" id="dropSearch" data-bs-toggle="dropdown"
+                    aria-expanded="false">Filter
+                    <i class="material-symbols-outlined menu-icon ms-2 text-white">filter_list</i></a>
+                <ul id="dropSearchList" class="dropdown-menu custom" aria-labelledby="dropSearch">
                     <div class="filter-panel">
                         <div class="form-group">
                             <label for="f-provinsi" class="form-label">Provinsi</label>
@@ -112,6 +112,7 @@
 
                     </div>
                 </ul>
+
             </div>
         </div>
         <div class="mb-2" id="pillSearch">

@@ -324,7 +324,7 @@ function datatableItem() {
             row.name +
             '" data-id="' +
             row.id +
-            '" id="btnHistory" style="width: 10px"><i class="material-symbols-outlined" style="font-size: 12px">history</i></a></div></div>'
+            '" id="btnHistory" ><i class="material-symbols-outlined" style="font-size: 12px">history</i></a></div></div>'
           );
         },
       },

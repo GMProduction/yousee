@@ -19,9 +19,11 @@
     {{-- ICON --}}
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-    <link rel="stylesheet" type="text/css" href="{{ asset('datatable/datatables.min.css') }}" />
     <link href="{{ asset('css/dropify/css/dropify.css') }}" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css"
+        rel="stylesheet" />
+    <link href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css" rel="stylesheet" />
     <script src="{{ asset('js/swal.js') }}"></script>
 
     @yield('css')
@@ -175,6 +177,7 @@
     <script>
         var role = '{{ auth()->user()->role }}';
     </script>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
     </script>
@@ -186,12 +189,16 @@
     <script src="{{ asset('css/dropify/js/dropify.js') }}"></script>
 
     <script src="{{ asset('js/dialog.js?v=2') }}"></script>
-    <script type="text/javascript" src="{{ asset('datatable/datatables.min.js') }}"></script>
     <script type="text/javascript"
         src="https://cdn.jsdelivr.net/npm/browser-image-compression@latest/dist/browser-image-compression.js"></script>
     <script src="{{ asset('js/handler_image.js') }}"></script>
     <script src="{{ asset('js/moment.min.js') }}"></script>
-    <script src="{{ asset('js/datatable.js') }}"></script>
+    {{-- <script type="text/javascript" src="https://code.jquery.com/jquery-3.7.0.js"></script> --}}
+    <script type="text/javascript" src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+    {{-- <script src="{{ asset('datatable/datatables.js') }}"></script> --}}
+
+    {{-- <script src="{{ asset('js/datatable.js') }}"></script> --}}
 
     <script>
         jQuery.fn.dataTableExt.oApi.fnPagingInfo = function(oSettings) {
