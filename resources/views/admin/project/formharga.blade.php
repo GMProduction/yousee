@@ -8,7 +8,7 @@
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="/admin/project">Project</a></li>
-            <li class="breadcrumb-item"><a href="/admin/project/detail">Detail Project</a></li>
+            <li class="breadcrumb-item"><a href="/admin/project/detail/1">Detail Project</a></li>
             <li class="breadcrumb-item active" aria-current="page">Buat Harga</li>
         </ol>
     </nav>

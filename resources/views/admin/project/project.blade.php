@@ -18,49 +18,53 @@
                 <div class="table">
                     <table id="table_project" class="table table-striped" style="width:100%">
                         <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Nama Project</th>
-                            <th>Tanggal Request</th>
-                            <th>Jumlah Titik</th>
-                            <th>PIC Client</th>
-                            <th>Berlampu</th>
-                            <th>Durasi</th>
-                            <th>Action</th>
-                        </tr>
+                            <tr>
+                                <th>#</th>
+                                <th>Nama Project</th>
+                                <th>Tanggal Request</th>
+                                <th>Jumlah Titik</th>
+                                <th>PIC Client</th>
+                                <th>Berlampu</th>
+                                <th>Durasi</th>
+                                <th>Action</th>
+                            </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td>#</td>
-                            <td>Nama Project</td>
-                            <td>Tanggal Request</td>
-                            <td>Jumlah Titik</td>
-                            <td>PIC Client</td>
-                            <td>Berlampu</td>
-                            <td>Durasi</td>
-                            <td>
-                                <div class='d-flex'><a class="btn-utama sml rnd  me-1" href="/admin/project/detail/1"
-                                                       id="addData"> <i
-                                            class='material-symbols-outlined menu-icon text-white'>info</i></a>
+                            <tr>
+                                <td>#</td>
+                                <td>Nama Project</td>
+                                <td>Tanggal Request</td>
+                                <td>Jumlah Titik</td>
+                                <td>PIC Client</td>
+                                <td>Berlampu</td>
+                                <td>Durasi</td>
+                                <td>
 
-                                    <a class="btn-danger sml rnd  me-1" href="project/addproject" id="addData"> <i
-                                            class='material-symbols-outlined menu-icon text-white'>delete</i></a>
+                                    <div class='d-flex'>
+                                        <a class="btn-success sml rnd  me-1" href="/admin/project/detail/1" id="addData">
+                                            <i class='material-symbols-outlined menu-icon text-white'>info</i></a>
 
-                                </div>
-                            </td>
-                        </tr>
+                                        <a class="btn-utama sml rnd  me-1" href="/admin/project/detail/1"> <i
+                                                class='material-symbols-outlined menu-icon text-white'>add</i></a>
+
+                                        <a class="btn-danger sml rnd  me-1" href="project/addproject" id="addData"> <i
+                                                class='material-symbols-outlined menu-icon text-white'>delete</i></a>
+
+                                    </div>
+                                </td>
+                            </tr>
                         </tbody>
                         <tfoot>
-                        <tr>
-                            <th>#</th>
-                            <th>Nama Project</th>
-                            <th>Tanggal Request</th>
-                            <th>Jumlah Titik</th>
-                            <th>PIC Client</th>
-                            <th>Berlampu</th>
-                            <th>Durasi</th>
-                            <th>Action</th>
-                        </tr>
+                            <tr>
+                                <th>#</th>
+                                <th>Nama Project</th>
+                                <th>Tanggal Request</th>
+                                <th>Jumlah Titik</th>
+                                <th>PIC Client</th>
+                                <th>Berlampu</th>
+                                <th>Durasi</th>
+                                <th>Action</th>
+                            </tr>
                         </tfoot>
                     </table>
                 </div>
@@ -115,18 +119,18 @@
     <script src="{{ asset('js/number_formater.js') }}"></script>
 
     <script>
-        $(document).ready(function () {
+        $(document).ready(function() {
             datatable()
         });
 
         function datatable() {
-            var url = '{{route('project.datatable')}}';
+            var url = '{{ route('project.datatable') }}';
             $('#table_project').DataTable({
                 destroy: true,
                 processing: true,
                 serverSide: true,
                 ajax: url,
-                "fnRowCallback": function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+                "fnRowCallback": function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
                     // debugger;
                     var numStart = this.fnPagingInfo().iStart;
                     var index = numStart + iDisplayIndexFull + 1;
@@ -135,10 +139,10 @@
                     return nRow;
                 },
                 columns: [{
-                    "className": '',
-                    "orderable": false,
-                    "defaultContent": ''
-                },
+                        "className": '',
+                        "orderable": false,
+                        "defaultContent": ''
+                    },
                     {
                         "data": "name",
                         "name": "name"
@@ -158,7 +162,7 @@
                     {
                         "data": "is_lighted",
                         "name": "is_lighted",
-                        render(data){
+                        render(data) {
                             return data ? 'Ya' : 'Tidak'
                         }
                     },
@@ -168,12 +172,15 @@
                     },
                     {
                         "data": "id",
-                        "render": function (data, type, row) {
+                        "render": function(data, type, row) {
                             let string = JSON.stringify(row);
                             return "<div class='d-flex gap-2'>\n" +
-                                "                                <a class='btn-success-soft sml rnd' data-id='" +
+                                "<a class='btn-success-soft sml rnd' data-id='" +
                                 data + "' data-row='" + string +
-                                "' id='editData' href='/admin/project/addproject?q="+row.id+"'> <i class='material-symbols-outlined menu-icon'>info</i></a>" +
+                                "' id='editData' href='/admin/project/addproject?q=" + row.id +
+                                "'> <i class='material-symbols-outlined menu-icon'>add</i></a>" +
+                                "<a class='btn-utama sml rnd  me-1' href='/admin/project/detail/1'>" +
+                                " <i class='material-symbols-outlined menu-icon text-white'>info</i></a>" +
                                 "<a class='btn-danger sml rnd  me-1' href='project/addproject' id='addData'> <i" +
                                 "    class='material-symbols-outlined menu-icon text-white'>delete</i></a>" +
                                 "</div>";
