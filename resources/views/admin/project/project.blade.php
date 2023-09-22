@@ -24,20 +24,20 @@
                                 <th>Tanggal Request</th>
                                 <th>Jumlah Titik</th>
                                 <th>PIC Client</th>
-                                <th>Berlampu</th>
                                 <th>Durasi</th>
+                                <th>Status</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
+                            {{-- <tr>
                                 <td>#</td>
                                 <td>Nama Project</td>
                                 <td>Tanggal Request</td>
                                 <td>Jumlah Titik</td>
                                 <td>PIC Client</td>
-                                <td>Berlampu</td>
                                 <td>Durasi</td>
+                                <th>Status</th>
                                 <td>
 
                                     <div class='d-flex'>
@@ -52,7 +52,7 @@
 
                                     </div>
                                 </td>
-                            </tr>
+                            </tr> --}}
                         </tbody>
                         <tfoot>
                             <tr>
@@ -61,8 +61,8 @@
                                 <th>Tanggal Request</th>
                                 <th>Jumlah Titik</th>
                                 <th>PIC Client</th>
-                                <th>Berlampu</th>
                                 <th>Durasi</th>
+                                <th>Status</th>
                                 <th>Action</th>
                             </tr>
                         </tfoot>
@@ -159,16 +159,14 @@
                         "data": "client_pic",
                         "name": "client_pic"
                     },
-                    {
-                        "data": "is_lighted",
-                        "name": "is_lighted",
-                        render(data) {
-                            return data ? 'Ya' : 'Tidak'
-                        }
-                    },
+
                     {
                         "data": "duration",
                         "name": "duration"
+                    },
+                    {
+                        "data": "status",
+                        "name": "status"
                     },
                     {
                         "data": "id",

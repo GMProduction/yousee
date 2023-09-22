@@ -66,7 +66,11 @@ body {
 }
 
 .bg-primary-soft {
-  background-color: $background-primary-color;
+  background-color: $background-primary-color !important;
+}
+
+.bg-primary-grey {
+  background-color: $font-grey7 !important;
 }
 
 //LOGIN

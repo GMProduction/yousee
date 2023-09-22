@@ -38,11 +38,6 @@
                         </div>
 
 
-                        <div class="form-floating mb-3">
-                            <input type="text" readonly class="form-control" id="inp_budget" name="inp_budget" required
-                                placeholder="Nama Tipe">
-                            <label for="inp_budget" class="form-label">Budget</label>
-                        </div>
 
                         <div class="form-floating mb-3">
                             <input type="text" readonly class="form-control" id="inp_pic_client" name="inp_pic_client"
@@ -50,11 +45,6 @@
                             <label for="inp_budget" class="form-label">PIC Client</label>
                         </div>
 
-                        <div class="form-floating mb-3">
-                            <input type="text" readonly class="form-control" id="inp_berlampu" name="inp_berlampu"
-                                required placeholder="Berlampu">
-                            <label for="inp_berlampu" class="form-label">Berlampu</label>
-                        </div>
 
                         <div class="form-floating mb-3 ">
                             <textarea style="height: auto;" type="text" class="form-control" id="name" name="name" rows="10"

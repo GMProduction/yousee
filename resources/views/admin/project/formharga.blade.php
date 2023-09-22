@@ -17,7 +17,8 @@
         <div class="panel mb-1">
             <div class="title">
                 <p>Buat Harga</p>
-
+                <a class="btn-utama-soft sml rnd " data-bs-toggle="modal" data-bs-target="#modalhargapaket"
+                    id="hargapaket">Masukan Harga Paket</a>
             </div>
             <div class="isi">
                 <div class="table">
@@ -94,8 +95,36 @@
                     (Excel)<i class="material-symbols-outlined menu-icon ms-2 text-success">border_all</i></a>
             </div>
         </div>
+    </div>
 
-
+    <!-- Modal Harga Paket -->
+    <div class="modal fade" id="modalhargapaket" tabindex="-1" aria-labelledby="modalhargapaket" aria-hidden="true">
+        <div class="modal-dialog modal-md">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modaltambahuser">Modal Harga Paket</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="panel p-4">
+                        <form id="form">
+                            @csrf
+                            <input id="id" name="id" hidden>
+                            <div class="form-floating mb-3">
+                                <input type="number" class="form-control" id="inp_harga1" name="inp_hargapaket"
+                                    placeholder="Harga Vendor">
+                                <label for="inp_hargapaket" class="form-label">Harga Paket</label>
+                            </div>
+                            <div class="my-3">
+                                <div class="d-flex">
+                                    <button type="submit" class="btn-utama" style="width: 100%">Simpan & Cetak PDF</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 @endsection
 

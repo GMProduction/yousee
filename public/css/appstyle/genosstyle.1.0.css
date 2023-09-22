@@ -25,7 +25,11 @@ body {
 }
 
 .bg-primary-soft {
-  background-color: #e7ceff;
+  background-color: #e7ceff !important;
+}
+
+.bg-primary-grey {
+  background-color: #f1f1f1 !important;
 }
 
 .login {
