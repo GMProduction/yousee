@@ -46,7 +46,7 @@ class ProjectController extends Controller
             'request_date'  => 'required',
             'duration'      => 'required',
             'duration_unit' => 'required',
-            'is_lighted'    => 'required',
+//            'is_lighted'    => 'required',
             'description'   => '',
         ]);
         $date = \DateTime::createFromFormat('d/m/Y',request('request_date'));

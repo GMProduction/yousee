@@ -102,6 +102,9 @@ Route::prefix('admin')->middleware(\App\Http\Middleware\AdminMiddleware::class)-
                 Route::match(['POST', 'GET'], '', [ProjectController::class, 'index'])->name("project");
                 Route::prefix('addproject')->group(function () {
                     Route::get('datatable', [\App\Http\Controllers\ProjectDetailController::class, 'datatable'])->name("tambahproject.datatable");
+                    Route::get('get-count-city/{id}', [\App\Http\Controllers\ProjectDetailController::class, 'getCountCity'])->name("tambahproject.count.city");
+                    Route::get('get-count-pic/{id}', [\App\Http\Controllers\ProjectDetailController::class, 'getCountPIC'])->name("tambahproject.count.pic");
+                    Route::post('delete/{id}', [\App\Http\Controllers\ProjectDetailController::class, 'delete'])->name("tambahproject.delete");
                     Route::match(['POST', 'GET'], '/', [\App\Http\Controllers\ProjectDetailController::class, 'indexTambahProject'])->name("tambahproject");
                 });
                 Route::get('/detail/{id}', [ProjectController::class, 'indexDetailProject'])->name("detail");
