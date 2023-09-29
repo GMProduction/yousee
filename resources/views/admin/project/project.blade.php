@@ -25,7 +25,7 @@
                                 <th>Jumlah Titik</th>
                                 <th>PIC Client</th>
                                 <th>Durasi</th>
-                                <th>Status</th>
+{{--                                <th>Status</th>--}}
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -62,7 +62,7 @@
                                 <th>Jumlah Titik</th>
                                 <th>PIC Client</th>
                                 <th>Durasi</th>
-                                <th>Status</th>
+{{--                                <th>Status</th>--}}
                                 <th>Action</th>
                             </tr>
                         </tfoot>
@@ -164,10 +164,10 @@
                         "data": "duration",
                         "name": "duration"
                     },
-                    {
-                        "data": "status",
-                        "name": "status"
-                    },
+                    // {
+                    //     "data": "status",
+                    //     "name": "status"
+                    // },
                     {
                         "data": "id",
                         "render": function(data, type, row) {
