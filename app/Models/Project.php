@@ -23,4 +23,9 @@ class Project extends Model
         'is_lighted' => 'boolean'
     ];
 
+    public function items()
+    {
+        return $this->hasMany(ProjectItem::class, 'project_id');
+    }
+
 }

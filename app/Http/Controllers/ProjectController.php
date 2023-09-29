@@ -18,7 +18,8 @@ class ProjectController extends Controller
      * @return mixed
      * @throws \Exception
      */
-    public function datatable(){
+    public function datatable()
+    {
         $project = Project::query();
         return DataTables::of($project)->make(true);
 
@@ -29,7 +30,7 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        if (\request()->method() == 'POST'){
+        if (\request()->method() == 'POST') {
             return $this->postData();
         }
         return view('admin.project.project', ['sidebar' => 'project']);
@@ -41,21 +42,21 @@ class ProjectController extends Controller
     public function postData()
     {
         $data = \request()->validate([
-            'name'          => 'required',
-            'client_pic'    => 'required',
-            'request_date'  => 'required',
-            'duration'      => 'required',
+            'name' => 'required',
+            'client_pic' => 'required',
+            'request_date' => 'required',
+            'duration' => 'required',
             'duration_unit' => 'required',
 //            'is_lighted'    => 'required',
-            'description'   => '',
+            'description' => '',
         ]);
-        $date = \DateTime::createFromFormat('d/m/Y',request('request_date'));
+        $date = \DateTime::createFromFormat('d/m/Y', request('request_date'));
         $data['request_date'] = $date;
 
-        if (request('id')){
+        if (request('id')) {
             $project = Project::find(request('id'));
             $project->update($data);
-        }else{
+        } else {
             $project = new Project();
             $project->create($data);
 
@@ -73,12 +74,19 @@ class ProjectController extends Controller
     }
 
 
-
-
     public function indexDetailProject($id)
     {
-        $data = Project::findOrFail($id);
-        return view('admin.project.detailproject', ['sidebar' => 'project', 'data' => $data]);
+        $data = Project::with(['items.item', 'items.city', 'items.pic'])->findOrFail($id);
+        $groupedCity = $data->items->groupBy('city_id');
+        $groupedPIC = $data->items->groupBy('pic_id');
+        $groupedCityValue = $groupedCity->values();
+        $groupedPICValue = $groupedPIC->values();
+        return view('admin.project.detailproject', [
+            'sidebar' => 'project',
+            'data' => $data,
+            'groupedCity' => $groupedCityValue,
+            'groupedPIC' => $groupedPICValue,
+        ]);
     }
 
     public function indexBuatHarga()
