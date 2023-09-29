@@ -21,19 +21,19 @@
                         <input id="id" name="id" hidden>
                         <div class="form-floating mb-3">
                             <input type="text" readonly class="form-control" id="inp_nama" name="inp_nama" required
-                                placeholder="Nama Project">
+                                placeholder="Nama Project" value="{{  $data->name }}">
                             <label for="inp_nama" class="form-label">Nama Project</label>
                         </div>
 
                         <div class="form-floating mb-3">
                             <input type="text" readonly class="form-control" id="inp_tgl_req" name="inp_tgl_req" required
-                                placeholder="Tanggal Request">
+                                placeholder="Tanggal Request" value="{{  $data->request_date }}">
                             <label for="inp_tgl_req" class="form-label">Tanggal Request</label>
                         </div>
 
                         <div class="form-floating mb-3">
                             <input type="text" readonly class="form-control" id="inp_durasi" name="inp_durasi" required
-                                placeholder="Nama Tipe">
+                                placeholder="Nama Tipe" value="{{ $data->duration.' '.$data->duration_unit }}">
                             <label for="inp_durasi" class="form-label">Durasi</label>
                         </div>
 
@@ -41,14 +41,14 @@
 
                         <div class="form-floating mb-3">
                             <input type="text" readonly class="form-control" id="inp_pic_client" name="inp_pic_client"
-                                required placeholder="Nama PIC">
+                                required placeholder="Nama PIC" value="{{ $data->client_pic }}">
                             <label for="inp_budget" class="form-label">PIC Client</label>
                         </div>
 
 
                         <div class="form-floating mb-3 ">
                             <textarea style="height: auto;" type="text" class="form-control" id="name" name="name" rows="10"
-                                readonly placeholder="Nama Tipe"></textarea>
+                                readonly placeholder="Nama Tipe" >{{ $data->description }}</textarea>
                             <label for="name" class="form-label">Keterangan</label>
                         </div>
 
@@ -60,10 +60,8 @@
                     <div class="title">
                         <p>Data Titik</p>
                         <div class="d-flex">
-
                             <a class="btn-success-soft sml rnd me-2" href="/admin/project/buatharga/1">Buat
                                 Harga<i class="material-symbols-outlined menu-icon ms-2 text-success">receipt_long</i></a>
-
                             <a class="btn-utama-soft sml rnd " data-bs-toggle="modal" data-bs-target="#modaltambahtitik"
                                 id="addData">Gunakan Titik Untuk Project Baru<i
                                     class="material-symbols-outlined menu-icon ms-2 text-prim">arrow_right_alt</i></a>

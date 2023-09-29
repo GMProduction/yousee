@@ -75,9 +75,10 @@ class ProjectController extends Controller
 
 
 
-    public function indexDetailProject()
+    public function indexDetailProject($id)
     {
-        return view('admin.project.detailproject', ['sidebar' => 'project']);
+        $data = Project::findOrFail($id);
+        return view('admin.project.detailproject', ['sidebar' => 'project', 'data' => $data]);
     }
 
     public function indexBuatHarga()
