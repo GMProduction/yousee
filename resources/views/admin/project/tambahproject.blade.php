@@ -102,13 +102,15 @@
                 <div class="panel mb-1">
                     <div class="title">
                         <p>Data Titik</p>
-                        <div class="d-flex">
-                            <a class="btn-success-soft sml rnd me-2" id="addPic">Tambah PIC titik<i
-                                    class="material-symbols-outlined menu-icon ms-2 text-success">add_circle</i></a>
+                        @if(request('q'))
+                            <div class="d-flex">
+                                <a class="btn-success-soft sml rnd me-2" id="addPic">Tambah PIC titik<i
+                                        class="material-symbols-outlined menu-icon ms-2 text-success">add_circle</i></a>
 
-                            <a class="btn-utama-soft sml rnd " id="addDataTitik">Tambah Titik <i
-                                    class="material-symbols-outlined menu-icon ms-2 text-grey">arrow_right_alt</i></a>
-                        </div>
+                                <a class="btn-utama-soft sml rnd " id="addDataTitik">Tambah Titik <i
+                                        class="material-symbols-outlined menu-icon ms-2 text-grey">arrow_right_alt</i></a>
+                            </div>
+                        @endif
                     </div>
                     <div class="isi">
                         <div class="table">
@@ -449,8 +451,8 @@
             });
             showTable()
             showDatatableItem()
-            getCountCity()
-            getCountPIC()
+            getCountCity('{{request('q')}}')
+            getCountPIC('{{request('q')}}')
         });
 
         $(document).on('click', '#addPic', function () {
@@ -460,10 +462,12 @@
             $('#modaltambahpictitik').modal('show')
         })
 
-        function getCountCity() {
+        function getCountCity(id) {
             let divCity = $('#countCity')
             divCity.empty()
-            $.get('{{route('tambahproject.count.city',['id' => request('q')])}}', function (req) {
+            let url = '{{route('tambahproject.count.city',['id' => 'vallll'])}}'
+            url.replace('vallll',id)
+            $.get(url, function (req) {
                 $.each(req, function (k, v) {
                     divCity.append('<div>' +
                         '<label>' + v.name + ' : ' + v.count + '</label>' +
@@ -472,10 +476,12 @@
             })
         }
 
-        function getCountPIC() {
+        function getCountPIC(id) {
             let divCity = $('#countPic')
             divCity.empty()
-            $.get('{{route('tambahproject.count.pic',['id' => request('q')])}}', function (req) {
+            let url = '{{route('tambahproject.count.pic',['id' => 'vallll'])}}'
+            url.replace('vallll',id)
+            $.get(url, function (req) {
                 $.each(req, function (k, v) {
                     divCity.append('<div>' +
                         '<label>' + v.nama + ' : ' + v.count + '</label>' +

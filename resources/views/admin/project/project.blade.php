@@ -18,16 +18,16 @@
                 <div class="table">
                     <table id="table_project" class="table table-striped" style="width:100%">
                         <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Nama Project</th>
-                            <th>Tanggal Request</th>
-                            <th>Jumlah Titik</th>
-                            <th>PIC Client</th>
-                            <th>Durasi</th>
-                            <th>Status</th>
-                            <th>Action</th>
-                        </tr>
+                            <tr>
+                                <th>#</th>
+                                <th>Nama Project</th>
+                                <th>Tanggal Request</th>
+                                <th>Jumlah Titik</th>
+                                <th>PIC Client</th>
+                                <th>Durasi</th>
+{{--                                <th>Status</th>--}}
+                                <th>Action</th>
+                            </tr>
                         </thead>
                         <tbody>
                         {{-- <tr>
@@ -55,16 +55,16 @@
                         </tr> --}}
                         </tbody>
                         <tfoot>
-                        <tr>
-                            <th>#</th>
-                            <th>Nama Project</th>
-                            <th>Tanggal Request</th>
-                            <th>Jumlah Titik</th>
-                            <th>PIC Client</th>
-                            <th>Durasi</th>
-                            <th>Status</th>
-                            <th>Action</th>
-                        </tr>
+                            <tr>
+                                <th>#</th>
+                                <th>Nama Project</th>
+                                <th>Tanggal Request</th>
+                                <th>Jumlah Titik</th>
+                                <th>PIC Client</th>
+                                <th>Durasi</th>
+{{--                                <th>Status</th>--}}
+                                <th>Action</th>
+                            </tr>
                         </tfoot>
                     </table>
                 </div>
@@ -164,10 +164,10 @@
                         "data": "duration",
                         "name": "duration"
                     },
-                    {
-                        "data": "status",
-                        "name": "status"
-                    },
+                    // {
+                    //     "data": "status",
+                    //     "name": "status"
+                    // },
                     {
                         "data": "id",
                         "render": function (data, type, row) {
