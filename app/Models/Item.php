@@ -68,6 +68,6 @@ class Item extends Model
     }
 
     public function vendorAll(){
-        return $this->belongsTo(Vendor::class, 'vendor_id')->withTrashed();
+        return $this->belongsTo(Vendor::class, 'vendor_id')->withDefault(['name' => ''])->withTrashed();
     }
 }

@@ -56,14 +56,15 @@ class ProjectDetailController extends Controller
             'pic_id'  => 'required',
         ]);
         $data['project_id'] = request('q');
-
+        $qty = request('qtyPic');
         if (request('id')) {
             $project = ProjectItem::find(request('id'));
             $project->update($data);
         } else {
-            $project = new ProjectItem();
-            $project->create($data);
-
+            for ($x = 1; $x <= $qty; $x++){
+                $project = new ProjectItem();
+                $project->create($data);
+            }
         }
 //
 //        $history = new HistoryController();
@@ -90,12 +91,33 @@ class ProjectDetailController extends Controller
             'item_id'    => 'required',
             'is_lighted' => 'required',
         ]);
-        $data['vendor_price'] = request('vendor_price');
+        $price = request('vendor_price');
+        $data['vendor_price'] = str_replace(',','',$price);
         $data['available'] = request('statAvail') ?? request('dateAvail');
+
+
         if (request('id')) {
+            $projectItem = ProjectItem::where([['item_id', request('item_id')],['project_id' , $id], ['id','!=',request('id')]])->first();
+            if ($projectItem){
+                return response()->json(
+                    [
+                        'msg' => 'Titik sudah dimasukkan',
+                    ],
+                    201
+                );
+            }
             $detail = ProjectItem::find(request('id'));
             $detail->update($data);
         } else {
+            $projectItem = ProjectItem::where([['item_id', request('item_id')],['project_id' , $id]])->first();
+            if ($projectItem){
+                return response()->json(
+                    [
+                        'msg' => 'Titik sudah dimasukkan',
+                    ],
+                    201
+                );
+            }
             $data['project_id'] = $id;
             $detail             = new ProjectItem();
             $detail->create($data);
