@@ -76,9 +76,9 @@
                                 <thead>
                                     <tr>
                                         <th>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" value=""
-                                                    onclick="selectAll()" class="selectalltable" id="flexCheckDefault">
+                                            <div class="text-center">
+                                                <input class="form-check-input selectalltable text-center" type="checkbox"
+                                                    value="" onclick="selectAll()" id="flexCheckDefault">
                                             </div>
                                         </th>
                                         <th>#</th>
@@ -147,10 +147,12 @@
     <script src="https://cdn.datatables.net/select/1.7.0/js/dataTables.select.min.js"></script>
     <script src="{{ asset('js/number_formater.js') }}"></script>
     <script>
+        var tb_titik;
+
         $(document).ready(function() {
-            var table_titik = $('#table_titik').DataTable({
+            tb_titik = $('#table_titik').DataTable({
 
-
+                select: true,
                 columnDefs: [{
                     orderable: false,
                     className: 'select-checkbox',
@@ -167,14 +169,16 @@
         });
 
         function selectAll() {
-            var checkBox = document.getElementsByClassName("selectalltable");
-            if (checkBox.checked == true) {
-                // table_titik.rows().select();
-                alert("select");
+            if ($('.selectalltable').is(':checked')) {
+                // alert("selected");
+                tb_titik.rows().select();
+
             } else {
-                // table_titik.rows().deselect();
-                alert("select");
+                // alert("no");
+                tb_titik.rows().deselect();
+
             }
+
         }
     </script>
 @endsection
