@@ -93,4 +93,9 @@ class ProjectController extends Controller
     {
         return view('admin.project.formharga', ['sidebar' => 'project']);
     }
+
+    public function delete($id){
+        Project::destroy($id);
+        return 'success';
+    }
 }

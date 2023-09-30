@@ -100,6 +100,7 @@ Route::prefix('admin')->middleware(\App\Http\Middleware\AdminMiddleware::class)-
             function () {
                 Route::get('datatable', [ProjectController::class, 'datatable'])->name("project.datatable");
                 Route::match(['POST', 'GET'], '', [ProjectController::class, 'index'])->name("project");
+                Route::post( 'delete/{id}', [ProjectController::class, 'delete'])->name("project.delete");
                 Route::prefix('addproject')->group(function () {
                     Route::get('datatable', [\App\Http\Controllers\ProjectDetailController::class, 'datatable'])->name("tambahproject.datatable");
                     Route::get('get-count-city/{id}', [\App\Http\Controllers\ProjectDetailController::class, 'getCountCity'])->name("tambahproject.count.city");

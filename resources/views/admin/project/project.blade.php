@@ -179,13 +179,25 @@
                                 "'> <i class='material-symbols-outlined menu-icon'>add</i></a>" +
                                 "<a class='btn-utama sml rnd  me-1' href='/admin/project/detail/" + row.id + "'>" +
                                 " <i class='material-symbols-outlined menu-icon text-white'>info</i></a>" +
-                                "<a class='btn-danger sml rnd  me-1' href='project/addproject' id='addData'> <i" +
+                                "<a data-id='"+data+"' class='btn-danger sml rnd  me-1' role='button' id='deleteProject'> <i" +
                                 "    class='material-symbols-outlined menu-icon text-white'>delete</i></a>" +
                                 "</div>";
                         }
                     },
                 ]
             });
+        }
+
+        $(document).on('click','#deleteProject', function () {
+            let id = $(this).data('id');
+            let data = {
+                _token: '{{csrf_token()}}',
+            };
+            deleteData(name, "/admin/project/delete/" + id, data, afterDelete);
+        })
+
+        function afterDelete(){
+            $('#table_project').DataTable().ajax.reload()
         }
     </script>
 @endsection

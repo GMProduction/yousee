@@ -37,7 +37,7 @@
                 <div class="panel p-4">
                     <form id="formProject" onsubmit="return saveForm()">
                         @csrf
-                        <input id="id" name="id" hidden>
+                        <input id="id" name="id" value="{{request('q')}}" hidden>
                         <div class="form-floating mb-3">
                             <input type="text" class="form-control" id="inp_nama" name="name" required
                                    value="{{ $data ? $data->name : '' }}" placeholder="Nama Project">
@@ -46,8 +46,8 @@
 
                         <div class="form-floating mb-3 nput-group date datepicker" id="datepicker"
                              data-provide="datepicker">
-                            <input type="text" class="form-control" id="date" name="request_date" required
-                                   value="{{ $data ? $data->request_date : '' }}" placeholder="Tanggal Request">
+                            <input type="text" class="form-control" id="date" name="request_date" required onchange="changeDate(this)"
+                                   value="{{ $data ? date('d/m/Y', strtotime($data->request_date)) : '' }}" placeholder="Tanggal Request">
                             <label for="date" class="form-label">Tanggal Request</label>
                             <div class="input-group-addon">
                                 <span class="glyphicon glyphicon-th"></span>
@@ -91,7 +91,11 @@
 
                         <div class="my-3">
                             <div class="d-flex">
-                                <button type="submit" class="btn-utama" style="width: 100%">Simpan</button>
+                                <button type="submit" class="btn-utama" style="width: 100%">@if(request('q'))
+                                        Edit
+                                    @else
+                                        Simpan
+                                    @endif</button>
                             </div>
 
                         </div>
@@ -143,26 +147,28 @@
                     </div>
 
                 </div>
-                <div class="panel p-4">
-                    <div class="d-flex flex-column">
-                        <div class="d-flex">
-                            <span class="material-symbols-outlined menu-icon me-2">info</span>
-                            <div>
-                                <div id="countCity">
+                @if(request('q'))
+                    <div class="panel p-4">
+                        <div class="d-flex flex-column">
+                            <div class="d-flex">
+                                <span class="material-symbols-outlined menu-icon me-2">info</span>
+                                <div>
+                                    <div id="countCity">
+                                    </div>
                                 </div>
                             </div>
-                        </div>
 
-                        <div class="d-flex mt-2">
-                            <span class="material-symbols-outlined menu-icon me-2">info</span>
-                            <div>
-                                <div id="countPic">
+                            <div class="d-flex mt-2">
+                                <span class="material-symbols-outlined menu-icon me-2">info</span>
+                                <div>
+                                    <div id="countPic">
+                                    </div>
                                 </div>
                             </div>
-                        </div>
 
+                        </div>
                     </div>
-                </div>
+                @endif
             </div>
 
         </div>
@@ -290,16 +296,16 @@
                                                 </div>
 
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" name="statAvail" value="Tersedia" id="flexCheckDefault" onchange="changeAvail(this)">
-                                                    <label class="form-check-label" for="flexCheckDefault">
+                                                    <input class="form-check-input" type="checkbox" name="statAvail" value="Tersedia" id="checkAvail" onchange="changeAvail()">
+                                                    <label class="form-check-label" for="checkAvail">
                                                         Tersedia
                                                     </label>
                                                 </div>
                                                 <div class="form-floating mb-3 input-group date datepicker"
                                                      id="tanggaltersedia" data-provide="datepicker">
 
-                                                    <input type="text" class="form-control" id="date"
-                                                           name="nameAvail" required
+                                                    <input type="text" class="form-control" id="date" onchange="changeData(this)"
+                                                           name="dateAvail" required
                                                            value=""
                                                            placeholder="Tersedia Tanggal">
                                                     <label for="date" class="form-label">Tersedia Tanggal</label>
@@ -315,34 +321,34 @@
                                                         Vendor</label>
                                                 </div>
 
-                                                <div class="panel p-2 bg-primary-grey">
-                                                    <p>Harga Dari Vendor <span class="unset text-primary">(Optional)</span>
-                                                    </p>
-                                                    <div class="form-floating mb-3">
-                                                        <input type="number" class="form-control" id="inp_harga1"
-                                                               name="inp_harga1" placeholder="Harga Vendor">
-                                                        <label for="inp_harga1" class="form-label">Harga 1
-                                                            Bulan</label>
-                                                    </div>
-                                                    <div class="form-floating mb-3">
-                                                        <input type="number" class="form-control" id="inp_harga3"
-                                                               name="inp_harga3" placeholder="Harga Vendor">
-                                                        <label for="inp_harga3" class="form-label">Harga 3
-                                                            Bulan</label>
-                                                    </div>
-                                                    <div class="form-floating mb-3">
-                                                        <input type="number" class="form-control" id="inp_harga6"
-                                                               name="inp_harga6" placeholder="Harga Vendor">
-                                                        <label for="inp_harga6" class="form-label">Harga 6
-                                                            Bulan</label>
-                                                    </div>
-                                                    <div class="form-floating mb-3">
-                                                        <input type="number" class="form-control" id="inp_harga12"
-                                                               name="inp_harga12" placeholder="Harga Vendor">
-                                                        <label for="inp_harga12" class="form-label">Harga 12
-                                                            Bulan</label>
-                                                    </div>
-                                                </div>
+                                                {{--                                                <div class="panel p-2 bg-primary-grey">--}}
+                                                {{--                                                    <p>Harga Dari Vendor <span class="unset text-primary">(Optional)</span>--}}
+                                                {{--                                                    </p>--}}
+                                                {{--                                                    <div class="form-floating mb-3">--}}
+                                                {{--                                                        <input type="number" class="form-control" id="inp_harga1"--}}
+                                                {{--                                                               name="inp_harga1" placeholder="Harga Vendor">--}}
+                                                {{--                                                        <label for="inp_harga1" class="form-label">Harga 1--}}
+                                                {{--                                                            Bulan</label>--}}
+                                                {{--                                                    </div>--}}
+                                                {{--                                                    <div class="form-floating mb-3">--}}
+                                                {{--                                                        <input type="number" class="form-control" id="inp_harga3"--}}
+                                                {{--                                                               name="inp_harga3" placeholder="Harga Vendor">--}}
+                                                {{--                                                        <label for="inp_harga3" class="form-label">Harga 3--}}
+                                                {{--                                                            Bulan</label>--}}
+                                                {{--                                                    </div>--}}
+                                                {{--                                                    <div class="form-floating mb-3">--}}
+                                                {{--                                                        <input type="number" class="form-control" id="inp_harga6"--}}
+                                                {{--                                                               name="inp_harga6" placeholder="Harga Vendor">--}}
+                                                {{--                                                        <label for="inp_harga6" class="form-label">Harga 6--}}
+                                                {{--                                                            Bulan</label>--}}
+                                                {{--                                                    </div>--}}
+                                                {{--                                                    <div class="form-floating mb-3">--}}
+                                                {{--                                                        <input type="number" class="form-control" id="inp_harga12"--}}
+                                                {{--                                                               name="inp_harga12" placeholder="Harga Vendor">--}}
+                                                {{--                                                        <label for="inp_harga12" class="form-label">Harga 12--}}
+                                                {{--                                                            Bulan</label>--}}
+                                                {{--                                                    </div>--}}
+                                                {{--                                                </div>--}}
                                             </div>
                                         </div>
 
@@ -427,6 +433,7 @@
     <script>
         let param, prov, pic_id;
         var urlTitik = "/data/item/datatable";
+        let idProject = ''
 
         $(document).ready(function () {
             param = '{{ request('q') }}'
@@ -451,9 +458,14 @@
             });
             showTable()
             showDatatableItem()
-            getCountCity('{{request('q')}}')
-            getCountPIC('{{request('q')}}')
+            idProject = '{{request('q')}}'
+            getCountCity()
+            getCountPIC()
         });
+
+        function changeDate(a) {
+            console.log($(a).val())
+        }
 
         $(document).on('click', '#addPic', function () {
             console.log('asdasd')
@@ -462,11 +474,11 @@
             $('#modaltambahpictitik').modal('show')
         })
 
-        function getCountCity(id) {
+        function getCountCity() {
             let divCity = $('#countCity')
             divCity.empty()
             let url = '{{route('tambahproject.count.city',['id' => 'vallll'])}}'
-            url.replace('vallll',id)
+            url = url.split('vallll').join(idProject)
             $.get(url, function (req) {
                 $.each(req, function (k, v) {
                     divCity.append('<div>' +
@@ -476,11 +488,11 @@
             })
         }
 
-        function getCountPIC(id) {
+        function getCountPIC() {
             let divCity = $('#countPic')
             divCity.empty()
             let url = '{{route('tambahproject.count.pic',['id' => 'vallll'])}}'
-            url.replace('vallll',id)
+            url = url.split('vallll').join(idProject)
             $.get(url, function (req) {
                 $.each(req, function (k, v) {
                     divCity.append('<div>' +
@@ -490,9 +502,8 @@
             })
         }
 
-        function changeAvail(a) {
-            console.log('asdasd', a)
-            let check = $(a).prop('checked');
+        function changeAvail() {
+            let check = $('#checkAvail').prop('checked');
             $('#modaltambahtitik #date').val('');
             if (check) {
                 $('#modaltambahtitik #date').attr('disabled', '')
@@ -548,17 +559,17 @@
                     "render": function (data, type, row) {
                         console.log(row)
                         return "<div class='d-flex gap-2'>\n" +
-                            "                                <a class='btn-success-soft sml rnd' data-id='" +
-                            data + "'  id='editData'> <i class='material-symbols-outlined menu-icon'>edit</i></a>" +
+                            // "                                <a class='btn-success-soft sml rnd' data-id='" +
+                            // data + "'  id='editData'> <i class='material-symbols-outlined menu-icon'>edit</i></a>" +
                             "                               " +
                             " <a class='btn-success-soft sml rnd' data-itemid='" + row?.item_id + "' data-tipe='" +
                             row?.item?.type?.name + "' data-tinggi='" + row?.item?.height + "' data-lebar='" + row
                                 ?.item?.width + "' data-lokasi='" + row?.item?.location + "' data-kotaid='" + row?.item
                                 ?.city?.id + "' data-kota='" + row?.item?.city?.name + "' data-picnama='" + row?.pic
                                 ?.nama + "' data-pic_id='" + row.pic_id + "' data-harga='" + row?.vendor_price +
-                            "' data-id='" + data +
+                            "' data-available='"+row?.available+"' data-light='"+row?.is_lighted+"' data-id='" + data +
                             "'  id='mapData'> <i class='material-symbols-outlined menu-icon'>map</i></a>" +
-                            " <a class='btn-danger sml rnd  me-1' data-id='"+data+"' role='button' id='deleteTitik'> <i" +
+                            " <a class='btn-danger sml rnd  me-1' data-id='" + data + "' role='button' id='deleteTitik'> <i" +
                             "    class='material-symbols-outlined menu-icon text-white'>delete</i></a>" +
                             "</div>";
                     }
@@ -567,7 +578,7 @@
             datatable('tbDetail', '{{ route('tambahproject.datatable', ['q' => request('q')]) }}', column)
         }
 
-        $(document).on('click','#deleteTitik', function () {
+        $(document).on('click', '#deleteTitik', function () {
             let id = $(this).data('id');
             let data = {
                 _token: '{{csrf_token()}}',
@@ -631,6 +642,10 @@
             $('#nama_vendor').val(row.vendor);
         })
 
+        function changeData(a) {
+            console.log('asdasd', $(a).val())
+        }
+
         $(document).on('click', '#mapData, #addDataTitik', function () {
             let row = $(this).data()
             console.log('asd', row)
@@ -646,6 +661,16 @@
             $('#lebar').val(row?.lebar);
             $('#tipe').val(row?.tipe);
             $('#inp_hargavendor').val(row?.harga);
+            $("input[name=is_lighted][value='"+row.light+"']").prop("checked",true);
+            let avail = row?.available
+            $('#checkAvail').prop("checked", false);
+            if (avail == "Tersedia"){
+                $('#checkAvail').prop("checked", true);
+                changeAvail()
+            }else {
+                changeAvail()
+                $('#modaltambahtitik #date').val(avail)
+            }
             getSelect("inp_namapic", "{{ route('user.get.json') }}", "nama", row?.pic_id, "Pilih PIC");
             $('#tambahtitik').DataTable().ajax.url(urlTitik).load()
 

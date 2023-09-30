@@ -15,6 +15,8 @@ class ProjectItem extends Model
         'pic_id',
         'item_id',
         'vendor_price',
+        'available',
+        'is_lighted'
     ];
 
     public function project(){

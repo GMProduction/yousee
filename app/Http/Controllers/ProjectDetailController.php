@@ -85,11 +85,13 @@ class ProjectDetailController extends Controller
     public function postTitik($id)
     {
         $data                 = request()->validate([
-            'city_id' => 'required',
-            'pic_id'  => 'required',
-            'item_id' => 'required',
+            'city_id'    => 'required',
+            'pic_id'     => 'required',
+            'item_id'    => 'required',
+            'is_lighted' => 'required',
         ]);
         $data['vendor_price'] = request('vendor_price');
+        $data['available'] = request('statAvail') ?? request('dateAvail');
         if (request('id')) {
             $detail = ProjectItem::find(request('id'));
             $detail->update($data);
@@ -127,9 +129,10 @@ class ProjectDetailController extends Controller
                  ->get();
     }
 
-
-    public function delete($id){
+    public function delete($id)
+    {
         ProjectItem::destroy($id);
+
         return 'success';
     }
 }
