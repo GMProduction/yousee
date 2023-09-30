@@ -25,12 +25,12 @@
                                 <th>Jumlah Titik</th>
                                 <th>PIC Client</th>
                                 <th>Durasi</th>
-{{--                                <th>Status</th>--}}
+                                {{--                                <th>Status</th> --}}
                                 <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                        {{-- <tr>
+                            {{-- <tr>
                             <td>#</td>
                             <td>Nama Project</td>
                             <td>Tanggal Request</td>
@@ -62,7 +62,7 @@
                                 <th>Jumlah Titik</th>
                                 <th>PIC Client</th>
                                 <th>Durasi</th>
-{{--                                <th>Status</th>--}}
+                                {{--                                <th>Status</th> --}}
                                 <th>Action</th>
                             </tr>
                         </tfoot>
@@ -73,8 +73,8 @@
         </div>
 
         <!-- Modal -->
-    {{-- <div class="modal fade" id="modaltambahtitik" tabindex="-1" aria-labelledby="modaltambahtitik" aria-hidden="true"> --}}
-    {{-- <div class="modal-dialog modal-xl">
+        {{-- <div class="modal fade" id="modaltambahtitik" tabindex="-1" aria-labelledby="modaltambahtitik" aria-hidden="true"> --}}
+        {{-- <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="modaltambahuser">Buat Project</h5>
@@ -93,7 +93,7 @@
                     <div class="mb-3">
                         <label for="icontipe" class="form-label">Icon Tipe</label>
                         {{-- <input class="form-control form-control-sm" id="icontipe" type="file"> --}}
-    {{-- <input type="file" id="icon" name="" class="image" required data-min-height="10"
+        {{-- <input type="file" id="icon" name="" class="image" required data-min-height="10"
         accept="image/jpeg, image/jpg, image/png" data-allowed-file-extensions="jpg jpeg png" />
 </div>
 
@@ -110,7 +110,7 @@
 </div>
 </div>
 </div>  --}}
-    <!-- Modal Detail-->
+        <!-- Modal Detail-->
 
     </div>
 @endsection
@@ -119,7 +119,7 @@
     <script src="{{ asset('js/number_formater.js') }}"></script>
 
     <script>
-        $(document).ready(function () {
+        $(document).ready(function() {
             datatable()
         });
 
@@ -130,7 +130,7 @@
                 processing: true,
                 serverSide: true,
                 ajax: url,
-                "fnRowCallback": function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+                "fnRowCallback": function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
                     // debugger;
                     var numStart = this.fnPagingInfo().iStart;
                     var index = numStart + iDisplayIndexFull + 1;
@@ -139,10 +139,10 @@
                     return nRow;
                 },
                 columns: [{
-                    "className": '',
-                    "orderable": false,
-                    "defaultContent": ''
-                },
+                        "className": '',
+                        "orderable": false,
+                        "defaultContent": ''
+                    },
                     {
                         "data": "name",
                         "name": "name"
@@ -170,16 +170,18 @@
                     // },
                     {
                         "data": "id",
-                        "render": function (data, type, row) {
+                        "render": function(data, type, row) {
                             let string = JSON.stringify(row);
                             return "<div class='d-flex gap-2'>\n" +
                                 "<a class='btn-success-soft sml rnd' data-id='" +
                                 data + "' data-row='" + string +
                                 "' id='editData' href='/admin/project/addproject?q=" + row.id +
                                 "'> <i class='material-symbols-outlined menu-icon'>add</i></a>" +
-                                "<a class='btn-utama sml rnd  me-1' href='/admin/project/detail/" + row.id + "'>" +
+                                "<a class='btn-utama sml rnd  me-1' href='/admin/project/detail/" + row.id +
+                                "'>" +
                                 " <i class='material-symbols-outlined menu-icon text-white'>info</i></a>" +
-                                "<a data-id='"+data+"' class='btn-danger sml rnd  me-1' role='button' id='deleteProject'> <i" +
+                                "<a data-id='" + data +
+                                "' class='btn-danger sml rnd  me-1' role='button' id='deleteProject'> <i" +
                                 "    class='material-symbols-outlined menu-icon text-white'>delete</i></a>" +
                                 "</div>";
                         }
@@ -188,15 +190,15 @@
             });
         }
 
-        $(document).on('click','#deleteProject', function () {
+        $(document).on('click', '#deleteProject', function() {
             let id = $(this).data('id');
             let data = {
-                _token: '{{csrf_token()}}',
+                _token: '{{ csrf_token() }}',
             };
             deleteData(name, "/admin/project/delete/" + id, data, afterDelete);
         })
 
-        function afterDelete(){
+        function afterDelete() {
             $('#table_project').DataTable().ajax.reload()
         }
     </script>
