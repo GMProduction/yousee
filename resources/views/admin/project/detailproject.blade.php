@@ -65,9 +65,9 @@
                         <div class="d-flex">
                             <a class="btn-success-soft sml rnd me-2" href="/admin/project/buatharga/1">Buat
                                 Harga<i class="material-symbols-outlined menu-icon ms-2 text-success">receipt_long</i></a>
-                            <a class="btn-utama-soft sml rnd " data-bs-toggle="modal" data-bs-target="#modaltambahtitik"
-                                id="addData">Gunakan Titik Untuk Project Baru<i
-                                    class="material-symbols-outlined menu-icon ms-2 text-prim">arrow_right_alt</i></a>
+                            <a class="btn-utama-soft sml rnd " data-bs-toggle="modal"
+                                data-bs-target="#modaltambahtitik">Gunakan Titik Untuk Project
+                                Baru<i class="material-symbols-outlined menu-icon ms-2 text-prim">arrow_right_alt</i></a>
                         </div>
                     </div>
                     <div class="isi">
@@ -141,6 +141,75 @@
             </div>
         </div>
     </div>
+
+    <!-- Modal Cari Project -->
+    <div class="modal fade" id="modaltambahtitik" tabindex="-1" aria-labelledby="modaltambahtitik" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modaltambahuser">Pilih Project</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+
+
+                    <div class="panel p-4">
+                        <div class="table">
+                            <table id="tbDetail" class="table table-striped" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Kota</th>
+                                        <th>Lokasi titik</th>
+                                        <th>PIC /titik</th>
+                                        <th>Harga Vendor</th>
+                                        <th>Durasi</th>
+                                        <th>Status</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>#</td>
+                                        <td>Nama Project</td>
+                                        <td>Tanggal Request</td>
+                                        <td>Jumlah Titik</td>
+                                        <td>PIC Client</td>
+                                        <td>Durasi</td>
+                                        <th>Status</th>
+                                        <td>
+
+                                            <div class='d-flex'>
+                                                <a class="btn-success sml rnd  me-1" href="/admin/project/detail/1"
+                                                    id="addData">Masukan Dalam
+                                                    Project
+                                                    <i
+                                                        class='material-symbols-outlined menu-icon text-white'>arrow_right_alt</i></a>
+
+
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Kota</th>
+                                        <th>Lokasi titik</th>
+                                        <th>PIC /titik</th>
+                                        <th>Harga Vendor</th>
+                                        <th>Durasi</th>
+                                        <th>Status</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
 
 @section('morejs')
@@ -172,6 +241,8 @@
             if ($('.selectalltable').is(':checked')) {
                 // alert("selected");
                 tb_titik.rows().select();
+
+
 
             } else {
                 // alert("no");
