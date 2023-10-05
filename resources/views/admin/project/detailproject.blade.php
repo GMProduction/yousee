@@ -65,8 +65,9 @@
                         <div class="d-flex">
                             <a class="btn-success-soft sml rnd me-2" href="/admin/project/buatharga/1">Buat
                                 Harga<i class="material-symbols-outlined menu-icon ms-2 text-success">receipt_long</i></a>
-                            <a class="btn-utama-soft sml rnd" id="btn-use-items">Gunakan Titik Untuk Project Baru<i
-                                    class="material-symbols-outlined menu-icon ms-2 text-prim">arrow_right_alt</i></a>
+                            <a class="btn-utama-soft sml rnd " data-bs-toggle="modal"
+                                data-bs-target="#modaltambahtitik">Gunakan Titik Untuk Project
+                                Baru<i class="material-symbols-outlined menu-icon ms-2 text-prim">arrow_right_alt</i></a>
                         </div>
                     </div>
                     <div class="isi">
