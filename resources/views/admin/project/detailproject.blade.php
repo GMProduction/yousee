@@ -65,9 +65,8 @@
                         <div class="d-flex">
                             <a class="btn-success-soft sml rnd me-2" href="/admin/project/buatharga/1">Buat
                                 Harga<i class="material-symbols-outlined menu-icon ms-2 text-success">receipt_long</i></a>
-                            <a class="btn-utama-soft sml rnd " data-bs-toggle="modal"
-                                data-bs-target="#modaltambahtitik">Gunakan Titik Untuk Project
-                                Baru<i class="material-symbols-outlined menu-icon ms-2 text-prim">arrow_right_alt</i></a>
+                            <a class="btn-utama-soft sml rnd" id="btn-use-items">Gunakan Titik Untuk Project Baru<i
+                                    class="material-symbols-outlined menu-icon ms-2 text-prim">arrow_right_alt</i></a>
                         </div>
                     </div>
                     <div class="isi">
@@ -81,7 +80,7 @@
                                                     value="" onclick="selectAll()" id="flexCheckDefault">
                                             </div>
                                         </th>
-                                        <th>#</th>
+                                        {{--                                    <th>#</th> --}}
                                         <th>Kota</th>
                                         <th>Lokasi titik</th>
                                         <th>PIC /titik</th>
@@ -89,21 +88,21 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($data->items as $item)
-                                        <tr>
-                                            <td></td>
-                                            <td>{{ $loop->index + 1 }}</td>
-                                            <td>{{ $item->city->name }}</td>
-                                            <td>{{ $item->item->location }}</td>
-                                            <td>{{ $item->pic->nama }}</td>
-                                            <td>Rp. {{ 0 }}</td>
-                                        </tr>
-                                    @endforeach
+                                    {{--                                    @foreach ($data->items as $item) --}}
+                                    {{--                                        <tr> --}}
+                                    {{--                                            <td></td> --}}
+                                    {{--                                            <td>{{ $loop->index + 1 }}</td> --}}
+                                    {{--                                            <td>{{ $item->city->name }}</td> --}}
+                                    {{--                                            <td>{{ $item->item->location }}</td> --}}
+                                    {{--                                            <td>{{ $item->pic->nama }}</td> --}}
+                                    {{--                                            <td>Rp. {{ 0 }}</td> --}}
+                                    {{--                                        </tr> --}}
+                                    {{--                                    @endforeach --}}
                                 </tbody>
                                 <tfoot>
                                     <tr>
                                         <td></td>
-                                        <th>#</th>
+                                        {{--                                    <th>#</th> --}}
                                         <th>Kota</th>
                                         <th>Lokasi titik</th>
                                         <th>PIC /titik</th>
@@ -217,16 +216,39 @@
     <script src="{{ asset('js/number_formater.js') }}"></script>
     <script>
         var tb_titik;
+        var dataSet = @json($data->items)
+
 
         $(document).ready(function() {
             tb_titik = $('#table_titik').DataTable({
-
-                select: true,
+                data: dataSet,
                 columnDefs: [{
                     orderable: false,
                     className: 'select-checkbox',
-                    targets: 0
+                    targets: 0,
+                    'checkboxes': {
+                        'selectRow': true
+                    }
                 }],
+                columns: [{
+                        "defaultContent": ''
+                    },
+                    {
+                        data: 'city.name'
+                    },
+                    {
+                        data: 'item.location'
+                    },
+                    {
+                        data: 'pic.nama'
+                    },
+                    {
+                        data: null,
+                        render: function() {
+                            return 'Rp. 0'
+                        }
+                    },
+                ],
                 select: {
                     style: 'multi',
                     selector: 'td:first-child'
@@ -235,21 +257,37 @@
                     [1, 'asc']
                 ]
             });
+
+            $('#btn-use-items').on('click', function(e) {
+                e.preventDefault();
+                useItemEvent();
+            })
         });
 
         function selectAll() {
             if ($('.selectalltable').is(':checked')) {
-                // alert("selected");
                 tb_titik.rows().select();
 
 
 
             } else {
-                // alert("no");
                 tb_titik.rows().deselect();
-
             }
+        }
 
+        function checkedTargets(checkboxes) {
+            return checkboxes.filter(function(index) {
+                return $(checkboxes[index]).prop('checked');
+            });
+        }
+
+        function useItemEvent() {
+            let data = tb_titik.rows({
+                selected: true
+            }).data();
+            $.each(data, function(k, v) {
+                console.log(v)
+            })
         }
     </script>
 @endsection
