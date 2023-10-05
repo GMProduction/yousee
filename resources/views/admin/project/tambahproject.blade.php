@@ -196,6 +196,7 @@
                                                 <th>#</th>
                                                 <th>Kota</th>
                                                 <th>Alamat</th>
+                                                <th>Lokasi</th>
                                                 <th>Vendor</th>
                                                 <th>Lebar</th>
                                                 <th>Tinggi</th>
@@ -212,6 +213,7 @@
                                                 <th>#</th>
                                                 <th>Kota</th>
                                                 <th>Alamat</th>
+                                                <th>Lokasi</th>
                                                 <th>Vendor</th>
                                                 <th>Lebar</th>
                                                 <th>Tinggi</th>
@@ -319,7 +321,7 @@
                                                 </div>
 
                                                 <div class="form-floating mb-3">
-                                                    <input type="number" class="form-control" id="inp_hargavendor"
+                                                    <input type="text" pattern="[0-9,]+" class="form-control" id="inp_hargavendor" oninvalid="this.setCustomValidity('Harga tidak sesuai')" onchange="this.setCustomValidity('')"
                                                         name="vendor_price" required placeholder="Harga Vendor">
                                                     <label for="inp_hargavendor" class="form-label">Harga dari
                                                         Vendor</label>
@@ -408,7 +410,7 @@
                                     </select>
                                 </div>
                                 <div class="form-floating mb-3">
-                                    <input type="number" class="form-control" id="in_jumlah" name="in_jumlah" required
+                                    <input type="number" class="form-control" id="in_jumlah" name="qtyPic" required
                                         placeholder="Jumlah">
                                     <label for="in_jumlah" class="form-label">Jumlah</label>
                                 </div>
@@ -433,6 +435,7 @@
     <script src="{{ asset('js/number_formater.js') }}"></script>
     <script src="{{ asset('js/datatable.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+    <script src="{{ asset('js/currency.js') }}"></script>
 
     <script>
         let param, prov, pic_id;
@@ -446,6 +449,8 @@
             $('#inp_berlampu_ya').prop('checked', '{{ $data && $data->is_lighted == 1 ? true : false }}')
             $('#inp_berlampu_tidak').prop('checked', '{{ $data && $data->is_lighted == 0 ? true : false }}')
             // $('#tambahtitik').DataTable();
+            currency('inp_hargavendor');
+
             $('#titik').DataTable();
             console.log('asdas', param)
             $('#province').select2({
@@ -475,6 +480,8 @@
             console.log('asdasd')
             getSelect("province", "/data/province", "name", prov, "Pilih Provinsi");
             getSelect("pic_id", "{{ route('user.get.json') }}", "nama", pic_id, "Pilih PIC");
+            $('#modaltambahpictitik #city').empty().trigger('change')
+            $('#modaltambahpictitik #in_jumlah').val('1')
             $('#modaltambahpictitik').modal('show')
         })
 
@@ -555,7 +562,10 @@
                 },
                 {
                     "data": "vendor_price",
-                    "name": "vendor_price"
+                    "name": "vendor_price",
+                    "render": function (data) {
+                        return 'Rp. '+data.toLocaleString()
+                    }
                 },
                 {
                     "data": "id",
@@ -568,8 +578,7 @@
                             "                               " +
                             " <a class='btn-success-soft sml rnd' data-itemid='" + row?.item_id + "' data-tipe='" +
                             row?.item?.type?.name + "' data-tinggi='" + row?.item?.height + "' data-lebar='" + row
-                            ?.item?.width + "' data-lokasi='" + row?.item?.location + "' data-kotaid='" + row?.item
-                            ?.city?.id + "' data-kota='" + row?.item?.city?.name + "' data-picnama='" + row?.pic
+                            ?.item?.width + "' data-lokasi='" + row?.item?.location + "' data-kotaid='" + row.city_id + "' data-kota='" + row?.city?.name + "' data-picnama='" + row?.pic
                             ?.nama + "' data-pic_id='" + row.pic_id + "' data-harga='" + row?.vendor_price +
                             "' data-available='" + row?.available + "' data-light='" + row?.is_lighted +
                             "' data-id='" + data +
@@ -601,6 +610,9 @@
                 "data": "city.name",
                 "name": "city.name"
             }, {
+                "data": "address",
+                "name": "address"
+            },{
                 "data": "location",
                 "name": "location"
             }, {
@@ -624,7 +636,7 @@
                 "render": function(data, type, row) {
                     return "<div class='d-flex gap-2'>" +
                         "<a data-id='" + row.id + "' data-vendor='" + row.vendor_all.name + "' data-kotaid='" +
-                        row?.city?.id + "' data-kota='" + row
+                        row?.city_id + "' data-kota='" + row
                         ?.city?.name + "' data-type='" + row?.type?.name + "' data-width='" + row.width +
                         "' data-height='" + row.height + "' data-location='" + row.location +
                         "' class='btn-utama sml rnd  me-1'" +
@@ -664,9 +676,9 @@
             $('#city_id').val(row?.kotaid);
             $('#kota').val(row?.kota);
             $('#alamat').val(row?.lokasi);
-            $('#tinggi').val(row?.tinggi);
-            $('#lebar').val(row?.lebar);
-            $('#tipe').val(row?.tipe);
+            $('#tinggi').val(row?.tinggi == "undefined" ? '' : row?.tinggi);
+            $('#lebar').val(row?.lebar == "undefined" ? '' : row?.tinggi);
+            $('#tipe').val(row?.tipe == "undefined" ? '' : row?.tipe);
             $('#inp_hargavendor').val(row?.harga);
             $("input[name=is_lighted][value='" + row.light + "']").prop("checked", true);
             let avail = row?.available
@@ -679,7 +691,11 @@
                 $('#modaltambahtitik #date').val(avail)
             }
             getSelect("inp_namapic", "{{ route('user.get.json') }}", "nama", row?.pic_id, "Pilih PIC");
-            $('#tambahtitik').DataTable().ajax.url(urlTitik).load()
+            let url = urlTitik;
+            if (row?.kotaid){
+                url = url+'?city='+row?.kotaid;
+            }
+            $('#tambahtitik').DataTable().ajax.url(url).load()
 
             $('#modaltambahtitik').modal('show')
         })
