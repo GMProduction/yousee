@@ -108,8 +108,16 @@ Route::prefix('admin')->middleware(\App\Http\Middleware\AdminMiddleware::class)-
                     Route::post('delete/{id}', [\App\Http\Controllers\ProjectDetailController::class, 'delete'])->name("tambahproject.delete");
                     Route::match(['POST', 'GET'], '/', [\App\Http\Controllers\ProjectDetailController::class, 'indexTambahProject'])->name("tambahproject");
                 });
-                Route::get('/detail/{id}', [ProjectController::class, 'indexDetailProject'])->name("detail");
-                Route::get('/buatharga/{id}', [ProjectController::class, 'indexBuatHarga'])->name("buatharga");
+                Route::prefix('/detail')->group(function (){
+                    Route::get('{id}', [ProjectController::class, 'indexDetailProject'])->name("detail");
+                    Route::get('{id}/json',[\App\Http\Controllers\ProjectDetailController::class,'getDetailProject'])->name('detail.json');
+                });
+                Route::prefix('buatharga')->group(function (){
+                    Route::get('{id}', [ProjectController::class, 'indexBuatHarga'])->name("buatharga");
+                    Route::post('{id}/harga',[\App\Http\Controllers\ProjectDetailController::class,'savePrice'])->name('detail.harga.post');
+                });
+                Route::post('clone-item',[\App\Http\Controllers\ProjectDetailController::class,'saveItemToProject'])->name('clone.item');
+
             }
         );
         Route::get('history/{id}', [\App\Http\Controllers\HistoryController::class, 'getHistory']);

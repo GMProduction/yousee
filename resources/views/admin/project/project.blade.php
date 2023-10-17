@@ -16,7 +16,7 @@
 
             <div class="isi">
                 <div class="table">
-                    <table id="table_project" class="table table-striped" style="width:100%">
+                    <table id="table_id" class="table table-striped" style="width:100%">
                         <thead>
                             <tr>
                                 <th>#</th>
@@ -125,7 +125,7 @@
 
         function datatable() {
             var url = '{{ route('project.datatable') }}';
-            $('#table_project').DataTable({
+            $('#table_id').DataTable({
                 destroy: true,
                 processing: true,
                 serverSide: true,

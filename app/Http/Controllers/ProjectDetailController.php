@@ -56,12 +56,12 @@ class ProjectDetailController extends Controller
             'pic_id'  => 'required',
         ]);
         $data['project_id'] = request('q');
-        $qty = request('qtyPic');
+        $qty                = request('qtyPic');
         if (request('id')) {
             $project = ProjectItem::find(request('id'));
             $project->update($data);
         } else {
-            for ($x = 1; $x <= $qty; $x++){
+            for ($x = 1; $x <= $qty; $x++) {
                 $project = new ProjectItem();
                 $project->create($data);
             }
@@ -91,14 +91,13 @@ class ProjectDetailController extends Controller
             'item_id'    => 'required',
             'is_lighted' => 'required',
         ]);
-        $price = request('vendor_price');
-        $data['vendor_price'] = str_replace(',','',$price);
-        $data['available'] = request('statAvail') ?? request('dateAvail');
-
+        $price                = request('vendor_price');
+        $data['vendor_price'] = str_replace(',', '', $price);
+        $data['available']    = request('statAvail') ?? request('dateAvail');
 
         if (request('id')) {
-            $projectItem = ProjectItem::where([['item_id', request('item_id')],['project_id' , $id], ['id','!=',request('id')]])->first();
-            if ($projectItem){
+            $projectItem = ProjectItem::where([['item_id', request('item_id')], ['project_id', $id], ['id', '!=', request('id')]])->first();
+            if ($projectItem) {
                 return response()->json(
                     [
                         'msg' => 'Titik sudah dimasukkan',
@@ -109,8 +108,8 @@ class ProjectDetailController extends Controller
             $detail = ProjectItem::find(request('id'));
             $detail->update($data);
         } else {
-            $projectItem = ProjectItem::where([['item_id', request('item_id')],['project_id' , $id]])->first();
-            if ($projectItem){
+            $projectItem = ProjectItem::where([['item_id', request('item_id')], ['project_id', $id]])->first();
+            if ($projectItem) {
                 return response()->json(
                     [
                         'msg' => 'Titik sudah dimasukkan',
@@ -157,4 +156,80 @@ class ProjectDetailController extends Controller
 
         return 'success';
     }
+
+    public function getDetailProject($id)
+    {
+        return ProjectItem::with(['city', 'pic', 'item'])->where('project_id', $id)->get();
+    }
+
+    public function savePrice($id)
+    {
+        $idD   = request('idD');
+        $type  = request('type');
+        $price = str_replace(',', '', request('price'));
+
+        $project = null;
+        if ($type) {
+            $project = Project::find($id);
+            $project->update(['total_price' => $price]);
+        } else {
+            $projectItem = ProjectItem::find($idD);
+            $projectItem->update([
+                'end_price' => $price,
+            ]);
+        }
+
+        return response()->json(
+            [
+                'msg'  => 'berhasil',
+                'data' => $project,
+            ],
+            200
+        );
+    }
+
+    public function saveItemToProject()
+    {
+        DB::beginTransaction();
+        try {
+            $item = \request('item');
+            $id   = \request('id');
+
+           if (isset($item)){
+               foreach ($item as $i) {
+                   $projectItem = ProjectItem::find($i);
+
+                   $check = ProjectItem::where([['project_id',$id],['item_id', $projectItem->item_id]])->first();
+                   if ($check == null){
+                       ProjectItem::create([
+                           'project_id'   => $id,
+                           'city_id'      => $projectItem->city_id,
+                           'pic_id'       => $projectItem->pic_id,
+                           'item_id'      => $projectItem->item_id,
+                           'vendor_price' => $projectItem->vendor_price,
+                           'available'    => $projectItem->available,
+                           'is_lighted'   => $projectItem->is_lighted,
+                           'end_price'    => $projectItem->end_price,
+                       ]);
+                   }
+               }
+           }
+            DB::commit();
+            $code = 200;
+            $msg  = 'Berhasil';
+        } catch (\Exception $er) {
+            DB::rollBack();
+            $code = 500;
+            $msg  = 'error : '.$er->getMessage();
+        }
+
+        return response()->json(
+            [
+                'msg' => $msg,
+                'data' => $id
+            ],
+            $code
+        );
+    }
+
 }

@@ -5,7 +5,7 @@
 @endsection
 
 @section('css')
-    <link href="https://cdn.datatables.net/select/1.7.0/css/select.dataTables.min.css" rel="stylesheet" />
+    <link href="https://cdn.datatables.net/select/1.7.0/css/select.dataTables.min.css" rel="stylesheet"/>
 @endsection
 
 @section('content')
@@ -25,33 +25,33 @@
                         <input id="id" name="id" hidden>
                         <div class="form-floating mb-3">
                             <input type="text" readonly class="form-control" id="inp_nama" name="inp_nama" required
-                                placeholder="Nama Project" value="{{ $data->name }}">
+                                   placeholder="Nama Project" value="{{ $data->name }}">
                             <label for="inp_nama" class="form-label">Nama Project</label>
                         </div>
 
                         <div class="form-floating mb-3">
                             <input type="text" readonly class="form-control" id="inp_tgl_req" name="inp_tgl_req" required
-                                placeholder="Tanggal Request" value="{{ $data->request_date }}">
+                                   placeholder="Tanggal Request" value="{{ $data->request_date }}">
                             <label for="inp_tgl_req" class="form-label">Tanggal Request</label>
                         </div>
 
                         <div class="form-floating mb-3">
                             <input type="text" readonly class="form-control" id="inp_durasi" name="inp_durasi" required
-                                placeholder="Nama Tipe" value="{{ $data->duration . ' ' . $data->duration_unit }}">
+                                   placeholder="Nama Tipe" value="{{ $data->duration . ' ' . $data->duration_unit }}">
                             <label for="inp_durasi" class="form-label">Durasi</label>
                         </div>
 
 
                         <div class="form-floating mb-3">
                             <input type="text" readonly class="form-control" id="inp_pic_client" name="inp_pic_client"
-                                required placeholder="Nama PIC" value="{{ $data->client_pic }}">
+                                   required placeholder="Nama PIC" value="{{ $data->client_pic }}">
                             <label for="inp_budget" class="form-label">PIC Client</label>
                         </div>
 
 
                         <div class="form-floating mb-3 ">
                             <textarea style="height: auto;" type="text" class="form-control" id="name" name="name" rows="10"
-                                readonly placeholder="Nama Tipe">{{ $data->description }}</textarea>
+                                      readonly placeholder="Nama Tipe">{{ $data->description }}</textarea>
                             <label for="name" class="form-label">Keterangan</label>
                         </div>
 
@@ -66,7 +66,7 @@
                             <a class="btn-success-soft sml rnd me-2" href="/admin/project/buatharga/1">Buat
                                 Harga<i class="material-symbols-outlined menu-icon ms-2 text-success">receipt_long</i></a>
                             <a class="btn-utama-soft sml rnd " data-bs-toggle="modal"
-                                data-bs-target="#modaltambahtitik">Gunakan Titik Untuk Project
+                               data-bs-target="#modaltambahtitik">Gunakan Titik Untuk Project
                                 Baru<i class="material-symbols-outlined menu-icon ms-2 text-prim">arrow_right_alt</i></a>
                         </div>
                     </div>
@@ -74,41 +74,41 @@
                         <div class="table">
                             <table id="table_titik" class="table table-striped" style="width:100%">
                                 <thead>
-                                    <tr>
-                                        <th>
-                                            <div class="text-center">
-                                                <input class="form-check-input selectalltable text-center" type="checkbox"
-                                                    value="" onclick="selectAll()" id="flexCheckDefault">
-                                            </div>
-                                        </th>
-                                        {{--                                    <th>#</th> --}}
-                                        <th>Kota</th>
-                                        <th>Lokasi titik</th>
-                                        <th>PIC /titik</th>
-                                        <th>Harga Vendor</th>
-                                    </tr>
+                                <tr>
+                                    <th>
+                                        <div class="text-center">
+                                            <input class="form-check-input selectalltable text-center" type="checkbox"
+                                                   value="" onclick="selectAll()" id="flexCheckDefault">
+                                        </div>
+                                    </th>
+                                    {{--                                    <th>#</th> --}}
+                                    <th>Kota</th>
+                                    <th>Lokasi titik</th>
+                                    <th>PIC /titik</th>
+                                    <th>Harga Vendor</th>
+                                </tr>
                                 </thead>
                                 <tbody>
-                                    {{--                                    @foreach ($data->items as $item) --}}
-                                    {{--                                        <tr> --}}
-                                    {{--                                            <td></td> --}}
-                                    {{--                                            <td>{{ $loop->index + 1 }}</td> --}}
-                                    {{--                                            <td>{{ $item->city->name }}</td> --}}
-                                    {{--                                            <td>{{ $item->item->location }}</td> --}}
-                                    {{--                                            <td>{{ $item->pic->nama }}</td> --}}
-                                    {{--                                            <td>Rp. {{ 0 }}</td> --}}
-                                    {{--                                        </tr> --}}
-                                    {{--                                    @endforeach --}}
+                                {{--                                    @foreach ($data->items as $item) --}}
+                                {{--                                        <tr> --}}
+                                {{--                                            <td></td> --}}
+                                {{--                                            <td>{{ $loop->index + 1 }}</td> --}}
+                                {{--                                            <td>{{ $item->city->name }}</td> --}}
+                                {{--                                            <td>{{ $item->item->location }}</td> --}}
+                                {{--                                            <td>{{ $item->pic->nama }}</td> --}}
+                                {{--                                            <td>Rp. {{ 0 }}</td> --}}
+                                {{--                                        </tr> --}}
+                                {{--                                    @endforeach --}}
                                 </tbody>
                                 <tfoot>
-                                    <tr>
-                                        <td></td>
-                                        {{--                                    <th>#</th> --}}
-                                        <th>Kota</th>
-                                        <th>Lokasi titik</th>
-                                        <th>PIC /titik</th>
-                                        <th>Harga Vendor</th>
-                                    </tr>
+                                <tr>
+                                    <td></td>
+                                    {{--                                    <th>#</th> --}}
+                                    <th>Kota</th>
+                                    <th>Lokasi titik</th>
+                                    <th>PIC /titik</th>
+                                    <th>Harga Vendor</th>
+                                </tr>
                                 </tfoot>
                             </table>
                         </div>
@@ -135,10 +135,11 @@
                             </div>
 
                         </div>
-
                     </div>
                 </div>
             </div>
+            <a id="btn-use-items" class="btn btn-danger">button</a>
+
         </div>
     </div>
 
@@ -155,53 +156,44 @@
 
                     <div class="panel p-4">
                         <div class="table">
-                            <table id="tbDetail" class="table table-striped" style="width:100%">
+                            <table id="table_id" class="table table-striped" style="width:100%">
                                 <thead>
-                                    <tr>
-                                        <th>#</th>
-                                        <th>Kota</th>
-                                        <th>Lokasi titik</th>
-                                        <th>PIC /titik</th>
-                                        <th>Harga Vendor</th>
-                                        <th>Durasi</th>
-                                        <th>Status</th>
-                                        <th>Action</th>
-                                    </tr>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Nama Project</th>
+                                    <th>PIC /titik</th>
+                                    <th>Durasi</th>
+                                    {{--                                    <th>Status</th>--}}
+                                    <th>Action</th>
+                                </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>#</td>
-                                        <td>Nama Project</td>
-                                        <td>Tanggal Request</td>
-                                        <td>Jumlah Titik</td>
-                                        <td>PIC Client</td>
-                                        <td>Durasi</td>
-                                        <th>Status</th>
-                                        <td>
+                                {{--                                <tr>--}}
+                                {{--                                    <td>#</td>--}}
+                                {{--                                    <td>Nama Project</td>--}}
+                                {{--                                    <td>Tanggal Request</td>--}}
+                                {{--                                    <td>Jumlah Titik</td>--}}
+                                {{--                                    <td>PIC Client</td>--}}
+                                {{--                                    <th>Status</th>--}}
+                                {{--                                    <td>--}}
 
-                                            <div class='d-flex'>
-                                                <a class="btn-success sml rnd  me-1" href="/admin/project/detail/1"
-                                                    id="addData">Masukan Dalam
-                                                    Project
-                                                    <i
-                                                        class='material-symbols-outlined menu-icon text-white'>arrow_right_alt</i></a>
-
-
-                                            </div>
-                                        </td>
-                                    </tr>
+                                {{--                                        <div class='d-flex'>--}}
+                                {{--                                            <a class="btn-success sml rnd  me-1" href="/admin/project/detail/1"--}}
+                                {{--                                               id="addData">Masukan Dalam Project--}}
+                                {{--                                                <i class='material-symbols-outlined menu-icon text-white'>arrow_right_alt</i></a>--}}
+                                {{--                                        </div>--}}
+                                {{--                                    </td>--}}
+                                {{--                                </tr>--}}
                                 </tbody>
                                 <tfoot>
-                                    <tr>
-                                        <th>#</th>
-                                        <th>Kota</th>
-                                        <th>Lokasi titik</th>
-                                        <th>PIC /titik</th>
-                                        <th>Harga Vendor</th>
-                                        <th>Durasi</th>
-                                        <th>Status</th>
-                                        <th>Action</th>
-                                    </tr>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Nama Project</th>
+                                    <th>PIC /titik</th>
+                                    <th>Durasi</th>
+                                    {{--                                    <th>Status</th>--}}
+                                    <th>Action</th>
+                                </tr>
                                 </tfoot>
                             </table>
                         </div>
@@ -215,12 +207,14 @@
 @section('morejs')
     <script src="https://cdn.datatables.net/select/1.7.0/js/dataTables.select.min.js"></script>
     <script src="{{ asset('js/number_formater.js') }}"></script>
+    <script src="{{ asset('js/datatable.js') }}"></script>
+
     <script>
         var tb_titik;
         var dataSet = @json($data->items)
 
 
-        $(document).ready(function() {
+        $(document).ready(function () {
             tb_titik = $('#table_titik').DataTable({
                 data: dataSet,
                 columnDefs: [{
@@ -232,8 +226,8 @@
                     }
                 }],
                 columns: [{
-                        "defaultContent": ''
-                    },
+                    "defaultContent": ''
+                },
                     {
                         data: 'city.name'
                     },
@@ -244,22 +238,24 @@
                         data: 'pic.nama'
                     },
                     {
-                        data: null,
-                        render: function() {
-                            return 'Rp. 0'
+                        data: 'vendor_price',
+                        render: function (data) {
+                            return 'Rp. ' + data.toLocaleString()
                         }
                     },
                 ],
+                bPaginate: false,
                 select: {
                     style: 'multi',
-                    selector: 'td:first-child'
+                    // selector: 'td:first-child'
+                    selector: 'td'
                 },
                 order: [
                     [1, 'asc']
                 ]
             });
 
-            $('#btn-use-items').on('click', function(e) {
+            $('#btn-use-items').on('click', function (e) {
                 e.preventDefault();
                 useItemEvent();
             })
@@ -269,15 +265,13 @@
             if ($('.selectalltable').is(':checked')) {
                 tb_titik.rows().select();
 
-
-
             } else {
                 tb_titik.rows().deselect();
             }
         }
 
         function checkedTargets(checkboxes) {
-            return checkboxes.filter(function(index) {
+            return checkboxes.filter(function (index) {
                 return $(checkboxes[index]).prop('checked');
             });
         }
@@ -286,9 +280,72 @@
             let data = tb_titik.rows({
                 selected: true
             }).data();
-            $.each(data, function(k, v) {
-                console.log(v)
+            $.each(data, function (k, v) {
+                console.log(v.id)
             })
+        }
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            showDatatableItem()
+        })
+
+        function showDatatableItem() {
+            let column = [{
+                "className": '',
+                "orderable": false,
+                "defaultContent": ''
+            }, {
+                "data": "name",
+                "name": "name"
+            }, {
+                "data": "client_pic",
+                "name": "client_pic"
+            }, {
+                "data": "duration",
+                "render": function (data, type, row) {
+                    return data+' '+row.duration_unit
+                }
+            }, {
+                "data": "id",
+                searchable: false,
+                "render": function (data, type, row) {
+                    return "<div class='d-flex gap-2'>" +
+                        "<a data-id='"+row.id+"' class='btn-success sml rnd  me-1' id='addProject' >Masukan Dalam Project" +
+                        "<i class='material-symbols-outlined menu-icon text-white'>arrow_right_alt</i></a>" +
+                        "</div>"
+                }
+            },]
+            datatable('table_id', '{{ route('project.datatable',['n' => request('id')]) }}', column)
+
+        }
+
+        $(document).on('click','#addProject',async function () {
+            let data = tb_titik.rows({
+                selected: true
+            }).data();
+            let form = {
+                'id': $(this).data('id'),
+                '_token':'{{csrf_token()}}',
+                'item':[]
+            }
+            await $.each(data, function (k, v) {
+                form['item'][k] = v.id
+            })
+            saveDataObjectFormData(
+                "Gunakan item ke project",
+                form,
+                "{{ route('clone.item') }}",
+                afterSaveProject
+            );
+            return false;
+        })
+
+        function afterSaveProject(res) {
+            if (res.data){
+                window.location = '/admin/project/addproject?q='+res.data
+            }
         }
     </script>
 @endsection

@@ -122,7 +122,7 @@
                     </div>
                     <div class="isi">
                         <div class="table">
-                            <table id="tbDetail" class="table table-striped" style="width:100%">
+                            <table id="table_id" class="table table-striped" style="width:100%">
                                 <thead>
                                     <tr>
                                         <th>#</th>
@@ -590,7 +590,7 @@
                     }
                 },
             ]
-            datatable('tbDetail', '{{ route('tambahproject.datatable', ['q' => request('q')]) }}', column)
+            datatable('table_id', '{{ route('tambahproject.datatable', ['q' => request('q')]) }}', column)
         }
 
         $(document).on('click', '#deleteTitik', function() {
@@ -704,9 +704,16 @@
             saveDataObjectFormData(
                 "Simpan Data",
                 $('#formProject').serialize(),
-                "{{ route('project') }}"
+                "{{ route('project') }}",
+                afterSaveProject
             );
             return false;
+        }
+
+        function afterSaveProject(res) {
+            if (res.data){
+                window.location = '/admin/project/addproject?q='+res.data;
+            }
         }
 
         function saveFormPIC() {
@@ -730,9 +737,21 @@
         function afterSaveTitik() {
             $('#modaltambahtitik').modal('hide')
             $('#modaltambahpictitik').modal('hide')
-            $('#tbDetail').DataTable().ajax.reload()
+            $('#table_id').DataTable().ajax.reload()
             getCountCity()
             getCountPIC()
         }
+    </script>
+
+    <script>
+
+        function keyPressCallbackTitik(e) {
+            $('#tambahtitik').DataTable().search(this.value).draw();
+        }
+        $( document ).ajaxComplete(function( event,request, settings ) {
+            $("#tambahtitik_wrapper .dataTables_filter input")
+                .unbind() // Unbind previous default bindings
+                .bind("input", debounce(keyPressCallbackTitik, 1000));
+        });
     </script>
 @endsection
