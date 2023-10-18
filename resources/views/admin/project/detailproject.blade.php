@@ -63,8 +63,9 @@
                     <div class="title">
                         <p>Data Titik</p>
                         <div class="d-flex">
-                            <a class="btn-success-soft sml rnd me-2" href="/admin/project/buatharga/1">Buat
-                                Harga<i class="material-symbols-outlined menu-icon ms-2 text-success">receipt_long</i></a>
+                            @if(auth()->user()->role == "pimpinan")
+                                <a class="btn-success-soft sml rnd me-2" href="/admin/project/buatharga/1">Buat Harga<i class="material-symbols-outlined menu-icon ms-2 text-success">receipt_long</i></a>
+                            @endif
                             <a class="btn-utama-soft sml rnd " data-bs-toggle="modal"
                                data-bs-target="#modaltambahtitik">Gunakan Titik Untuk Project
                                 Baru<i class="material-symbols-outlined menu-icon ms-2 text-prim">arrow_right_alt</i></a>
@@ -138,8 +139,6 @@
                     </div>
                 </div>
             </div>
-            <a id="btn-use-items" class="btn btn-danger">button</a>
-
         </div>
     </div>
 

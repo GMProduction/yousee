@@ -112,7 +112,7 @@ Route::prefix('admin')->middleware(\App\Http\Middleware\AdminMiddleware::class)-
                     Route::get('{id}', [ProjectController::class, 'indexDetailProject'])->name("detail");
                     Route::get('{id}/json',[\App\Http\Controllers\ProjectDetailController::class,'getDetailProject'])->name('detail.json');
                 });
-                Route::prefix('buatharga')->group(function (){
+                Route::prefix('buatharga')->middleware(\App\Http\Middleware\PimpinanMiddleware::class)->group(function (){
                     Route::get('{id}', [ProjectController::class, 'indexBuatHarga'])->name("buatharga");
                     Route::post('{id}/harga',[\App\Http\Controllers\ProjectDetailController::class,'savePrice'])->name('detail.harga.post');
                 });
