@@ -5,6 +5,7 @@
 @endsection
 
 @section('css')
+
     <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
 
@@ -24,6 +25,8 @@
     </style>
 @endsection
 @section('content')
+{{--    <script src="{{ asset('css/summernote/summernote.css') }}"></script>--}}
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="/admin/project">Project</a></li>
@@ -65,10 +68,10 @@
                             <select class="form-select" aria-label="Default select example" id="duration_unit"
                                 name="duration_unit">
                                 <option selected>Pilih Durasi</option>
-                                <option value="day">Hari</option>
-                                <option value="week">Minggu</option>
-                                <option value="week">Bulan</option>
-                                <option value="year">Tahun</option>
+                                <option value="Hari">Hari</option>
+                                <option value="Minggu">Minggu</option>
+                                <option value="Bulan">Bulan</option>
+                                <option value="Tahun">Tahun</option>
                             </select>
                         </div>
 
@@ -86,9 +89,10 @@
 
 
                         <div class="form-floating mb-3 ">
-                            <textarea style="height: auto;" type="text" class="form-control" id="name" name="description" rows="10"
+                            <textarea style="height: auto;" type="text" class="form-control" id="description" name="description" rows="10"
                                 required placeholder="Nama Tipe">{{ $data ? $data->description : '' }}</textarea>
-                            <label for="name" class="form-label">Keterangan</label>
+{{--                            <div id="description"></div>--}}
+{{--                            <label for="description" class="form-label">Keterangan</label>--}}
                         </div>
 
                         <div class="my-3">
@@ -436,7 +440,8 @@
     <script src="{{ asset('js/datatable.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
     <script src="{{ asset('js/currency.js') }}"></script>
-
+{{--    <script src="{{ asset('css/summernote/summernote.js') }}"></script>--}}
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
     <script>
         let param, prov, pic_id;
         var urlTitik = "/data/item/datatable";
@@ -450,7 +455,17 @@
             $('#inp_berlampu_tidak').prop('checked', '{{ $data && $data->is_lighted == 0 ? true : false }}')
             // $('#tambahtitik').DataTable();
             currency('inp_hargavendor');
-
+            $('#description').summernote({
+                toolbar: [
+                    // [groupName, [list of button]]
+                    // ['style', ['bold', 'italic', 'underline', 'clear']],
+                    // ['font', ['strikethrough', 'superscript', 'subscript']],
+                    // ['fontsize', ['fontsize']],
+                    // ['color', ['color']],
+                    ['para', ['ul', 'ol']],
+                    // ['height', ['height']]
+                ]
+            });
             $('#titik').DataTable();
             console.log('asdas', param)
             $('#province').select2({

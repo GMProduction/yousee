@@ -50,8 +50,8 @@
 
 
                         <div class="form-floating mb-3 ">
-                            <textarea style="height: auto;" type="text" class="form-control" id="name" name="name" rows="10"
-                                      readonly placeholder="Nama Tipe">{{ $data->description }}</textarea>
+                            <div style="height: auto;" type="text" class="form-control" id="name" name="name" rows="10"
+                                      readonly placeholder="Nama Tipe">{!! $data->description !!}</div>
                             <label for="name" class="form-label">Keterangan</label>
                         </div>
 
@@ -64,7 +64,7 @@
                         <p>Data Titik</p>
                         <div class="d-flex">
                             @if(auth()->user()->role == "pimpinan")
-                                <a class="btn-success-soft sml rnd me-2" href="/admin/project/buatharga/1">Buat Harga<i class="material-symbols-outlined menu-icon ms-2 text-success">receipt_long</i></a>
+                                <a class="btn-success-soft sml rnd me-2" href="/admin/project/buatharga/{{request('id')}}">Buat Harga<i class="material-symbols-outlined menu-icon ms-2 text-success">receipt_long</i></a>
                             @endif
                             <a class="btn-utama-soft sml rnd " data-bs-toggle="modal"
                                data-bs-target="#modaltambahtitik">Gunakan Titik Untuk Project

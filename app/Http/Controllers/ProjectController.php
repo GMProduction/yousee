@@ -64,7 +64,7 @@ class ProjectController extends Controller
         $dProject             = null;
         if (request('id')) {
             $project  = Project::find(request('id'));
-            $dProject = $project->update($data);
+            $project->update($data);
         } else {
             $project  = new Project();
             $dProject = $project->create($data);
@@ -76,7 +76,7 @@ class ProjectController extends Controller
         return response()->json(
             [
                 'msg'  => 'berhasil',
-                'data' => $dProject->id,
+                'data' => $dProject ? $dProject->id : null,
             ],
             200
         );
