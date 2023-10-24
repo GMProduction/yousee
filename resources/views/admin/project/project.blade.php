@@ -24,6 +24,7 @@
                                 <th>Tanggal Request</th>
                                 <th>Jumlah Titik</th>
                                 <th>PIC Client</th>
+                                <th>Status</th>
                                 <th>Durasi</th>
                                 {{--                                <th>Status</th> --}}
                                 <th>Action</th>
@@ -61,6 +62,7 @@
                                 <th>Tanggal Request</th>
                                 <th>Jumlah Titik</th>
                                 <th>PIC Client</th>
+                                <th>Status</th>
                                 <th>Durasi</th>
                                 {{--                                <th>Status</th> --}}
                                 <th>Action</th>
@@ -159,15 +161,15 @@
                         "data": "client_pic",
                         "name": "client_pic"
                     },
-
+                    {
+                        "data": "status",
+                        "name": "status"
+                    },
                     {
                         "data": "duration",
                         "name": "duration"
                     },
-                    // {
-                    //     "data": "status",
-                    //     "name": "status"
-                    // },
+
                     {
                         "data": "id",
                         "render": function(data, type, row) {
