@@ -48,11 +48,11 @@
             </div>
 
             <div class="pb-4 ps-4 pe-4 d-flex ">
-                <a class="btn-utama-soft sml rnd me-2 ms-auto" data-bs-toggle="modal" data-bs-target="#modaltambahtitik"
+                <a class="btn-utama-soft sml rnd me-2 ms-auto" href="/admin/report/{{request('id')}}" target="_blank"
                    id="addData">Simpan
                     (PDF)<i class="material-symbols-outlined menu-icon ms-2 text-prim">picture_as_pdf</i></a>
 
-                <a class="btn-success-soft sml rnd " data-bs-toggle="modal" data-bs-target="#modaltambahtitik"
+                <a class="btn-success-soft sml rnd " href="{{route('export.excell',['id' => request('id')])}}"
                    id="addData">Simpan
                     (Excel)<i class="material-symbols-outlined menu-icon ms-2 text-success">border_all</i></a>
             </div>
@@ -158,9 +158,13 @@
                     "data": "id",
                     searchable: false,
                     "render": function (data, type, row) {
+                        let btn = 'save';
+                        if (totalHarga == 0 && row.end_price != 0) {
+                            btn = 'edit';
+                        }
                         return totalHarga == 0 ? "<div class='d-flex gap-2'>\n" +
                             "<a class='btn-utama sml rnd  me-1' href='#' data-id='" + data + "' id='btnSave'>\n" +
-                            "   <i class='material-symbols-outlined menu-icon text-white'>save</i></a>\n" +
+                            "   <i class='material-symbols-outlined menu-icon text-white'>"+btn+"</i></a>\n" +
                             "</div>" : "";
                     }
                 },
