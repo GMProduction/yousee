@@ -1,11 +1,11 @@
 <!doctype html>
-{{--<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">--}}
+{{-- <html lang="{{ str_replace('_', '-', app()->getLocale()) }}"> --}}
 
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Nama Project</title>
+    <title>{{ $data->name }}</title>
     <!-- Fonts -->
 
     <!-- Styles -->
@@ -127,14 +127,14 @@
         {{-- <img src="{{ public_path('static-image/logo.png') }}" style="width: 120px; float: left;" /> --}}
 
         <div>
-            <div style=" text-align: center;margin-bottom:5px ;margin-top:0"><img style="width: 130px"
-{{--                    src="{{ public_path('/images/local/yousee.png') }}" />--}}
+            <div style=" text-align: center;margin-bottom:5px ;margin-top:0"><img style="width: 130px">
+                {{--                    src="{{ public_path('/images/local/yousee.png') }}" /> --}}
             </div>
-{{--            @if (request('start'))--}}
-{{--                <h5 style=" text-align: center;margin-bottom:10px ;margin-top:0">Periode--}}
-{{--                    {{ date_format(DateTime::createFromFormat('Y-m-d', request('start')), 'd M Y') }} s/d--}}
-{{--                    {{ date_format(DateTime::createFromFormat('Y-m-d', request('end')), 'd M Y') }}</h5>--}}
-{{--            @endif--}}
+            {{--            @if (request('start')) --}}
+            {{--                <h5 style=" text-align: center;margin-bottom:10px ;margin-top:0">Periode --}}
+            {{--                    {{ date_format(DateTime::createFromFormat('Y-m-d', request('start')), 'd M Y') }} s/d --}}
+            {{--                    {{ date_format(DateTime::createFromFormat('Y-m-d', request('end')), 'd M Y') }}</h5> --}}
+            {{--            @endif --}}
 
         </div>
 
@@ -169,7 +169,8 @@
             <br>
             <p class="margin-normal text-bold">Dengan Hormat,</p>
             <p class="margin-normal">Bersama surat ini, kami <span class="text-bold">YOUSEE INDONESIA</span> mengajukan
-                <span class="text-bold">Penawaran Harga {{$data->name}}, </span>Adapun penawaran kami sebagai berikut :
+                <span class="text-bold">Penawaran Harga {{ $data->name }}, </span>Adapun penawaran kami sebagai
+                berikut :
             </p>
 
 
@@ -188,9 +189,9 @@
                         <th colspan="3">Ukuran</th>
                         <th rowspan="2">V/H</th>
                         <th rowspan="2">Status</th>
-{{--                        @if($data->total_price == 0)--}}
-                            <th rowspan="2">{{$data->duration}} {{$data->duration_unit}}</th>
-{{--                        @endif--}}
+                        {{--                        @if ($data->total_price == 0) --}}
+                        <th rowspan="2">{{ $data->duration }} {{ $data->duration_unit }}</th>
+                        {{--                        @endif --}}
                     </tr>
                     <tr>
                         <th>P</th>
@@ -200,51 +201,56 @@
 
                 </thead>
                 <tbody>
-                <?php $sum_tot_Price = 0 ?>
-                @forelse($data->items as $key => $d)
-                    <tr>
-                        <td style="width: 50px">{{$key+1}}</td>
-                        <td class="text-center ">{{$d->city->name}}</td>
-                        <td>{{$d->item->location}}</td>
-                        <td class="text-center ">{{$d->item->width}}</td>
-                        <td class="text-center ">x</td>
-                        <td class="text-center ">{{$d->item->height}}</td>
-                        <td class="text-center ">{{$d->item->position}}</td>
-                        <td class="text-center ">{{$d->available == 'Tersedia' ? $d->available :  'Tersedia tgl '.$d->available}}</td>
-                        @if($data->total_price == 0)
-                            <td class="text-center ">Rp. {{number_format($d->end_price)}}</td>
-                        @else
-                            @if($key == 0)
-                            <td class="text-center " rowspan="{{count($data->items)}}">Rp. {{number_format($data->total_price)}}</td>
+                    <?php $sum_tot_Price = 0; ?>
+                    @forelse($data->items as $key => $d)
+                        <tr>
+                            <td style="width: 50px">{{ $key + 1 }}</td>
+                            <td class="text-center ">{{ $d->city->name }}</td>
+                            <td>{{ $d->item->location }}</td>
+                            <td class="text-center ">{{ $d->item->width }}</td>
+                            <td class="text-center ">x</td>
+                            <td class="text-center ">{{ $d->item->height }}</td>
+                            <td class="text-center ">{{ $d->item->position }}</td>
+                            <td class="text-center ">
+                                {{ $d->available == 'Tersedia' ? $d->available : 'Tersedia tgl ' . $d->available }}
+                            </td>
+                            @if ($data->total_price == 0)
+                                <td class="text-center ">Rp. {{ number_format($d->end_price) }}</td>
+                            @else
+                                @if ($key == 0)
+                                    <td class="text-center " rowspan="{{ count($data->items) }}">Rp.
+                                        {{ number_format($data->total_price) }}</td>
+                                @endif
                             @endif
-                        @endif
-                    </tr>
-                        <?php $sum_tot_Price += $d->end_price ?>
-                @empty
+                        </tr>
+                        <?php $sum_tot_Price += $d->end_price; ?>
+                    @empty
                         <tr>
                             <td colspan="9" class="text-center">Tidak ada data</td>
                         </tr>
-                @endforelse
-{{--                    <tr>--}}
-{{--                        <td>1</td>--}}
-{{--                        <td class="text-center ">Bekasi</td>--}}
-{{--                        <td>Jl KH Noer Ali, Kota Bekasi, Jawa Barat (Jakarta/Kota Menuju Galaxy/A Yani) </td>--}}
-{{--                        <td class="text-center ">4</td>--}}
-{{--                        <td class="text-center ">x</td>--}}
-{{--                        <td class="text-center ">6</td>--}}
-{{--                        <td class="text-center ">Vertikal</td>--}}
-{{--                        <td class="text-center ">Rp 30.000.000</td>--}}
-{{--                        <td class="text-center ">Rp 90.000.000</td>--}}
-{{--                    </tr>--}}
+                    @endforelse
+                    {{--                    <tr> --}}
+                    {{--                        <td>1</td> --}}
+                    {{--                        <td class="text-center ">Bekasi</td> --}}
+                    {{--                        <td>Jl KH Noer Ali, Kota Bekasi, Jawa Barat (Jakarta/Kota Menuju Galaxy/A Yani) </td> --}}
+                    {{--                        <td class="text-center ">4</td> --}}
+                    {{--                        <td class="text-center ">x</td> --}}
+                    {{--                        <td class="text-center ">6</td> --}}
+                    {{--                        <td class="text-center ">Vertikal</td> --}}
+                    {{--                        <td class="text-center ">Rp 30.000.000</td> --}}
+                    {{--                        <td class="text-center ">Rp 90.000.000</td> --}}
+                    {{--                    </tr> --}}
                 </tbody>
-{{--                @if($data->total_price == 0)--}}
-                    <tfoot>
+                {{--                @if ($data->total_price == 0) --}}
+                <tfoot>
                     <tr>
                         <td colspan="8" class="text-center text-bold">Total Harga</td>
-                        <td class="text-center text-bold">Rp. {{$data->total_price == 0 ? number_format($sum_tot_Price) : number_format($data->total_price)}}</td>
+                        <td class="text-center text-bold">Rp.
+                            {{ $data->total_price == 0 ? number_format($sum_tot_Price) : number_format($data->total_price) }}
+                        </td>
                     </tr>
-                    </tfoot>
-{{--                @endif--}}
+                </tfoot>
+                {{--                @endif --}}
             </table>
         </div>
 
@@ -254,9 +260,9 @@
             <div class="normalfontsize">
                 <p class="margin-normal  text-bold">Ketarangan :</p>
                 {!! $data->description !!}
-{{--                <p class="margin-normal"><span class="dot"></span> Perawatan selama kontrak (kerusakan media,dsb)--}}
-{{--                </p>--}}
-{{--                <p class="margin-normal"><span class="dot"></span> Sudah termasuk cetak & pasang visual 1x </p>--}}
+                {{--                <p class="margin-normal"><span class="dot"></span> Perawatan selama kontrak (kerusakan media,dsb) --}}
+                {{--                </p> --}}
+                {{--                <p class="margin-normal"><span class="dot"></span> Sudah termasuk cetak & pasang visual 1x </p> --}}
             </div>
             <br>
             <p class="margin-normal normalfontsize ">Demikian penawaran kami, atas perhatian dan kerjasamanya kami
@@ -278,26 +284,38 @@
         <div class="page-break"></div>
 
         {{-- HEADER --}}
+        @foreach ($data->items as $item)
+            @if (!isset($prevItem) || $item->city->id !== $prevItem)
+                <img style="width: 100%;position:absolute; bottom: 0; z-index: -10;"
+                    src="{{ public_path('/images/local/headertiapkota.jpg') }}" />
+                <h1
+                    style="position:absolute; top: 280px; z-index: 10; text-align: center; width: 100%; font-size: 3em; font-weight: bold">
+                    {{ $item->city->name }}
+                </h1>
+                <div class="page-break"></div>
+                {{-- ISI --}}
+                @foreach ($data->items as $it)
+                    @if ($item->city->id == $it->city->id)
+                        @if ($it->item->image2 != null)
+                            <div>
+                                <img style="width: 100%;position:absolute; bottom: 0; z-index: -10;"
+                                    src="{{ public_path($it->item->image2) }}" />
+                                <div class="page-break"></div>
+                            </div>
+                        @endif
+                    @endif
+                @endforeach
+            @endif
+            @php $prevItem = $item->city->id @endphp
+        @endforeach
         <div>
-            <img style="width: 100%;position:absolute; bottom: 0; z-index: -10;"
-                src="{{ public_path('/images/local/headertiapkota.jpg') }}" />
-            <h1
-                style="position:absolute; top: 280px; z-index: 10; text-align: center; width: 100%; font-size: 3em; font-weight: bold">
-                AREA KOTA BEKASI
-            </h1>
+
         </div>
 
-        {{-- ISI --}}
-        <div class="page-break"></div>
-        <div>
-            <img style="width: 100%;position:absolute; bottom: 0; z-index: -10;"
-                src="{{ public_path('/images/local/headertiapkota.jpg') }}" />
 
-        </div>
 
 
         {{-- SERVICE AREA --}}
-        <div class="page-break"></div>
         <div>
             <img style="width: 100%;position:absolute; bottom: 0; z-index: -10;"
                 src="{{ public_path('/images/local/servicearea.jpg') }}" />

@@ -16,20 +16,20 @@ class penawaranController extends Controller
 
     public function index($id)
     {
-//                return $this->dataTransaksi($id);
+        //                return $this->dataTransaksi($id);
         $trans = [];
         $pdf   = App::make('dompdf.wrapper');
         $pdf->loadHTML($this->dataTransaksi($id))->setPaper('A4', 'potrait')->save('Laporan.pdf');
 
-//        $data = $this->dataTransaksi($id);
-//         return view('admin/project/penawaran', ['data' => $data]);
+        //        $data = $this->dataTransaksi($id);
+        //         return view('admin/project/penawaran', ['data' => $data]);
         return $pdf->stream();
     }
 
     public function dataTransaksi($id)
     {
-        $data  = Project::with(['items.city','items.item'])->findOrFail($id);
-//        return $data;
+        $data  = Project::with(['items.city', 'items.item'])->findOrFail($id);
+        //        return $data;
         $trans = [];
         $start = \request('start');
         $end   = \request('end');
@@ -43,8 +43,9 @@ class penawaranController extends Controller
     /**
      * @return BinaryFileResponse
      */
-    public function exportExcel($id){
+    public function exportExcel($id)
+    {
         $data = Project::findOrFail($id);
-        return Excel::download(new PenawaranExport($id, $data->name), $data->name.'.xlsx');
+        return Excel::download(new PenawaranExport($id, $data->name), $data->name . '.xlsx');
     }
 }
