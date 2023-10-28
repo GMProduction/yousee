@@ -100,7 +100,7 @@ Route::prefix('admin')->middleware(\App\Http\Middleware\AdminMiddleware::class)-
             function () {
                 Route::get('datatable', [ProjectController::class, 'datatable'])->name("project.datatable");
                 Route::match(['POST', 'GET'], '', [ProjectController::class, 'index'])->name("project");
-                Route::post( 'delete/{id}', [ProjectController::class, 'delete'])->name("project.delete");
+                Route::post('delete/{id}', [ProjectController::class, 'delete'])->name("project.delete");
                 Route::prefix('addproject')->group(function () {
                     Route::get('datatable', [\App\Http\Controllers\ProjectDetailController::class, 'datatable'])->name("tambahproject.datatable");
                     Route::get('get-count-city/{id}', [\App\Http\Controllers\ProjectDetailController::class, 'getCountCity'])->name("tambahproject.count.city");
@@ -108,12 +108,22 @@ Route::prefix('admin')->middleware(\App\Http\Middleware\AdminMiddleware::class)-
                     Route::post('delete/{id}', [\App\Http\Controllers\ProjectDetailController::class, 'delete'])->name("tambahproject.delete");
                     Route::match(['POST', 'GET'], '/', [\App\Http\Controllers\ProjectDetailController::class, 'indexTambahProject'])->name("tambahproject");
                 });
-                Route::get('/detail/{id}', [ProjectController::class, 'indexDetailProject'])->name("detail");
-                Route::get('/buatharga/{id}', [ProjectController::class, 'indexBuatHarga'])->name("buatharga");
+                Route::prefix('/detail')->group(function () {
+                    Route::get('{id}', [ProjectController::class, 'indexDetailProject'])->name("detail");
+                    Route::get('{id}/json', [\App\Http\Controllers\ProjectDetailController::class, 'getDetailProject'])->name('detail.json');
+                });
+                Route::prefix('buatharga')->middleware(\App\Http\Middleware\PimpinanMiddleware::class)->group(function () {
+                    Route::get('{id}', [ProjectController::class, 'indexBuatHarga'])->name("buatharga");
+                    Route::post('{id}/harga', [\App\Http\Controllers\ProjectDetailController::class, 'savePrice'])->name('detail.harga.post');
+                });
+                Route::post('clone-item', [\App\Http\Controllers\ProjectDetailController::class, 'saveItemToProject'])->name('clone.item');
+
+                Route::post('/changestatus', [ProjectController::class, 'changeStatus'])->name('changestatus');
             }
         );
         Route::get('history/{id}', [\App\Http\Controllers\HistoryController::class, 'getHistory']);
-        Route::get('report', [\App\Http\Controllers\penawaranController::class, 'index']);
+        Route::get('report/{id}', [\App\Http\Controllers\penawaranController::class, 'index'])->name('export.pdf');
+        Route::get('report-excell/{id}', [\App\Http\Controllers\penawaranController::class, 'exportExcel'])->name('export.excell');
     }
 );
 

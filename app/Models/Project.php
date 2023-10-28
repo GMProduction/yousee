@@ -17,7 +17,8 @@ class Project extends Model
         'duration',
         'duration_unit',
         'is_lighted',
-        'description'
+        'description',
+        'total_price'
     ];
 
     protected $casts = [
@@ -26,7 +27,7 @@ class Project extends Model
 
     public function items()
     {
-        return $this->hasMany(ProjectItem::class, 'project_id');
+        return $this->hasMany(ProjectItem::class, 'project_id')->orderBy('city_id','asc');
     }
 
     /**

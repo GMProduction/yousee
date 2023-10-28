@@ -182,7 +182,8 @@
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
     </script>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+    {{--    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script> --}}
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" type="text/javascript"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
     <script src="{{ asset('js/base.js') }}"></script>
@@ -193,6 +194,7 @@
         src="https://cdn.jsdelivr.net/npm/browser-image-compression@latest/dist/browser-image-compression.js"></script>
     <script src="{{ asset('js/handler_image.js') }}"></script>
     <script src="{{ asset('js/moment.min.js') }}"></script>
+    <script src="{{ asset('js/debounce.js') }}"></script>
     {{-- <script type="text/javascript" src="https://code.jquery.com/jquery-3.7.0.js"></script> --}}
     <script type="text/javascript" src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
@@ -216,7 +218,10 @@
         };
     </script>
 
+
+
     @yield('morejs')
+    <script src="{{ asset('js/debounceDefault.js') }}"></script>
 
 </body>
 

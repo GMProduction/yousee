@@ -318,6 +318,17 @@ function currency(field) {
     });
 }
 
+function currencyClass(field) {
+    $('.' + field).on({
+        keyup: function () {
+            formatCurrency($(this));
+        },
+        blur: function () {
+            formatCurrency($(this), "blur");
+        }
+    });
+}
+
 function setImgDropify(img,text ='Masukkan Image Item',   file = null, height = 400) {
     img = $('#' + img).dropify({
         messages: {

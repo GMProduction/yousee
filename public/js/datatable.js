@@ -1,4 +1,4 @@
-function datatable(tb, url, columns, createdRow = null, order = []) {
+function datatable(tb, url, columns, serverSide = true, drawCallback, bPaginate = true, createdRow = null, order = []) {
     let columnDefs = [];
     $.each(columns, function (k, v) {
         columnDefs[k] = v;
@@ -7,7 +7,7 @@ function datatable(tb, url, columns, createdRow = null, order = []) {
 
     $('#' + tb).DataTable({
         processing: true,
-        serverSide: true,
+        serverSide: serverSide,
         // responsive: true,
         rowReorder: {
             selector: 'td:nth-child(2)'
@@ -30,12 +30,15 @@ function datatable(tb, url, columns, createdRow = null, order = []) {
         createdRow: createdRow,
         columnDefs: columnDefs,
         columns: columns,
+        drawCallback: drawCallback,
+        bPaginate: bPaginate
         // scrollX: true,
     });
     // }).columns.adjust().responsive.recalc();
 }
 
-function BasicDatatableGenerator(element, url = '/', col = [], colDef = [], data = function () {}, extConfig = {}) {
+function BasicDatatableGenerator(element, url = '/', col = [], colDef = [], data = function () {
+}, extConfig = {}) {
     let baseConfig = {
         scrollX: true,
         processing: true,

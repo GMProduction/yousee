@@ -1,0 +1,17 @@
+function keyPressCallback(e) {
+    // let text = $(".dataTables_wrapper .dataTables_filter input").val()
+    $('#table_id').DataTable().search(this.value).draw();
+    // if (text.length >= 2) {
+    //     table.search(this.value).draw();
+    // }
+    // if (text == ''){
+    //     table.search(this.value).draw();
+    // }
+}
+
+
+$( document ).ajaxComplete(function( event,request, settings ) {
+    $("#table_id_wrapper .dataTables_filter input")
+        .unbind() // Unbind previous default bindings
+        .bind("input", debounce(keyPressCallback, 1000));
+});
