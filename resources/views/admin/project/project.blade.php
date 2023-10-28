@@ -170,7 +170,9 @@
                     },
                     {
                         "data": "duration",
-                        "name": "duration"
+                        "render": function(data, type, row) {
+                            return row.duration + " " + row.duration_unit;
+                        }
                     },
 
                     {
