@@ -26,11 +26,9 @@ class ProjectController extends Controller
             $project = Project::where('id', '!=', \request('n'));
         } else {
             $project = Project::query();
-
         }
 
         return DataTables::of($project)->make(true);
-
     }
 
     /**
@@ -56,7 +54,7 @@ class ProjectController extends Controller
             'request_date'  => 'required',
             'duration'      => 'required',
             'duration_unit' => 'required',
-//            'is_lighted'    => 'required',
+            //            'is_lighted'    => 'required',
             'description'   => '',
         ]);
         $date                 = \DateTime::createFromFormat('d/m/Y', request('request_date'));
@@ -68,10 +66,9 @@ class ProjectController extends Controller
         } else {
             $project  = new Project();
             $dProject = $project->create($data);
-
         }
-//        $history = new HistoryController();
-//        $history->postHistory($dProject->id);
+        //        $history = new HistoryController();
+        //        $history->postHistory($dProject->id);
 
         return response()->json(
             [
@@ -117,6 +114,23 @@ class ProjectController extends Controller
         return 'success';
     }
 
+    public function changeStatus(Request $request)
+    {
+        $id = $request->id;
+        $status = $request->status;
 
+        $pesan = Project::findorfail($id);
 
+        $updated = $pesan->update(
+            [
+                $pesan->status = $status
+            ]
+        );
+
+        if ($updated) {
+            return response()->json("berhasil");
+        } else {
+            return response()->json("gagal");
+        }
+    }
 }

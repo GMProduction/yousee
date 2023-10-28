@@ -10,6 +10,7 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\DataTables;
+use Illuminate\Http\Request;
 
 class ProjectDetailController extends Controller
 {
@@ -22,7 +23,6 @@ class ProjectDetailController extends Controller
         $project = ProjectItem::with(['project', 'city', 'pic', 'item'])->where('project_id', request('q'));
 
         return DataTables::of($project)->make(true);
-
     }
 
     /**
@@ -66,9 +66,9 @@ class ProjectDetailController extends Controller
                 $project->create($data);
             }
         }
-//
-//        $history = new HistoryController();
-//        $history->postHistory($project->id);
+        //
+        //        $history = new HistoryController();
+        //        $history->postHistory($project->id);
 
         return response()->json(
             [
@@ -133,21 +133,21 @@ class ProjectDetailController extends Controller
     public function getCountCity($id)
     {
         return DB::table('project_items')
-                 ->selectRaw('cities.name,count(project_items.id) as count')
-                 ->join('cities', 'cities.id', '=', 'project_items.city_id')
-                 ->where('project_items.project_id', '=', $id)
-                 ->groupBy('cities.id')
-                 ->get();
+            ->selectRaw('cities.name,count(project_items.id) as count')
+            ->join('cities', 'cities.id', '=', 'project_items.city_id')
+            ->where('project_items.project_id', '=', $id)
+            ->groupBy('cities.id')
+            ->get();
     }
 
     public function getCountPIC($id)
     {
         return DB::table('project_items')
-                 ->selectRaw('users.nama,count(project_items.id) as count')
-                 ->join('users', 'users.id', '=', 'project_items.pic_id')
-                 ->where('project_items.project_id', '=', $id)
-                 ->groupBy('users.id')
-                 ->get();
+            ->selectRaw('users.nama,count(project_items.id) as count')
+            ->join('users', 'users.id', '=', 'project_items.pic_id')
+            ->where('project_items.project_id', '=', $id)
+            ->groupBy('users.id')
+            ->get();
     }
 
     public function delete($id)
@@ -195,32 +195,32 @@ class ProjectDetailController extends Controller
             $item = \request('item');
             $id   = \request('id');
 
-           if (isset($item)){
-               foreach ($item as $i) {
-                   $projectItem = ProjectItem::find($i);
+            if (isset($item)) {
+                foreach ($item as $i) {
+                    $projectItem = ProjectItem::find($i);
 
-                   $check = ProjectItem::where([['project_id',$id],['item_id', $projectItem->item_id]])->first();
-                   if ($check == null){
-                       ProjectItem::create([
-                           'project_id'   => $id,
-                           'city_id'      => $projectItem->city_id,
-                           'pic_id'       => $projectItem->pic_id,
-                           'item_id'      => $projectItem->item_id,
-                           'vendor_price' => $projectItem->vendor_price,
-                           'available'    => $projectItem->available,
-                           'is_lighted'   => $projectItem->is_lighted,
-                           'end_price'    => $projectItem->end_price,
-                       ]);
-                   }
-               }
-           }
+                    $check = ProjectItem::where([['project_id', $id], ['item_id', $projectItem->item_id]])->first();
+                    if ($check == null) {
+                        ProjectItem::create([
+                            'project_id'   => $id,
+                            'city_id'      => $projectItem->city_id,
+                            'pic_id'       => $projectItem->pic_id,
+                            'item_id'      => $projectItem->item_id,
+                            'vendor_price' => $projectItem->vendor_price,
+                            'available'    => $projectItem->available,
+                            'is_lighted'   => $projectItem->is_lighted,
+                            'end_price'    => $projectItem->end_price,
+                        ]);
+                    }
+                }
+            }
             DB::commit();
             $code = 200;
             $msg  = 'Berhasil';
         } catch (\Exception $er) {
             DB::rollBack();
             $code = 500;
-            $msg  = 'error : '.$er->getMessage();
+            $msg  = 'error : ' . $er->getMessage();
         }
 
         return response()->json(
@@ -231,5 +231,4 @@ class ProjectDetailController extends Controller
             $code
         );
     }
-
 }

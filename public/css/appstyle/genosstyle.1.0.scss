@@ -91,6 +91,39 @@ body {
   display: block;
 }
 
+.pill {
+  padding: 4px 10px;
+  border-radius: 50px;
+  display: inline-block;
+  font-weight: bold;
+  font-size: 0.7rem;
+
+  &.blue {
+    background-color: rgba(0, 0, 255, 0.1);
+    color: blue;
+  }
+
+  &.red {
+    background-color: rgba(255, 0, 0, 0.1);
+    color: red;
+  }
+
+  &.green {
+    background-color: rgba(0, 128, 0, 0.1);
+    color: green;
+  }
+
+  &.grey {
+    background-color: rgba(128, 128, 128, 0.1);
+    color: grey;
+  }
+
+  &.orange {
+    background-color: rgba(255, 166, 0, 0.1);
+    color: orange;
+  }
+}
+
 .logo-login {
   position: absolute;
   bottom: 20px;
@@ -625,7 +658,42 @@ input.form-control {
   display: flex;
   text-align: center;
   border: none;
-  background-color: $background-success-color;
+  background-color: $success-color;
+  color: white;
+  border-radius: 5px;
+  padding: 10px;
+  font-weight: bold;
+  align-items: center;
+  // box-shadow: 1px 1px 5px $shadow-primary-color;
+  cursor: pointer;
+
+  a {
+    display: block;
+  }
+
+  &.sml {
+    padding: 3px 10px;
+    font-size: 0.8rem;
+  }
+
+  &.rnd {
+    border-radius: $rounded;
+  }
+
+  &:hover {
+    transition: all 0.5s;
+    // box-shadow: 2px 2px 20px $shadow-success-color;
+    color: $success-soft-color1;
+  }
+}
+
+.btn-warnings {
+  all: unset;
+  transition: all 0.5s;
+  display: flex;
+  text-align: center;
+  border: none;
+  background-color: orangered;
   color: white;
   border-radius: 5px;
   padding: 10px;

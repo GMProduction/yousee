@@ -33,6 +33,7 @@ class penawaranController extends Controller
         $trans = [];
         $start = \request('start');
         $end   = \request('end');
+        $this->changeStatusToPengajuan($id);
         // if (\request('start')) {
         //     $trans = $trans->whereBetween('created_at', ["$start 00:00:00", "$end 23:59:59"]);
         // }
@@ -46,6 +47,14 @@ class penawaranController extends Controller
     public function exportExcel($id)
     {
         $data = Project::findOrFail($id);
+        $this->changeStatusToPengajuan($id);
         return Excel::download(new PenawaranExport($id, $data->name), $data->name . '.xlsx');
+    }
+
+    public function changeStatusToPengajuan($id)
+    {
+        $data = Project::findOrFail($id);
+        $data->status = "1";
+        $data->save();
     }
 }

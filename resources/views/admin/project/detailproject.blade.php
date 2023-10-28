@@ -31,7 +31,16 @@
 
                         <div class="form-floating mb-3">
                             <input type="text" readonly class="form-control" disabled placeholder="Status"
-                                value="{{ $data->status }}">
+                                value=@if ($data->status == 0) "Pencarian Titik"
+                                 @elseif ($data->status == 1)
+                                    "Pengajuan Penawaran"
+                                 @elseif ($data->status == 2)
+                                    "Sedang Tayang"
+                                 @elseif ($data->status == 3)
+                                    "Selesai"
+                                 @else
+                                    "Batal" @endif>
+
                             <label for="inp_nama" class="form-label">Status</label>
                         </div>
 
@@ -90,7 +99,6 @@
                                                     value="" onclick="selectAll()" id="flexCheckDefault">
                                             </div>
                                         </th>
-                                        {{--                                    <th>#</th> --}}
                                         <th>Kota</th>
                                         <th>Lokasi titik</th>
                                         <th>PIC /titik</th>

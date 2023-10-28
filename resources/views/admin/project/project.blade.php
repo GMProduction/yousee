@@ -7,6 +7,7 @@
 @section('content')
     <div>
 
+
         <div class="panel">
             <div class="title">
                 <p>Data Project</p>
@@ -163,7 +164,9 @@
                     },
                     {
                         "data": "status",
-                        "name": "status"
+                        "render": function(data, type, row) {
+                            return statusToString(row.status);
+                        }
                     },
                     {
                         "data": "duration",
@@ -175,13 +178,31 @@
                         "render": function(data, type, row) {
                             let string = JSON.stringify(row);
                             return "<div class='d-flex gap-2'>\n" +
-                                "<a class='btn-success-soft sml rnd' data-id='" +
+                                "<a class='btn-success sml rnd ' data-id='" +
                                 data + "' data-row='" + string +
                                 "' id='editData' href='/admin/project/addproject?q=" + row.id +
-                                "'> <i class='material-symbols-outlined menu-icon'>add</i></a>" +
+                                "'> <i class='material-symbols-outlined menu-icon text-white'>add</i></a>" +
                                 "<a class='btn-utama sml rnd  me-1' href='/admin/project/detail/" + row.id +
                                 "'>" +
                                 " <i class='material-symbols-outlined menu-icon text-white'>info</i></a>" +
+
+                                "<div class='dropdown'>" +
+                                "<a class='btn-warnings sml rnd  me-1'  data-bs-placement='top' title='Ganti Status'" +
+                                "id='dropdownMenuButton" + row.id +
+                                "' data-bs-toggle='dropdown' aria-expanded='false'>" +
+                                " <i class='material-symbols-outlined menu-icon text-white'>stat_minus_1</i></a>" +
+                                "<ul class='dropdown-menu' aria-labelledby='dropdownMenuButton" + row.id +
+                                "'>'" +
+                                "<a style= 'color: orange; padding: 0 10px; font-weight: bold; font-size: .7rem' >Ubah Status</a>" +
+                                "<hr>" +
+                                "<li><a class='dropdown-item' onclick='changestat(" + row.id +
+                                ", 2, event)'>Sedang Tayang</a></li>" +
+                                "<li><a class='dropdown-item' onclick='changestat(" + row.id +
+                                ", 3, event)'>Selesai</a></li>" +
+                                "<li><a class='dropdown-item  text-danger' onclick='changestat(" + row.id +
+                                ", 4, event)'>Batal</a></li>" +
+                                "</ul>" +
+                                " </div>" +
                                 "<a data-id='" + data +
                                 "' class='btn-danger sml rnd  me-1' role='button' id='deleteProject'> <i" +
                                 "    class='material-symbols-outlined menu-icon text-white'>delete</i></a>" +
@@ -200,8 +221,39 @@
             deleteData(name, "/admin/project/delete/" + id, data, afterDelete);
         })
 
+        function changestat(id, stat, e) {
+
+            e.preventDefault();
+
+
+            $.ajax({
+                type: 'POST',
+                url: "{{ route('changestatus') }}",
+                timeout: 5000,
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    id: id,
+                    status: stat,
+                },
+                success: function(data) {
+                    if (data == "gagal") {
+                        alert(data);
+
+                    }
+
+
+                    // Assuming you've updated the DataTable's data
+                    $('#table_id').DataTable().ajax.reload();
+                },
+                error: function(xhr, status, error) {
+                    alert(error);
+
+                }
+            });
+        }
+
         function afterDelete() {
-            $('#table_project').DataTable().ajax.reload()
+            $('#table_id').DataTable().ajax.reload()
         }
     </script>
 @endsection
