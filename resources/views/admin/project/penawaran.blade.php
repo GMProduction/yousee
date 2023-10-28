@@ -299,7 +299,7 @@
                         @if ($it->item->image2 != null)
                             <div>
                                 <img style="width: 100%;position:absolute; bottom: 0; z-index: -10;"
-                                    src="{{ public_path($it->item->image2) }}" />
+                                    src="{{ public_path($it->item->image3) }}" />
                                 <div class="page-break"></div>
                             </div>
                         @endif
