@@ -321,8 +321,11 @@
                                                 </div>
 
                                                 <div class="form-floating mb-3">
-                                                    <input type="text" pattern="[0-9,]+" class="form-control" id="inp_hargavendor" oninvalid="this.setCustomValidity('Harga tidak sesuai')" onchange="this.setCustomValidity('')"
-                                                        name="vendor_price" required placeholder="Harga Vendor">
+                                                    <input type="text" pattern="[0-9,]+" class="form-control"
+                                                        id="inp_hargavendor"
+                                                        oninvalid="this.setCustomValidity('Harga tidak sesuai')"
+                                                        onchange="this.setCustomValidity('')" name="vendor_price" required
+                                                        placeholder="Harga Vendor">
                                                     <label for="inp_hargavendor" class="form-label">Harga dari
                                                         Vendor</label>
                                                 </div>
@@ -563,8 +566,8 @@
                 {
                     "data": "vendor_price",
                     "name": "vendor_price",
-                    "render": function (data) {
-                        return 'Rp. '+data.toLocaleString()
+                    "render": function(data) {
+                        return 'Rp. ' + data.toLocaleString()
                     }
                 },
                 {
@@ -576,13 +579,14 @@
                             // "                                <a class='btn-success-soft sml rnd' data-id='" +
                             // data + "'  id='editData'> <i class='material-symbols-outlined menu-icon'>edit</i></a>" +
                             "                               " +
-                            " <a class='btn-success-soft sml rnd' data-itemid='" + row?.item_id + "' data-tipe='" +
+                            " <a class='btn-success sml rnd' data-itemid='" + row?.item_id + "' data-tipe='" +
                             row?.item?.type?.name + "' data-tinggi='" + row?.item?.height + "' data-lebar='" + row
-                            ?.item?.width + "' data-lokasi='" + row?.item?.location + "' data-kotaid='" + row.city_id + "' data-kota='" + row?.city?.name + "' data-picnama='" + row?.pic
+                            ?.item?.width + "' data-lokasi='" + row?.item?.location + "' data-kotaid='" + row
+                            .city_id + "' data-kota='" + row?.city?.name + "' data-picnama='" + row?.pic
                             ?.nama + "' data-pic_id='" + row.pic_id + "' data-harga='" + row?.vendor_price +
                             "' data-available='" + row?.available + "' data-light='" + row?.is_lighted +
                             "' data-id='" + data +
-                            "'  id='mapData'> <i class='material-symbols-outlined menu-icon'>map</i></a>" +
+                            "'  id='mapData'> <i class='material-symbols-outlined menu-icon text-white'>edit</i></a>" +
                             " <a class='btn-danger sml rnd  me-1' data-id='" + data +
                             "' role='button' id='deleteTitik'> <i" +
                             "    class='material-symbols-outlined menu-icon text-white'>delete</i></a>" +
@@ -612,7 +616,7 @@
             }, {
                 "data": "address",
                 "name": "address"
-            },{
+            }, {
                 "data": "location",
                 "name": "location"
             }, {
@@ -692,8 +696,8 @@
             }
             getSelect("inp_namapic", "{{ route('user.get.json') }}", "nama", row?.pic_id, "Pilih PIC");
             let url = urlTitik;
-            if (row?.kotaid){
-                url = url+'?city='+row?.kotaid;
+            if (row?.kotaid) {
+                url = url + '?city=' + row?.kotaid;
             }
             $('#tambahtitik').DataTable().ajax.url(url).load()
 

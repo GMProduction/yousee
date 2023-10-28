@@ -173,10 +173,10 @@
                         "render": function(data, type, row) {
                             let string = JSON.stringify(row);
                             return "<div class='d-flex gap-2'>\n" +
-                                "<a class='btn-success-soft sml rnd' data-id='" +
+                                "<a class='btn-success sml rnd' data-id='" +
                                 data + "' data-row='" + string +
                                 "' id='editData' href='/admin/project/addproject?q=" + row.id +
-                                "'> <i class='material-symbols-outlined menu-icon'>add</i></a>" +
+                                "'> <i class='material-symbols-outlined menu-icon text-white'>add</i></a>" +
                                 "<a class='btn-utama sml rnd  me-1' href='/admin/project/detail/" + row.id +
                                 "'>" +
                                 " <i class='material-symbols-outlined menu-icon text-white'>info</i></a>" +
