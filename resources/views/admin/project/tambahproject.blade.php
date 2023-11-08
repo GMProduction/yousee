@@ -5,7 +5,9 @@
 @endsection
 
 @section('css')
-
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css"
+          integrity="sha512-hoalWLoI8r4UszCkZ5kL8vayOGVae1oxXe/2A4AO6J9+580uKHDO3JdHb7NzwwzK5xr/Fs0W40kiNHxM9vyTtQ=="
+          crossorigin="" />
     <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
 
@@ -22,7 +24,32 @@
         .select2-selection__arrow {
             height: 36px !important;
         }
+
+        #map {
+            height: 500px;
+            width: 100%
+        }
+
+        #main-map {
+            height: 500px;
+            width: 100%
+        }
+
+        #single-map-container {
+            height: 450px;
+            width: 50%
+        }
+
+        .marker-position {
+            top: -25px;
+            left: 0;
+            position: relative;
+            color: aqua;
+            font-weight: bold;
+        }
     </style>
+    <script src="{{ asset('js/map-control.js?v=2') }}"></script>
+
 @endsection
 @section('content')
 {{--    <script src="{{ asset('css/summernote/summernote.css') }}"></script>--}}
@@ -130,6 +157,7 @@
                                 <thead>
                                     <tr>
                                         <th>#</th>
+                                        <th>Tipe</th>
                                         <th>Kota</th>
                                         <th>Lokasi titik</th>
                                         <th>PIC /titik</th>
@@ -143,6 +171,7 @@
                                 <tfoot>
                                     <tr>
                                         <th>#</th>
+                                        <th>Tipe</th>
                                         <th>Kota</th>
                                         <th>Lokasi titik</th>
                                         <th>PIC /titik</th>
@@ -434,17 +463,24 @@
                 </div>
             </div>
         </div>
-
+        <!-- Modal -->
+        @include('admin.item-modal')
     </div>
 @endsection
 
 @section('morejs')
+
     <script src="{{ asset('js/number_formater.js') }}"></script>
     <script src="{{ asset('js/datatable.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
     <script src="{{ asset('js/currency.js') }}"></script>
 {{--    <script src="{{ asset('css/summernote/summernote.js') }}"></script>--}}
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+    <script
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA1MgLuZuyqR_OGY3ob3M52N46TDBRI_9k&callback=initMap&v=weekly"
+        async></script>
+    <script src="{{ asset('js/item.js?v=4') }}"></script>
+
     <script>
         let param, prov, pic_id;
         var urlTitik = "/data/item/datatable";
@@ -470,7 +506,6 @@
                 ]
             });
             $('#titik').DataTable();
-            console.log('asdas', param)
             $('#province').select2({
                 dropdownParent: $("#modaltambahpictitik")
             });
@@ -495,7 +530,6 @@
         }
 
         $(document).on('click', '#addPic', function() {
-            console.log('asdasd')
             getSelect("province", "/data/province", "name", prov, "Pilih Provinsi");
             getSelect("pic_id", "{{ route('user.get.json') }}", "nama", pic_id, "Pilih PIC");
             $('#modaltambahpictitik #city').empty().trigger('change')
@@ -567,6 +601,10 @@
                     "defaultContent": ''
                 },
                 {
+                    "data": "item.type.name",
+                    "name": "item.type.name"
+                },
+                {
                     "data": "city.name",
                     "name": "city.name"
                 },
@@ -589,7 +627,6 @@
                     "data": "id",
                     searchable: false,
                     "render": function(data, type, row) {
-                        console.log(row)
                         return "<div class='d-flex gap-2'>\n" +
                             // "                                <a class='btn-success-soft sml rnd' data-id='" +
                             // data + "'  id='editData'> <i class='material-symbols-outlined menu-icon'>edit</i></a>" +
@@ -654,6 +691,7 @@
                 searchable: false,
                 "render": function(data, type, row) {
                     return "<div class='d-flex gap-2'>" +
+                        "       <a class='btn-utama-soft sml rnd me-1' data-id='"+data+"' id='detailData'> <i class='material-symbols-outlined menu-icon'>map</i></a>\n" +
                         "<a data-id='" + row.id + "' data-vendor='" + row.vendor_all.name + "' data-kotaid='" +
                         row?.city_id + "' data-kota='" + row
                         ?.city?.name + "' data-type='" + row?.type?.name + "' data-width='" + row.width +
@@ -669,7 +707,6 @@
 
         $(document).on('click', '#addItem', function() {
             let row = $(this).data()
-            console.log('asdadas', row)
             $('#idTitik').val(row.id);
             $('#city_id').val(row.kotaid);
             $('#kota').val(row.kota);
@@ -686,7 +723,6 @@
 
         $(document).on('click', '#mapData, #addDataTitik', function() {
             let row = $(this).data()
-            console.log('asd', row)
             // $('#inp_namapic').val(row?.picnama)
             $('#formTitik #id').val(row?.id)
             $('#idPic').val(row?.pic_id)

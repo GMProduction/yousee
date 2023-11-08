@@ -133,7 +133,6 @@ function removeMultiMarker() {
 }
 
 function createGoogleMapMarker(payload = []) {
-    console.log(role);
     var bounds = new google.maps.LatLngBounds();
     payload.forEach(function (v, k) {
         var marker = new google.maps.Marker({
@@ -195,7 +194,6 @@ async function openDetail(element) {
 async function generateSingleGoogleMapData(id) {
     try {
         let payload = id;
-
         if (typeof id == 'string'){
             let response = await $.get('/map/data/' + id);
             payload = response.payload;
@@ -204,7 +202,6 @@ async function generateSingleGoogleMapData(id) {
             payload.url = url;
         }
 
-        console.log(payload['latitude'] + typeof payload['latitude'], payload['longitude']);
         const location = {lat: payload['latitude'], lng: payload['longitude']};
         map_container_single = new google.maps.Map(document.getElementById("single-map-container"), {
             zoom: 16,
@@ -225,11 +222,11 @@ async function generateSingleGoogleMapData(id) {
 function generateDetail(data) {
     $('#detail-title-tipe').html(data['type']['name']);
     $('#detail-title-nama').html('( ' + data['name'] + ' )');
-    $('#single-map-container-street-view').html(data['url']);
+    // $('#single-map-container-street-view').html(data['url']);
     $('#detail-vendor').val(data['vendor_all']['name']+' ('+data['vendor_all']['brand']+')');
     $('#detail-vendor-address').val(data['vendor_all']['address']);
     $('#detail-vendor-email').val(data['vendor_all']['email']);
-    $('#detail-vendor-phone').val(data['vendor_all']['phone']);
+    $('#detail-vendor-phone').val(data['vendor_all']['picPhone']);
     $('#detail-vendor-phone-pic').val(data['vendor_all']['picPhone']);
     $('#detail-vendor-pic').val(data['vendor_all']['picName']);
     $('#detail-provinsi').val(data['city']['province']['name']);
@@ -257,4 +254,12 @@ function generateDetail(data) {
     $('#link-gbr3').attr('href', data['image3']);
     $('#dwnld-gbr3').attr('href', data['image3']);
     $('#dwnld-gbr3').attr('download', data['image3']);
+
+    let picPhone = data['vendor_all']['picPhone'];
+    const first = picPhone.substring(0, 1);
+    if (first == 0){
+        picPhone = '62'+picPhone.substring(1)
+    }
+    const text = 'Apakah '+data['type']['name']+' yang berlokasi di '+data['city']['name']+' '+data['address']+' '+data['location']+' tersedia ?';
+    $('#sendWa').attr('href','https://wa.me/'+picPhone+'?text='+encodeURI(text)).attr('target','_blank')
 }

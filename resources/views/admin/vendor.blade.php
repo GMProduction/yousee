@@ -238,7 +238,6 @@
             form.submit(async function(e) {
                 e.preventDefault(e);
                 let formData = new FormData(this);
-                console.log(formData);
                 let data = {
                     'form_data': formData,
                     'image': {

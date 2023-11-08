@@ -18,7 +18,9 @@ class Project extends Model
         'duration_unit',
         'is_lighted',
         'description',
-        'total_price'
+        'total_price',
+        'number_doc',
+        'to_name'
     ];
 
     protected $casts = [

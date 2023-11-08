@@ -2,7 +2,6 @@ async function saveData(title, form, url, resposeSuccess, image = null) {
 
     var form_data = new FormData($('#' + form)[0]);
 
-    console.log(form_data)
     swal({
         title: title,
         text: "Apa kamu yakin ?",
@@ -29,7 +28,6 @@ async function saveData(title, form, url, resposeSuccess, image = null) {
                         'Accept': "application/json"
                     },
                     success: function (data, textStatus, xhr) {
-                        console.log(data);
 
                         if (xhr.status === 200) {
                             swal("Berhasil", {
@@ -46,7 +44,6 @@ async function saveData(title, form, url, resposeSuccess, image = null) {
                         } else {
                             swal(data['msg'])
                         }
-                        console.log(data);
                     },
                     xhr: function() {
                         $('#progressbar').remove();
@@ -92,7 +89,6 @@ async function saveData(title, form, url, resposeSuccess, image = null) {
 }
 
 function saveDataObjectFormData(title, form_data, url, resposeSuccess) {
-    console.log('asdasd', form_data)
     swal({
         title: title,
         text: "Apa kamu yakin ?",
@@ -113,7 +109,6 @@ function saveDataObjectFormData(title, form_data, url, resposeSuccess) {
                         'Accept': "application/json"
                     },
                     success: function (data, textStatus, xhr) {
-                        console.log(data);
 
                         if (xhr.status === 200) {
                             swal("Data Updated ", {
@@ -130,7 +125,6 @@ function saveDataObjectFormData(title, form_data, url, resposeSuccess) {
                         } else {
                             swal(data['msg'])
                         }
-                        console.log(data);
                     },
                     complete: function (xhr, textStatus) {
                         console.log(xhr.status);
@@ -155,7 +149,6 @@ function saveDataObjectFormData(title, form_data, url, resposeSuccess) {
 
 function saveDataAjaxWImage(title, form, form_data, url, resposeSuccess) {
     var dataForm = form_data['form_data'];
-    console.log(form_data);
     if (form_data['image']){
         $.each(form_data['image'], async function (k,v) {
             if ($('#'+form+' #'+v).val()) {
@@ -164,7 +157,6 @@ function saveDataAjaxWImage(title, form, form_data, url, resposeSuccess) {
             }
         })
     }
-    console.log(dataForm.get('icon'));
     swal({
         title: title,
         text: "Apa kamu yakin ?",
@@ -185,7 +177,6 @@ function saveDataAjaxWImage(title, form, form_data, url, resposeSuccess) {
                         'Accept': "application/json"
                     },
                     success: function (data, textStatus, xhr) {
-                        console.log(data);
 
                         if (xhr.status === 200) {
                             swal("Data created ", {
@@ -225,7 +216,6 @@ function saveDataAjaxWImage(title, form, form_data, url, resposeSuccess) {
 
 function deleteData(text, url,data, resposeSuccess) {
 
-    console.log(data);
     swal({
         title: 'Hapus Data',
         text: "Apa kamu yakin menghapus data " + text + " ?",
@@ -246,7 +236,6 @@ function deleteData(text, url,data, resposeSuccess) {
                         'Accept': "application/json"
                     },
                     success: function (data, textStatus, xhr) {
-                        console.log(data);
 
                         if (xhr.status === 200) {
                             swal("Data Deleted ", {
@@ -263,7 +252,6 @@ function deleteData(text, url,data, resposeSuccess) {
                         } else {
                             swal(data['msg'])
                         }
-                        console.log(data);
                     },
                     complete: function (xhr, textStatus) {
                         console.log(xhr.status);

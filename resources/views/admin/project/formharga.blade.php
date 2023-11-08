@@ -8,7 +8,7 @@
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="/admin/project">Project</a></li>
-            <li class="breadcrumb-item"><a href="/admin/project/detail/1">Detail Project</a></li>
+            <li class="breadcrumb-item"><a href="/admin/project/detail/{{request('id')}}">Detail Project</a></li>
             <li class="breadcrumb-item active" aria-current="page">Buat Harga</li>
         </ol>
     </nav>
@@ -25,6 +25,7 @@
                         <thead>
                             <tr>
                                 <th>#</th>
+                                <th>Tipe</th>
                                 <th>Kota</th>
                                 <th>Lokasi titik</th>
                                 <th>PIC /titik</th>
@@ -37,7 +38,7 @@
                         </tbody>
                         <tfoot>
                             <tr>
-                                <th colspan="4" style="text-align:center">Total Harga</th>
+                                <th colspan="5" style="text-align:center">Total Harga</th>
                                 <th></th>
                                 <th></th>
                             </tr>
@@ -46,15 +47,17 @@
                 </div>
             </div>
 
-            <div class="pb-4 ps-4 pe-4 d-flex ">
-                <a class="btn-utama-soft sml rnd me-2 ms-auto" href="/admin/report/{{ request('id') }}" target="_blank"
-                    id="addData">Simpan (PDF)<i
-                        class="material-symbols-outlined menu-icon ms-2 text-prim">picture_as_pdf</i></a>
+           @if($data->to_name)
+                <div class="pb-4 ps-4 pe-4 d-flex ">
+                    <a class="btn-utama-soft sml rnd me-2 ms-auto" href="/admin/report/{{ request('id') }}" target="_blank"
+                       id="addData">Simpan (PDF)<i
+                            class="material-symbols-outlined menu-icon ms-2 text-prim">picture_as_pdf</i></a>
 
-                <a class="btn-success-soft sml rnd " href="{{ route('export.excell', ['id' => request('id')]) }}"
-                    id="addData">Simpan (Excel)<i
-                        class="material-symbols-outlined menu-icon ms-2 text-success">border_all</i></a>
-            </div>
+                    <a class="btn-success-soft sml rnd " href="{{ route('export.excell', ['id' => request('id')]) }}"
+                       id="addData">Simpan (Excel)<i
+                            class="material-symbols-outlined menu-icon ms-2 text-success">border_all</i></a>
+                </div>
+            @endif
         </div>
     </div>
 
@@ -72,13 +75,13 @@
                             @csrf
                             <input name="type" hidden value="paket">
                             <div class="form-floating mb-3">
-                                <input type="text" required class="form-control price" id="inp_harga1" name="price"
+                                <input type="text"  class="form-control price" id="inp_harga1" name="price"
                                     placeholder="Total Harga Jual">
                                 <label for="inp_hargapaket" class="form-label">Harga Paket</label>
                             </div>
                             <div class="my-3">
                                 <div class="d-flex">
-                                    <button type="submit" class="btn-utama" style="width: 100%">Simpan & Cetak PDF</button>
+                                    <button type="submit" class="btn-utama" style="width: 100%">Simpan Harga Paket</button>
                                 </div>
                             </div>
                         </form>
@@ -96,13 +99,11 @@
     <script type="text/javascript" src="https://cdn.datatables.net/plug-ins/1.13.6/api/sum().js"></script>
 
     <script>
-        let totalHarga = 0,
+        let totalHarga = '{{ $data->total_price }}',
             totalHargaTable = 0;
         $(document).ready(function() {
-            totalHarga = '{{ $data->total_price }}'
             showData();
         });
-        console.log()
 
         $(document).on('click', '#addData, #editData', function() {
             let id = $(this).data('id');
@@ -125,6 +126,10 @@
                     "className": '',
                     "orderable": false,
                     "defaultContent": ''
+                },
+                {
+                    "data": "item.type.name",
+                    "name": "item.type.name"
                 },
                 {
                     "data": "city.name",
@@ -173,16 +178,14 @@
 
             let drawCallback = function() {
                 var api = this.api();
-                $(api.column(4).footer()).html(
-                    'Rp. ' + api.column(4, {
+                $(api.column(5).footer()).html(
+                    'Rp. ' + api.column(5, {
                         page: 'current'
                     }).data().sum().toLocaleString()
                 );
-                totalHargaTable = api.column(5).data().sum()
-                $(api.column(5).footer()).html(
-                    totalHargaTable > 0 ? 'Rp. ' + api.column(5, {
-                        page: 'current'
-                    }).data().sum().toLocaleString() : 'Rp. ' + parseInt(totalHarga).toLocaleString()
+                totalHargaTable = api.column(6).data().sum()
+                $(api.column(6).footer()).html(
+                    totalHarga == 0  ? 'Rp. ' + parseInt(totalHargaTable).toLocaleString() : 'Rp. ' +parseInt(totalHarga).toLocaleString()
                 );
             }
             datatable('table_id', '{{ route('tambahproject.datatable', ['q' => request('id')]) }}', column, false,

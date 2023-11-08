@@ -61,7 +61,7 @@ class ProjectController extends Controller
         $data['request_date'] = $date;
         $dProject             = null;
         if (request('id')) {
-            $project  = Project::find(request('id'));
+            $project = Project::find(request('id'));
             $project->update($data);
         } else {
             $project  = new Project();
@@ -116,14 +116,14 @@ class ProjectController extends Controller
 
     public function changeStatus(Request $request)
     {
-        $id = $request->id;
+        $id     = $request->id;
         $status = $request->status;
 
         $pesan = Project::findorfail($id);
 
         $updated = $pesan->update(
             [
-                $pesan->status = $status
+                $pesan->status = $status,
             ]
         );
 
@@ -132,5 +132,24 @@ class ProjectController extends Controller
         } else {
             return response()->json("gagal");
         }
+    }
+
+    /**
+     * @param $id
+     *
+     * @return string
+     */
+    public function saveSettingPdf($id)
+    {
+        $project = Project::findorfail($id);
+
+        $field = \request()->validate([
+            'number_doc' => 'required',
+            'to_name'    => 'required',
+        ]);
+
+        $project->update($field);
+
+        return 'success';
     }
 }

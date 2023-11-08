@@ -55,6 +55,7 @@ Route::prefix('data')->middleware('auth')->group(
                 Route::post('delete/{id}', [\App\Http\Controllers\ItemController::class, 'delete']);
                 Route::post('post-item', [\App\Http\Controllers\ItemController::class, 'postItem']);
                 Route::get('url-street-view/{id}', [\App\Http\Controllers\ItemController::class, 'getUrlStreetView']);
+                Route::get('by-id/{id}', [\App\Http\Controllers\ItemController::class, 'getItemByID']);
             }
         );
     }
@@ -101,6 +102,7 @@ Route::prefix('admin')->middleware(\App\Http\Middleware\AdminMiddleware::class)-
                 Route::get('datatable', [ProjectController::class, 'datatable'])->name("project.datatable");
                 Route::match(['POST', 'GET'], '', [ProjectController::class, 'index'])->name("project");
                 Route::post('delete/{id}', [ProjectController::class, 'delete'])->name("project.delete");
+                Route::post('setting/{id}/pdf', [ProjectController::class, 'saveSettingPdf'])->name("project.setting.pdf");
                 Route::prefix('addproject')->group(function () {
                     Route::get('datatable', [\App\Http\Controllers\ProjectDetailController::class, 'datatable'])->name("tambahproject.datatable");
                     Route::get('get-count-city/{id}', [\App\Http\Controllers\ProjectDetailController::class, 'getCountCity'])->name("tambahproject.count.city");

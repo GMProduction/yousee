@@ -146,7 +146,7 @@
                 <tr>
                     <td class="wo-border ">No</td>
                     <td class="wo-border">:</td>
-                    <td class="wo-border">032 / PTSSI.YS / PNW / V / 2023</td>
+                    <td class="wo-border">{{$data->number_doc}}</td>
                 </tr>
                 <tr>
                     <td class="wo-border">Hal</td>
@@ -163,7 +163,7 @@
             <br>
 
             <p class="margin-normal">Kepada:</p>
-            <p class="margin-normal text-bold">PIMPINAN</p>
+            <p class="margin-normal text-bold">{{$data->to_name}}</p>
             <p class="margin-normal">Di. Tempat.</p>
 
             <br>

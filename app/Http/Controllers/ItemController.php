@@ -173,4 +173,8 @@ class ItemController extends CustomController
         Item::where('id','=',$id)->delete();
         return 'berhasil';
     }
+
+    public function getItemByID($id){
+        return Item::findOrFail($id);
+    }
 }
