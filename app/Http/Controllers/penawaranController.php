@@ -16,7 +16,7 @@ class penawaranController extends Controller
 
     public function index($id)
     {
-                        return $this->dataTransaksi($id);
+//                        return $this->dataTransaksi($id);
         $trans = [];
         $pdf   = App::make('dompdf.wrapper');
         $pdf->loadHTML($this->dataTransaksi($id))->setPaper('A4', 'potrait')->save('Laporan.pdf');
