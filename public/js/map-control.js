@@ -260,6 +260,10 @@ function generateDetail(data) {
     if (first == 0){
         picPhone = '62'+picPhone.substring(1)
     }
+    // console.log(window.location.hostname);
+    // const img = data['image1'];
+    //
+    // navigator.clipboard.writeText(copyText.value);
     const text = 'Apakah '+data['type']['name']+' yang berlokasi di '+data['city']['name']+' '+data['address']+' '+data['location']+' tersedia ?';
-    $('#sendWa').attr('href','https://wa.me/'+picPhone+'?text='+encodeURI(text)).attr('target','_blank')
+    $('.sendWa').attr('href','https://wa.me/'+picPhone+'?text='+encodeURI(text)).attr('target','_blank')
 }

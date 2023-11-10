@@ -155,8 +155,8 @@
                         "name": "request_date"
                     },
                     {
-                        "data": "total_location",
-                        "name": "total_location"
+                        "data": "items_count",
+                        "name": "items_count"
                     },
                     {
                         "data": "client_pic",

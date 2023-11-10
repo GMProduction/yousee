@@ -141,7 +141,7 @@
         <br>
 
         <div class="container normalfontsize">
-            <p style="float: right" class="margin-normal">Sukoharjo, 27 May 2023</p>
+            <p style="float: right" class="margin-normal">Sukoharjo, {{$date}}</p>
             <table class="wo-border">
                 <tr>
                     <td class="wo-border ">No</td>

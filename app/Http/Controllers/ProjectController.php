@@ -23,9 +23,9 @@ class ProjectController extends Controller
     public function datatable()
     {
         if (\request('n')) {
-            $project = Project::where('id', '!=', \request('n'));
+            $project = Project::withCount('items')->where('id', '!=', \request('n'));
         } else {
-            $project = Project::query();
+            $project = Project::withCount('items');
         }
 
         return DataTables::of($project)->make(true);

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Export\PenawaranExport;
 use App\Import\PemendagriReportExport;
 use App\Models\Project;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\App;
@@ -33,12 +34,13 @@ class penawaranController extends Controller
         $trans = [];
         $start = \request('start');
         $end   = \request('end');
+        $date = Carbon::now()->format('d F Y');
         $this->changeStatusToPengajuan($id);
         // if (\request('start')) {
         //     $trans = $trans->whereBetween('created_at', ["$start 00:00:00", "$end 23:59:59"]);
         // }
         // $trans = $trans->get();
-        return view('admin/project/penawaran', ['data' => $data]);
+        return view('admin/project/penawaran', ['data' => $data, 'date' => $date]);
     }
 
     /**

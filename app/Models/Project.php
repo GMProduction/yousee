@@ -32,6 +32,11 @@ class Project extends Model
         return $this->hasMany(ProjectItem::class, 'project_id')->orderBy('city_id','asc');
     }
 
+//    public function items_count()
+//    {
+//        return $this->hasMany(ProjectItem::class, 'project_id')->count('id');
+//    }
+
     /**
      * @return HasMany
      */

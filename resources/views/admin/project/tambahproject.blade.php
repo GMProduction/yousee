@@ -690,8 +690,12 @@
                 "data": "id",
                 searchable: false,
                 "render": function(data, type, row) {
+                    const phone = row.vendor_all?.picPhone;
+                    const text = 'Apakah '+row['type']['name']+' yang berlokasi di '+row['city']['name']+' '+row['address']+' '+row['location']+' tersedia ?';
+
                     return "<div class='d-flex gap-2'>" +
                         "       <a class='btn-utama-soft sml rnd me-1' data-id='"+data+"' id='detailData'> <i class='material-symbols-outlined menu-icon'>map</i></a>\n" +
+                        "       <a class='btn-utama-soft sml rnd me-1'  data-phone='"+phone+"' data-text='"+text+"' id='detailDataWa'> <img src='{{asset('/images/whatsapp.svg')}}' width='25'>\n" +
                         "<a data-id='" + row.id + "' data-vendor='" + row.vendor_all.name + "' data-kotaid='" +
                         row?.city_id + "' data-kota='" + row
                         ?.city?.name + "' data-type='" + row?.type?.name + "' data-width='" + row.width +
@@ -796,6 +800,13 @@
             getCountCity()
             getCountPIC()
         }
+
+        $(document).on('click','#detailDataWa', function () {
+            const picPhone = $(this).data('phone');
+            const text = encodeURI($(this).data('text'));
+            $(this).attr('href','https://wa.me/'+picPhone+'?text='+text).attr('target','_blank')
+
+        })
     </script>
 
     <script>

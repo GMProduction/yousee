@@ -471,7 +471,7 @@
                                                name="detail-vendor-phone-pic" readonly="readonly" placeholder="Vendor">
                                         <label for="detail-vendor-phone-pic" class="form-label">Nomor PIC</label>
                                     </div>
-                                    <a role="button" id="sendWa"><img src="{{asset('/images/whatsapp.svg')}}" width="25"></a>
+                                    <a role="button" id="sendWa" class="sendWa"><img src="{{asset('/images/whatsapp.svg')}}" width="25"></a>
                                 </div>
                                 <div class="my-3" style="border-bottom: 1px solid gray"></div>
                             @endif
@@ -567,9 +567,13 @@
                             <div style="position: relative">
                                 <a id="link-gbr1" target="_blank"><img id="detail-gambar-1" src=""
                                                                        alt="Gambar-1" style="width: 100%"></a>
-                                <a class="btn-utama flex " id="dwnld-gbr1"
-                                   style="position: absolute; right: 10px; top: 10px">Download <i
-                                        class="ms-2 material-symbols-outlined menu-icon">download</i></a>
+                                <div class="d-flex flex-row" style="position: absolute; right: 10px; top: 10px">
+                                    <a class="btn-utama flex me-2 sendWa" id="sendWa1"
+                                       style="">Kirim Wa <img class="ms-1" src='{{asset('/images/whatsapp.svg')}}' width='20'></a>
+                                    <a class="btn-utama flex " id="dwnld-gbr1"
+                                       style="">Download <i
+                                            class="ms-2 material-symbols-outlined menu-icon" style="color: white">download</i></a>
+                                </div>
                             </div>
                         </div>
                         <div class="tab-pane fade show" id="pills-single-gambar2" role="tabpanel"
@@ -577,9 +581,13 @@
                             <div style="position: relative">
                                 <a id="link-gbr2" target="_blank"><img id="detail-gambar-2" src=""
                                                                        alt="Gambar-2" style="width: 100%"></a>
-                                <a class="btn-utama flex " id="dwnld-gbr2"
-                                   style="position: absolute; right: 10px; top: 10px">Download <i
-                                        class="ms-2 material-symbols-outlined menu-icon">download</i></a>
+                                <div class="d-flex flex-row" style="position: absolute; right: 10px; top: 10px">
+                                    <a class="btn-utama flex me-2 sendWa" id="sendWa2"
+                                       style="">Kirim Wa <img class="ms-1" src='{{asset('/images/whatsapp.svg')}}' width='20'></a>
+                                    <a class="btn-utama flex " id="dwnld-gbr2"
+                                       style="">Download <i
+                                            class="ms-2 material-symbols-outlined menu-icon">download</i></a>
+                                </div>
                             </div>
 
 
