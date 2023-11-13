@@ -144,7 +144,7 @@
         <br>
 
         <div class="container normalfontsize">
-            <p style="float: right" class="margin-normal">Sukoharjo, {{ $date }}</p>
+            <p style="float: right" class="margin-normal">Sukoharjo,</p>
             <table class="wo-border">
                 <tr>
                     <td class="wo-border ">No</td>
