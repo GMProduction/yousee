@@ -804,7 +804,11 @@
         }
 
         $(document).on('click', '#detailDataWa', function() {
-            const picPhone = $(this).data('phone');
+            let picPhone = $(this).data('phone');
+            const first = picPhone.substring(0, 1);
+            if (first == 0) {
+                picPhone = '62' + picPhone.substring(1)
+            }
             const text = encodeURI($(this).data('text'));
             $(this).attr('href', 'https://wa.me/' + picPhone + '?text=' + text).attr('target', '_blank')
 
