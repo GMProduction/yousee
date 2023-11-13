@@ -5,7 +5,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>{{ $data->name }}</title>
+    <title>
+        {{-- {{ $data->name }} --}}
+        hehe
+    </title>
     <!-- Fonts -->
 
     <!-- Styles -->
@@ -141,12 +144,12 @@
         <br>
 
         <div class="container normalfontsize">
-            <p style="float: right" class="margin-normal">Sukoharjo, {{$date}}</p>
+            <p style="float: right" class="margin-normal">Sukoharjo, {{ $date }}</p>
             <table class="wo-border">
                 <tr>
                     <td class="wo-border ">No</td>
                     <td class="wo-border">:</td>
-                    <td class="wo-border">{{$data->number_doc}}</td>
+                    <td class="wo-border">{{ $data->number_doc }}</td>
                 </tr>
                 <tr>
                     <td class="wo-border">Hal</td>
@@ -163,7 +166,7 @@
             <br>
 
             <p class="margin-normal">Kepada:</p>
-            <p class="margin-normal text-bold">{{$data->to_name}}</p>
+            <p class="margin-normal text-bold">{{ $data->to_name }}</p>
             <p class="margin-normal">Di. Tempat.</p>
 
             <br>
