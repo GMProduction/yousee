@@ -149,7 +149,7 @@
                 <tr>
                     <td class="wo-border ">No</td>
                     <td class="wo-border">:</td>
-                    <td class="wo-border">{{ $data->number_doc }}</td>
+                    <td class="wo-border">{{ $data->number_doc ?? '' }}</td>
                 </tr>
                 <tr>
                     <td class="wo-border">Hal</td>
