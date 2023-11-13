@@ -16,8 +16,8 @@ class CreateProjectItems extends Migration
         Schema::create('project_items', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('project_id')->unsigned()->nullable();
-            $table->unsignedBigInteger('city_id');
-            $table->bigInteger('pic_id')->unsigned();
+            $table->unsignedBigInteger('city_id')->nullable();
+            $table->bigInteger('pic_id')->unsigned()->nullable();
             $table->bigInteger('item_id')->unsigned()->nullable();
             $table->bigInteger('vendor_price')->default(0);
             $table->timestamps();
