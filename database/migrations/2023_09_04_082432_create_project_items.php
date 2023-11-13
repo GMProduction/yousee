@@ -22,9 +22,9 @@ class CreateProjectItems extends Migration
             $table->bigInteger('vendor_price')->default(0);
             $table->timestamps();
             $table->foreign('project_id')->references('id')->on('projects');
-            $table->foreign('pic_id')->references('id')->on('users');
-            $table->foreign('item_id')->references('id')->on('items');
-            $table->foreign('city_id')->references('id')->on('cities');
+            $table->foreign('pic_id')->references('id')->on('user');
+            $table->foreign('item_id')->references('id')->on('item');
+            $table->foreign('city_id')->references('id')->on('citie');
         });
     }
 
