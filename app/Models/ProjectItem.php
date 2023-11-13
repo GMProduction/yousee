@@ -20,20 +20,23 @@ class ProjectItem extends Model
         'end_price'
     ];
 
-    public function project(){
-        return $this->belongsTo(Project::class,'project_id');
+    public function project()
+    {
+        return $this->belongsTo(Project::class, 'project_id');
     }
 
-    public function city(){
-        return $this->belongsTo(City::class,'city_id');
+    public function city()
+    {
+        return $this->belongsTo(City::class, 'city_id');
     }
 
-    public function pic(){
-        return $this->belongsTo(User::class,'pic_id');
+    public function pic()
+    {
+        return $this->belongsTo(User::class, 'pic_id');
     }
 
-    public function item(){
-        return $this->belongsTo(Item::class,'item_id')->withDefault(['name' => '', 'location' => '']);
+    public function item()
+    {
+        return $this->belongsTo(Item::class, 'item_id')->withDefault(['name' => '', 'location' => '', 'type' => ['name' => ''], 'address' => '']);
     }
-
 }

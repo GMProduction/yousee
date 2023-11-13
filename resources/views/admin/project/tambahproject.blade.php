@@ -6,8 +6,8 @@
 
 @section('css')
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css"
-          integrity="sha512-hoalWLoI8r4UszCkZ5kL8vayOGVae1oxXe/2A4AO6J9+580uKHDO3JdHb7NzwwzK5xr/Fs0W40kiNHxM9vyTtQ=="
-          crossorigin="" />
+        integrity="sha512-hoalWLoI8r4UszCkZ5kL8vayOGVae1oxXe/2A4AO6J9+580uKHDO3JdHb7NzwwzK5xr/Fs0W40kiNHxM9vyTtQ=="
+        crossorigin="" />
     <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
 
@@ -49,10 +49,9 @@
         }
     </style>
     <script src="{{ asset('js/map-control.js?v=2') }}"></script>
-
 @endsection
 @section('content')
-{{--    <script src="{{ asset('css/summernote/summernote.css') }}"></script>--}}
+    {{--    <script src="{{ asset('css/summernote/summernote.css') }}"></script> --}}
     <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
@@ -118,8 +117,8 @@
                         <div class="form-floating mb-3 ">
                             <textarea style="height: auto;" type="text" class="form-control" id="description" name="description" rows="10"
                                 required placeholder="Nama Tipe">{{ $data ? $data->description : '' }}</textarea>
-{{--                            <div id="description"></div>--}}
-{{--                            <label for="description" class="form-label">Keterangan</label>--}}
+                            {{--                            <div id="description"></div> --}}
+                            {{--                            <label for="description" class="form-label">Keterangan</label> --}}
                         </div>
 
                         <div class="my-3">
@@ -469,12 +468,11 @@
 @endsection
 
 @section('morejs')
-
     <script src="{{ asset('js/number_formater.js') }}"></script>
     <script src="{{ asset('js/datatable.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
     <script src="{{ asset('js/currency.js') }}"></script>
-{{--    <script src="{{ asset('css/summernote/summernote.js') }}"></script>--}}
+    {{--    <script src="{{ asset('css/summernote/summernote.js') }}"></script> --}}
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
     <script
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA1MgLuZuyqR_OGY3ob3M52N46TDBRI_9k&callback=initMap&v=weekly"
@@ -691,11 +689,15 @@
                 searchable: false,
                 "render": function(data, type, row) {
                     const phone = row.vendor_all?.picPhone;
-                    const text = 'Apakah '+row['type']['name']+' yang berlokasi di '+row['city']['name']+' '+row['address']+' '+row['location']+' tersedia ?';
+                    const text = 'Apakah ' + row['type']['name'] + ' yang berlokasi di ' + row['city']['name'] +
+                        ' ' + row['address'] + ' ' + row['location'] + ' tersedia ?';
 
                     return "<div class='d-flex gap-2'>" +
-                        "       <a class='btn-utama-soft sml rnd me-1' data-id='"+data+"' id='detailData'> <i class='material-symbols-outlined menu-icon'>map</i></a>\n" +
-                        "       <a class='btn-utama-soft sml rnd me-1'  data-phone='"+phone+"' data-text='"+text+"' id='detailDataWa'> <img src='{{asset('/images/whatsapp.svg')}}' width='25'>\n" +
+                        "       <a class='btn-utama-soft sml rnd me-1' data-id='" + data +
+                        "' id='detailData'> <i class='material-symbols-outlined menu-icon'>map</i></a>\n" +
+                        "       <a class='btn-utama-soft sml rnd me-1'  data-phone='" + phone +
+                        "' data-text='" + text +
+                        "' id='detailDataWa'> <img src='{{ asset('/images/whatsapp.svg') }}' width='25'>\n" +
                         "<a data-id='" + row.id + "' data-vendor='" + row.vendor_all.name + "' data-kotaid='" +
                         row?.city_id + "' data-kota='" + row
                         ?.city?.name + "' data-type='" + row?.type?.name + "' data-width='" + row.width +
@@ -770,8 +772,8 @@
         }
 
         function afterSaveProject(res) {
-            if (res.data){
-                window.location = '/admin/project/addproject?q='+res.data;
+            if (res.data) {
+                window.location = '/admin/project/addproject?q=' + res.data;
             }
         }
 
@@ -801,20 +803,19 @@
             getCountPIC()
         }
 
-        $(document).on('click','#detailDataWa', function () {
+        $(document).on('click', '#detailDataWa', function() {
             const picPhone = $(this).data('phone');
             const text = encodeURI($(this).data('text'));
-            $(this).attr('href','https://wa.me/'+picPhone+'?text='+text).attr('target','_blank')
+            $(this).attr('href', 'https://wa.me/' + picPhone + '?text=' + text).attr('target', '_blank')
 
         })
     </script>
 
     <script>
-
         function keyPressCallbackTitik(e) {
             $('#tambahtitik').DataTable().search(this.value).draw();
         }
-        $( document ).ajaxComplete(function( event,request, settings ) {
+        $(document).ajaxComplete(function(event, request, settings) {
             $("#tambahtitik_wrapper .dataTables_filter input")
                 .unbind() // Unbind previous default bindings
                 .bind("input", debounce(keyPressCallbackTitik, 1000));
