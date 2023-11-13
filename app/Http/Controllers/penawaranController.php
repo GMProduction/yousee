@@ -30,7 +30,8 @@ class penawaranController extends Controller
     public function dataTransaksi($id)
     {
         $data  = Project::with(['items.city', 'items.item'])->findOrFail($id);
-        return $data;
+        dd($data);
+
         $trans = [];
         $start = \request('start');
         $end   = \request('end');
