@@ -19,19 +19,18 @@ class penawaranController extends Controller
     {
         //                        return $this->dataTransaksi($id);
         $trans = [];
-        // $pdf   = App::make('dompdf.wrapper');
-        // $pdf->loadHTML($this->dataTransaksi($id))->setPaper('A4', 'potrait')->save('Laporan.pdf');
+        $pdf   = App::make('dompdf.wrapper');
+        $pdf->loadHTML($this->dataTransaksi($id))->setPaper('A4', 'potrait')->save('Laporan.pdf');
 
-        $data = $this->dataTransaksi($id);
-        return view('admin/project/penawaran', ['data' => $data]);
-        // return $pdf->stream();
+        //        $data = $this->dataTransaksi($id);
+        //         return view('admin/project/penawaran', ['data' => $data]);
+        return $pdf->stream();
     }
 
     public function dataTransaksi($id)
     {
         $data  = Project::with(['items.city', 'items.item'])->findOrFail($id);
-        dd($data);
-
+        //        return $data;
         $trans = [];
         $start = \request('start');
         $end   = \request('end');

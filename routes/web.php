@@ -124,7 +124,7 @@ Route::prefix('admin')->middleware(\App\Http\Middleware\AdminMiddleware::class)-
             }
         );
         Route::get('history/{id}', [\App\Http\Controllers\HistoryController::class, 'getHistory']);
-        Route::get('report/{id}', [\App\Http\Controllers\penawaranController::class, 'index'])->name('export.pdf');
+        Route::get('report/{id}', [\App\Http\Controllers\penawaranController::class, 'dataTransaksi'])->name('export.pdf');
         Route::get('report-excell/{id}', [\App\Http\Controllers\penawaranController::class, 'exportExcel'])->name('export.excell');
     }
 );
