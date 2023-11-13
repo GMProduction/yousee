@@ -24,7 +24,7 @@ class CreateProjectItems extends Migration
             $table->foreign('project_id')->references('id')->on('projects');
             $table->foreign('pic_id')->references('id')->on('user');
             $table->foreign('item_id')->references('id')->on('item');
-            $table->foreign('city_id')->references('id')->on('citie');
+            $table->foreign('city_id')->references('id')->on('citi');
         });
     }
 
