@@ -303,7 +303,7 @@
                                     {{ $it->item->image2 }}
                                 </h1>
                                 <img style="width: 100%;position:absolute; bottom: 0; z-index: -10;"
-                                    src="{{ public_path('/images/item/318bc0f0-0c96-11ed-afe4-6f6d2d85b266.jpg') }}" />
+                                    src="https://internal.yousee-indonesia.com/images/item/318bc0f0-0c96-11ed-afe4-6f6d2d85b266.jpg" />
                                 <div class="page-break"></div>
                             </div>
                         @endif
