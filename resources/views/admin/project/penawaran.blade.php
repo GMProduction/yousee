@@ -277,7 +277,8 @@
         <br>
 
         <div style="position:absolute; bottom: 0; z-index: -10;">
-            <img style="width: 100%" src="{{ public_path('/images/local/footerreport.jpg') }}" />
+            <img style="width: 100%"
+                src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('/images/local/footerreport.jpg'))) }}" />
         </div>
 
 
@@ -318,7 +319,7 @@
         {{-- SERVICE AREA --}}
         <div>
             <img style="width: 100%;position:absolute; bottom: 0; z-index: -10;"
-                src="{{ public_path('/images/local/servicearea.jpg') }}" />
+                src="https://internal.yousee-indonesia.com/images/local/servicearea.jpg" />
 
         </div>
     </div>
