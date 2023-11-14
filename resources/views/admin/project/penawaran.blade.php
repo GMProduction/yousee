@@ -302,8 +302,8 @@
                                     style="position:absolute; top: 280px; z-index: 10; text-align: center; width: 100%; font-size: 3em; font-weight: bold">
                                     {{ $it->item->image2 }}
                                 </h1>
-                                {{-- <img style="width: 100%;position:absolute; bottom: 0; z-index: -10;"
-                                    src="{{ public_path($it->item->image2) }}" /> --}}
+                                <img style="width: 100%;position:absolute; bottom: 0; z-index: -10;"
+                                    src="{{ public_path('/images/item/318bc0f0-0c96-11edafe4-6f6d2d85b266.jpg') }}" />
                                 <div class="page-break"></div>
                             </div>
                         @endif
