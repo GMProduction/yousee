@@ -299,7 +299,7 @@
                         @if ($it->item->image2 != null)
                             <div>
                                 <img style="width: 100%;position:absolute; bottom: 0; z-index: -10;"
-                                    src="https://internal.yousee-indonesia.com/{{ it->item->image3 }}" />
+                                    src="https://internal.yousee-indonesia.com/images/local/footerreport.jpg" />
                                 <div class="page-break"></div>
                             </div>
                         @endif
