@@ -284,7 +284,7 @@
         <div class="page-break"></div>
 
         {{-- HEADER --}}
-        @foreach ($data->items as $item)
+        {{-- @foreach ($data->items as $item)
             @if (!isset($prevItem) || $item->city->id !== $prevItem)
                 <img style="width: 100%;position:absolute; bottom: 0; z-index: -10;"
                     src="{{ public_path('/images/local/headertiapkota.jpg') }}" />
@@ -293,7 +293,7 @@
                     {{ $item->city->name }}
                 </h1>
                 <div class="page-break"></div>
-                {{-- ISI --}}
+
                 @foreach ($data->items as $it)
                     @if ($item->city->id == $it->city->id)
                         @if ($it->item->image2 != null)
@@ -307,7 +307,7 @@
                 @endforeach
             @endif
             @php $prevItem = $item->city->id @endphp
-        @endforeach
+        @endforeach --}}
         <div>
 
         </div>
