@@ -298,8 +298,9 @@
                     @if ($item->city->id == $it->city->id)
                         @if ($it->item->image2 != null)
                             <div>
+                                {{ $it->item->image }}
                                 <img style="width: 100%;position:absolute; bottom: 0; z-index: -10;"
-                                    src="{{ public_path('$it->item->image2') }}" />
+                                    src="{{ public_path($it->item->image2) }}" />
                                 <div class="page-break"></div>
                             </div>
                         @endif
