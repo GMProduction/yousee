@@ -133,7 +133,7 @@ return [
 
     //NETWORK DOMAINESIA
 
-      'disks' => [
+    'disks' => [
 
         'local' => [
             'driver' => 'local',
@@ -143,7 +143,7 @@ return [
         'public' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),
-            'url' => env('APP_URL').'/storage',
+            'url' => env('APP_URL') . '/storage',
             'visibility' => 'public',
         ],
 
@@ -170,7 +170,7 @@ return [
             'visibility' => 'public',
         ],
 
-    // ],
+    ],
     /*
     |--------------------------------------------------------------------------
     | Symbolic Links
