@@ -287,7 +287,7 @@
         @foreach ($data->items as $item)
             @if (!isset($prevItem) || $item->city->id !== $prevItem)
                 <img style="width: 100%;position:absolute; bottom: 0; z-index: -10;"
-                    src="{{ public_path('/images/local/headertiapkota.jpg') }}" />
+                    src="https://internal.yousee-indonesia.com/images/local/headertiapkota.jpg" />
                 <h1
                     style="position:absolute; top: 280px; z-index: 10; text-align: center; width: 100%; font-size: 3em; font-weight: bold">
                     {{ $item->city->name }}
