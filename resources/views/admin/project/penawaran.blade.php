@@ -202,11 +202,11 @@
                 </thead>
                 <tbody>
                     <?php $sum_tot_Price = 0; ?>
-                    @forelse($data->items as $key => $d)
+                    @forelse($item as $key => $d)
                         <tr>
-                            <td style="width: 50px">{{ $key + 1 }}</td>
+                            <td class="text-center " style="width: 50px">{{ $key + 1 }}</td>
                             <td class="text-center ">{{ $d->city->name }}</td>
-                            <td>{{ $d->item->location }}</td>
+                            <td>{{ $d->item->address }}<br>{{ $d->item->location }}</td>
                             <td class="text-center ">{{ $d->item->width }}</td>
                             <td class="text-center ">x</td>
                             <td class="text-center ">{{ $d->item->height }}</td>
@@ -271,7 +271,7 @@
             <br>
             <p class="margin-normal normalfontsize ">Hormat Kami,</p>
             <br><br><br>
-            <p class="margin-normal normalfontsize text-bold">Agam Nata</p>
+            <p class="margin-normal normalfontsize text-bold">{{$data->from}}</p>
         </div>
 
         <br>

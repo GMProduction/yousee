@@ -4,6 +4,7 @@ namespace App\Export;
 
 use App\Models\Item;
 use App\Models\Project;
+use App\Models\ProjectItem;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
@@ -88,10 +89,13 @@ class PenawaranExport implements FromQuery, WithHeadings, WithMapping, ShouldAut
         $totalPrice        = 0;
         $totalVenbdorPrice = 0;
         $margin            = 0;
-        foreach ($this->query()->items as $key => $d) {
+
+        $item = ProjectItem::with(['city','pic','item.vendorAll'])->where('project_id',$this->query()->id)->orderBy('index_number','ASC')->get();
+        foreach ($item as $key => $d) {
             $this->rowNumber   = (int)$this->rowNumber + 1;
             $row               = [
                 $this->rowNumber,
+//                $d->index_number,
                 $d->city->name,
                 $d->item->address.', '.$d->city->name.', '.$d->city->province->name.' ( '.$d->item->location.' )',
                 $d->item->width,
@@ -109,7 +113,7 @@ class PenawaranExport implements FromQuery, WithHeadings, WithMapping, ShouldAut
             array_push($data, $row);
         }
         $grandTotal = $this->query()->total_price == 0 ? $totalPrice : $this->query()->total_price;
-        $footer     = ['Total Harga', '', '', '', '', '', '', '', '', $totalVenbdorPrice, $grandTotal,$grandTotal-$totalVenbdorPrice];
+        $footer     = ['Total Harga', '', '', '', '', '', '', '', '', $totalVenbdorPrice, $grandTotal, $grandTotal - $totalVenbdorPrice];
         array_push($data, $footer);
 
         return $data;

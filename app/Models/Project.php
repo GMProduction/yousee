@@ -20,7 +20,8 @@ class Project extends Model
         'description',
         'total_price',
         'number_doc',
-        'to_name'
+        'to_name',
+        'from'
     ];
 
     protected $casts = [

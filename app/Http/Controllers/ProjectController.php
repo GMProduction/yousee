@@ -48,7 +48,7 @@ class ProjectController extends Controller
      */
     public function postData()
     {
-        $data                 = \request()->validate([
+        \request()->validate([
             'name'          => 'required',
             'client_pic'    => 'required',
             'request_date'  => 'required',
@@ -57,6 +57,8 @@ class ProjectController extends Controller
             //            'is_lighted'    => 'required',
             'description'   => '',
         ]);
+        $data = \request()->all();
+
         $date                 = \DateTime::createFromFormat('d/m/Y', request('request_date'));
         $data['request_date'] = $date;
         $dProject             = null;
@@ -152,4 +154,6 @@ class ProjectController extends Controller
 
         return 'success';
     }
+
+
 }

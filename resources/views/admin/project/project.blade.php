@@ -184,9 +184,9 @@
                                 data + "' data-row='" + string +
                                 "' id='editData' href='/admin/project/addproject?q=" + row.id +
                                 "'> <i class='material-symbols-outlined menu-icon text-white'>add</i></a>" +
-                                "<a class='btn-utama sml rnd  me-1' href='/admin/project/detail/" + row.id +
-                                "'>" +
-                                " <i class='material-symbols-outlined menu-icon text-white'>info</i></a>" +
+                                // "<a class='btn-utama sml rnd  me-1' href='/admin/project/detail/" + row.id +
+                                // "'>" +
+                                // " <i class='material-symbols-outlined menu-icon text-white'>info</i></a>" +
 
                                 "<div class='dropdown'>" +
                                 "<a class='btn-warnings sml rnd  me-1'  data-bs-placement='top' title='Ganti Status'" +
