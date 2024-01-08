@@ -1,37 +1,49 @@
-function datatable(tb, url, columns, serverSide = true, drawCallback, bPaginate = true, createdRow = null, order = []) {
+
+function datatable(tb, url, columns, serverSide = true, drawCallback, bPaginate = true, createdRow = null, order = [], select=null) {
     let columnDefs = [];
     $.each(columns, function (k, v) {
         columnDefs[k] = v;
         columnDefs[k]['targets'] = k;
     })
-
     $('#' + tb).DataTable({
         processing: true,
         serverSide: serverSide,
         // responsive: true,
         rowReorder: {
-            selector: 'td:nth-child(2)'
+            // selector: 'td:nth-child(2)'
+            selector: '.orderRow'
         },
+        // rowReorder: {
+        //     dataSrc:'id',
+        // },
         ajax: url,
         fnRowCallback: function (
             nRow,
             aData,
             iDisplayIndex,
-            iDisplayIndexFull
+            iDisplayIndexFull,
         ) {
             // debugger;
-            var numStart = this.fnPagingInfo().iStart;
-            var index = numStart + iDisplayIndexFull + 1;
-            // var index = iDisplayIndexFull + 1;
-            $("td:first", nRow).html(index);
-            return nRow;
+            if (select == null){
+                var numStart = this.fnPagingInfo().iStart;
+                var index = numStart + iDisplayIndexFull + 1;
+                // var index = iDisplayIndexFull + 1;
+                $("td:first", nRow).html(index);
+                return nRow;
+            }
+            // $("td:last", nRow).html('1');
+            // console.log('nRow',nRow)
+            // console.log('aData',aData)
+            // console.log('iDisplayIndex',iDisplayIndex)
+            // console.log('iDisplayIndexFull',iDisplayIndexFull)
         },
         order: order,
         createdRow: createdRow,
         columnDefs: columnDefs,
         columns: columns,
         drawCallback: drawCallback,
-        bPaginate: bPaginate
+        bPaginate: bPaginate,
+        select:select,
         // scrollX: true,
     });
     // }).columns.adjust().responsive.recalc();

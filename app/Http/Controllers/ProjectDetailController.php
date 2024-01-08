@@ -20,9 +20,43 @@ class ProjectDetailController extends Controller
      */
     public function datatable()
     {
-        $project = ProjectItem::with(['project', 'city', 'pic', 'item.type'])->where('project_id', request('q'));
+        $project = ProjectItem::with(['project', 'city', 'pic', 'item.type'])->where('project_id', request('q'))->orderBy('index_number', 'ASC');
 
         return DataTables::of($project)->make(true);
+    }
+
+    public function moveOrderProjectItem()
+    {
+        DB::beginTransaction();
+        try {
+            $id     = \request('id');
+            $number = \request('number');
+            $move   = \request('move');
+
+            $projectItem = ProjectItem::where([['id', $id], ['index_number', $number]])->first();
+            if ($move == 'up') {
+                $numberLast = (int)$projectItem->index_number - 1;
+            } else {
+                $numberLast = (int)$projectItem->index_number + 1;
+            }
+            $projectItemM = ProjectItem::where([['project_id', $projectItem->project_id], ['index_number', $numberLast]])->first();
+            $projectItemM->update(['index_number' => $number]);
+            $projectItem->update(['index_number' => $numberLast]);
+            DB::commit();
+            $code = 200;
+            $msg  = 'success';
+        } catch (\Exception $er) {
+            DB::rollBack();
+            $code = 500;
+            $msg  = 'error : '.$er->getMessage();
+        }
+
+        return response()->json(
+            [
+                'msg' => $msg,
+            ],
+            $code
+        );
     }
 
     /**
@@ -40,10 +74,16 @@ class ProjectDetailController extends Controller
         }
         $project = [];
         if ($param) {
+            $this->setIndexNumber($param);
             $project = Project::find($param);
         }
 
         return view('admin.project.tambahproject', ['sidebar' => 'project', 'data' => $project]);
+    }
+
+    public function getDataProjectImg($id)
+    {
+        return Project::with(['items.item', 'items.city', 'items.pic'])->findOrFail($id);
     }
 
     /**
@@ -94,6 +134,12 @@ class ProjectDetailController extends Controller
         $price                = request('vendor_price');
         $data['vendor_price'] = str_replace(',', '', $price);
         $data['available']    = request('statAvail') ?? request('dateAvail');
+        $data['index_number'] = 0;
+
+        $proj = ProjectItem::where('project_id', $id)->orderBy('index_number', 'DESC')->first();
+        if ($proj) {
+            $data['index_number'] = (int)$proj->index_number + 1;
+        }
 
         if (request('id')) {
             $projectItem = ProjectItem::where([['item_id', request('item_id')], ['project_id', $id], ['id', '!=', request('id')]])->first();
@@ -133,27 +179,28 @@ class ProjectDetailController extends Controller
     public function getCountCity($id)
     {
         return DB::table('project_items')
-            ->selectRaw('cities.name,count(project_items.id) as count')
-            ->join('cities', 'cities.id', '=', 'project_items.city_id')
-            ->where('project_items.project_id', '=', $id)
-            ->groupBy('cities.id')
-            ->get();
+                 ->selectRaw('cities.name,count(project_items.id) as count')
+                 ->join('cities', 'cities.id', '=', 'project_items.city_id')
+                 ->where('project_items.project_id', '=', $id)
+                 ->groupBy('cities.id')
+                 ->get();
     }
 
     public function getCountPIC($id)
     {
         return DB::table('project_items')
-            ->selectRaw('users.nama,count(project_items.id) as count')
-            ->join('users', 'users.id', '=', 'project_items.pic_id')
-            ->where('project_items.project_id', '=', $id)
-            ->groupBy('users.id')
-            ->get();
+                 ->selectRaw('users.nama,count(project_items.id) as count')
+                 ->join('users', 'users.id', '=', 'project_items.pic_id')
+                 ->where('project_items.project_id', '=', $id)
+                 ->groupBy('users.id')
+                 ->get();
     }
 
     public function delete($id)
     {
+        $projItem = ProjectItem::find($id);
         ProjectItem::destroy($id);
-
+        $this->reorderProjectItem($projItem->project_id);
         return 'success';
     }
 
@@ -195,12 +242,18 @@ class ProjectDetailController extends Controller
             $item = \request('item');
             $id   = \request('id');
 
+            $proj      = ProjectItem::where('project_id', $id)->orderBy('index_number', 'DESC')->first();
+            $index_num = 0;
+            if ($proj) {
+                $index_num = $proj->index_number;
+            }
+
             if (isset($item)) {
                 foreach ($item as $i) {
                     $projectItem = ProjectItem::find($i);
-
                     $check = ProjectItem::where([['project_id', $id], ['item_id', $projectItem->item_id]])->first();
                     if ($check == null) {
+                        $index_num++;
                         ProjectItem::create([
                             'project_id'   => $id,
                             'city_id'      => $projectItem->city_id,
@@ -210,6 +263,7 @@ class ProjectDetailController extends Controller
                             'available'    => $projectItem->available,
                             'is_lighted'   => $projectItem->is_lighted,
                             'end_price'    => $projectItem->end_price,
+                            'index_number' => $index_num,
                         ]);
                     }
                 }
@@ -220,15 +274,38 @@ class ProjectDetailController extends Controller
         } catch (\Exception $er) {
             DB::rollBack();
             $code = 500;
-            $msg  = 'error : ' . $er->getMessage();
+            $msg  = 'error : '.$er->getMessage();
         }
 
         return response()->json(
             [
-                'msg' => $msg,
-                'data' => $id
+                'msg'  => $msg,
+                'data' => $id,
             ],
             $code
         );
     }
+
+    public function setIndexNumber($id)
+    {
+        $projec = ProjectItem::where([['project_id', $id], ['index_number', 0]])->get();
+        if (count($projec) > 1) {
+            foreach ($projec as $k => $d) {
+                $d->update([
+                    'index_number' => $k,
+                ]);
+            }
+        }
+    }
+
+    public function reorderProjectItem($id){
+        $projec = ProjectItem::where('project_id', $id)->orderBy('index_number','ASC')->get();
+        foreach ($projec as $k => $d) {
+            $d->update([
+                'index_number' => $k,
+            ]);
+        }
+
+    }
+
 }

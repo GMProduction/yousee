@@ -105,6 +105,7 @@ Route::prefix('admin')->middleware(\App\Http\Middleware\AdminMiddleware::class)-
                 Route::post('setting/{id}/pdf', [ProjectController::class, 'saveSettingPdf'])->name("project.setting.pdf");
                 Route::prefix('addproject')->group(function () {
                     Route::get('datatable', [\App\Http\Controllers\ProjectDetailController::class, 'datatable'])->name("tambahproject.datatable");
+                    Route::post('move-order', [\App\Http\Controllers\ProjectDetailController::class, 'moveOrderProjectItem'])->name("tambahproject.move");
                     Route::get('get-count-city/{id}', [\App\Http\Controllers\ProjectDetailController::class, 'getCountCity'])->name("tambahproject.count.city");
                     Route::get('get-count-pic/{id}', [\App\Http\Controllers\ProjectDetailController::class, 'getCountPIC'])->name("tambahproject.count.pic");
                     Route::post('delete/{id}', [\App\Http\Controllers\ProjectDetailController::class, 'delete'])->name("tambahproject.delete");

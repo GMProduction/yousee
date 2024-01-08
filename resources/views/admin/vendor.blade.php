@@ -98,6 +98,7 @@
                                 <input type="text" class="form-control" id="picPhone" name="picPhone" required
                                     placeholder="Nama Tipe">
                                 <label for="picPhone" class="form-label">Nomor PIC</label>
+                                <span class="text-danger" style="font-size: 8pt">Gunakan tanda / (garis miring) untuk memisah nomor whatsapp</span>
                             </div>
                             <div class="my-3">
                                 <div class="d-flex">

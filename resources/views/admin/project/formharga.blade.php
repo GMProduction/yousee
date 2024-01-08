@@ -8,7 +8,7 @@
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="/admin/project">Project</a></li>
-            <li class="breadcrumb-item"><a href="/admin/project/detail/{{request('id')}}">Detail Project</a></li>
+            <li class="breadcrumb-item"><a href="/admin/project/addproject?q={{request('id')}}">Detail Project</a></li>
             <li class="breadcrumb-item active" aria-current="page">Buat Harga</li>
         </ol>
     </nav>
@@ -190,7 +190,6 @@
             }
             datatable('table_id', '{{ route('tambahproject.datatable', ['q' => request('id')]) }}', column, false,
                 drawCallback, false)
-
         }
 
         $(document).on('click', '#btnSave', function() {

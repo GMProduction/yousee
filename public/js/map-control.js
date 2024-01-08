@@ -256,14 +256,18 @@ function generateDetail(data) {
     $('#dwnld-gbr3').attr('download', data['image3']);
 
     let picPhone = data['vendor_all']['picPhone'];
-    const first = picPhone.substring(0, 1);
+    let splitNumber = picPhone.split('/')
+    let num = splitNumber[0].split(' ').join('')
+    const first = num.substring(0, 1);
     if (first == 0){
-        picPhone = '62'+picPhone.substring(1)
+        num = '62'+num.substring(1)
     }
+    console.log('firstfirstfirst',first)
+    console.log('2222222222',num)
     // console.log(window.location.hostname);
     // const img = data['image1'];
     //
     // navigator.clipboard.writeText(copyText.value);
     const text = 'Apakah '+data['type']['name']+' yang berlokasi di '+data['city']['name']+' '+data['address']+' '+data['location']+' tersedia ?';
-    $('.sendWa').attr('href','https://wa.me/'+picPhone+'?text='+encodeURI(text)).attr('target','_blank')
+    $('.sendWa').attr('href','https://wa.me/'+num+'?text='+encodeURI(text)).attr('target','_blank')
 }
