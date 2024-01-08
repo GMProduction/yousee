@@ -309,7 +309,7 @@
                     @endif
                 @endforeach
             @endif
-            @php $prevItem = $item->city->id @endphp
+            @php $prevItem = $i->city->id @endphp
         @endforeach
         <div>
 
