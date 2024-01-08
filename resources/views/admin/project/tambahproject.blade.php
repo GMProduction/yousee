@@ -57,13 +57,30 @@
 @section('content')
     {{--    <script src="{{ asset('css/summernote/summernote.css') }}"></script> --}}
     <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
-    <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="/admin/project">Project</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Tambah Project</li>
-        </ol>
-    </nav>
+    <div class="d-flex justify-content-between mb-3">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/admin/project">Project</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Tambah Project</li>
+            </ol>
+        </nav>
+        @if ($data)
+            <div class="d-flex gap-2 ">
+                <a style="150px" class="btn-warnings sml  flex-fill " href="/admin/report/{{ request('q') }}/1"
+                    target="_blank">Export PDF (Penawaran)<i
+                        class="material-symbols-outlined menu-icon ms-2 text-white">picture_as_pdf</i></a>
 
+                <a style="150px" class="btn-warnings sml  flex-fill " href="/admin/report/{{ request('q') }}/2"
+                    target="_blank">Export PDF (Internal)<i
+                        class="material-symbols-outlined menu-icon ms-2 text-white">picture_as_pdf</i></a>
+
+                <a style="150px" class="btn-success sml flex-fill "
+                    href="{{ route('export.excell', ['id' => request('q')]) }}">Export
+                    Excel<i class="material-symbols-outlined menu-icon ms-2 text-white">border_all</i></a>
+            </div>
+        @endif
+
+    </div>
     <div>
         <div class="d-flex flex-column">
 
@@ -144,30 +161,21 @@
                                 <label for="number_doc" class="form-label">Nomor Suarat</label>
                             </div>
 
-                            <div class="my-3">
-                                <div class="d-flex">
-                                    <button type="submit" class="btn-utama" style="width: 100%">
+                            <div class="d-flex w-100 gap-4 ">
+                                <button type="submit" class="btn-utama flex-fill"><span
+                                        class="d-flex justify-content-center align-items-center ">
                                         @if (request('q'))
-                                            Edit
+                                            Simpan Hasil Perubahan
                                         @else
                                             Simpan
                                         @endif
-                                    </button>
-                                </div>
+                                        <i class="material-symbols-outlined menu-icon ms-2 text-white">save</i>
+                                    </span>
+                                </button>
 
                             </div>
-                            @if ($data)
-                                <div class="pb-4  d-flex justify-content-evenly">
-                                    <a class="btn-utama-soft sml rnd " href="/admin/report/{{ request('q') }}"
-                                        target="_blank">Simpan (PDF)<i
-                                            class="material-symbols-outlined menu-icon ms-2 text-prim">picture_as_pdf</i></a>
-
-                                    <a class="btn-success-soft sml rnd"
-                                        href="{{ route('export.excell', ['id' => request('q')]) }}">Simpan (Excel)<i
-                                            class="material-symbols-outlined menu-icon ms-2 text-success">border_all</i></a>
-                                </div>
-                            @endif
                         </div>
+
                     </form>
                 </div>
             </div>
@@ -183,23 +191,32 @@
             <div class="">
                 <div class="panel mb-1">
                     <div class="title d-flex flex-column">
-                        <p>Data Titik</p>
+                        <p class="mb-2">Data Titik</p>
                         @if (request('q'))
-                            <div class="d-flex gap-2 flex-md-row flex-column">
-                                @if (auth()->user()->role == 'pimpinan')
-                                    <a class="btn-success-soft sml rnd "
-                                        href="/admin/project/buatharga/{{ request('q') }}">Buat Harga<i
-                                            class="material-symbols-outlined menu-icon ms-2 text-success">receipt_long</i></a>
-                                @endif
-                                <a class="btn-utama-soft sml rnd " data-bs-toggle="modal"
-                                    data-bs-target="#modalShare">Gunakan Titik Untuk Project
-                                    Baru<i
-                                        class="material-symbols-outlined menu-icon ms-2 text-prim">arrow_right_alt</i></a>
-                                <a class="btn-success-soft sml rnd " id="addPic">Tambah PIC titik<i
-                                        class="material-symbols-outlined menu-icon ms-2 text-success">add_circle</i></a>
+                            <div class="d-flex gap-2 flex-md-row flex-column justify-content-between ">
 
-                                <a class="btn-utama-soft sml rnd " id="addDataTitik">Tambah Titik <i
-                                        class="material-symbols-outlined menu-icon ms-2 text-grey">arrow_right_alt</i></a>
+                                <div class="d-flex gap-2">
+                                    <a class="btn-success-soft sml rnd  " id="addPic"><span
+                                            class="d-flex align-items-center">Tambah PIC
+                                            titik<i
+                                                class="material-symbols-outlined menu-icon ms-2 text-success">add_circle</i></span></a>
+
+                                    <a class="btn-utama-soft sml rnd " id="addDataTitik">Tambah Titik <i
+                                            class="material-symbols-outlined menu-icon ms-2 text-grey">arrow_right_alt</i></a>
+                                </div>
+
+                                <div class="d-flex gap-2">
+                                    @if (auth()->user()->role == 'pimpinan')
+                                        <a class="btn-success sml rnd "
+                                            href="/admin/project/buatharga/{{ request('q') }}">Buat Harga<i
+                                                class="material-symbols-outlined menu-icon ms-2 text-white">receipt_long</i></a>
+                                    @endif
+                                    <a class="btn-utama sml rnd d-flex align-items-center" data-bs-toggle="modal"
+                                        data-bs-target="#modalShare">Gunakan Titik Untuk
+                                        Project
+                                        Baru<i
+                                            class="material-symbols-outlined menu-icon ms-2 text-white">arrow_right_alt</i></a>
+                                </div>
                             </div>
                         @endif
                     </div>

@@ -255,7 +255,6 @@
         </div>
 
         <div class="container">
-            <p class="margin-normal tablefontsize text-bold">*harga tidak termasuk PPN 11%,</p>
             <br>
             <div class="normalfontsize">
                 <p class="margin-normal  text-bold">Ketarangan :</p>
@@ -271,7 +270,7 @@
             <br>
             <p class="margin-normal normalfontsize ">Hormat Kami,</p>
             <br><br><br>
-            <p class="margin-normal normalfontsize text-bold">{{$data->from}}</p>
+            <p class="margin-normal normalfontsize text-bold">{{ $data->from }}</p>
         </div>
 
         <br>
@@ -298,10 +297,13 @@
                     @if ($item->city->id == $it->city->id)
                         @if ($it->item->image2 != null)
                             <div>
-
+                                <a
+                                    style="bottom: 30px; left: 30px; width: 30px; height: 30px; font-size: 1.5rem; position:absolute; border-radius: 50%; color: black; background-color: white; padding: 5px; font-weight: bold; text-align: center; line-height: 30px">{{ $it->index_number + 1 }}</a>
                                 <img style="width: 100%;position:absolute; bottom: 0; z-index: -10;"
                                     src="https://internal.yousee-indonesia.com/{{ $it->item->image2 }}" />
+                                {{-- src="http://yousee.test/{{ $it->item->image2 }}" /> --}}
                                 <div class="page-break"></div>
+
                             </div>
                         @endif
                     @endif
