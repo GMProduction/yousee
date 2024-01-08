@@ -126,18 +126,18 @@
     <div>
 
         {{-- HEADER --}}
-        @foreach ($data->items as $item)
-            @if (!isset($prevItem) || $item->city->id !== $prevItem)
+        @foreach ($item as $i)
+            @if (!isset($prevItem) || $i->city->id !== $prevItem)
                 <img style="width: 100%;position:absolute; bottom: 0; z-index: -10;"
                     src="https://internal.yousee-indonesia.com/images/local/headertiapkota.jpg" />
                 <h1
                     style="position:absolute; top: 280px; z-index: 10; text-align: center; width: 100%; font-size: 3em; font-weight: bold">
-                    {{ $item->city->name }}
+                    {{ $i->city->name }}
                 </h1>
                 <div class="page-break"></div>
 
-                @foreach ($data->items as $it)
-                    @if ($item->city->id == $it->city->id)
+                @foreach ($item as $it)
+                    @if ($i->city->id == $it->city->id)
                         @if ($it->item->image2 != null)
                             <div>
                                 <a
@@ -154,7 +154,7 @@
                     @endif
                 @endforeach
             @endif
-            @php $prevItem = $item->city->id @endphp
+            @php $prevItem = $i->city->id @endphp
         @endforeach
         <div>
 
