@@ -136,6 +136,11 @@
                 </h1>
                 <div class="page-break"></div>
 
+                {{ $itslast = false }}
+
+                @if ($loop->last)
+                    {{ $itslast = true }}
+                @endif
                 @foreach ($item as $it)
                     @if ($i->city->id == $it->city->id)
                         @if ($it->item->image2 != null)
@@ -145,7 +150,9 @@
                                 <img style="width: 100%;position:absolute; bottom: 0; z-index: -10;"
                                     src="https://internal.yousee-indonesia.com/{{ $it->item->image2 }}" />
                                 {{-- src="http://yousee.test/{{ $it->item->image2 }}" /> --}}
-                                <div class="page-break"></div>
+                                @if (!$itslast)
+                                    <div class="page-break"></div>
+                                @endif
 
                             </div>
                         @endif
