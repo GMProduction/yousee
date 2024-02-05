@@ -33,41 +33,48 @@ class Item extends Model
         'trafic'
     ];
 
-    protected $with = ['type','city','createdBy','lastUpdate'];
+    protected $with = ['type', 'city', 'createdBy', 'lastUpdate'];
 
     protected $casts = [
         'latitude' => 'float',
         'longitude' => 'float',
     ];
-//    protected $hidden = [
-//        'url',
-//    ];
+    //    protected $hidden = [
+    //        'url',
+    //    ];
 
-    public function type(){
-        return $this->belongsTo(type::class);
+    public function type()
+    {
+        return $this->belongsTo(type::class)->withDefault(['name' => '']);
     }
 
-    public function city() {
+    public function city()
+    {
         return $this->belongsTo(City::class);
     }
 
-    public function createdBy(){
+    public function createdBy()
+    {
         return $this->belongsTo(User::class, 'created_by');
     }
 
-    public function lastUpdate(){
+    public function lastUpdate()
+    {
         return $this->belongsTo(User::class, 'last_update_by');
     }
 
-    public function history(){
-        return $this->belongsToMany(User::class, 'histories','item_id','user_id');
+    public function history()
+    {
+        return $this->belongsToMany(User::class, 'histories', 'item_id', 'user_id');
     }
 
-    public function vendor(){
+    public function vendor()
+    {
         return $this->belongsTo(Vendor::class, 'vendor_id');
     }
 
-    public function vendorAll(){
+    public function vendorAll()
+    {
         return $this->belongsTo(Vendor::class, 'vendor_id')->withDefault(['name' => ''])->withTrashed();
     }
 }

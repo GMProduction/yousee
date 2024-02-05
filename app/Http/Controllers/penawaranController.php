@@ -13,15 +13,22 @@ use Illuminate\Support\Facades\App;
 use Maatwebsite\Excel\Facades\Excel;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
+use function PHPSTORM_META\type;
+
 class penawaranController extends Controller
 {
 
-    public function index($id)
+    public function index($id, $logo)
     {
-                        return $this->dataTransaksi($id);
+        // return $this->dataTransaksi($id);
         $trans = [];
         $pdf   = App::make('dompdf.wrapper');
-        $pdf->loadHTML($this->dataTransaksi($id))->setPaper('A4', 'potrait')->save('Laporan.pdf');
+
+        if ($logo == 1) {
+            $pdf->loadHTML($this->dataTransaksi($id))->setPaper('A4', 'potrait')->save('Laporan.pdf');
+        } else {
+            $pdf->loadHTML($this->exportpdfinternal($id))->setPaper('A4', 'potrait')->save('Laporan.pdf');
+        }
 
         //        $data = $this->dataTransaksi($id);
         //         return view('admin/project/penawaran', ['data' => $data]);
@@ -31,7 +38,7 @@ class penawaranController extends Controller
     public function dataTransaksi($id)
     {
         $data  = Project::with(['items.city', 'items.item'])->findOrFail($id);
-        $item = ProjectItem::with(['city','item'])->where('project_id', $id)->orderBy('index_number','ASC')->get();
+        $item = ProjectItem::with(['city', 'item'])->where('project_id', $id)->orderBy('index_number', 'ASC')->get();
         //        return $data;
         $trans = [];
         $start = \request('start');
@@ -43,6 +50,23 @@ class penawaranController extends Controller
         // }
         // $trans = $trans->get();
         return view('admin/project/penawaran', ['data' => $data, 'date' => $date, 'item' => $item]);
+    }
+
+    public function exportpdfinternal($id)
+    {
+        $data  = Project::with(['items.city', 'items.item'])->findOrFail($id);
+        $item = ProjectItem::with(['city', 'item'])->where('project_id', $id)->orderBy('index_number', 'ASC')->get();
+        //        return $data;
+        $trans = [];
+        $start = \request('start');
+        $end   = \request('end');
+        $date = Carbon::now()->format('d F Y');
+        $this->changeStatusToPengajuan($id);
+        // if (\request('start')) {
+        //     $trans = $trans->whereBetween('created_at', ["$start 00:00:00", "$end 23:59:59"]);
+        // }
+        // $trans = $trans->get();
+        return view('admin/project/pdfinternal', ['data' => $data, 'date' => $date, 'item' => $item]);
     }
 
     /**

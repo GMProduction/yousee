@@ -390,6 +390,7 @@ input.form-control {
   color: white;
   border-radius: 5px;
   padding: 10px;
+  font-weight: bold;
   cursor: pointer;
 }
 .btn-utama.flex {
@@ -539,6 +540,7 @@ input.form-control {
   padding: 10px;
   font-weight: bold;
   align-items: center;
+  justify-content: center;
   cursor: pointer;
 }
 .btn-success a {
@@ -568,6 +570,7 @@ input.form-control {
   padding: 10px;
   font-weight: bold;
   align-items: center;
+  justify-content: center;
   cursor: pointer;
 }
 .btn-warnings a {
@@ -582,7 +585,8 @@ input.form-control {
 }
 .btn-warnings:hover {
   transition: all 0.5s;
-  color: #1fa552;
+  background-color: orange;
+  color: white;
 }
 
 .btn-success-soft {
