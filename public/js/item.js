@@ -338,6 +338,19 @@ function datatableItem() {
                 },
             },
             {
+                data: "status_on_rent",
+                name: "status_on_rent",
+                render:function (data) {
+                    if (data.includes('used until')){
+                        return '<span class="text-danger fw-bold">'+data+'</span>'
+                    }else if (data.includes('will used')){
+                        return '<span class="text-warning fw-bold">'+data+'</span>'
+                    }else {
+                        return '<span class="text-success fw-bold">'+data+'</span>'
+                    }
+                }
+            },
+            {
                 data: "id",
                 searchable: false,
                 render: function (data, type, row) {
@@ -452,6 +465,19 @@ function datatableItemPresence() {
             {
                 data: "position",
                 name: "position",
+            },
+            {
+                "data": "status_on_rent",
+                "name": "status_on_rent",
+                render:function (data) {
+                    if (data.includes('used until')){
+                        return '<span class="text-danger fw-bold">'+data+'</span>'
+                    }else if (data.includes('will used')){
+                        return '<span class="text-warning fw-bold">'+data+'</span>'
+                    }else {
+                        return '<span class="text-success fw-bold">'+data+'</span>'
+                    }
+                }
             },
             {
                 data: "id",

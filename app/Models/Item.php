@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -33,41 +34,75 @@ class Item extends Model
         'trafic'
     ];
 
-    protected $with = ['type','city','createdBy','lastUpdate'];
+    protected $with = ['type', 'city', 'createdBy', 'lastUpdate'];
 
     protected $casts = [
         'latitude' => 'float',
         'longitude' => 'float',
     ];
-//    protected $hidden = [
-//        'url',
-//    ];
+    //    protected $hidden = [
+    //        'url',
+    //    ];
 
-    public function type(){
-        return $this->belongsTo(type::class);
+    public function type()
+    {
+        return $this->belongsTo(type::class)->withDefault(['name' => '']);
     }
 
-    public function city() {
+    public function city()
+    {
         return $this->belongsTo(City::class);
     }
 
-    public function createdBy(){
+    public function createdBy()
+    {
         return $this->belongsTo(User::class, 'created_by');
     }
 
-    public function lastUpdate(){
+    public function lastUpdate()
+    {
         return $this->belongsTo(User::class, 'last_update_by');
     }
 
-    public function history(){
-        return $this->belongsToMany(User::class, 'histories','item_id','user_id');
+    public function history()
+    {
+        return $this->belongsToMany(User::class, 'histories', 'item_id', 'user_id');
     }
 
-    public function vendor(){
+    public function vendor()
+    {
         return $this->belongsTo(Vendor::class, 'vendor_id');
     }
 
-    public function vendorAll(){
+    public function vendorAll()
+    {
         return $this->belongsTo(Vendor::class, 'vendor_id')->withDefault(['name' => ''])->withTrashed();
+    }
+
+    public function itemRent()
+    {
+        return $this->hasMany(ItemRent::class, 'item_id');
+    }
+
+    public function getStatusOnRentAttribute()
+    {
+        $now = Carbon::now()->format('Y-m-d');
+        $rents = $this->itemRent()->where('end', '>', $now)->get();
+        $result = 'empty';
+        if (count($rents) > 0) {
+            foreach ($rents as $rent) {
+                $dateNow = Carbon::now();
+                $dateStart = date('Y-m-d', strtotime($rent->start));
+                $dateEnd = date('Y-m-d', strtotime($rent->end));
+                if (($dateNow > $dateStart) && ($dateNow < $dateEnd)) {
+                    $result = 'used until '.Carbon::parse($dateStart)->format('d-m-Y');
+                    break;
+                } else {
+                    $result = 'will used '.Carbon::parse($dateStart)->format('d-m-Y');
+                }
+            }
+            return $result;
+        }
+        return $result;
     }
 }
