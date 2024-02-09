@@ -51,7 +51,7 @@
             </a>
 
             <ul class="dropdown-menu custom" aria-labelledby="dropdownprofile">
-                <li><a class="dropdown-item disabled" href="#">{{ auth()->user()->email }}</a></li>
+                <li><a class="dropdown-item disabled" href="#">{{ auth()->user()->username }}</a></li>
                 <hr>
                 {{-- <li><a class="dropdown-item" href="#">Another action</a></li> --}}
                 <li><a class="dropdown-item text-danger" href="/logout">Logout</a></li>
@@ -157,7 +157,7 @@
                 <li class="nav-item text-center mt-3 mb-3">
 
                     <a class="title1-role " href="#"> Login Sebagai </a> <br>
-                    <a class="title-role " href="#"> Admin </a>
+                    <a class="title-role " href="#"> {{ auth()->user()->username }} </a>
                 </li>
 
                 {{-- <li class="nav-item">

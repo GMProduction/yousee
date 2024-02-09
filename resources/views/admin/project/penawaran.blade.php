@@ -141,12 +141,12 @@
         <br>
 
         <div class="container normalfontsize">
-            <p style="float: right" class="margin-normal">Sukoharjo, {{$date}}</p>
+            <p style="float: right" class="margin-normal">Sukoharjo, {{ $date }}</p>
             <table class="wo-border">
                 <tr>
                     <td class="wo-border ">No</td>
                     <td class="wo-border">:</td>
-                    <td class="wo-border">{{$data->number_doc}}</td>
+                    <td class="wo-border">{{ $data->number_doc }}</td>
                 </tr>
                 <tr>
                     <td class="wo-border">Hal</td>
@@ -163,7 +163,7 @@
             <br>
 
             <p class="margin-normal">Kepada:</p>
-            <p class="margin-normal text-bold">{{$data->to_name}}</p>
+            <p class="margin-normal text-bold">{{ $data->to_name }}</p>
             <p class="margin-normal">Di. Tempat.</p>
 
             <br>
@@ -255,7 +255,6 @@
         </div>
 
         <div class="container">
-            <p class="margin-normal tablefontsize text-bold">*harga tidak termasuk PPN 11%,</p>
             <br>
             <div class="normalfontsize">
                 <p class="margin-normal  text-bold">Ketarangan :</p>
@@ -271,42 +270,46 @@
             <br>
             <p class="margin-normal normalfontsize ">Hormat Kami,</p>
             <br><br><br>
-            <p class="margin-normal normalfontsize text-bold">{{$data->from}}</p>
+            <p class="margin-normal normalfontsize text-bold">{{ $data->from }}</p>
         </div>
 
         <br>
 
         <div style="position:absolute; bottom: 0; z-index: -10;">
-            <img style="width: 100%" src="{{ public_path('/images/local/footerreport.jpg') }}" />
+            <img style="width: 100%" src="https://internal.yousee-indonesia.com/images/local/footerreport.jpg" />
         </div>
 
 
         <div class="page-break"></div>
 
         {{-- HEADER --}}
-        @foreach ($data->items as $item)
-            @if (!isset($prevItem) || $item->city->id !== $prevItem)
+        @foreach ($item as $i)
+            @if (!isset($prevItem) || $i->city->id !== $prevItem)
                 <img style="width: 100%;position:absolute; bottom: 0; z-index: -10;"
-                    src="{{ public_path('/images/local/headertiapkota.jpg') }}" />
+                    src="https://internal.yousee-indonesia.com/images/local/headertiapkota.jpg" />
                 <h1
                     style="position:absolute; top: 280px; z-index: 10; text-align: center; width: 100%; font-size: 3em; font-weight: bold">
-                    {{ $item->city->name }}
+                    {{ $i->city->name }}
                 </h1>
                 <div class="page-break"></div>
-                {{-- ISI --}}
-                @foreach ($data->items as $it)
-                    @if ($item->city->id == $it->city->id)
+
+                @foreach ($item as $it)
+                    @if ($i->city->id == $it->city->id)
                         @if ($it->item->image2 != null)
                             <div>
+                                <a
+                                    style="bottom: 30px; left: 30px; width: 30px; height: 30px; font-size: 1.5rem; position:absolute; border-radius: 50%; color: black; background-color: white; padding: 5px; font-weight: bold; text-align: center; line-height: 30px">{{ $it->index_number + 1 }}</a>
                                 <img style="width: 100%;position:absolute; bottom: 0; z-index: -10;"
-                                    src="{{ public_path($it->item->image3) }}" />
+                                    src="https://internal.yousee-indonesia.com/{{ $it->item->image2 }}" />
+                                {{-- src="http://yousee.test/{{ $it->item->image2 }}" /> --}}
                                 <div class="page-break"></div>
+
                             </div>
                         @endif
                     @endif
                 @endforeach
             @endif
-            @php $prevItem = $item->city->id @endphp
+            @php $prevItem = $i->city->id @endphp
         @endforeach
         <div>
 
@@ -318,7 +321,7 @@
         {{-- SERVICE AREA --}}
         <div>
             <img style="width: 100%;position:absolute; bottom: 0; z-index: -10;"
-                src="{{ public_path('/images/local/servicearea.jpg') }}" />
+                src="https://internal.yousee-indonesia.com/images/local/servicearea.jpg" />
 
         </div>
     </div>

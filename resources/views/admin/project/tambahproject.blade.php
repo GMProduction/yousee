@@ -313,7 +313,10 @@
                                                 <th>Tinggi</th>
                                                 <th>Type</th>
                                                 <th>Posisi</th>
+<<<<<<< HEAD
                                                 <th>Status</th>
+=======
+>>>>>>> cde154c730c91370f29946b32983e5d89341923e
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
@@ -331,7 +334,10 @@
                                                 <th>Tinggi</th>
                                                 <th>Type</th>
                                                 <th>Posisi</th>
+<<<<<<< HEAD
                                                 <th>Status</th>
+=======
+>>>>>>> cde154c730c91370f29946b32983e5d89341923e
                                                 <th>Action</th>
                                             </tr>
                                         </tfoot>
@@ -988,7 +994,6 @@
         }
 
         $(document).on('click', '#addItem', function() {
-
             let row = $(this).data()
             if (row.rent_status.includes('used until')){
                 swal(row?.type+" sudah digunakan")

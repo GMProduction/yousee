@@ -487,6 +487,8 @@ input.form-control {
   color: white;
   border-radius: 5px;
   padding: 10px;
+  font-weight: bold;
+
   // box-shadow: 1px 1px 5px $shadow-primary-color;
   cursor: pointer;
 
@@ -664,6 +666,7 @@ input.form-control {
   padding: 10px;
   font-weight: bold;
   align-items: center;
+  justify-content: center;
   // box-shadow: 1px 1px 5px $shadow-primary-color;
   cursor: pointer;
 
@@ -699,6 +702,8 @@ input.form-control {
   padding: 10px;
   font-weight: bold;
   align-items: center;
+  justify-content: center;
+
   // box-shadow: 1px 1px 5px $shadow-primary-color;
   cursor: pointer;
 
@@ -718,7 +723,8 @@ input.form-control {
   &:hover {
     transition: all 0.5s;
     // box-shadow: 2px 2px 20px $shadow-success-color;
-    color: $success-soft-color1;
+    background-color: orange;
+    color: white;
   }
 }
 
