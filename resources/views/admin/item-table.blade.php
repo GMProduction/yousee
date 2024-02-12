@@ -14,6 +14,7 @@
                     <th>Qty</th>
                     <th>Side</th>
                     <th>Posisi</th>
+                    <th>Status</th>
                     <th>Action</th>
                 </tr>
                 </thead>
@@ -29,6 +30,7 @@
                     <th>Qty</th>
                     <th>Side</th>
                     <th>Posisi</th>
+                    <th>Status</th>
                     <th>Action</th>
                 </tr>
                 </tfoot>
@@ -52,6 +54,7 @@
                     <th>Posisi</th>
                     <th>Created By</th>
                     <th>Last Updated By</th>
+                    <th>Status</th>
                     <th>Action</th>
                 </tr>
                 </thead>
@@ -68,6 +71,7 @@
                     <th>Posisi</th>
                     <th>Created By</th>
                     <th>Last Updated By</th>
+                    <th>Status</th>
                     <th>Action</th>
                 </tr>
                 </tfoot>

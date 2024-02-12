@@ -8,6 +8,7 @@ use App\Models\type;
 use App\Models\Vendor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Hash;
 use Yajra\DataTables\DataTables;
 
 class VendorController extends CustomController
@@ -25,7 +26,12 @@ class VendorController extends CustomController
             Arr::add($vendor[$key], 'item', $item);
         }
 
-        return DataTables::of($vendor)->make(true);
+        return DataTables::of($vendor)
+                         ->addColumn('pass', function ($data) {
+                             return $data->password ? true : false;
+                         })
+                         ->removeColumn('password')
+                         ->make(true);
     }
 
     /**
@@ -49,17 +55,26 @@ class VendorController extends CustomController
                 'address'  => 'required',
                 'phone'    => 'required',
                 'brand'    => 'required',
-                'email'    => 'required',
                 'picName'  => 'required',
                 'picPhone' => 'required',
             ]
         );
+        $data  = \request()->all();
+        if (\request('password')) {
+            \request()->validate([
+                'password' => 'confirmed|min:8',
+            ], [
+                'password.confirmed' => 'Password konfirmasi tidak sesuai',
+                'password.min'       => 'Password minimal 8 karakter',
+            ]);
+            $data['password'] = Hash::make(\request('password'));
+        }
 
         if (\request('id')) {
             $vendor = Vendor::find(\request('id'));
-            $vendor->update($field);
+            $vendor->update($data);
         } else {
-            Vendor::create($field);
+            Vendor::create($data);
         }
 
         return response()->json(
@@ -75,8 +90,10 @@ class VendorController extends CustomController
         return Vendor::all();
     }
 
-    public function delete($id){
-        Vendor::where('id','=',$id)->delete();
+    public function delete($id)
+    {
+        Vendor::where('id', '=', $id)->delete();
+
         return 'berhasil';
     }
 }

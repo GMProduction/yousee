@@ -23,7 +23,8 @@ class ItemController extends CustomController
         $city     = \request('city');
         $type     = \request('type');
         $position = \request('position');
-        $item     = Item::with(['vendorAll','city']);
+        $item     = Item::with(['vendorAll','city','itemRent']);
+
         if ($city) {
             $item = $item->where('city_id', $city);
         }
@@ -45,6 +46,7 @@ class ItemController extends CustomController
             $item = $item->where('created_by', '=', auth()->id());
         }
 
+        $item = $item->get()->append(['status_on_rent']);
         return DataTables::of($item)->make(true);
     }
 

@@ -18,6 +18,7 @@ class Vendor extends Model
         'email',
         'picName',
         'picPhone',
+        'password'
     ];
 
 //    protected $with = 'items';

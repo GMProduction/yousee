@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -76,5 +77,32 @@ class Item extends Model
     public function vendorAll()
     {
         return $this->belongsTo(Vendor::class, 'vendor_id')->withDefault(['name' => ''])->withTrashed();
+    }
+
+    public function itemRent()
+    {
+        return $this->hasMany(ItemRent::class, 'item_id');
+    }
+
+    public function getStatusOnRentAttribute()
+    {
+        $now = Carbon::now()->format('Y-m-d');
+        $rents = $this->itemRent()->where('end', '>', $now)->get();
+        $result = 'empty';
+        if (count($rents) > 0) {
+            foreach ($rents as $rent) {
+                $dateNow = Carbon::now();
+                $dateStart = date('Y-m-d', strtotime($rent->start));
+                $dateEnd = date('Y-m-d', strtotime($rent->end));
+                if (($dateNow > $dateStart) && ($dateNow < $dateEnd)) {
+                    $result = 'used until '.Carbon::parse($dateStart)->format('d-m-Y');
+                    break;
+                } else {
+                    $result = 'will used '.Carbon::parse($dateStart)->format('d-m-Y');
+                }
+            }
+            return $result;
+        }
+        return $result;
     }
 }

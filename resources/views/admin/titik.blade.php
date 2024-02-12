@@ -159,7 +159,7 @@
     {{-- @include('admin.map', ['data' => 'script']) --}}
 
     {{--    <script src="{{ asset('js/map-control.js') }}"></script> --}}
-    <script src="{{ asset('js/item.js?v=4') }}"></script>
+    <script src="{{ asset('js/item.js?v=5') }}"></script>
 
     <script>
         $(document).ready(function() {
