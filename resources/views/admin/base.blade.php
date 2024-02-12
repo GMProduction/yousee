@@ -126,9 +126,6 @@
                     </li>
                 @endif
 
-
-
-
                 <li class="nav-item has-submenu">
                     <a class="nav-link menu @if ($sidebar == 'vendor') active @endif" href="/admin/vendor">
                         <i class="material-symbols-outlined menu-icon">handshake</i>
@@ -152,7 +149,7 @@
                         <i class="material-symbols-outlined menu-icon">assignment</i>
                         <p class="menu-text">Project</p>
                     </a>
-                </li>
+                </li>s
 
                 <li class="nav-item text-center mt-3 mb-3">
 
