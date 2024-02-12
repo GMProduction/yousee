@@ -313,10 +313,7 @@
                                                 <th>Tinggi</th>
                                                 <th>Type</th>
                                                 <th>Posisi</th>
-<<<<<<< HEAD
-                                                <th>Status</th>
-=======
->>>>>>> cde154c730c91370f29946b32983e5d89341923e
+
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
@@ -334,10 +331,8 @@
                                                 <th>Tinggi</th>
                                                 <th>Type</th>
                                                 <th>Posisi</th>
-<<<<<<< HEAD
                                                 <th>Status</th>
-=======
->>>>>>> cde154c730c91370f29946b32983e5d89341923e
+
                                                 <th>Action</th>
                                             </tr>
                                         </tfoot>
@@ -951,13 +946,13 @@
             }, {
                 data: "status_on_rent",
                 name: "status_on_rent",
-                render:function (data) {
-                    if (data.includes('used until')){
-                        return '<span class="text-danger fw-bold">'+data+'</span>'
-                    }else if (data.includes('will used')){
-                        return '<span class="text-warning fw-bold">'+data+'</span>'
-                    }else {
-                        return '<span class="text-success fw-bold">'+data+'</span>'
+                render: function(data) {
+                    if (data.includes('used until')) {
+                        return '<span class="text-danger fw-bold">' + data + '</span>'
+                    } else if (data.includes('will used')) {
+                        return '<span class="text-warning fw-bold">' + data + '</span>'
+                    } else {
+                        return '<span class="text-success fw-bold">' + data + '</span>'
                     }
                 }
             }, {
@@ -976,7 +971,8 @@
                         "' id='detailDataWa'> <img src='{{ asset('/images/whatsapp.svg') }}' width='25'>\n" +
                         "<a data-id='" + row.id + "' data-vendor='" + row.vendor_all.name + "' data-kotaid='" +
                         row?.city_id + "' data-kota='" + row
-                        ?.city?.name + "' data-rent_status='"+row?.status_on_rent+"' data-type='" + row?.type?.name + "' data-width='" + row.width +
+                        ?.city?.name + "' data-rent_status='" + row?.status_on_rent + "' data-type='" + row
+                        ?.type?.name + "' data-width='" + row.width +
                         "' data-height='" + row.height + "' data-location='" + row.location +
                         "' class='btn-utama sml rnd  me-1'" +
                         "  id='addItem'> <i class='material-symbols-outlined menu-icon text-white'>arrow_right_alt</i></a>\n" +
@@ -995,8 +991,8 @@
 
         $(document).on('click', '#addItem', function() {
             let row = $(this).data()
-            if (row.rent_status.includes('used until')){
-                swal(row?.type+" sudah digunakan")
+            if (row.rent_status.includes('used until')) {
+                swal(row?.type + " sudah digunakan")
                 return false;
             }
             $('#idTitik').val(row.id);
