@@ -311,8 +311,10 @@
         }
 
         function toHumanDate(date) {
-            let now = new Date();
-            let offset = now.getTimezoneOffset();
+            // let now = new Date();
+            let offset = new Date((new Date).toLocaleString("en-US", {
+                timeZone: "Asia/Jakarta"
+            }));
             let dateData = moment(Date.parse(date));
             // console.log('dddddddddd',));
 

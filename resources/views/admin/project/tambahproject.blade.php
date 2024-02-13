@@ -309,10 +309,12 @@
                                                 <th>Alamat</th>
                                                 <th>Lokasi</th>
                                                 <th>Vendor</th>
+                                                <th>login terahkir</th>
                                                 <th>Lebar</th>
                                                 <th>Tinggi</th>
                                                 <th>Type</th>
                                                 <th>Posisi</th>
+                                                <th>Status</th>
 
                                                 <th>Action</th>
                                             </tr>
@@ -327,6 +329,7 @@
                                                 <th>Alamat</th>
                                                 <th>Lokasi</th>
                                                 <th>Vendor</th>
+                                                <th>login terahkir</th>
                                                 <th>Lebar</th>
                                                 <th>Tinggi</th>
                                                 <th>Type</th>
@@ -916,77 +919,105 @@
 
         function showDatatableItem() {
             let column = [{
-                "className": '',
-                "orderable": false,
-                "defaultContent": ''
-            }, {
-                "data": "city.name",
-                "name": "city.name"
-            }, {
-                "data": "address",
-                "name": "address"
-            }, {
-                "data": "location",
-                "name": "location"
-            }, {
-                "data": "vendor_all.name",
-                "name": "vendorAll.name"
-            }, {
-                "data": "width",
-                "name": "width"
-            }, {
-                "data": "height",
-                "name": "height"
-            }, {
-                "data": "type.name",
-                "name": "type.name"
-            }, {
-                "data": "position",
-                "name": "position"
-            }, {
-                data: "status_on_rent",
-                name: "status_on_rent",
-                render: function(data) {
-                    if (data.includes('used until')) {
-                        return '<span class="text-danger fw-bold">' + data + '</span>'
-                    } else if (data.includes('will used')) {
-                        return '<span class="text-warning fw-bold">' + data + '</span>'
-                    } else {
-                        return '<span class="text-success fw-bold">' + data + '</span>'
+                    "className": '',
+                    "orderable": false,
+                    "defaultContent": ''
+                }, {
+                    "data": "city.name",
+                    "name": "city.name"
+                }, {
+                    "data": "address",
+                    "name": "address"
+                }, {
+                    "data": "location",
+                    "name": "location"
+                }, {
+                    "data": "vendor_all.name",
+                    "name": "vendorAll.name"
+                },
+                {
+                    "data": "vendor_all.last_seen",
+                    "name": "vendorAll.last_seen",
+                    render: function(data) {
+                        return data ? toHumanDate(data) : ''
+                        // return moment.duration('2024-02-05 20:01:36', "minutes").humanize()
                     }
-                }
-            }, {
-                "data": "id",
-                searchable: false,
-                "render": function(data, type, row) {
-                    const phone = row.vendor_all?.picPhone;
-                    const text = 'Apakah ' + row['type']['name'] + ' yang berlokasi di ' + row['city']['name'] +
-                        ' ' + row['address'] + ' ' + row['location'] + ' tersedia ?';
+                }, {
+                    "data": "width",
+                    "name": "width"
+                }, {
+                    "data": "height",
+                    "name": "height"
+                }, {
+                    "data": "type.name",
+                    "name": "type.name"
+                }, {
+                    "data": "position",
+                    "name": "position"
+                }, {
+                    data: "status_on_rent",
+                    name: "status_on_rent",
+                    render: function(data) {
+                        if (data.includes('used until')) {
+                            return '<span class="text-danger fw-bold">' + data + '</span>'
+                        } else if (data.includes('will used')) {
+                            return '<span class="text-warning fw-bold">' + data + '</span>'
+                        } else {
+                            return '<span class="text-success fw-bold">' + data + '</span>'
+                        }
+                    }
+                }, {
+                    "data": "id",
+                    searchable: false,
+                    "render": function(data, type, row) {
+                        const phone = row.vendor_all?.picPhone;
+                        const text = 'Apakah ' + row['type']['name'] + ' yang berlokasi di ' + row['city']['name'] +
+                            ' ' + row['address'] + ' ' + row['location'] + ' tersedia ?';
 
-                    return "<div class='d-flex gap-2'>" +
-                        "       <a class='btn-utama-soft sml rnd me-1' data-id='" + data +
-                        "' id='detailData'> <i class='material-symbols-outlined menu-icon'>map</i></a>\n" +
-                        "       <a class='btn-utama-soft sml rnd me-1'  data-phone='" + phone +
-                        "' data-text='" + text +
-                        "' id='detailDataWa'> <img src='{{ asset('/images/whatsapp.svg') }}' width='25'>\n" +
-                        "<a data-id='" + row.id + "' data-vendor='" + row.vendor_all.name + "' data-kotaid='" +
-                        row?.city_id + "' data-kota='" + row
-                        ?.city?.name + "' data-rent_status='" + row?.status_on_rent + "' data-type='" + row
-                        ?.type?.name + "' data-width='" + row.width +
-                        "' data-height='" + row.height + "' data-location='" + row.location +
-                        "' class='btn-utama sml rnd  me-1'" +
-                        "  id='addItem'> <i class='material-symbols-outlined menu-icon text-white'>arrow_right_alt</i></a>\n" +
-                        "</div>"
-                }
-            }, ]
+                        return "<div class='d-flex gap-2'>" +
+                            "       <a class='btn-utama-soft sml rnd me-1' data-id='" + data +
+                            "' id='detailData'> <i class='material-symbols-outlined menu-icon'>map</i></a>\n" +
+                            "       <a class='btn-utama-soft sml rnd me-1'  data-phone='" + phone +
+                            "' data-text='" + text +
+                            "' id='detailDataWa'> <img src='{{ asset('/images/whatsapp.svg') }}' width='25'>\n" +
+                            "<a data-id='" + row.id + "' data-vendor='" + row.vendor_all.name + "' data-kotaid='" +
+                            row?.city_id + "' data-kota='" + row
+                            ?.city?.name + "' data-rent_status='" + row?.status_on_rent + "' data-type='" + row
+                            ?.type?.name + "' data-width='" + row.width +
+                            "' data-height='" + row.height + "' data-location='" + row.location +
+                            "' class='btn-utama sml rnd  me-1'" +
+                            "  id='addItem'> <i class='material-symbols-outlined menu-icon text-white'>arrow_right_alt</i></a>\n" +
+                            "</div>"
+                    }
+                },
+            ]
 
             let drawCallback = function() {
                 var api = this.api();
-                console.log('323333', api)
             }
-            console.log('urlTitikurlTitik', urlTitik)
             datatable('tambahtitik', urlTitik, column, true, drawCallback)
 
+            function toHumanDate(date) {
+                // let now = new Date((new Date).toLocaleString("en-US", {
+                //     timeZone: "Asia/Jakarta"
+                // }));
+                let offset = new Date((new Date).toLocaleString("en-US", {
+                    timeZone: "Asia/Jakarta"
+                }));
+                let dateData = moment(Date.parse(date));
+                // console.log('dddddddddd',));
+
+                let dataAnswer = dateData.add((offset * (-1)), 'm').toNow();
+                let momentNow = moment();
+                if (momentNow.diff(dateData, 'years') > 0) {
+                    dataAnswer = dateData.format('LL')
+                } else if (momentNow.diff(dateData, 'days') > 5) {
+                    dataAnswer = dateData.format('MMMM D')
+
+                }
+
+                return dataAnswer;
+            }
         }
 
         $(document).on('click', '#addItem', function() {
