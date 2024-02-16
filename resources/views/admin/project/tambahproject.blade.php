@@ -158,7 +158,7 @@
                             <div class="form-floating mb-3">
                                 <input type="text" class="form-control" id="number_doc" name="number_doc"
                                     value="{{ $data ? $data->number_doc : '' }}" required placeholder="Nomor Surat">
-                                <label for="number_doc" class="form-label">Nomor Suarat</label>
+                                <label for="number_doc" class="form-label">Nomor Surat</label>
                             </div>
 
                             <div class="d-flex w-100 gap-4 ">
