@@ -147,12 +147,14 @@
                         <p class="menu-text">Titik Iklan</p>
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link menu @if ($sidebar == 'project') active @endif" href="/admin/project">
-                        <i class="material-symbols-outlined menu-icon">assignment</i>
-                        <p class="menu-text">Project</p>
-                    </a>
-                </li>
+                @if(auth()->user()->role !== 'staf')
+                    <li class="nav-item">
+                        <a class="nav-link menu @if ($sidebar == 'project') active @endif" href="/admin/project">
+                            <i class="material-symbols-outlined menu-icon">assignment</i>
+                            <p class="menu-text">Project</p>
+                        </a>
+                    </li>
+                @endif
 
                 <li class="nav-item text-center mt-3 mb-3">
 

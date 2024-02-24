@@ -5,12 +5,12 @@
 @endsection
 
 @section('css')
-    <link href="https://cdn.datatables.net/select/1.7.0/css/select.dataTables.min.css" rel="stylesheet" />
+    <link href="https://cdn.datatables.net/select/1.7.0/css/select.dataTables.min.css" rel="stylesheet"/>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css"
-        integrity="sha512-hoalWLoI8r4UszCkZ5kL8vayOGVae1oxXe/2A4AO6J9+580uKHDO3JdHb7NzwwzK5xr/Fs0W40kiNHxM9vyTtQ=="
-        crossorigin="" />
+          integrity="sha512-hoalWLoI8r4UszCkZ5kL8vayOGVae1oxXe/2A4AO6J9+580uKHDO3JdHb7NzwwzK5xr/Fs0W40kiNHxM9vyTtQ=="
+          crossorigin=""/>
     <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
+          href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
 
     <style>
         .select2-selection__rendered {
@@ -67,15 +67,15 @@
         @if ($data)
             <div class="d-flex gap-2 ">
                 <a style="150px" class="btn-warnings sml  flex-fill " href="/admin/report/{{ request('q') }}/1"
-                    target="_blank">Export PDF (Penawaran)<i
+                   target="_blank">Export PDF (Penawaran)<i
                         class="material-symbols-outlined menu-icon ms-2 text-white">picture_as_pdf</i></a>
 
                 <a style="150px" class="btn-warnings sml  flex-fill " href="/admin/report/{{ request('q') }}/2"
-                    target="_blank">Export PDF (Internal)<i
+                   target="_blank">Export PDF (Internal)<i
                         class="material-symbols-outlined menu-icon ms-2 text-white">picture_as_pdf</i></a>
 
                 <a style="150px" class="btn-success sml flex-fill "
-                    href="{{ route('export.excell', ['id' => request('q')]) }}">Export
+                   href="{{ route('export.excell', ['id' => request('q')]) }}">Export
                     Excel<i class="material-symbols-outlined menu-icon ms-2 text-white">border_all</i></a>
             </div>
         @endif
@@ -92,16 +92,16 @@
                             <input id="id" name="id" value="{{ request('q') }}" hidden>
                             <div class="form-floating mb-3">
                                 <input type="text" class="form-control" id="inp_nama" name="name" required
-                                    value="{{ $data ? $data->name : '' }}" placeholder="Nama Project">
+                                       value="{{ $data ? $data->name : '' }}" placeholder="Nama Project">
                                 <label for="inp_nama" class="form-label">Nama Project</label>
                             </div>
 
                             <div class="form-floating mb-3 nput-group date datepicker" id="datepicker"
-                                data-provide="datepicker">
+                                 data-provide="datepicker">
                                 <input type="text" class="form-control" id="date" name="request_date" required
-                                    onchange="changeDate(this)"
-                                    value="{{ $data ? date('d/m/Y', strtotime($data->request_date)) : '' }}"
-                                    placeholder="Tanggal Request">
+                                       onchange="changeDate(this)"
+                                       value="{{ $data ? date('d/m/Y', strtotime($data->request_date)) : '' }}"
+                                       placeholder="Tanggal Request">
                                 <label for="date" class="form-label">Tanggal Request</label>
                                 <div class="input-group-addon">
                                     <span class="glyphicon glyphicon-th"></span>
@@ -118,11 +118,11 @@
                             <div class="d-flex align-items-stretch mb-3 ">
                                 <div class="form-floating me-1">
                                     <input type="text" class="form-control" id="inp_durasi" name="duration" required
-                                        value="{{ $data ? $data->duration : '' }}" placeholder="Nama Tipe">
+                                           value="{{ $data ? $data->duration : '' }}" placeholder="Nama Tipe">
                                     <label for="inp_durasi" class="form-label">Durasi</label>
                                 </div>
                                 <select class="form-select" aria-label="Default select example" id="duration_unit"
-                                    name="duration_unit">
+                                        name="duration_unit">
                                     <option selected>Pilih Durasi</option>
                                     <option value="Hari">Hari</option>
                                     <option value="Minggu">Minggu</option>
@@ -133,7 +133,7 @@
 
                             <div class="form-floating  ">
                                 <textarea style="height: auto;" type="text" class="form-control" id="description" name="description" rows="10"
-                                    required placeholder="Nama Tipe">{{ $data ? $data->description : '' }}</textarea>
+                                          required placeholder="Nama Tipe">{{ $data ? $data->description : '' }}</textarea>
                                 {{--                            <div id="description"></div> --}}
                                 {{--                               <label for="description" class="form-label">Keterangan</label> --}}
                             </div>
@@ -142,22 +142,22 @@
                         <div class="col-md-6">
                             <div class="form-floating mb-3">
                                 <input type="text" class="form-control" id="inp_pic_client" name="client_pic" required
-                                    value="{{ $data ? $data->client_pic : '' }}" placeholder="Nama PIC">
+                                       value="{{ $data ? $data->client_pic : '' }}" placeholder="Nama PIC">
                                 <label for="inp_budget" class="form-label">PIC Client</label>
                             </div>
                             <div class="form-floating mb-3">
                                 <input type="text" class="form-control" id="from" name="from"
-                                    value="{{ $data ? $data->from : '' }}" required placeholder="Nama Pembuat">
+                                       value="{{ $data ? $data->from : '' }}" required placeholder="Nama Pembuat">
                                 <label for="to_name" class="form-label">Nama Pembuat</label>
                             </div>
                             <div class="form-floating mb-3">
                                 <input type="text" class="form-control" id="to_name" name="to_name"
-                                    value="{{ $data ? $data->to_name : '' }}" required placeholder="Nama Penerima">
+                                       value="{{ $data ? $data->to_name : '' }}" required placeholder="Nama Penerima">
                                 <label for="to_name" class="form-label">Nama Penerima</label>
                             </div>
                             <div class="form-floating mb-3">
                                 <input type="text" class="form-control" id="number_doc" name="number_doc"
-                                    value="{{ $data ? $data->number_doc : '' }}" required placeholder="Nomor Surat">
+                                       value="{{ $data ? $data->number_doc : '' }}" required placeholder="Nomor Surat">
                                 <label for="number_doc" class="form-label">Nomor Suarat</label>
                             </div>
 
@@ -208,11 +208,11 @@
                                 <div class="d-flex gap-2">
                                     @if (auth()->user()->role == 'pimpinan')
                                         <a class="btn-success sml rnd "
-                                            href="/admin/project/buatharga/{{ request('q') }}">Buat Harga<i
+                                           href="/admin/project/buatharga/{{ request('q') }}">Buat Harga<i
                                                 class="material-symbols-outlined menu-icon ms-2 text-white">receipt_long</i></a>
                                     @endif
                                     <a class="btn-utama sml rnd d-flex align-items-center" data-bs-toggle="modal"
-                                        data-bs-target="#modalShare">Gunakan Titik Untuk
+                                       data-bs-target="#modalShare">Gunakan Titik Untuk
                                         Project
                                         Baru<i
                                             class="material-symbols-outlined menu-icon ms-2 text-white">arrow_right_alt</i></a>
@@ -224,38 +224,38 @@
                         <div class="table table-responsive">
                             <table id="table_id" class="table " style="width:100%">
                                 <thead>
-                                    <tr>
-                                        <th>
-                                            <div class="text-center">
-                                                <input class="form-check-input selectalltable text-center" type="checkbox"
-                                                    value="" onclick="selectAll()" id="checkRow">
-                                            </div>
-                                        </th>
-                                        <th>No</th>
-                                        <th>Tipe</th>
-                                        <th>Kota</th>
-                                        <th>Lokasi titik</th>
-                                        <th>PIC /titik</th>
-                                        <th>Harga Vendor</th>
-                                        <th>Action</th>
-                                        <th>Order</th>
-                                    </tr>
+                                <tr>
+                                    <th>
+                                        <div class="text-center">
+                                            <input class="form-check-input selectalltable text-center" type="checkbox"
+                                                   value="" onclick="selectAll()" id="checkRow">
+                                        </div>
+                                    </th>
+                                    <th>No</th>
+                                    <th>Tipe</th>
+                                    <th>Kota</th>
+                                    <th>Lokasi titik</th>
+                                    <th>PIC /titik</th>
+                                    <th>Harga Vendor</th>
+                                    <th>Action</th>
+                                    <th>Order</th>
+                                </tr>
                                 </thead>
                                 <tbody>
 
                                 </tbody>
                                 <tfoot>
-                                    <tr>
-                                        <th></th>
-                                        <th>No</th>
-                                        <th>Tipe</th>
-                                        <th>Kota</th>
-                                        <th>Lokasi titik</th>
-                                        <th>PIC /titik</th>
-                                        <th>Harga Vendor</th>
-                                        <th>Action</th>
-                                        <th>Order</th>
-                                    </tr>
+                                <tr>
+                                    <th></th>
+                                    <th>No</th>
+                                    <th>Tipe</th>
+                                    <th>Kota</th>
+                                    <th>Lokasi titik</th>
+                                    <th>PIC /titik</th>
+                                    <th>Harga Vendor</th>
+                                    <th>Action</th>
+                                    <th>Order</th>
+                                </tr>
                                 </tfoot>
                             </table>
                         </div>
@@ -289,7 +289,7 @@
         </div>
         <!-- Modal Tambah Titik-->
         <div class="modal fade" id="modaltambahtitik" tabindex="-1" aria-labelledby="modaltambahtitik"
-            aria-hidden="true">
+             aria-hidden="true">
             <div class="modal-dialog modal-fullscreen">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -303,43 +303,37 @@
                                 <div class="table">
                                     <table id="tambahtitik" class="table table-striped" style="width:100%">
                                         <thead>
-                                            <tr>
-                                                <th>#</th>
-                                                <th>Kota</th>
-                                                <th>Alamat</th>
-                                                <th>Lokasi</th>
-                                                <th>Vendor</th>
-                                                <th>Lebar</th>
-                                                <th>Tinggi</th>
-                                                <th>Type</th>
-                                                <th>Posisi</th>
-<<<<<<< HEAD
-                                                <th>Status</th>
-=======
->>>>>>> cde154c730c91370f29946b32983e5d89341923e
-                                                <th>Action</th>
-                                            </tr>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Foto</th>
+                                            <th>Kota</th>
+                                            <th>Alamat</th>
+                                            <th>Vendor</th>
+                                            <th>Lebar</th>
+                                            <th>Tinggi</th>
+                                            <th>Type</th>
+                                            <th>Posisi</th>
+                                            <th>Status</th>
+                                            <th>Action</th>
+                                        </tr>
                                         </thead>
                                         <tbody>
 
                                         </tbody>
                                         <tfoot>
-                                            <tr>
-                                                <th>#</th>
-                                                <th>Kota</th>
-                                                <th>Alamat</th>
-                                                <th>Lokasi</th>
-                                                <th>Vendor</th>
-                                                <th>Lebar</th>
-                                                <th>Tinggi</th>
-                                                <th>Type</th>
-                                                <th>Posisi</th>
-<<<<<<< HEAD
-                                                <th>Status</th>
-=======
->>>>>>> cde154c730c91370f29946b32983e5d89341923e
-                                                <th>Action</th>
-                                            </tr>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Foto</th>
+                                            <th>Kota</th>
+                                            <th>Alamat</th>
+                                            <th>Vendor</th>
+                                            <th>Lebar</th>
+                                            <th>Tinggi</th>
+                                            <th>Type</th>
+                                            <th>Posisi</th>
+                                            <th>Status</th>
+                                            <th>Action</th>
+                                        </tr>
                                         </tfoot>
                                     </table>
                                 </div>
@@ -359,32 +353,32 @@
 
                                                 <div class="form-floating mb-3">
                                                     <input type="text" class="form-control" id="kota"
-                                                        name="kota" placeholder="Kota" readonly>
+                                                           name="kota" placeholder="Kota" readonly>
                                                     <label for="kota" class="form-label">Kota</label>
                                                 </div>
                                                 <div class="form-floating mb-3">
                                                     <input type="text" class="form-control" id="alamat"
-                                                        name="alamat" placeholder="Alamat" readonly>
+                                                           name="alamat" placeholder="Alamat" readonly>
                                                     <label for="alamat" class="form-label">Alamat</label>
                                                 </div>
                                                 <div class="form-floating mb-3">
                                                     <input type="text" class="form-control" id="tinggi"
-                                                        name="tinggi" placeholder="Tinggi" readonly>
+                                                           name="tinggi" placeholder="Tinggi" readonly>
                                                     <label for="tinggi" class="form-label">Tinggi</label>
                                                 </div>
                                                 <div class="form-floating mb-3">
                                                     <input type="text" class="form-control" id="lebar"
-                                                        name="lebar" placeholder="Lebar" readonly>
+                                                           name="lebar" placeholder="Lebar" readonly>
                                                     <label for="lebar" class="form-label">Lebar</label>
                                                 </div>
                                                 <div class="form-floating mb-3">
                                                     <input type="text" class="form-control" id="tipe"
-                                                        name="tipe" placeholder="tipe" readonly>
+                                                           name="tipe" placeholder="tipe" readonly>
                                                     <label for="tipe" class="form-label">Tipe</label>
                                                 </div>
                                                 <div class="form-floating mb-3">
                                                     <input type="text" class="form-control" id="nama_vendor"
-                                                        name="nama_vendor" placeholder="nama_vendor" readonly>
+                                                           name="nama_vendor" placeholder="nama_vendor" readonly>
                                                     <label for="nama_vendor" class="form-label">Nama Vendor</label>
                                                 </div>
                                             </div>
@@ -395,7 +389,7 @@
                                                     {{--                                                   name="inp_namapic" required placeholder="Nama PIC"> --}}
                                                     <label for="inp_namapic" class="form-label">Nama PIC</label>
                                                     <select id="inp_namapic" required name="pic_id" class="form-select "
-                                                        style="width: 100%" aria-label="Default select example">
+                                                            style="width: 100%" aria-label="Default select example">
                                                     </select>
                                                 </div>
 
@@ -404,15 +398,15 @@
                                                     <div class="d-flex">
                                                         <div class="form-check me-3">
                                                             <input class="form-check-input" type="radio"
-                                                                name="is_lighted" value="1" id="inp_berlampu_ya">
+                                                                   name="is_lighted" value="1" id="inp_berlampu_ya">
                                                             <label class="form-check-label" for="inp_berlampu_ya">
                                                                 Ya
                                                             </label>
                                                         </div>
                                                         <div class="form-check">
                                                             <input class="form-check-input" type="radio"
-                                                                name="is_lighted" value="0" id="inp_berlampu_tidak"
-                                                                checked>
+                                                                   name="is_lighted" value="0" id="inp_berlampu_tidak"
+                                                                   checked>
                                                             <label class="form-check-label" for="inp_berlampu_tidak">
                                                                 Tidak
                                                             </label>
@@ -422,17 +416,17 @@
 
                                                 <div class="form-check">
                                                     <input class="form-check-input" type="checkbox" name="statAvail"
-                                                        value="Tersedia" id="checkAvail" onchange="changeAvail()">
+                                                           value="Tersedia" id="checkAvail" onchange="changeAvail()">
                                                     <label class="form-check-label" for="checkAvail">
                                                         Tersedia
                                                     </label>
                                                 </div>
                                                 <div class="form-floating mb-3 input-group date datepicker"
-                                                    id="tanggaltersedia" data-provide="datepicker">
+                                                     id="tanggaltersedia" data-provide="datepicker">
 
                                                     <input type="text" class="form-control" id="date"
-                                                        onchange="changeData(this)" name="dateAvail" required
-                                                        value="" placeholder="Tersedia Tanggal">
+                                                           onchange="changeData(this)" name="dateAvail" required
+                                                           value="" placeholder="Tersedia Tanggal">
                                                     <label for="date" class="form-label">Tersedia Tanggal</label>
                                                     <div class="input-group-addon">
                                                         <span class="glyphicon glyphicon-th"></span>
@@ -441,10 +435,10 @@
 
                                                 <div class="form-floating mb-3">
                                                     <input type="text" pattern="[0-9,]+" class="form-control"
-                                                        id="inp_hargavendor"
-                                                        oninvalid="this.setCustomValidity('Harga tidak sesuai')"
-                                                        onchange="this.setCustomValidity('')" name="vendor_price" required
-                                                        placeholder="Harga Vendor">
+                                                           id="inp_hargavendor"
+                                                           oninvalid="this.setCustomValidity('Harga tidak sesuai')"
+                                                           onchange="this.setCustomValidity('')" name="vendor_price" required
+                                                           placeholder="Harga Vendor">
                                                     <label for="inp_hargavendor" class="form-label">Harga dari
                                                         Vendor</label>
                                                 </div>
@@ -498,7 +492,7 @@
 
         <!-- Modal PIC Titik -->
         <div class="modal fade" id="modaltambahpictitik" tabindex="-1" aria-labelledby="modaltambahpictitik"
-            aria-hidden="true">
+             aria-hidden="true">
             <div class="modal-dialog modal-md">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -515,25 +509,25 @@
                                 <div class="mb-3">
                                     <label for="in_kota" class="form-label">Pilih Provinsi</label>
                                     <select id="province" required name="province" class="form-select "
-                                        style="width: 100%" aria-label="Default select example">
+                                            style="width: 100%" aria-label="Default select example">
                                     </select>
                                 </div>
                                 <div class="mb-3">
                                     <label for="city" class="form-label">Pilih Kota</label>
                                     <select id="city" required name="city_id" class="form-select "
-                                        style="width: 100%" aria-label="Default select example">
+                                            style="width: 100%" aria-label="Default select example">
                                     </select>
                                 </div>
 
                                 <div class="mb-3">
                                     <label for="pic_id" class="form-label">Nama PIC</label>
                                     <select id="pic_id" required name="pic_id" class="form-select "
-                                        style="width: 100%" aria-label="Default select example">
+                                            style="width: 100%" aria-label="Default select example">
                                     </select>
                                 </div>
                                 <div class="form-floating mb-3">
                                     <input type="number" class="form-control" id="in_jumlah" name="qtyPic" required
-                                        placeholder="Jumlah">
+                                           placeholder="Jumlah">
                                     <label for="in_jumlah" class="form-label">Jumlah</label>
                                 </div>
 
@@ -564,42 +558,42 @@
                             <div class="table">
                                 <table id="tabelShare" class="table table-striped" style="width:100%">
                                     <thead>
-                                        <tr>
-                                            <th>#</th>
-                                            <th>Nama Project</th>
-                                            <th>PIC /titik</th>
-                                            <th>Durasi</th>
-                                            {{--                                    <th>Status</th> --}}
-                                            <th>Action</th>
-                                        </tr>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Nama Project</th>
+                                        <th>PIC /titik</th>
+                                        <th>Durasi</th>
+                                        {{--                                    <th>Status</th> --}}
+                                        <th>Action</th>
+                                    </tr>
                                     </thead>
                                     <tbody>
-                                        {{--                                <tr> --}}
-                                        {{--                                    <td>#</td> --}}
-                                        {{--                                    <td>Nama Project</td> --}}
-                                        {{--                                    <td>Tanggal Request</td> --}}
-                                        {{--                                    <td>Jumlah Titik</td> --}}
-                                        {{--                                    <td>PIC Client</td> --}}
-                                        {{--                                    <th>Status</th> --}}
-                                        {{--                                    <td> --}}
+                                    {{--                                <tr> --}}
+                                    {{--                                    <td>#</td> --}}
+                                    {{--                                    <td>Nama Project</td> --}}
+                                    {{--                                    <td>Tanggal Request</td> --}}
+                                    {{--                                    <td>Jumlah Titik</td> --}}
+                                    {{--                                    <td>PIC Client</td> --}}
+                                    {{--                                    <th>Status</th> --}}
+                                    {{--                                    <td> --}}
 
-                                        {{--                                        <div class='d-flex'> --}}
-                                        {{--                                            <a class="btn-success sml rnd  me-1" href="/admin/project/detail/1" --}}
-                                        {{--                                               id="addData">Masukan Dalam Project --}}
-                                        {{--                                                <i class='material-symbols-outlined menu-icon text-white'>arrow_right_alt</i></a> --}}
-                                        {{--                                        </div> --}}
-                                        {{--                                    </td> --}}
-                                        {{--                                </tr> --}}
+                                    {{--                                        <div class='d-flex'> --}}
+                                    {{--                                            <a class="btn-success sml rnd  me-1" href="/admin/project/detail/1" --}}
+                                    {{--                                               id="addData">Masukan Dalam Project --}}
+                                    {{--                                                <i class='material-symbols-outlined menu-icon text-white'>arrow_right_alt</i></a> --}}
+                                    {{--                                        </div> --}}
+                                    {{--                                    </td> --}}
+                                    {{--                                </tr> --}}
                                     </tbody>
                                     <tfoot>
-                                        <tr>
-                                            <th>#</th>
-                                            <th>Nama Project</th>
-                                            <th>PIC /titik</th>
-                                            <th>Durasi</th>
-                                            {{--                                    <th>Status</th> --}}
-                                            <th>Action</th>
-                                        </tr>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Nama Project</th>
+                                        <th>PIC /titik</th>
+                                        <th>Durasi</th>
+                                        {{--                                    <th>Status</th> --}}
+                                        <th>Action</th>
+                                    </tr>
                                     </tfoot>
                                 </table>
                             </div>
@@ -636,7 +630,7 @@
         var urlTitik = "/data/item/datatable";
         let idProject = ''
 
-        $(document).ready(function() {
+        $(document).ready(function () {
             param = '{{ request('q') }}'
             $('#duration_unit').val('{{ $data ? $data->duration_unit : '' }}')
             $('#project_id').val(param)
@@ -681,7 +675,7 @@
             console.log($(a).val())
         }
 
-        $(document).on('click', '#addPic', function() {
+        $(document).on('click', '#addPic', function () {
             getSelect("province", "/data/province", "name", prov, "Pilih Provinsi");
             getSelect("pic_id", "{{ route('user.get.json') }}", "nama", pic_id, "Pilih PIC");
             $('#modaltambahpictitik #city').empty().trigger('change')
@@ -694,8 +688,8 @@
             divCity.empty()
             let url = '{{ route('tambahproject.count.city', ['id' => 'vallll']) }}'
             url = url.split('vallll').join(idProject)
-            $.get(url, function(req) {
-                $.each(req, function(k, v) {
+            $.get(url, function (req) {
+                $.each(req, function (k, v) {
                     divCity.append('<div>' +
                         '<label>' + v.name + ' : ' + v.count + '</label>' +
                         '</div>')
@@ -708,8 +702,8 @@
             divCity.empty()
             let url = '{{ route('tambahproject.count.pic', ['id' => 'vallll']) }}'
             url = url.split('vallll').join(idProject)
-            $.get(url, function(req) {
-                $.each(req, function(k, v) {
+            $.get(url, function (req) {
+                $.each(req, function (k, v) {
                     divCity.append('<div>' +
                         '<label>' + v.nama + ' : ' + v.count + '</label>' +
                         '</div>')
@@ -727,7 +721,7 @@
             }
         }
 
-        $(function() {
+        $(function () {
             $('.datepicker').datepicker({
                 format: 'dd/mm/yyyy',
                 todayHighlight: 'TRUE',
@@ -735,7 +729,7 @@
             });
         });
 
-        $(document).on("change", "#province", function() {
+        $(document).on("change", "#province", function () {
             let id = $(this).val();
             getSelect(
                 "city",
@@ -748,20 +742,20 @@
 
         function showTable() {
             let column = [{
-                    "className": 'select-checkbox',
-                    "orderable": false,
-                    "defaultContent": '',
-                    'checkboxes': {
-                        'selectRow': true
-                    }
-                }, {
-                    "data": "index_number",
-                    "name": "index_number",
-                    "className": 'align-middle',
-                    "render": function(data) {
-                        return parseInt(data) + 1
-                    }
-                },
+                "className": 'select-checkbox',
+                "orderable": false,
+                "defaultContent": '',
+                'checkboxes': {
+                    'selectRow': true
+                }
+            }, {
+                "data": "index_number",
+                "name": "index_number",
+                "className": 'align-middle',
+                "render": function (data) {
+                    return parseInt(data) + 1
+                }
+            },
                 {
                     "data": "item.type.name",
                     "name": "item.type.name",
@@ -778,8 +772,7 @@
                     "data": "item.address",
                     "name": "item.address",
                     "className": 'align-middle',
-                    render: function(data, x, s) {
-                        console.log('323333', s)
+                    render: function (data, x, s) {
                         return '<div>' +
                             '<label>' + data + '</label>' +
                             '<br><label>' + s?.item?.location + '</label>' +
@@ -793,23 +786,23 @@
                 {
                     "data": "vendor_price",
                     "name": "vendor_price",
-                    "render": function(data) {
+                    "render": function (data) {
                         return 'Rp. ' + data.toLocaleString()
                     }
                 },
                 {
                     "data": "id",
                     searchable: false,
-                    "render": function(data, type, row) {
+                    "render": function (data, type, row) {
                         return "<div class='d-flex gap-2'>\n" +
                             // "                                <a class='btn-success-soft sml rnd' data-id='" +
                             // data + "'  id='editData'> <i class='material-symbols-outlined menu-icon'>edit</i></a>" +
                             "                               " +
                             " <a class='btn-success sml rnd' data-itemid='" + row?.item_id + "' data-tipe='" +
                             row?.item?.type?.name + "' data-tinggi='" + row?.item?.height + "' data-lebar='" + row
-                            ?.item?.width + "' data-lokasi='" + row?.item?.location + "' data-kotaid='" + row
-                            .city_id + "' data-kota='" + row?.city?.name + "' data-picnama='" + row?.pic
-                            ?.nama + "' data-pic_id='" + row.pic_id + "' data-harga='" + row?.vendor_price +
+                                ?.item?.width + "' data-lokasi='" + row?.item?.location + "' data-kotaid='" + row
+                                .city_id + "' data-kota='" + row?.city?.name + "' data-picnama='" + row?.pic
+                                ?.nama + "' data-pic_id='" + row.pic_id + "' data-harga='" + row?.vendor_price +
                             "' data-available='" + row?.available + "' data-light='" + row?.is_lighted +
                             "' data-id='" + data +
                             "'  id='mapData'> <i class='material-symbols-outlined menu-icon text-white'>edit</i></a>" +
@@ -820,17 +813,18 @@
                     }
                 },
                 {
-                    // data:'id',
+                    data: 'index_number',
                     name: 'order',
                     "orderable": false,
                     defaultContent: '',
+                    className: 'orderRow',
                     fieldInfo: 'This field can only be edited via click and drag row reordering.',
-                    // render:function (data,a,x,d,s) {
-                    //     // console.log('d',d.row)
-                    //    return '<div class="d-flex  justify-content-center" ><div role="button" style="background-color: #fafafa"><span class="material-symbols-outlined">'+
-                    //    ' arrow_drop_down'+
-                    //     '</span></div></div>';
-                    // }
+                    render: function (data, a, x, d, s) {
+                        // console.log('d',d.row)
+                        return '<div class="d-flex  justify-content-center " ><div  style="background-color: #F2F2F2; cursor: move" class="rounded"><span class="material-symbols-outlined">' +
+                            'more_vert' +
+                            '</span></div></div>';
+                    }
                 },
 
             ]
@@ -854,47 +848,69 @@
                         '" width="150" height="200" role="button" id="showImg">' +
                         '<span>' + loc + '</span>' +
                         '</div>');
-                    $(api.column(8)).html('1');
-                    console.log('$(api.column(8))', $(api.column(8)))
+                    // $(api.column(8)).html('1');
+                    // console.log('$(api.column(8))', $(api.column(8)))
                 })
                 console.log('a.aoData', a.aoData)
                 let lenght = a.aoData.length
-                $.each(a.aoData, function(k, v) {
-                    console.log('asdasd', )
-                    let divData = '<div class="h-full">';
-                    if (k == 0) {
-                        divData += '<div class="d-flex flex-column ">';
-                        divData += '<div></div>' +
-                            '<div><a class="btn btn-sm p-0" id="changeOrder" data-id="' + v._aData.id +
-                            '" data-number="' + v._aData.index_number +
-                            '" data-move="down" style="height: 15px"><span class="material-symbols-outlined iconsClass">arrow_drop_down</span></a></div>';
-                    } else if (parseInt(k + 1) == lenght) {
-                        divData += '<div class="d-flex flex-column ">';
-                        divData += '<div><a class="btn btn-sm p-0" id="changeOrder" data-id="' + v._aData.id +
-                            '" data-number="' + v._aData.index_number +
-                            '" data-move="up" style="height: 15px"><span class="material-symbols-outlined iconsClass">arrow_drop_up</span></a></div>' +
-                            '<div></div>';
-
-                    } else {
-                        divData += '<div class="d-flex flex-column ">';
-                        divData += '<div><a class="btn btn-sm p-0" id="changeOrder" data-id="' + v._aData.id +
-                            '" data-number="' + v._aData.index_number +
-                            '" data-move="up" style="height: 15px"><span class="material-symbols-outlined iconsClass">arrow_drop_up</span></a></div>' +
-                            '<div><a class="btn btn-sm p-0" id="changeOrder" data-id="' + v._aData.id +
-                            '" data-number="' + v._aData.index_number +
-                            '" data-move="down" style="height: 15px"><span class="material-symbols-outlined iconsClass">arrow_drop_down</span></a></div>';
-
-                    }
-                    divData += '</div></div>';
-                    v.anCells[8].innerHTML = divData
-                })
+                // $.each(a.aoData, function(k, v) {
+                //     console.log('asdasd', )
+                //     let divData = '<div class="h-full">';
+                //     if (k == 0) {
+                //         divData += '<div class="d-flex flex-column ">';
+                //         divData += '<div></div>' +
+                //             '<div><a class="btn btn-sm p-0" id="changeOrder" data-id="' + v._aData.id +
+                //             '" data-number="' + v._aData.index_number +
+                //             '" data-move="down" style="height: 15px"><span class="material-symbols-outlined iconsClass">arrow_drop_down</span></a></div>';
+                //     } else if (parseInt(k + 1) == lenght) {
+                //         divData += '<div class="d-flex flex-column ">';
+                //         divData += '<div><a class="btn btn-sm p-0" id="changeOrder" data-id="' + v._aData.id +
+                //             '" data-number="' + v._aData.index_number +
+                //             '" data-move="up" style="height: 15px"><span class="material-symbols-outlined iconsClass">arrow_drop_up</span></a></div>' +
+                //             '<div></div>';
+                //
+                //     } else {
+                //         divData += '<div class="d-flex flex-column ">';
+                //         divData += '<div><a class="btn btn-sm p-0" id="changeOrder" data-id="' + v._aData.id +
+                //             '" data-number="' + v._aData.index_number +
+                //             '" data-move="up" style="height: 15px"><span class="material-symbols-outlined iconsClass">arrow_drop_up</span></a></div>' +
+                //             '<div><a class="btn btn-sm p-0" id="changeOrder" data-id="' + v._aData.id +
+                //             '" data-number="' + v._aData.index_number +
+                //             '" data-move="down" style="height: 15px"><span class="material-symbols-outlined iconsClass">arrow_drop_down</span></a></div>';
+                //
+                //     }
+                //     divData += '</div></div>';
+                //     v.anCells[8].innerHTML = divData
+                // })
             }
 
             datatable('table_id', '{{ route('tambahproject.datatable', ['q' => request('q')]) }}', column, true,
                 drawCallback, false, null, [], select)
+
+            $('#table_id').DataTable().on('row-reorder', function (e, diff, edit) {
+                let result = edit.triggerRow.data();
+                let id = result.id
+                let number = result.index_number
+                let newNumber = diff.filter(x => x.oldPosition === number)
+                let move = newNumber[0]?.['newPosition']
+
+                console.log('id', number)
+                console.log('diff', diff)
+                console.log('idnumber',)
+                changeOrder(id, number, move)
+                // for (var i = 0, ien = diff.length; i < ien; i++) {
+                //     let rowData = table.row(diff[i].node).data();
+                //
+                //     result +=
+                //         `${rowData[1]} updated to be in position ${diff[i].newData} ` +
+                //         `(was ${diff[i].oldData})<br>`;
+                // }
+                //
+                // document.querySelector('#result').innerHTML = 'Event result:<br>' + result;
+            });
         }
 
-        $(document).on('click', '#changeOrder', function() {
+        $(document).on('click', '#changeOrder', function () {
             let id = $(this).data('id')
             let number = $(this).data('number')
             let move = $(this).data('move')
@@ -904,13 +920,26 @@
                 move,
                 '_token': '{{ csrf_token() }}'
             }
-            $.post('{{ route('tambahproject.move') }}', data, function(res) {
+            $.post('{{ route('tambahproject.move') }}', data, function (res) {
                 console.log('ressss', res);
                 $('#table_id').DataTable().ajax.reload();
             })
         })
 
-        $(document).on('click', '#deleteTitik', function() {
+        function changeOrder(id, number, move) {
+            let data = {
+                id,
+                number,
+                move,
+                '_token': '{{ csrf_token() }}'
+            }
+            $.post('{{ route('tambahproject.new.move') }}', data, function (res) {
+                console.log('ressss', res);
+                $('#table_id').DataTable().ajax.reload();
+            })
+        }
+
+        $(document).on('click', '#deleteTitik', function () {
             let id = $(this).data('id');
             let data = {
                 _token: '{{ csrf_token() }}',
@@ -925,14 +954,24 @@
                 "orderable": false,
                 "defaultContent": ''
             }, {
+                "data": "image1",
+                "name": "image1",
+                render: function (data) {
+                    return '<img src="' + data + '" width="100" height="100" />'
+                }
+            }, {
                 "data": "city.name",
-                "name": "city.name"
+                "name": "city.name",
+
             }, {
                 "data": "address",
-                "name": "address"
-            }, {
-                "data": "location",
-                "name": "location"
+                "name": "address",
+                render: function (data, x, row) {
+                    return '<div class="d-flex flex-column">' +
+                        '<span>' + data + '</div>' +
+                        '<span class="text-muted">' + row?.location + '</div>' +
+                        '</div>'
+                }
             }, {
                 "data": "vendor_all.name",
                 "name": "vendorAll.name"
@@ -951,19 +990,19 @@
             }, {
                 data: "status_on_rent",
                 name: "status_on_rent",
-                render:function (data) {
-                    if (data.includes('used until')){
-                        return '<span class="text-danger fw-bold">'+data+'</span>'
-                    }else if (data.includes('will used')){
-                        return '<span class="text-warning fw-bold">'+data+'</span>'
-                    }else {
-                        return '<span class="text-success fw-bold">'+data+'</span>'
+                render: function (data) {
+                    if (data.includes('used until')) {
+                        return '<span class="text-danger fw-bold">' + data + '</span>'
+                    } else if (data.includes('will used')) {
+                        return '<span class="text-warning fw-bold">' + data + '</span>'
+                    } else {
+                        return '<span class="text-success fw-bold">' + data + '</span>'
                     }
                 }
             }, {
                 "data": "id",
                 searchable: false,
-                "render": function(data, type, row) {
+                "render": function (data, type, row) {
                     const phone = row.vendor_all?.picPhone;
                     const text = 'Apakah ' + row['type']['name'] + ' yang berlokasi di ' + row['city']['name'] +
                         ' ' + row['address'] + ' ' + row['location'] + ' tersedia ?';
@@ -976,15 +1015,15 @@
                         "' id='detailDataWa'> <img src='{{ asset('/images/whatsapp.svg') }}' width='25'>\n" +
                         "<a data-id='" + row.id + "' data-vendor='" + row.vendor_all.name + "' data-kotaid='" +
                         row?.city_id + "' data-kota='" + row
-                        ?.city?.name + "' data-rent_status='"+row?.status_on_rent+"' data-type='" + row?.type?.name + "' data-width='" + row.width +
+                            ?.city?.name + "' data-rent_status='" + row?.status_on_rent + "' data-type='" + row?.type?.name + "' data-width='" + row.width +
                         "' data-height='" + row.height + "' data-location='" + row.location +
                         "' class='btn-utama sml rnd  me-1'" +
                         "  id='addItem'> <i class='material-symbols-outlined menu-icon text-white'>arrow_right_alt</i></a>\n" +
                         "</div>"
                 }
-            }, ]
+            },]
 
-            let drawCallback = function() {
+            let drawCallback = function () {
                 var api = this.api();
                 console.log('323333', api)
             }
@@ -993,12 +1032,12 @@
 
         }
 
-        $(document).on('click', '#addItem', function() {
+        $(document).on('click', '#addItem', function () {
             let row = $(this).data()
-            if (row.rent_status.includes('used until')){
-                swal(row?.type+" sudah digunakan")
-                return false;
-            }
+            // if (row.rent_status.includes('used until')){
+            //     swal(row?.type+" sudah digunakan")
+            //     return false;
+            // }
             $('#idTitik').val(row.id);
             $('#city_id').val(row.kotaid);
             $('#kota').val(row.kota);
@@ -1013,7 +1052,7 @@
             console.log('asdasd', $(a).val())
         }
 
-        $(document).on('click', '#mapData, #addDataTitik', function() {
+        $(document).on('click', '#mapData, #addDataTitik', function () {
             let row = $(this).data()
             // $('#inp_namapic').val(row?.picnama)
             $('#formTitik #id').val(row?.id)
@@ -1089,7 +1128,7 @@
             getCountPIC()
         }
 
-        $(document).on('click', '#detailDataWa', function() {
+        $(document).on('click', '#detailDataWa', function () {
             let picPhone = $(this).data('phone');
             const first = picPhone.substring(0, 1);
             if (first == 0) {
@@ -1106,7 +1145,7 @@
             $('#tambahtitik').DataTable().search(this.value).draw();
         }
 
-        $(document).ajaxComplete(function(event, request, settings) {
+        $(document).ajaxComplete(function (event, request, settings) {
             $("#tambahtitik_wrapper .dataTables_filter input")
                 .unbind() // Unbind previous default bindings
                 .bind("input", debounce(keyPressCallbackTitik, 1000));
@@ -1134,13 +1173,13 @@
                 "name": "client_pic"
             }, {
                 "data": "duration",
-                "render": function(data, type, row) {
+                "render": function (data, type, row) {
                     return data + ' ' + row.duration_unit
                 }
             }, {
                 "data": "id",
                 searchable: false,
-                "render": function(data, type, row) {
+                "render": function (data, type, row) {
                     return "<div class='d-flex gap-2'>" +
                         "<a data-id='" + row.id +
                         "' data-name='" + row.name +
@@ -1148,12 +1187,12 @@
                         "<i class='material-symbols-outlined menu-icon text-white'>arrow_right_alt</i></a>" +
                         "</div>"
                 }
-            }, ]
+            },]
             datatable('tabelShare', '{{ route('project.datatable', ['n' => request('q')]) }}', column)
 
         }
 
-        $(document).on('click', '#addProject', async function() {
+        $(document).on('click', '#addProject', async function () {
             let data = $('#table_id').DataTable().rows({
                 selected: true
             }).data();
@@ -1164,7 +1203,7 @@
                 '_token': '{{ csrf_token() }}',
                 'item': []
             }
-            await $.each(data, function(k, v) {
+            await $.each(data, function (k, v) {
                 form['item'][k] = v.id
             })
             if (form.item.length > 0) {

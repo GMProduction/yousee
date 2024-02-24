@@ -97,7 +97,7 @@ Route::prefix('admin')->middleware(\App\Http\Middleware\AdminMiddleware::class)-
             }
         );
 
-        Route::prefix('project')->group(
+        Route::prefix('project')->middleware(\App\Http\Middleware\StafMiddleware::class)->group(
             function () {
                 Route::get('datatable', [ProjectController::class, 'datatable'])->name("project.datatable");
                 Route::match(['POST', 'GET'], '', [ProjectController::class, 'index'])->name("project");
@@ -106,6 +106,7 @@ Route::prefix('admin')->middleware(\App\Http\Middleware\AdminMiddleware::class)-
                 Route::prefix('addproject')->group(function () {
                     Route::get('datatable', [\App\Http\Controllers\ProjectDetailController::class, 'datatable'])->name("tambahproject.datatable");
                     Route::post('move-order', [\App\Http\Controllers\ProjectDetailController::class, 'moveOrderProjectItem'])->name("tambahproject.move");
+                    Route::post('new-move-order', [\App\Http\Controllers\ProjectDetailController::class, 'newMoveOrderProjectItem'])->name("tambahproject.new.move");
                     Route::get('get-count-city/{id}', [\App\Http\Controllers\ProjectDetailController::class, 'getCountCity'])->name("tambahproject.count.city");
                     Route::get('get-count-pic/{id}', [\App\Http\Controllers\ProjectDetailController::class, 'getCountPIC'])->name("tambahproject.count.pic");
                     Route::post('delete/{id}', [\App\Http\Controllers\ProjectDetailController::class, 'delete'])->name("tambahproject.delete");

@@ -59,6 +59,39 @@ class ProjectDetailController extends Controller
         );
     }
 
+    public function newMoveOrderProjectItem()
+    {
+        DB::beginTransaction();
+        try {
+            $id     = \request('id');
+            $number = (int)\request('number');
+            $move   = (int)\request('move');
+
+            $projectItem = ProjectItem::where([['id', $id], ['index_number', $number]])->first();
+            $projectItem->update(['index_number' => $move]);
+            $item = ProjectItem::where('project_id', $projectItem->project_id)->orderBy('index_number','ASC')->orderBy('updated_at',$number > $move ? 'DESC' : 'ASC')->get();
+
+            foreach ($item as $key => $d) {
+                $d->update(['index_number' => $key]);
+            }
+
+            DB::commit();
+            $code = 200;
+            $msg  = 'success';
+        } catch (\Exception $er) {
+            DB::rollBack();
+            $code = 500;
+            $msg  = 'error : '.$er->getMessage();
+        }
+
+        return response()->json(
+            [
+                'msg' => $msg,
+            ],
+            $code
+        );
+    }
+
     /**
      * @return Application|Factory|View|JsonResponse|null
      */
@@ -201,6 +234,7 @@ class ProjectDetailController extends Controller
         $projItem = ProjectItem::find($id);
         ProjectItem::destroy($id);
         $this->reorderProjectItem($projItem->project_id);
+
         return 'success';
     }
 
@@ -251,7 +285,7 @@ class ProjectDetailController extends Controller
             if (isset($item)) {
                 foreach ($item as $i) {
                     $projectItem = ProjectItem::find($i);
-                    $check = ProjectItem::where([['project_id', $id], ['item_id', $projectItem->item_id]])->first();
+                    $check       = ProjectItem::where([['project_id', $id], ['item_id', $projectItem->item_id]])->first();
                     if ($check == null) {
                         $index_num++;
                         ProjectItem::create([
@@ -298,8 +332,9 @@ class ProjectDetailController extends Controller
         }
     }
 
-    public function reorderProjectItem($id){
-        $projec = ProjectItem::where('project_id', $id)->orderBy('index_number','ASC')->get();
+    public function reorderProjectItem($id)
+    {
+        $projec = ProjectItem::where('project_id', $id)->orderBy('index_number', 'ASC')->get();
         foreach ($projec as $k => $d) {
             $d->update([
                 'index_number' => $k,

@@ -316,8 +316,8 @@ function datatableItem() {
                 name: "position",
             },
             {
-                data: "created_by.nama",
-                name: "createdBy.nama",
+                data: "created_by_user.nama",
+                name: "createdByUser.nama",
             },
             {
                 data: "last_update.nama",
