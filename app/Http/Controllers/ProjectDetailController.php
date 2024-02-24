@@ -20,7 +20,7 @@ class ProjectDetailController extends Controller
      */
     public function datatable()
     {
-        $project = ProjectItem::with(['project', 'city', 'pic', 'item.type'])->where('project_id', request('q'))->orderBy('index_number', 'ASC');
+        $project = ProjectItem::with(['project', 'city', 'pic', 'item.type','item.vendorAll'])->where('project_id', request('q'))->orderBy('index_number', 'ASC');
 
         return DataTables::of($project)->make(true);
     }

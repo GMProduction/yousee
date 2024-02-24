@@ -234,8 +234,10 @@
                                     <th>No</th>
                                     <th>Tipe</th>
                                     <th>Kota</th>
-                                    <th>Lokasi titik</th>
-                                    <th>PIC /titik</th>
+                                    <th>Vendor</th>
+                                    <th>Ukuran</th>
+                                    <th>PIC</th>
+                                    <th>Deskripsi</th>
                                     <th>Harga Vendor</th>
                                     <th>Action</th>
                                     <th>Order</th>
@@ -250,8 +252,10 @@
                                     <th>No</th>
                                     <th>Tipe</th>
                                     <th>Kota</th>
+                                    <th>Vendor</th>
                                     <th>Lokasi titik</th>
-                                    <th>PIC /titik</th>
+                                    <th>PIC</th>
+                                    <th>Deskripsi</th>
                                     <th>Harga Vendor</th>
                                     <th>Action</th>
                                     <th>Order</th>
@@ -300,42 +304,44 @@
 
                         <div class="row">
                             <div class="col-8">
-                                <div class="table">
-                                    <table id="tambahtitik" class="table table-striped" style="width:100%">
-                                        <thead>
-                                        <tr>
-                                            <th>#</th>
-                                            <th>Foto</th>
-                                            <th>Kota</th>
-                                            <th>Alamat</th>
-                                            <th>Vendor</th>
-                                            <th>Lebar</th>
-                                            <th>Tinggi</th>
-                                            <th>Type</th>
-                                            <th>Posisi</th>
-                                            <th>Status</th>
-                                            <th>Action</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
+                                <div class="table-responsive">
+                                    <div class="table">
+                                        <table id="tambahtitik" class="table table-striped" style="width:100%">
+                                            <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Foto</th>
+                                                <th>Kota</th>
+                                                <th>Alamat</th>
+                                                <th>Vendor</th>
+                                                <th>Lebar</th>
+                                                <th>Tinggi</th>
+                                                <th>Type</th>
+                                                <th>Posisi</th>
+                                                <th>Status</th>
+                                                <th>Action</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
 
-                                        </tbody>
-                                        <tfoot>
-                                        <tr>
-                                            <th>#</th>
-                                            <th>Foto</th>
-                                            <th>Kota</th>
-                                            <th>Alamat</th>
-                                            <th>Vendor</th>
-                                            <th>Lebar</th>
-                                            <th>Tinggi</th>
-                                            <th>Type</th>
-                                            <th>Posisi</th>
-                                            <th>Status</th>
-                                            <th>Action</th>
-                                        </tr>
-                                        </tfoot>
-                                    </table>
+                                            </tbody>
+                                            <tfoot>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Foto</th>
+                                                <th>Kota</th>
+                                                <th>Alamat</th>
+                                                <th>Vendor</th>
+                                                <th>Lebar</th>
+                                                <th>Tinggi</th>
+                                                <th>Type</th>
+                                                <th>Posisi</th>
+                                                <th>Status</th>
+                                                <th>Action</th>
+                                            </tr>
+                                            </tfoot>
+                                        </table>
+                                    </div>
                                 </div>
                             </div>
 
@@ -630,6 +636,10 @@
         var urlTitik = "/data/item/datatable";
         let idProject = ''
 
+        function toFixedWithoutZeros(num, precision){
+            return  num.toFixed(precision).replace(/\.0+$/, '')
+        }
+
         $(document).ready(function () {
             param = '{{ request('q') }}'
             $('#duration_unit').val('{{ $data ? $data->duration_unit : '' }}')
@@ -740,6 +750,7 @@
             );
         });
 
+
         function showTable() {
             let column = [{
                 "className": 'select-checkbox',
@@ -752,6 +763,7 @@
                 "data": "index_number",
                 "name": "index_number",
                 "className": 'align-middle',
+                "orderable": false,
                 "render": function (data) {
                     return parseInt(data) + 1
                 }
@@ -759,33 +771,61 @@
                 {
                     "data": "item.type.name",
                     "name": "item.type.name",
+                    "orderable": false,
                     "className": 'align-middle',
-
                 },
                 {
                     "data": "city.name",
                     "name": "city.name",
+                    "orderable": false,
                     "className": 'align-middle',
-
+                    render:(data,x, row) => {
+                        return '<div class="d-flex flex-column">' +
+                            '<label>' + data + '</label>' +
+                            '<label class="text-muted">' + row?.item?.address + '</label>' +
+                            '<label class="text-muted">' + row?.item?.location + '</label>' +
+                            '</div>'
+                    }
+                },
+                {
+                    "data": "item.vendor_all.name",
+                    "name": "item.vendorAll.name",
+                    "orderable": false,
                 },
                 {
                     "data": "item.address",
                     "name": "item.address",
+                    "orderable": false,
                     "className": 'align-middle',
-                    render: function (data, x, s) {
-                        return '<div>' +
-                            '<label>' + data + '</label>' +
-                            '<br><label>' + s?.item?.location + '</label>' +
+                    render: function (data, x, row) {
+                        return '<div class="d-flex flex-column">' +
+                            '<label>' + toFixedWithoutZeros(parseFloat(row?.item.height),2) + ' x '+toFixedWithoutZeros(parseFloat(row?.item.width),2)+'</label>' +
+                            '<label>' + row?.item.position+'</label>' +
                             '</div>'
                     }
                 },
                 {
                     "data": "pic.nama",
+                    "orderable": false,
                     "name": "pic.nama",
+                },
+                {
+                    "data": "pic.nama",
+                    "orderable": false,
+                    "name": "pic.nama",
+                    render:(data,x, row) => {
+                        let light = row?.is_lighted ? "Ya" : 'Tidak';
+                        let avail = row?.available;
+                        return '<div class="d-flex flex-column">' +
+                            '<span>Berlampu : '+light+'</span>' +
+                            '<span>Ketersediaan : '+avail+'</span>' +
+                            '</div>'
+                    }
                 },
                 {
                     "data": "vendor_price",
                     "name": "vendor_price",
+                    "orderable": false,
                     "render": function (data) {
                         return 'Rp. ' + data.toLocaleString()
                     }
@@ -885,7 +925,7 @@
             }
 
             datatable('table_id', '{{ route('tambahproject.datatable', ['q' => request('q')]) }}', column, true,
-                drawCallback, false, null, [], select)
+                drawCallback, false, null, [], select,'ltipr')
 
             $('#table_id').DataTable().on('row-reorder', function (e, diff, edit) {
                 let result = edit.triggerRow.data();
@@ -977,10 +1017,16 @@
                 "name": "vendorAll.name"
             }, {
                 "data": "width",
-                "name": "width"
+                "name": "width",
+                render:(data) => {
+                    return toFixedWithoutZeros(parseFloat(data),2)
+                }
             }, {
                 "data": "height",
-                "name": "height"
+                "name": "height",
+                render:(data) => {
+                    return toFixedWithoutZeros(parseFloat(data),2)
+                }
             }, {
                 "data": "type.name",
                 "name": "type.name"
