@@ -158,7 +158,7 @@
                             <div class="form-floating mb-3">
                                 <input type="text" class="form-control" id="number_doc" name="number_doc"
                                     value="{{ $data ? $data->number_doc : '' }}" required placeholder="Nomor Surat">
-                                <label for="number_doc" class="form-label">Nomor Surat</label>
+                                <label for="number_doc" class="form-label">Nomor Suarat</label>
                             </div>
 
                             <div class="d-flex w-100 gap-4 ">
@@ -234,8 +234,10 @@
                                         <th>No</th>
                                         <th>Tipe</th>
                                         <th>Kota</th>
-                                        <th>Lokasi titik</th>
-                                        <th>PIC /titik</th>
+                                        <th>Vendor</th>
+                                        <th>Ukuran</th>
+                                        <th>PIC</th>
+                                        <th>Deskripsi</th>
                                         <th>Harga Vendor</th>
                                         <th>Action</th>
                                         <th>Order</th>
@@ -250,8 +252,10 @@
                                         <th>No</th>
                                         <th>Tipe</th>
                                         <th>Kota</th>
+                                        <th>Vendor</th>
                                         <th>Lokasi titik</th>
-                                        <th>PIC /titik</th>
+                                        <th>PIC</th>
+                                        <th>Deskripsi</th>
                                         <th>Harga Vendor</th>
                                         <th>Action</th>
                                         <th>Order</th>
@@ -300,46 +304,44 @@
 
                         <div class="row">
                             <div class="col-8">
-                                <div class="table">
-                                    <table id="tambahtitik" class="table table-striped" style="width:100%">
-                                        <thead>
-                                            <tr>
-                                                <th>#</th>
-                                                <th>Kota</th>
-                                                <th>Alamat</th>
-                                                <th>Lokasi</th>
-                                                <th>Vendor</th>
-                                                <th>login terahkir</th>
-                                                <th>Lebar</th>
-                                                <th>Tinggi</th>
-                                                <th>Type</th>
-                                                <th>Posisi</th>
-                                                <th>Status</th>
+                                <div class="table-responsive">
+                                    <div class="table">
+                                        <table id="tambahtitik" class="table table-striped" style="width:100%">
+                                            <thead>
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th>Foto</th>
+                                                    <th>Kota</th>
+                                                    <th>Alamat</th>
+                                                    <th>Vendor</th>
+                                                    <th>Lebar</th>
+                                                    <th>Tinggi</th>
+                                                    <th>Type</th>
+                                                    <th>Posisi</th>
+                                                    <th>Status</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
 
-                                                <th>Action</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-
-                                        </tbody>
-                                        <tfoot>
-                                            <tr>
-                                                <th>#</th>
-                                                <th>Kota</th>
-                                                <th>Alamat</th>
-                                                <th>Lokasi</th>
-                                                <th>Vendor</th>
-                                                <th>login terahkir</th>
-                                                <th>Lebar</th>
-                                                <th>Tinggi</th>
-                                                <th>Type</th>
-                                                <th>Posisi</th>
-                                                <th>Status</th>
-
-                                                <th>Action</th>
-                                            </tr>
-                                        </tfoot>
-                                    </table>
+                                            </tbody>
+                                            <tfoot>
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th>Foto</th>
+                                                    <th>Kota</th>
+                                                    <th>Alamat</th>
+                                                    <th>Vendor</th>
+                                                    <th>Lebar</th>
+                                                    <th>Tinggi</th>
+                                                    <th>Type</th>
+                                                    <th>Posisi</th>
+                                                    <th>Status</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </tfoot>
+                                        </table>
+                                    </div>
                                 </div>
                             </div>
 
@@ -634,6 +636,10 @@
         var urlTitik = "/data/item/datatable";
         let idProject = ''
 
+        function toFixedWithoutZeros(num, precision) {
+            return num.toFixed(precision).replace(/\.0+$/, '')
+        }
+
         $(document).ready(function() {
             param = '{{ request('q') }}'
             $('#duration_unit').val('{{ $data ? $data->duration_unit : '' }}')
@@ -744,6 +750,7 @@
             );
         });
 
+
         function showTable() {
             let column = [{
                     "className": 'select-checkbox',
@@ -756,6 +763,7 @@
                     "data": "index_number",
                     "name": "index_number",
                     "className": 'align-middle',
+                    "orderable": false,
                     "render": function(data) {
                         return parseInt(data) + 1
                     }
@@ -763,34 +771,62 @@
                 {
                     "data": "item.type.name",
                     "name": "item.type.name",
+                    "orderable": false,
                     "className": 'align-middle',
-
                 },
                 {
                     "data": "city.name",
                     "name": "city.name",
+                    "orderable": false,
                     "className": 'align-middle',
-
+                    render: (data, x, row) => {
+                        return '<div class="d-flex flex-column">' +
+                            '<label>' + data + '</label>' +
+                            '<label class="text-muted">' + row?.item?.address + '</label>' +
+                            '<label class="text-muted">' + row?.item?.location + '</label>' +
+                            '</div>'
+                    }
+                },
+                {
+                    "data": "item.vendor_all.name",
+                    "name": "item.vendorAll.name",
+                    "orderable": false,
                 },
                 {
                     "data": "item.address",
                     "name": "item.address",
+                    "orderable": false,
                     "className": 'align-middle',
-                    render: function(data, x, s) {
-                        console.log('323333', s)
-                        return '<div>' +
-                            '<label>' + data + '</label>' +
-                            '<br><label>' + s?.item?.location + '</label>' +
+                    render: function(data, x, row) {
+                        return '<div class="d-flex flex-column">' +
+                            '<label>' + toFixedWithoutZeros(parseFloat(row?.item.height), 2) + ' x ' +
+                            toFixedWithoutZeros(parseFloat(row?.item.width), 2) + '</label>' +
+                            '<label>' + row?.item.position + '</label>' +
                             '</div>'
                     }
                 },
                 {
                     "data": "pic.nama",
+                    "orderable": false,
                     "name": "pic.nama",
+                },
+                {
+                    "data": "pic.nama",
+                    "orderable": false,
+                    "name": "pic.nama",
+                    render: (data, x, row) => {
+                        let light = row?.is_lighted ? "Ya" : 'Tidak';
+                        let avail = row?.available;
+                        return '<div class="d-flex flex-column">' +
+                            '<span>Berlampu : ' + light + '</span>' +
+                            '<span>Ketersediaan : ' + avail + '</span>' +
+                            '</div>'
+                    }
                 },
                 {
                     "data": "vendor_price",
                     "name": "vendor_price",
+                    "orderable": false,
                     "render": function(data) {
                         return 'Rp. ' + data.toLocaleString()
                     }
@@ -818,17 +854,18 @@
                     }
                 },
                 {
-                    // data:'id',
+                    data: 'index_number',
                     name: 'order',
                     "orderable": false,
                     defaultContent: '',
+                    className: 'orderRow',
                     fieldInfo: 'This field can only be edited via click and drag row reordering.',
-                    // render:function (data,a,x,d,s) {
-                    //     // console.log('d',d.row)
-                    //    return '<div class="d-flex  justify-content-center" ><div role="button" style="background-color: #fafafa"><span class="material-symbols-outlined">'+
-                    //    ' arrow_drop_down'+
-                    //     '</span></div></div>';
-                    // }
+                    render: function(data, a, x, d, s) {
+                        // console.log('d',d.row)
+                        return '<div class="d-flex  justify-content-center " ><div  style="background-color: #F2F2F2; cursor: move" class="rounded"><span class="material-symbols-outlined">' +
+                            'more_vert' +
+                            '</span></div></div>';
+                    }
                 },
 
             ]
@@ -852,44 +889,66 @@
                         '" width="150" height="200" role="button" id="showImg">' +
                         '<span>' + loc + '</span>' +
                         '</div>');
-                    $(api.column(8)).html('1');
-                    console.log('$(api.column(8))', $(api.column(8)))
+                    // $(api.column(8)).html('1');
+                    // console.log('$(api.column(8))', $(api.column(8)))
                 })
                 console.log('a.aoData', a.aoData)
                 let lenght = a.aoData.length
-                $.each(a.aoData, function(k, v) {
-                    console.log('asdasd', )
-                    let divData = '<div class="h-full">';
-                    if (k == 0) {
-                        divData += '<div class="d-flex flex-column ">';
-                        divData += '<div></div>' +
-                            '<div><a class="btn btn-sm p-0" id="changeOrder" data-id="' + v._aData.id +
-                            '" data-number="' + v._aData.index_number +
-                            '" data-move="down" style="height: 15px"><span class="material-symbols-outlined iconsClass">arrow_drop_down</span></a></div>';
-                    } else if (parseInt(k + 1) == lenght) {
-                        divData += '<div class="d-flex flex-column ">';
-                        divData += '<div><a class="btn btn-sm p-0" id="changeOrder" data-id="' + v._aData.id +
-                            '" data-number="' + v._aData.index_number +
-                            '" data-move="up" style="height: 15px"><span class="material-symbols-outlined iconsClass">arrow_drop_up</span></a></div>' +
-                            '<div></div>';
-
-                    } else {
-                        divData += '<div class="d-flex flex-column ">';
-                        divData += '<div><a class="btn btn-sm p-0" id="changeOrder" data-id="' + v._aData.id +
-                            '" data-number="' + v._aData.index_number +
-                            '" data-move="up" style="height: 15px"><span class="material-symbols-outlined iconsClass">arrow_drop_up</span></a></div>' +
-                            '<div><a class="btn btn-sm p-0" id="changeOrder" data-id="' + v._aData.id +
-                            '" data-number="' + v._aData.index_number +
-                            '" data-move="down" style="height: 15px"><span class="material-symbols-outlined iconsClass">arrow_drop_down</span></a></div>';
-
-                    }
-                    divData += '</div></div>';
-                    v.anCells[8].innerHTML = divData
-                })
+                // $.each(a.aoData, function(k, v) {
+                //     console.log('asdasd', )
+                //     let divData = '<div class="h-full">';
+                //     if (k == 0) {
+                //         divData += '<div class="d-flex flex-column ">';
+                //         divData += '<div></div>' +
+                //             '<div><a class="btn btn-sm p-0" id="changeOrder" data-id="' + v._aData.id +
+                //             '" data-number="' + v._aData.index_number +
+                //             '" data-move="down" style="height: 15px"><span class="material-symbols-outlined iconsClass">arrow_drop_down</span></a></div>';
+                //     } else if (parseInt(k + 1) == lenght) {
+                //         divData += '<div class="d-flex flex-column ">';
+                //         divData += '<div><a class="btn btn-sm p-0" id="changeOrder" data-id="' + v._aData.id +
+                //             '" data-number="' + v._aData.index_number +
+                //             '" data-move="up" style="height: 15px"><span class="material-symbols-outlined iconsClass">arrow_drop_up</span></a></div>' +
+                //             '<div></div>';
+                //
+                //     } else {
+                //         divData += '<div class="d-flex flex-column ">';
+                //         divData += '<div><a class="btn btn-sm p-0" id="changeOrder" data-id="' + v._aData.id +
+                //             '" data-number="' + v._aData.index_number +
+                //             '" data-move="up" style="height: 15px"><span class="material-symbols-outlined iconsClass">arrow_drop_up</span></a></div>' +
+                //             '<div><a class="btn btn-sm p-0" id="changeOrder" data-id="' + v._aData.id +
+                //             '" data-number="' + v._aData.index_number +
+                //             '" data-move="down" style="height: 15px"><span class="material-symbols-outlined iconsClass">arrow_drop_down</span></a></div>';
+                //
+                //     }
+                //     divData += '</div></div>';
+                //     v.anCells[8].innerHTML = divData
+                // })
             }
 
             datatable('table_id', '{{ route('tambahproject.datatable', ['q' => request('q')]) }}', column, true,
-                drawCallback, false, null, [], select)
+                drawCallback, false, null, [], select, 'ltipr')
+
+            $('#table_id').DataTable().on('row-reorder', function(e, diff, edit) {
+                let result = edit.triggerRow.data();
+                let id = result.id
+                let number = result.index_number
+                let newNumber = diff.filter(x => x.oldPosition === number)
+                let move = newNumber[0]?.['newPosition']
+
+                console.log('id', number)
+                console.log('diff', diff)
+                console.log('idnumber', )
+                changeOrder(id, number, move)
+                // for (var i = 0, ien = diff.length; i < ien; i++) {
+                //     let rowData = table.row(diff[i].node).data();
+                //
+                //     result +=
+                //         `${rowData[1]} updated to be in position ${diff[i].newData} ` +
+                //         `(was ${diff[i].oldData})<br>`;
+                // }
+                //
+                // document.querySelector('#result').innerHTML = 'Event result:<br>' + result;
+            });
         }
 
         $(document).on('click', '#changeOrder', function() {
@@ -908,6 +967,19 @@
             })
         })
 
+        function changeOrder(id, number, move) {
+            let data = {
+                id,
+                number,
+                move,
+                '_token': '{{ csrf_token() }}'
+            }
+            $.post('{{ route('tambahproject.new.move') }}', data, function(res) {
+                console.log('ressss', res);
+                $('#table_id').DataTable().ajax.reload();
+            })
+        }
+
         $(document).on('click', '#deleteTitik', function() {
             let id = $(this).data('id');
             let data = {
@@ -919,113 +991,101 @@
 
         function showDatatableItem() {
             let column = [{
-                    "className": '',
-                    "orderable": false,
-                    "defaultContent": ''
-                }, {
-                    "data": "city.name",
-                    "name": "city.name"
-                }, {
-                    "data": "address",
-                    "name": "address"
-                }, {
-                    "data": "location",
-                    "name": "location"
-                }, {
-                    "data": "vendor_all.name",
-                    "name": "vendorAll.name"
-                },
-                {
-                    "data": "vendor_all.last_seen",
-                    "name": "vendorAll.last_seen",
-                    render: function(data) {
-                        return data ? toHumanDate(data) : ''
-                        // return moment.duration('2024-02-05 20:01:36', "minutes").humanize()
-                    }
-                }, {
-                    "data": "width",
-                    "name": "width"
-                }, {
-                    "data": "height",
-                    "name": "height"
-                }, {
-                    "data": "type.name",
-                    "name": "type.name"
-                }, {
-                    "data": "position",
-                    "name": "position"
-                }, {
-                    data: "status_on_rent",
-                    name: "status_on_rent",
-                    render: function(data) {
-                        if (data.includes('used until')) {
-                            return '<span class="text-danger fw-bold">' + data + '</span>'
-                        } else if (data.includes('will used')) {
-                            return '<span class="text-warning fw-bold">' + data + '</span>'
-                        } else {
-                            return '<span class="text-success fw-bold">' + data + '</span>'
-                        }
-                    }
-                }, {
-                    "data": "id",
-                    searchable: false,
-                    "render": function(data, type, row) {
-                        const phone = row.vendor_all?.picPhone;
-                        const text = 'Apakah ' + row['type']['name'] + ' yang berlokasi di ' + row['city']['name'] +
-                            ' ' + row['address'] + ' ' + row['location'] + ' tersedia ?';
+                "className": '',
+                "orderable": false,
+                "defaultContent": ''
+            }, {
+                "data": "image1",
+                "name": "image1",
+                render: function(data) {
+                    return '<img src="' + data + '" width="100" height="100" />'
+                }
+            }, {
+                "data": "city.name",
+                "name": "city.name",
 
-                        return "<div class='d-flex gap-2'>" +
-                            "       <a class='btn-utama-soft sml rnd me-1' data-id='" + data +
-                            "' id='detailData'> <i class='material-symbols-outlined menu-icon'>map</i></a>\n" +
-                            "       <a class='btn-utama-soft sml rnd me-1'  data-phone='" + phone +
-                            "' data-text='" + text +
-                            "' id='detailDataWa'> <img src='{{ asset('/images/whatsapp.svg') }}' width='25'>\n" +
-                            "<a data-id='" + row.id + "' data-vendor='" + row.vendor_all.name + "' data-kotaid='" +
-                            row?.city_id + "' data-kota='" + row
-                            ?.city?.name + "' data-rent_status='" + row?.status_on_rent + "' data-type='" + row
-                            ?.type?.name + "' data-width='" + row.width +
-                            "' data-height='" + row.height + "' data-location='" + row.location +
-                            "' class='btn-utama sml rnd  me-1'" +
-                            "  id='addItem'> <i class='material-symbols-outlined menu-icon text-white'>arrow_right_alt</i></a>\n" +
-                            "</div>"
+            }, {
+                "data": "address",
+                "name": "address",
+                render: function(data, x, row) {
+                    return '<div class="d-flex flex-column">' +
+                        '<span>' + data + '</div>' +
+                        '<span class="text-muted">' + row?.location + '</div>' +
+                        '</div>'
+                }
+            }, {
+                "data": "vendor_all.name",
+                "name": "vendorAll.name"
+            }, {
+                "data": "width",
+                "name": "width",
+                render: (data) => {
+                    return toFixedWithoutZeros(parseFloat(data), 2)
+                }
+            }, {
+                "data": "height",
+                "name": "height",
+                render: (data) => {
+                    return toFixedWithoutZeros(parseFloat(data), 2)
+                }
+            }, {
+                "data": "type.name",
+                "name": "type.name"
+            }, {
+                "data": "position",
+                "name": "position"
+            }, {
+                data: "status_on_rent",
+                name: "status_on_rent",
+                render: function(data) {
+                    if (data.includes('used until')) {
+                        return '<span class="text-danger fw-bold">' + data + '</span>'
+                    } else if (data.includes('will used')) {
+                        return '<span class="text-warning fw-bold">' + data + '</span>'
+                    } else {
+                        return '<span class="text-success fw-bold">' + data + '</span>'
                     }
-                },
-            ]
+                }
+            }, {
+                "data": "id",
+                searchable: false,
+                "render": function(data, type, row) {
+                    const phone = row.vendor_all?.picPhone;
+                    const text = 'Apakah ' + row['type']['name'] + ' yang berlokasi di ' + row['city']['name'] +
+                        ' ' + row['address'] + ' ' + row['location'] + ' tersedia ?';
+
+                    return "<div class='d-flex gap-2'>" +
+                        "       <a class='btn-utama-soft sml rnd me-1' data-id='" + data +
+                        "' id='detailData'> <i class='material-symbols-outlined menu-icon'>map</i></a>\n" +
+                        "       <a class='btn-utama-soft sml rnd me-1'  data-phone='" + phone +
+                        "' data-text='" + text +
+                        "' id='detailDataWa'> <img src='{{ asset('/images/whatsapp.svg') }}' width='25'>\n" +
+                        "<a data-id='" + row.id + "' data-vendor='" + row.vendor_all.name + "' data-kotaid='" +
+                        row?.city_id + "' data-kota='" + row
+                        ?.city?.name + "' data-rent_status='" + row?.status_on_rent + "' data-type='" + row
+                        ?.type?.name + "' data-width='" + row.width +
+                        "' data-height='" + row.height + "' data-location='" + row.location +
+                        "' class='btn-utama sml rnd  me-1'" +
+                        "  id='addItem'> <i class='material-symbols-outlined menu-icon text-white'>arrow_right_alt</i></a>\n" +
+                        "</div>"
+                }
+            }, ]
 
             let drawCallback = function() {
                 var api = this.api();
+                console.log('323333', api)
             }
+            console.log('urlTitikurlTitik', urlTitik)
             datatable('tambahtitik', urlTitik, column, true, drawCallback)
 
-            function toHumanDate(date) {
-                // let now = new Date((new Date).toLocaleString("en-US", {
-                //     timeZone: "Asia/Jakarta"
-                // }));
-                let offset = new Date((new Date).toLocaleString("en-US", {
-                    timeZone: "Asia/Jakarta"
-                }));
-                let dateData = moment(Date.parse(date));
-                // console.log('dddddddddd',));
-
-                let dataAnswer = dateData.add((offset * (-1)), 'm').toNow();
-                let momentNow = moment();
-                if (momentNow.diff(dateData, 'years') > 0) {
-                    dataAnswer = dateData.format('LL')
-                } else if (momentNow.diff(dateData, 'days') > 5) {
-                    dataAnswer = dateData.format('MMMM D')
-
-                }
-
-                return dataAnswer;
-            }
         }
 
         $(document).on('click', '#addItem', function() {
             let row = $(this).data()
-            if (row.rent_status.includes('used until')) {
-                swal(row?.type + " sudah digunakan")
-                return false;
-            }
+            // if (row.rent_status.includes('used until')){
+            //     swal(row?.type+" sudah digunakan")
+            //     return false;
+            // }
             $('#idTitik').val(row.id);
             $('#city_id').val(row.kotaid);
             $('#kota').val(row.kota);

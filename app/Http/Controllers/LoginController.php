@@ -30,7 +30,7 @@ class LoginController extends CustomController
                     return Redirect::back()->withErrors(['username' => 'User non aktif'])->with(['username' => request('username')]);
                 }
                 $role = \auth()->user()->role;
-                if ($role == 'pimpinan'){
+                if ($role == 'pimpinan' || $role == 'staf'){
                     $role = 'admin';
                 }
                 $redirect = "/$role";

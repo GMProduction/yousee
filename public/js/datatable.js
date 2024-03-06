@@ -1,5 +1,7 @@
 
-function datatable(tb, url, columns, serverSide = true, drawCallback, bPaginate = true, createdRow = null, order = [], select=null) {
+
+
+function datatable(tb, url, columns, serverSide = true, drawCallback, bPaginate = true, createdRow = null, order = [], select=null,dom='lftipr') {
     let columnDefs = [];
     $.each(columns, function (k, v) {
         columnDefs[k] = v;
@@ -44,6 +46,7 @@ function datatable(tb, url, columns, serverSide = true, drawCallback, bPaginate 
         drawCallback: drawCallback,
         bPaginate: bPaginate,
         select:select,
+        dom:dom
         // scrollX: true,
     });
     // }).columns.adjust().responsive.recalc();

@@ -34,7 +34,7 @@ class Item extends Model
         'trafic'
     ];
 
-    protected $with = ['type', 'city', 'createdBy', 'lastUpdate'];
+    protected $with = ['type', 'city', 'createdByUser', 'lastUpdate'];
 
     protected $casts = [
         'latitude' => 'float',
@@ -54,7 +54,7 @@ class Item extends Model
         return $this->belongsTo(City::class);
     }
 
-    public function createdBy()
+    public function createdByUser()
     {
         return $this->belongsTo(User::class, 'created_by');
     }
@@ -95,7 +95,7 @@ class Item extends Model
                 $dateStart = date('Y-m-d', strtotime($rent->start));
                 $dateEnd = date('Y-m-d', strtotime($rent->end));
                 if (($dateNow > $dateStart) && ($dateNow < $dateEnd)) {
-                    $result = 'used until '.Carbon::parse($dateStart)->format('d-m-Y');
+                    $result = 'used until '.Carbon::parse($dateEnd)->format('d-m-Y');
                     break;
                 } else {
                     $result = 'will used '.Carbon::parse($dateStart)->format('d-m-Y');
