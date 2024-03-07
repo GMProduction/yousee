@@ -147,7 +147,7 @@
                         <p class="menu-text">Titik Iklan</p>
                     </a>
                 </li>
-                @if(auth()->user()->role !== 'staf')
+                @if(auth()->user()->role !== 'magang')
                     <li class="nav-item">
                         <a class="nav-link menu @if ($sidebar == 'project') active @endif" href="/admin/project">
                             <i class="material-symbols-outlined menu-icon">assignment</i>
