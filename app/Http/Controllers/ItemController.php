@@ -43,7 +43,7 @@ class ItemController extends CustomController
             $item = $item->where('position', $position);
         }
 
-        if (auth()->user()->role == 'staf') {
+        if (auth()->user()->role == 'magang') {
             $item = $item->where('created_by', '=', auth()->id());
         }
 

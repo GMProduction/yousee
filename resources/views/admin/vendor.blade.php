@@ -310,24 +310,6 @@
             datatable();
         }
 
-        function toHumanDate(date) {
-            // let now = new Date();
-            let offset = new Date((new Date).toLocaleString("en-US", {
-                timeZone: "Asia/Jakarta"
-            }));
-            let dateData = moment(Date.parse(date));
-            // console.log('dddddddddd',));
 
-            let dataAnswer = dateData.add((offset * (-1)), 'm').toNow();
-            let momentNow = moment();
-            if (momentNow.diff(dateData, 'years') > 0) {
-                dataAnswer = dateData.format('LL')
-            } else if (momentNow.diff(dateData, 'days') > 5) {
-                dataAnswer = dateData.format('MMMM D')
-
-            }
-
-            return dataAnswer;
-        }
     </script>
 @endsection

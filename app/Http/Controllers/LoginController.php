@@ -30,13 +30,13 @@ class LoginController extends CustomController
                     return Redirect::back()->withErrors(['username' => 'User non aktif'])->with(['username' => request('username')]);
                 }
                 $role = \auth()->user()->role;
-                if ($role == 'pimpinan' || $role == 'staf'){
+                if ($role == 'pimpinan' || $role == 'magang'){
                     $role = 'admin';
                 }
                 $redirect = "/$role";
 
 //            return response()->json();
-
+                request()->session()->regenerate();
                 return redirect($redirect);
             }
             return Redirect::back()->withErrors(['pasword' => 'Password mismach.'])->with(['username' => request('username')]);

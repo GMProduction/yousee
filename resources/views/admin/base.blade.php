@@ -144,7 +144,7 @@
                         <p class="menu-text">Titik Iklan</p>
                     </a>
                 </li>
-                @if(auth()->user()->role !== 'staf')
+                @if(auth()->user()->role !== 'magang')
                     <li class="nav-item">
                         <a class="nav-link menu @if ($sidebar == 'project') active @endif" href="/admin/project">
                             <i class="material-symbols-outlined menu-icon">assignment</i>
@@ -188,7 +188,7 @@
     <script src="{{ asset('js/base.js') }}"></script>
     <script src="{{ asset('css/dropify/js/dropify.js') }}"></script>
 
-    <script src="{{ asset('js/dialog.js?v=2') }}"></script>
+    <script src="{{ asset('js/dialog.js?v=3') }}"></script>
     <script type="text/javascript"
         src="https://cdn.jsdelivr.net/npm/browser-image-compression@latest/dist/browser-image-compression.js"></script>
     <script src="{{ asset('js/handler_image.js') }}"></script>

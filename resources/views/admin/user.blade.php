@@ -77,7 +77,7 @@
                                 <option value="pimpinan">Pimpinan</option>
                                 <option value="admin">Admin</option>
                                 <option value="presence">Presence</option>
-                                <option value="staf">Staf</option>
+                                <option value="magang">Magang</option>
                             </select>
 
                             <div class="form-floating mb-3">

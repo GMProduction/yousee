@@ -17,7 +17,7 @@ class StafMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
-        if (auth()->user()->role == 'staf') {
+        if (auth()->user()->role == 'magang') {
             return redirect('/admin');
         }
 
