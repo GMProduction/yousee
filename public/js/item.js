@@ -351,6 +351,13 @@ function datatableItem() {
                 }
             },
             {
+                "data": "last_update_vendor",
+                "name": "last_update_vendor",
+                render: function (data) {
+                    return data ? moment(data).format('LLLL') : '-'
+                }
+            },
+            {
                 data: "id",
                 searchable: false,
                 render: function (data, type, row) {

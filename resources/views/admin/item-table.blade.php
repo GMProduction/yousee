@@ -55,6 +55,7 @@
                     <th>Created By</th>
                     <th>Last Updated By</th>
                     <th>Status</th>
+                    <th>Last Updated By Vendor</th>
                     <th>Action</th>
                 </tr>
                 </thead>
@@ -72,6 +73,7 @@
                     <th>Created By</th>
                     <th>Last Updated By</th>
                     <th>Status</th>
+                    <th>Last Updated By Vendor</th>
                     <th>Action</th>
                 </tr>
                 </tfoot>

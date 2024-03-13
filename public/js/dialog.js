@@ -11,9 +11,9 @@ async function saveData(title, form, url, resposeSuccess, image = null) {
     })
         .then(async (res) => {
             if (res) {
-                if (image){
-                    if ($('#'+image).val()) {
-                        let image1 = await handleImageUpload($('#'+image));
+                if (image) {
+                    if ($('#' + image).val()) {
+                        let image1 = await handleImageUpload($('#' + image));
                         form_data.append('profile', image1, image1.name);
                     }
                 }
@@ -45,19 +45,19 @@ async function saveData(title, form, url, resposeSuccess, image = null) {
                             swal(data['msg'])
                         }
                     },
-                    xhr: function() {
+                    xhr: function () {
                         $('#progressbar').remove();
-                        $('#'+form).append(' <div id="progressbar" class="progress mt-2">\n' +
+                        $('#' + form).append(' <div id="progressbar" class="progress mt-2">\n' +
                             '                                <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>\n' +
                             '                            </div>')
                         var xhr = new window.XMLHttpRequest();
-                        xhr.upload.addEventListener("progress", function(evt) {
+                        xhr.upload.addEventListener("progress", function (evt) {
                             if (evt.lengthComputable) {
                                 var percentComplete = (evt.loaded / evt.total) * 100;
                                 //Do something with upload progress here
                                 // console.log(percentComplete)
-                                $('#progressbar div').attr('style',"width:"+percentComplete+'%').html(parseInt(percentComplete)+'%')
-                                if (percentComplete === 100){
+                                $('#progressbar div').attr('style', "width:" + percentComplete + '%').html(parseInt(percentComplete) + '%')
+                                if (percentComplete === 100) {
                                     $('#progressbar div').addClass('bg-success')
                                 }
                             }
@@ -79,7 +79,7 @@ async function saveData(title, form, url, resposeSuccess, image = null) {
                         $('#progressbar div').removeClass('bg-success').addClass('bg-danger');
                         console.log(error);
                         console.log(textStatus);
-                        swal(JSON.parse(error.responseText).errors ? JSON.parse(error.responseText).errors[Object.keys(JSON.parse(error.responseText).errors)[0]][0] : JSON.parse(error.responseText)?.message ? JSON.parse(error.responseText).message : JSON.parse(error.responseText).msg ? JSON.parse(error.responseText).msg : error.responseJSON['msg'] )
+                        swal(JSON.parse(error.responseText).errors ? JSON.parse(error.responseText).errors[Object.keys(JSON.parse(error.responseText).errors)[0]][0] : JSON.parse(error.responseText)?.message ? JSON.parse(error.responseText).message : JSON.parse(error.responseText).msg ? JSON.parse(error.responseText).msg : error.responseJSON['msg'])
                         // swal(error.responseText ? JSON.parse(error.responseText).message : error.responseJSON['msg'] )
                     }
                 })
@@ -136,7 +136,7 @@ function saveDataObjectFormData(title, form_data, url, resposeSuccess) {
                         console.log(xhr.status);
                         console.log(textStatus);
                         console.log(error.responseJSON);
-                        swal(JSON.parse(error.responseText).errors ? JSON.parse(error.responseText).errors[Object.keys(JSON.parse(error.responseText).errors)[0]][0] : JSON.parse(error.responseText)?.message ? JSON.parse(error.responseText).message : error.responseJSON['msg'] )
+                        swal(JSON.parse(error.responseText).errors ? JSON.parse(error.responseText).errors[Object.keys(JSON.parse(error.responseText).errors)[0]][0] : JSON.parse(error.responseText)?.message ? JSON.parse(error.responseText).message : error.responseJSON['msg'])
 
                         // swal(error.responseJSON.errors ? error.responseJSON.errors[Object.keys(error.responseJSON.errors)[0]][0] : error.responseJSON['message'] ? error.responseJSON['message'] : error.responseJSON['msg'] )
 
@@ -149,10 +149,10 @@ function saveDataObjectFormData(title, form_data, url, resposeSuccess) {
 
 function saveDataAjaxWImage(title, form, form_data, url, resposeSuccess) {
     var dataForm = form_data['form_data'];
-    if (form_data['image']){
-        $.each(form_data['image'], async function (k,v) {
-            if ($('#'+form+' #'+v).val()) {
-                let icon = await handleImageUpload($('#'+v));
+    if (form_data['image']) {
+        $.each(form_data['image'], async function (k, v) {
+            if ($('#' + form + ' #' + v).val()) {
+                let icon = await handleImageUpload($('#' + v));
                 dataForm.append(v, icon, icon.name);
             }
         })
@@ -204,7 +204,7 @@ function saveDataAjaxWImage(title, form, form_data, url, resposeSuccess) {
                         $('#progressbar div').removeClass('bg-success').addClass('bg-danger');
                         console.log(error);
                         console.log(textStatus);
-                        swal(JSON.parse(error.responseText).errors ? JSON.parse(error.responseText).errors[Object.keys(JSON.parse(error.responseText).errors)[0]][0] : JSON.parse(error.responseText)?.message ? JSON.parse(error.responseText).message : JSON.parse(error.responseText).msg ? JSON.parse(error.responseText).msg : error.responseJSON['msg'] )
+                        swal(JSON.parse(error.responseText).errors ? JSON.parse(error.responseText).errors[Object.keys(JSON.parse(error.responseText).errors)[0]][0] : JSON.parse(error.responseText)?.message ? JSON.parse(error.responseText).message : JSON.parse(error.responseText).msg ? JSON.parse(error.responseText).msg : error.responseJSON['msg'])
 
                     }
                 })
@@ -214,7 +214,7 @@ function saveDataAjaxWImage(title, form, form_data, url, resposeSuccess) {
 
 }
 
-function deleteData(text, url,data, resposeSuccess) {
+function deleteData(text, url, data, resposeSuccess) {
 
     swal({
         title: 'Hapus Data',
@@ -268,7 +268,7 @@ function deleteData(text, url,data, resposeSuccess) {
                         console.log(xhr);
                         console.log(textStatus);
                         // swal(error.responseJSON.errors ? error.responseJSON.errors[Object.keys(error.responseJSON.errors)[0]][0] : error.responseJSON['message'] ? error.responseJSON['message'] : error.responseJSON['msg'] )
-                        swal(error.responseText ? JSON.parse(error.responseText).message : error.responseJSON['msg'] )
+                        swal(error.responseText ? JSON.parse(error.responseText).message : error.responseJSON['msg'])
                     }
                 })
             }
@@ -279,9 +279,9 @@ function deleteData(text, url,data, resposeSuccess) {
 function getSelect(id, url, nameValue = 'name', idValue, text = null) {
     var select = $('#' + id);
     select.empty();
-    if (text){
-        select.append('<option value="" selected>'+text+'</option>')
-    }else {
+    if (text) {
+        select.append('<option value="" selected>' + text + '</option>')
+    } else {
         select.append('<option value="" disabled selected>Pilih Data</option>')
     }
     $.get(url, function (data) {
@@ -317,7 +317,7 @@ function currencyClass(field) {
     });
 }
 
-function setImgDropify(img,text ='Masukkan Image Item',   file = null, height = 400) {
+function setImgDropify(img, text = 'Masukkan Image Item', file = null, height = 400) {
     img = $('#' + img).dropify({
         messages: {
             'default': text,
@@ -337,4 +337,44 @@ function setImgDropify(img,text ='Masukkan Image Item',   file = null, height = 
     }
     $('.dropify-wrapper').height(height).width(300);
 
+}
+
+function toHumanDate(date) {
+    // let now = new Date();
+    // let offset = new Date((new Date).toLocaleString("en-US", {
+    //     timeZone: "Asia/Jakarta"
+    // }));
+
+    let momentNow = moment();
+    let dateData = moment(date);
+    // console.log('dddddddddd',));
+    console.log('dataAnswer', moment(date).format('LLLL'))
+
+    // let dataAnswer = dateData.add((momentNow * (-1)), 'm').toNow();
+    let dataAnswer = '';
+
+
+    if (momentNow.diff(dateData, 'minutes') < 1) { //second
+        dataAnswer = dateData.toNow();
+    } else if (momentNow.diff(dateData, 'hours') < 1) { // menit
+        dataAnswer = dateData.toNow();
+
+    } else if (momentNow.diff(dateData, 'days') < 1) { //jam
+        dataAnswer = dateData.toNow();
+
+    } else if (momentNow.diff(dateData, 'weeks') < 1) { // hari
+        dataAnswer = dateData.toNow();
+
+    } else if (momentNow.diff(dateData, 'months') < 1) { //minggu
+        dataAnswer = dateData.toNow();
+
+    } else if (momentNow.diff(dateData, 'years') < 1) { // bulan
+        dataAnswer = dateData.toNow();
+
+    }else if (momentNow.diff(dateData, 'years') >= 1) { // tahun
+        dataAnswer = dateData.toNow();
+
+    }
+
+    return dateData.toNow()+ ' ago';
 }

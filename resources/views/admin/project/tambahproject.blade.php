@@ -314,11 +314,11 @@
                                                     <th>Kota</th>
                                                     <th>Alamat</th>
                                                     <th>Vendor</th>
-                                                    <th>Lebar</th>
-                                                    <th>Tinggi</th>
+                                                    <th>Ukuran</th>
                                                     <th>Type</th>
                                                     <th>Posisi</th>
                                                     <th>Status</th>
+                                                    <th>Terakhir di update vendor</th>
                                                     <th>Action</th>
                                                 </tr>
                                             </thead>
@@ -332,11 +332,11 @@
                                                     <th>Kota</th>
                                                     <th>Alamat</th>
                                                     <th>Vendor</th>
-                                                    <th>Lebar</th>
-                                                    <th>Tinggi</th>
+                                                    <th>Ukuran</th>
                                                     <th>Type</th>
                                                     <th>Posisi</th>
                                                     <th>Status</th>
+                                                    <th>Terakhir di update vendor</th>
                                                     <th>Action</th>
                                                 </tr>
                                             </tfoot>
@@ -1015,18 +1015,19 @@
                 }
             }, {
                 "data": "vendor_all.name",
-                "name": "vendorAll.name"
+                "name": "vendorAll.name",
+                render:(data,x,row) => {
+                    const seen = row.vendor_all?.last_seen ? toHumanDate(row.vendor_all?.last_seen) : "";
+                    return '<div class="d-flex flex-column">' +
+                        '<span>'+data+'</span>' +
+                        '<span class="text-success" style="font-size: 8pt">'+seen+'</span>' +
+                        '</div>'
+                }
             }, {
                 "data": "width",
                 "name": "width",
-                render: (data) => {
-                    return toFixedWithoutZeros(parseFloat(data), 2)
-                }
-            }, {
-                "data": "height",
-                "name": "height",
-                render: (data) => {
-                    return toFixedWithoutZeros(parseFloat(data), 2)
+                render: (data,x, row) => {
+                    return toFixedWithoutZeros(parseFloat(data), 2)+' x '+toFixedWithoutZeros(parseFloat(row.height), 2)
                 }
             }, {
                 "data": "type.name",
@@ -1035,16 +1036,23 @@
                 "data": "position",
                 "name": "position"
             }, {
-                data: "status_on_rent",
-                name: "status_on_rent",
-                render: function(data) {
-                    if (data.includes('used until')) {
-                        return '<span class="text-danger fw-bold">' + data + '</span>'
-                    } else if (data.includes('will used')) {
-                        return '<span class="text-warning fw-bold">' + data + '</span>'
+                data: "status_rent",
+                name: "status_rent",
+                render: function(data,x,row) {
+                    if (data == 1) {
+                        const rent = moment(row.rent_until).format('DD MMM YYYY')
+                        return '<span class="text-warning fw-bold">Akan disewa tanggal '+rent+'</span>'
+                    } else if (data == 2) {
+                        return '<span class="text-danger fw-bold">Disewa</span>'
                     } else {
-                        return '<span class="text-success fw-bold">' + data + '</span>'
+                        return '<span class="text-success fw-bold">Tersedia</span>'
                     }
+                }
+            },{
+                "data": "last_update_vendor",
+                "name": "last_update_vendor",
+                render: function (data) {
+                    return data ? moment(data).format('LLLL') : '-'
                 }
             }, {
                 "data": "id",
