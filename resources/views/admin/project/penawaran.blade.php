@@ -127,8 +127,8 @@
         {{-- <img src="{{ public_path('static-image/logo.png') }}" style="width: 120px; float: left;" /> --}}
 
         <div>
-            <div style=" text-align: center;margin-bottom:5px ;margin-top:0"><img style="width: 130px">
-                {{--                    src="{{ public_path('/images/local/yousee.png') }}" /> --}}
+            <div style=" text-align: center;margin-bottom:5px ;margin-top:0">
+                <img style="width: 130px" src="{{ public_path('/images/local/yousee.png') }}" />
             </div>
             {{--            @if (request('start')) --}}
             {{--                <h5 style=" text-align: center;margin-bottom:10px ;margin-top:0">Periode --}}
