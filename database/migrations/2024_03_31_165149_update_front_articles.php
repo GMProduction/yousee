@@ -16,6 +16,7 @@ class UpdateFrontArticles extends Migration
         Schema::table('front_articles', function (Blueprint $table) {
             //
             $table->string('slug');
+            $table->longText('content')->change();
         });
     }
 
@@ -29,6 +30,7 @@ class UpdateFrontArticles extends Migration
         Schema::table('front_articles', function (Blueprint $table) {
             //
             $table->string('slug');
+            $table->text('content')->change();
         });
     }
 }
