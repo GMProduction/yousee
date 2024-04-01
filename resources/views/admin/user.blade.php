@@ -78,6 +78,7 @@
                                 <option value="admin">Admin</option>
                                 <option value="presence">Presence</option>
                                 <option value="magang">Magang</option>
+                                <option value="cs">Cs</option>
                             </select>
 
                             <div class="form-floating mb-3">
