@@ -7,6 +7,8 @@ use App\Models\Item;
 use App\Models\type;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 use Yajra\DataTables\DataTables;
 
 class ItemController extends CustomController
@@ -23,7 +25,7 @@ class ItemController extends CustomController
         $city     = \request('city');
         $type     = \request('type');
         $position = \request('position');
-        $item     = Item::with(['vendorAll','city','itemRent']);
+        $item     = Item::with(['vendorAll', 'city', 'itemRent']);
 
         if ($city) {
             $item = $item->where('city_id', $city);
@@ -47,7 +49,7 @@ class ItemController extends CustomController
             $item = $item->where('created_by', '=', auth()->id());
         }
 
-        $item = $item->get()->append(['status_on_rent']);
+//        $item = $item->get()->append(['status_on_rent']);
         return DataTables::of($item)->make(true);
     }
 
@@ -172,12 +174,45 @@ class ItemController extends CustomController
         return $item->url;
     }
 
-    public function delete($id){
-        Item::where('id','=',$id)->delete();
+    public function delete($id)
+    {
+        Item::where('id', '=', $id)->delete();
+
         return 'berhasil';
     }
 
-    public function getItemByID($id){
+    public function getItemByID($id)
+    {
         return Item::findOrFail($id);
+    }
+
+    public function changeShowLandingPage()
+    {
+        $id   = \request('id');
+        $item = Item::find($id);
+        $item->update([
+            'isShow' => ! $item->isShow,
+        ]);
+
+        return 'succees';
+    }
+
+    public function generateSlug()
+    {
+        DB::beginTransaction();
+        try {
+            $item = Item::all();
+            foreach ($item as $d) {
+                $address = Str::slug($d->address);
+                $type    = Str::slug($d->type->name);
+                $slug    = $type.'-'.$address.'-'.$d->id;
+                $d->update(['slug' => $slug]);
+            }
+            DB::commit();
+            return 'success';
+        }catch (\Exception $er){
+            DB::rollBack();
+            return 'error: '.$er->getMessage();
+        }
     }
 }

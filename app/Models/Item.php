@@ -31,7 +31,9 @@ class Item extends Model
         'vendor_id',
         'qty',
         'side',
-        'trafic'
+        'trafic',
+        'isShow',
+        'slug'
     ];
 
     protected $with = ['type', 'city', 'createdByUser', 'lastUpdate'];

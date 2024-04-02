@@ -56,6 +56,8 @@ Route::prefix('data')->middleware('auth')->group(
                 Route::post('post-item', [\App\Http\Controllers\ItemController::class, 'postItem']);
                 Route::get('url-street-view/{id}', [\App\Http\Controllers\ItemController::class, 'getUrlStreetView']);
                 Route::get('by-id/{id}', [\App\Http\Controllers\ItemController::class, 'getItemByID']);
+                Route::post('show-data', [\App\Http\Controllers\ItemController::class, 'changeShowLandingPage']);
+                Route::get('generate-slug', [\App\Http\Controllers\ItemController::class, 'generateSlug']);
             }
         );
     }
