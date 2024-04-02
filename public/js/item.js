@@ -338,15 +338,16 @@ function datatableItem() {
                 },
             },
             {
-                data: "status_on_rent",
-                name: "status_on_rent",
-                render:function (data) {
-                    if (data.includes('used until')){
-                        return '<span class="text-danger fw-bold">'+data+'</span>'
-                    }else if (data.includes('will used')){
-                        return '<span class="text-warning fw-bold">'+data+'</span>'
-                    }else {
-                        return '<span class="text-success fw-bold">'+data+'</span>'
+                data: "status_rent",
+                name: "status_rent",
+                render: function (data, x, row) {
+                    if (data == 1) {
+                        const rent = moment(row.rent_until).format('DD MMM YYYY')
+                        return '<span class="text-warning fw-bold">Akan disewa tanggal ' + rent + '</span>'
+                    } else if (data == 2) {
+                        return '<span class="text-danger fw-bold">Disewa</span>'
+                    } else {
+                        return '<span class="text-success fw-bold">Tersedia</span>'
                     }
                 }
             },
@@ -355,6 +356,15 @@ function datatableItem() {
                 "name": "last_update_vendor",
                 render: function (data) {
                     return data ? moment(data).format('LLLL') : '-'
+                }
+            },
+            {
+                "data": "isShow",
+                "name": 'isShow',
+                render:function (data,x ,row) {
+                    let show = data ? 'visibility' : 'visibility_off';
+                    let color = data ? 'text-success':'text-danger';
+                    return '<a role="button" id="changeShow" data-id="'+row.id+'"><span class="material-symbols-outlined  '+color+'">'+show+'</span></a>'
                 }
             },
             {
@@ -390,6 +400,19 @@ function datatableItem() {
         ],
     });
 }
+
+$(document).on("click",'#changeShow', function () {
+    console.log('asdas', )
+
+    let form = {
+        'id':$(this).data('id'),
+        '_token':$('meta[name="_token"]').attr("content")
+    }
+        $.post('/data/item/show-data', form, function (res) {
+            console.log(res)
+            $('#table_id').DataTable().ajax.reload();
+        })
+})
 
 $(document).on("click", "#deteleData", function () {
     let row = $(this).data("row");
@@ -474,15 +497,16 @@ function datatableItemPresence() {
                 name: "position",
             },
             {
-                "data": "status_on_rent",
-                "name": "status_on_rent",
-                render:function (data) {
-                    if (data.includes('used until')){
-                        return '<span class="text-danger fw-bold">'+data+'</span>'
-                    }else if (data.includes('will used')){
-                        return '<span class="text-warning fw-bold">'+data+'</span>'
-                    }else {
-                        return '<span class="text-success fw-bold">'+data+'</span>'
+                data: "status_rent",
+                name: "status_rent",
+                render: function (data, x, row) {
+                    if (data == 1) {
+                        const rent = moment(row.rent_until).format('DD MMM YYYY')
+                        return '<span class="text-warning fw-bold">Akan disewa tanggal ' + rent + '</span>'
+                    } else if (data == 2) {
+                        return '<span class="text-danger fw-bold">Disewa</span>'
+                    } else {
+                        return '<span class="text-success fw-bold">Tersedia</span>'
                     }
                 }
             },
