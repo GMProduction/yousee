@@ -409,8 +409,7 @@ $(document).on("click",'#changeShow', function () {
         '_token':$('meta[name="_token"]').attr("content")
     }
         $.post('/data/item/show-data', form, function (res) {
-            console.log(res)
-            $('#table_id').DataTable().ajax.reload();
+            $('#table_id').DataTable().ajax.reload( null, false );
         })
 })
 
