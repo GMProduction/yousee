@@ -368,7 +368,9 @@ function datatableItem() {
             color +
             '">' +
             show +
-            "</span></a>"
+            "</span>" +
+            data +
+            "</a>"
           );
         },
       },
