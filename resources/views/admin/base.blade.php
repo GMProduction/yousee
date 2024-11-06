@@ -9,7 +9,7 @@
 
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="{{ asset('css/appstyle/genosstyle.1.0.css') }}" type="text/css">
+    <link rel="stylesheet" href="{{ asset('css/appstyle/genosstyle.2.0.css') }}" type="text/css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     {{-- <link rel="stylesheet"
@@ -144,7 +144,7 @@
                         <p class="menu-text">Titik Iklan</p>
                     </a>
                 </li>
-                @if(auth()->user()->role !== 'magang')
+                @if (auth()->user()->role !== 'magang')
                     <li class="nav-item">
                         <a class="nav-link menu @if ($sidebar == 'project') active @endif" href="/admin/project">
                             <i class="material-symbols-outlined menu-icon">assignment</i>

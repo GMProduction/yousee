@@ -97,14 +97,24 @@ class Item extends Model
                 $dateStart = date('Y-m-d', strtotime($rent->start));
                 $dateEnd = date('Y-m-d', strtotime($rent->end));
                 if (($dateNow > $dateStart) && ($dateNow < $dateEnd)) {
-                    $result = 'used until '.Carbon::parse($dateEnd)->format('d-m-Y');
+                    $result = 'used until ' . Carbon::parse($dateEnd)->format('d-m-Y');
                     break;
                 } else {
-                    $result = 'will used '.Carbon::parse($dateStart)->format('d-m-Y');
+                    $result = 'will used ' . Carbon::parse($dateStart)->format('d-m-Y');
                 }
             }
             return $result;
         }
         return $result;
+    }
+
+    // Di dalam model Item
+    public function getStatusAttribute()
+    {
+        // Logika untuk menentukan status berdasarkan latitude dan longitude
+        if ($this->latitude < -11.000 || $this->latitude > 6.100 || $this->longitude < 95.000 || $this->longitude > 141.000) {
+            return "SALAH";
+        }
+        return "BENAR";
     }
 }

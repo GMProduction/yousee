@@ -49,8 +49,28 @@ class ItemController extends CustomController
             $item = $item->where('created_by', '=', auth()->id());
         }
 
-//        $item = $item->get()->append(['status_on_rent']);
-        return DataTables::of($item)->make(true);
+        //        $item = $item->get()->append(['status_on_rent']);
+        return DataTables::of($item)
+            ->addColumn('status', function ($item) {
+                // Hitung status berdasarkan latitude dan longitude
+                return ($item->latitude < -11.000 || $item->latitude > 6.100 || $item->longitude < 95.000 || $item->longitude > 141.000) ? "SALAH" : "BENAR";
+            })
+            ->filterColumn('status', function ($query, $keyword) {
+                if (strtolower($keyword) === 'salah') {
+                    $query->where(function ($q) {
+                        $q->where('latitude', '<', -11.000)
+                            ->orWhere('latitude', '>', 6.100)
+                            ->orWhere('longitude', '<', 95.000)
+                            ->orWhere('longitude', '>', 141.000);
+                    });
+                } elseif (strtolower($keyword) === 'benar') {
+                    $query->where(function ($q) {
+                        $q->whereBetween('latitude', [-11.000, 6.100])
+                            ->whereBetween('longitude', [95.000, 141.000]);
+                    });
+                }
+            })
+            ->make(true);
     }
 
     public function cardItem()
@@ -114,19 +134,19 @@ class ItemController extends CustomController
 
         if ($image1) {
             $image     = $this->generateImageName('image1');
-            $stringImg = '/images/item/'.$image;
+            $stringImg = '/images/item/' . $image;
             $this->uploadImage('image1', $image, 'imageItem');
             Arr::set($data, 'image1', $stringImg);
         }
         if ($image2) {
             $image     = $this->generateImageName('image2');
-            $stringImg = '/images/item/'.$image;
+            $stringImg = '/images/item/' . $image;
             $this->uploadImage('image2', $image, 'imageItem');
             Arr::set($data, 'image2', $stringImg);
         }
         if ($image3) {
             $image     = $this->generateImageName('image3');
-            $stringImg = '/images/item/'.$image;
+            $stringImg = '/images/item/' . $image;
             $this->uploadImage('image3', $image, 'imageItem');
             Arr::set($data, 'image3', $stringImg);
         }
@@ -136,18 +156,18 @@ class ItemController extends CustomController
             Arr::set($data, 'last_update_by', auth()->id());
 
             if ($image1 && $item->image1) {
-                if (file_exists('../public'.$item->image1)) {
-                    unlink('../public'.$item->image1);
+                if (file_exists('../public' . $item->image1)) {
+                    unlink('../public' . $item->image1);
                 }
             }
             if ($image1 && $item->image2) {
-                if (file_exists('../public'.$item->image2)) {
-                    unlink('../public'.$item->image2);
+                if (file_exists('../public' . $item->image2)) {
+                    unlink('../public' . $item->image2);
                 }
             }
             if ($image1 && $item->image3) {
-                if (file_exists('../public'.$item->image3)) {
-                    unlink('../public'.$item->image3);
+                if (file_exists('../public' . $item->image3)) {
+                    unlink('../public' . $item->image3);
                 }
             }
             $item->update($data);
@@ -205,14 +225,14 @@ class ItemController extends CustomController
             foreach ($item as $d) {
                 $address = Str::slug($d->address);
                 $type    = Str::slug($d->type->name);
-                $slug    = $type.'-'.$address.'-'.$d->id;
+                $slug    = $type . '-' . $address . '-' . $d->id;
                 $d->update(['slug' => $slug]);
             }
             DB::commit();
             return 'success';
-        }catch (\Exception $er){
+        } catch (\Exception $er) {
             DB::rollBack();
-            return 'error: '.$er->getMessage();
+            return 'error: ' . $er->getMessage();
         }
     }
 }

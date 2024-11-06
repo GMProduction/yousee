@@ -629,7 +629,7 @@
     {{--    <script src="{{ asset('css/summernote/summernote.js') }}"></script> --}}
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
 
-    <script src="{{ asset('js/item.js?v=4') }}"></script>
+    <script src="{{ asset('js/item2.js?v=4') }}"></script>
 
     <script>
         let param, prov, pic_id;
@@ -1016,18 +1016,19 @@
             }, {
                 "data": "vendor_all.name",
                 "name": "vendorAll.name",
-                render:(data,x,row) => {
+                render: (data, x, row) => {
                     const seen = row.vendor_all?.last_seen ? toHumanDate(row.vendor_all?.last_seen) : "";
                     return '<div class="d-flex flex-column">' +
-                        '<span>'+data+'</span>' +
-                        '<span class="text-success" style="font-size: 8pt">'+seen+'</span>' +
+                        '<span>' + data + '</span>' +
+                        '<span class="text-success" style="font-size: 8pt">' + seen + '</span>' +
                         '</div>'
                 }
             }, {
                 "data": "width",
                 "name": "width",
-                render: (data,x, row) => {
-                    return toFixedWithoutZeros(parseFloat(data), 2)+' x '+toFixedWithoutZeros(parseFloat(row.height), 2)
+                render: (data, x, row) => {
+                    return toFixedWithoutZeros(parseFloat(data), 2) + ' x ' + toFixedWithoutZeros(parseFloat(row
+                        .height), 2)
                 }
             }, {
                 "data": "type.name",
@@ -1038,20 +1039,20 @@
             }, {
                 data: "status_rent",
                 name: "status_rent",
-                render: function(data,x,row) {
+                render: function(data, x, row) {
                     if (data == 1) {
                         const rent = moment(row.rent_until).format('DD MMM YYYY')
-                        return '<span class="text-warning fw-bold">Akan disewa tanggal '+rent+'</span>'
+                        return '<span class="text-warning fw-bold">Akan disewa tanggal ' + rent + '</span>'
                     } else if (data == 2) {
                         return '<span class="text-danger fw-bold">Disewa</span>'
                     } else {
                         return '<span class="text-success fw-bold">Tersedia</span>'
                     }
                 }
-            },{
+            }, {
                 "data": "last_update_vendor",
                 "name": "last_update_vendor",
-                render: function (data) {
+                render: function(data) {
                     return data ? moment(data).format('LLLL') : '-'
                 }
             }, {

@@ -51,6 +51,7 @@
             font-weight: bold;
         }
     </style>
+
     <script src="{{ asset('js/map-control.js?v=2') }}"></script>
 @endsection
 @section('content')
@@ -159,7 +160,7 @@
     {{-- @include('admin.map', ['data' => 'script']) --}}
 
     {{--    <script src="{{ asset('js/map-control.js') }}"></script> --}}
-    <script src="{{ asset('js/item.js?v=5') }}"></script>
+    <script src="{{ asset('js/item2.js?v=5') }}"></script>
 
     <script>
         $(document).ready(function() {
@@ -169,6 +170,23 @@
 
             });
             datatableItem();
+
+
+            validateCoordinates();
+            // Fungsi untuk memberi tanda pada baris dengan koordinat di luar Indonesia
+            function validateCoordinates() {
+
+
+
+                // Cek jika koordinat berada di luar wilayah Indonesia
+                if (lat < -11 || lat > 6 || lng < 95 || lng > 141) {
+                    // Tambahkan kelas khusus ke kolom longitude jika di luar batas
+                    $(this).find('td').eq(2).addClass('out-of-bounds');
+                }
+                // Dapatkan semua baris dalam tabel
+
+            }
+
             getSelect('f-provinsi', '/data/province', 'name', null, 'Semua Provinsi');
             getSelect('type', '/data/type')
             getSelect('f-tipe', '/data/type', 'name', null, 'Semua Type');
