@@ -172,21 +172,6 @@
             datatableItem();
 
 
-            validateCoordinates();
-            // Fungsi untuk memberi tanda pada baris dengan koordinat di luar Indonesia
-            function validateCoordinates() {
-
-
-
-                // Cek jika koordinat berada di luar wilayah Indonesia
-                if (lat < -11 || lat > 6 || lng < 95 || lng > 141) {
-                    // Tambahkan kelas khusus ke kolom longitude jika di luar batas
-                    $(this).find('td').eq(2).addClass('out-of-bounds');
-                }
-                // Dapatkan semua baris dalam tabel
-
-            }
-
             getSelect('f-provinsi', '/data/province', 'name', null, 'Semua Provinsi');
             getSelect('type', '/data/type')
             getSelect('f-tipe', '/data/type', 'name', null, 'Semua Type');
