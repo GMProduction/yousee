@@ -6,8 +6,6 @@
 
 @section('content')
     <div>
-
-
         <div class="panel">
             <div class="title">
                 <p>Data User</p>
@@ -19,32 +17,32 @@
                 <div class="table">
                     <table id="table_id" class="table table-striped" style="width:100%">
                         <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Nama</th>
-                            <th>Username</th>
-                            <th>Role</th>
-                            <th>Email</th>
-                            <th>No Hp</th>
-                            <th>Jumlah</th>
-                            <th>Status</th>
-                            <th>Action</th>
-                        </tr>
+                            <tr>
+                                <th>#</th>
+                                <th>Nama</th>
+                                <th>Username</th>
+                                <th>Role</th>
+                                <th>Email</th>
+                                <th>No Hp</th>
+                                <th>Jumlah</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
                         </thead>
                         <tbody>
                         </tbody>
                         <tfoot>
-                        <tr>
-                            <th>#</th>
-                            <th>Nama</th>
-                            <th>Username</th>
-                            <th>Role</th>
-                            <th>Email</th>
-                            <th>No Hp</th>
-                            <th>Jumlah</th>
-                            <th>Status</th>
-                            <th>Action</th>
-                        </tr>
+                            <tr>
+                                <th>#</th>
+                                <th>Nama</th>
+                                <th>Username</th>
+                                <th>Role</th>
+                                <th>Email</th>
+                                <th>No Hp</th>
+                                <th>Jumlah</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
                         </tfoot>
                     </table>
                 </div>
@@ -66,13 +64,13 @@
                         <div class="modal-body">
                             <div class="form-floating mb-3">
                                 <input type="text" class="form-control formData" id="nama" name="nama"
-                                       placeholder="Jhony">
+                                    placeholder="Jhony">
                                 <label for="nama" class="form-label">Nama</label>
                             </div>
 
                             <label for="role" class="form-label">Role</label>
                             <select class="form-select mb-3 formData" aria-label="Default select example" id="role"
-                                    name="role">
+                                name="role">
                                 <option selected>Pilih Role</option>
                                 <option value="pimpinan">Pimpinan</option>
                                 <option value="admin">Admin</option>
@@ -83,13 +81,13 @@
 
                             <div class="form-floating mb-3">
                                 <input type="text" class="form-control  formData" id="no_hp" name="no_hp"
-                                       placeholder="08712345678">
+                                    placeholder="08712345678">
                                 <label for="nohp" class="form-label">No. Hp</label>
                             </div>
 
                             <div class="form-floating mb-3">
                                 <input type="email" class="form-control formData" id="email" name="email"
-                                       placeholder="name@example.com">
+                                    placeholder="name@example.com">
                                 <label for="floatingInput">Email</label>
                             </div>
 
@@ -97,17 +95,17 @@
 
                             <div class="form-floating mb-3">
                                 <input type="text" class="form-control formData" id="username" name="username"
-                                       placeholder="Jhony">
+                                    placeholder="Jhony">
                                 <label for="nama" class="form-label">Username</label>
                             </div>
                             <div class="form-floating mb-3">
                                 <input type="password" class="form-control formData " id="password" name="password"
-                                       placeholder="Jhony">
+                                    placeholder="Jhony">
                                 <label for="password" class="form-label">Password</label>
                             </div>
                             <div class="form-floating mb-3">
                                 <input type="password" class="form-control formData " id="password_confirmation"
-                                       name="password_confirmation" placeholder="Jhony">
+                                    name="password_confirmation" placeholder="Jhony">
                                 <label for="password_confirmation" class="form-label">Konfirmasi Password</label>
                             </div>
 
@@ -134,15 +132,15 @@
     <script src="{{ asset('js/number_formater.js') }}"></script>
 
     <script>
-        $(document).ready(function () {
+        $(document).ready(function() {
             datatable();
         });
 
-        $(document).on('click', '#editData, #addData', function () {
+        $(document).on('click', '#editData, #addData', function() {
             var data = $(this).data('row');
             $('form .formData').val('')
             if (data) {
-                $.each(data, function (v, k) {
+                $.each(data, function(v, k) {
                     $('#' + v).val(data[v])
                 })
 
@@ -162,7 +160,7 @@
             datatable();
         }
 
-        $(document).on('click', '#activeData', function () {
+        $(document).on('click', '#activeData', function() {
             let id = $(this).data('id');
             let active = $(this).data('status');
             let _token = '{{ csrf_token() }}';
@@ -188,7 +186,7 @@
                 processing: true,
                 serverSide: true,
                 ajax: url,
-                "fnRowCallback": function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+                "fnRowCallback": function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
                     // debugger;
                     var numStart = this.fnPagingInfo().iStart;
                     var index = numStart + iDisplayIndexFull + 1;
@@ -197,10 +195,10 @@
                     return nRow;
                 },
                 columns: [{
-                    "className": '',
-                    "orderable": false,
-                    "defaultContent": ''
-                },
+                        "className": '',
+                        "orderable": false,
+                        "defaultContent": ''
+                    },
                     {
                         "data": "nama",
                         "name": "nama"
@@ -228,14 +226,14 @@
                     {
                         "data": "isActive",
                         // "name": "isActive",
-                        "render": function (data) {
+                        "render": function(data) {
                             return data == 1 ? 'Aktif' : 'Non Aktif'
                         }
                     },
 
                     {
                         "data": "id",
-                        "render": function (data, type, row) {
+                        "render": function(data, type, row) {
                             let string = JSON.stringify(row);
                             var icon = 'visibility_off';
                             if (row.isActive) {

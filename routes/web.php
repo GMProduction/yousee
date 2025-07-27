@@ -1,13 +1,15 @@
 <?php
 
 use App\Http\Controllers\BerandaController;
+use App\Http\Controllers\CalonVendorAdminController;
 use App\Http\Controllers\DaftarController;
 use App\Http\Controllers\LoginController;
-use App\Http\Controllers\MasterBarangController;
-use App\Http\Controllers\MasterPelangganController;
+use App\Http\Controllers\MitraController;
+use App\Http\Controllers\PengajuanAffiliateController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\TipeController;
 use App\Http\Controllers\TitikController;
+use App\Http\Controllers\UserAffiliateController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VendorController;
 use Illuminate\Support\Facades\Route;
@@ -24,6 +26,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::match(['POST', 'GET'], '/', [LoginController::class, 'index'])->middleware('guest');
+Route::get('/form/mitra/{id}', [MitraController::class, 'create'])->name('mitra.create');
+Route::post('/form/mitra', [MitraController::class, 'store'])->name('mitra.store');
 
 Route::prefix('presence')->middleware(\App\Http\Middleware\PresenceMiddleware::class)->group(
     function () {
@@ -90,6 +94,16 @@ Route::prefix('admin')->middleware(\App\Http\Middleware\AdminMiddleware::class)-
             }
         );
 
+        Route::prefix('pengajuan-afiliate')->group(
+            function () {
+                Route::match(['POST', 'GET'], '', [PengajuanAffiliateController::class, 'index']);
+                Route::get('datatable', [\App\Http\Controllers\PengajuanAffiliateController::class, 'datatable']);
+                Route::post('delete/{id}', [\App\Http\Controllers\PengajuanAffiliateController::class, 'delete']);
+                Route::get('all', [\App\Http\Controllers\PengajuanAffiliateController::class, 'getAfiliate']);
+            }
+        );
+
+
         Route::prefix('titik')->group(
             function () {
                 Route::get('', [TitikController::class, 'index']);
@@ -130,6 +144,24 @@ Route::prefix('admin')->middleware(\App\Http\Middleware\AdminMiddleware::class)-
         Route::get('history/{id}', [\App\Http\Controllers\HistoryController::class, 'getHistory']);
         Route::get('report/{id}/{logo}', [\App\Http\Controllers\penawaranController::class, 'index'])->name('export.pdf');
         Route::get('report-excell/{id}', [\App\Http\Controllers\penawaranController::class, 'exportExcel'])->name('export.excell');
+
+        Route::prefix('useraffiliate')->name('admin.useraffiliate.')->group(function () {
+            Route::get('/', [UserAffiliateController::class, 'adminIndex'])->name('index');
+            Route::get('/data', [UserAffiliateController::class, 'datatable'])->name('data');
+            Route::get('/{id}', [UserAffiliateController::class, 'show']);
+            Route::put('/{id}', [UserAffiliateController::class, 'update']);
+            Route::delete('/{id}', [UserAffiliateController::class, 'destroy'])->name('destroy');
+            Route::put('/{id}/status', [UserAffiliateController::class, 'updateStatus'])->name('status');
+        });
+
+        Route::prefix('calon-vendor')->name('admin.calon-vendor.')->group(function () {
+            Route::get('', [CalonVendorAdminController::class, 'index'])->name('index');
+            Route::post('/{id}/update-status', [CalonVendorAdminController::class, 'updateStatus'])->name('update-status');
+            Route::get('/{id}/edit', [CalonVendorAdminController::class, 'edit'])->name('edit');
+            Route::put('/{id}', [CalonVendorAdminController::class, 'update'])->name('update');
+            Route::delete('/{id}/delete', [CalonVendorAdminController::class, 'hapus'])->name('hapus');
+            Route::get('/data', [CalonVendorAdminController::class, 'data'])->name('data');
+        });
     }
 );
 

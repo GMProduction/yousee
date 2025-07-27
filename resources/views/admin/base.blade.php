@@ -144,6 +144,21 @@
                         <p class="menu-text">Titik Iklan</p>
                     </a>
                 </li>
+
+                <li class="nav-item has-submenu">
+                    <a class="nav-link menu @if ($sidebar == 'pengajuan-afiliate') active @endif"
+                        href="/admin/pengajuan-afiliate">
+                        <i class="material-symbols-outlined menu-icon">handshake</i>
+                        <p class="menu-text">Pengajuan Afiliate</p>
+                    </a>
+                </li>
+
+                <li class="nav-item has-submenu">
+                    <a class="nav-link menu @if ($sidebar == 'calon-vendor') active @endif" href="/admin/calon-vendor">
+                        <i class="material-symbols-outlined menu-icon">handshake</i>
+                        <p class="menu-text">Pengajuan Mitra</p>
+                    </a>
+                </li>
                 @if (auth()->user()->role !== 'magang')
                     <li class="nav-item">
                         <a class="nav-link menu @if ($sidebar == 'project') active @endif" href="/admin/project">

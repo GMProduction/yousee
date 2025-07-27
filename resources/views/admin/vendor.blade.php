@@ -9,7 +9,7 @@
 
         <div class="panel">
             <div class="title">
-                <p>Tipe Iklan</p>
+                <p>Data Vendor</p>
                 <a class="btn-utama-soft sml rnd " id="addData">Vendor Baru <i
                         class="material-symbols-outlined menu-icon ms-2">add_circle</i></a>
             </div>
@@ -309,7 +309,5 @@
             $('#modaltambahtitik').modal('hide')
             datatable();
         }
-
-
     </script>
 @endsection
