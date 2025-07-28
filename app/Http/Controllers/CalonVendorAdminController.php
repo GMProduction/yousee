@@ -26,7 +26,7 @@ class CalonVendorAdminController extends Controller
             })
             ->addColumn('titik_file', function ($row) {
                 if ($row->titik_file) {
-                    $url = base_url() . 'storage/titik_file/' . $row->titik_file;
+                    $url = base_url() .  $row->titik_file;
                     return '<a href="' . $url . '" target="_blank">Lihat File</a>';
                 }
                 return '-';
