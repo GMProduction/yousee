@@ -116,7 +116,7 @@
                     searchable: false,
                     render: function(cv) {
                         if (cv) {
-                            return `<a href="{{ base_url() }}storage/${cv}" target="_blank" class="btn btn-sm btn-info">Lihat CV</a>`;
+                            return `<a href="{{ base_url() }}${cv}" target="_blank" class="btn btn-sm btn-info">Lihat CV</a>`;
                         } else {
                             return `<span class="text-muted">Tidak ada CV</span>`;
                         }
