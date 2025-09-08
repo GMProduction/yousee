@@ -77,37 +77,9 @@
         <nav id="sidebar" class="sidebar card py-2" style="height: 100vh;">
             <ul class="nav flex-column" id="nav_accordion">
 
-
-
-                {{-- <li class="nav-item">
-                <a class="title-role" href="#"> Admin </a>
-            </li>
-            <li class="nav-item has-submenu">
-                <a class="nav-link menu" href="#">
-                    <i class="material-symbols-outlined menu-icon">perm_identity</i>
-                    <p class="menu-text">Admin</p>
-                </a>
-                <ul class="submenu  collapse">
-                    <li><a class="nav-link menu" href="#"><i class="material-symbols-outlined menu-icon">perm_identity</i>
-                            <p class="menu-text">Submenu item 4</p>
-                        </a></li>
-                    <li><a class="nav-link menu" href="#">
-                            <i class="material-symbols-outlined menu-icon">perm_identity</i>
-                            <p class="menu-text">Submenu item 4</p>
-                        </a></li>
-                    <li><a class="nav-link menu" href="#">
-                            <i class="material-symbols-outlined menu-icon">perm_identity</i>
-                            <p class="menu-text">Submenu item 4</p>
-                        </a> </li>
-                </ul>
-            </li> --}}
-
-
                 <li class="mt-4 mb-3">
                     <img class="w-100" src="{{ asset('images/local/yousee.png') }}" />
                 </li>
-
-
 
                 <li class="nav-item">
                     <a class="nav-link menu @if ($sidebar == 'beranda') active @endif " href="/admin">
@@ -174,12 +146,6 @@
                     <a class="title-role " href="#"> {{ auth()->user()->username }} </a>
                 </li>
 
-                {{-- <li class="nav-item">
-                <a class="nav-link menu" href="/logout">
-                    <i class="material-symbols-outlined menu-icon">person</i>
-                    <p class="menu-text">Logout</p>
-                </a>
-            </li> --}}
             </ul>
         </nav>
 
@@ -196,7 +162,6 @@
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
     </script>
 
-    {{--    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script> --}}
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
@@ -209,12 +174,8 @@
     <script src="{{ asset('js/handler_image.js') }}"></script>
     <script src="{{ asset('js/moment.min.js') }}"></script>
     <script src="{{ asset('js/debounce.js') }}"></script>
-    {{-- <script type="text/javascript" src="https://code.jquery.com/jquery-3.7.0.js"></script> --}}
     <script type="text/javascript" src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
-    {{-- <script src="{{ asset('datatable/datatables.js') }}"></script> --}}
-
-    {{-- <script src="{{ asset('js/datatable.js') }}"></script> --}}
 
     <script>
         jQuery.fn.dataTableExt.oApi.fnPagingInfo = function(oSettings) {

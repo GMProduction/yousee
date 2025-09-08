@@ -80,7 +80,7 @@
 @section('morejs')
     {{--    <script src="{{ asset('js/number_formater.js') }}"></script> --}}
     <script
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA1MgLuZuyqR_OGY3ob3M52N46TDBRI_9k&callback=initMap&v=weekly"
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCalUboAfIDg9Ku8QznTpkw5Txad7ESiBU&callback=initMap&v=weekly"
         async></script>
     <script src="{{ asset('js/currency.js') }}"></script>
 
