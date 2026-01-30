@@ -598,7 +598,7 @@
                         <div class="tab-pane fade show" id="pills-single-gambar3" role="tabpanel"
                             aria-labelledby="pills-single-gambar3-tab">
                             <div style="position: relative">
-                                <a id="link-gbr3" target="_blank"><img id="detail-gambar-3" src=""
+                                <a id="link-gbr3" target="_blank"><img id="detail-gambar-33" src=""
                                         alt="Gambar-3" style="width: 100%"></a>
                                 <a class="btn-utama flex " id="dwnld-gbr3"
                                     style="position: absolute; right: 10px; top: 10px">Download <i
