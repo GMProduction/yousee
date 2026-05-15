@@ -136,7 +136,17 @@
             </div>
             <div class="tab-pane fade" id="pills-peta" role="tabpanel" aria-labelledby="pills-peta-tab">
                 {{-- @include('admin.map', ['data' => 'content']) --}}
-                <div id="main-map" style="width: 100%; height: 500px; height: calc(100vh - 70px)"></div>
+                <div style="position: relative;">
+                    <div id="main-map" style="width: 100%; height: 500px; height: calc(100vh - 70px)"></div>
+                    <div id="map-loading"
+                        style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255,255,255,0.7); z-index: 99; display: flex; align-items: center; justify-content: center; visibility: hidden;">
+                        <div class="d-flex flex-column align-items-center">
+                            <div class="spinner-border text-primary mb-2" role="status">
+                            </div>
+                            <span class="fw-bold text-primary">Memuat Peta...</span>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 

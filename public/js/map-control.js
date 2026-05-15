@@ -110,17 +110,28 @@ function initMap() {
 }
 
 async function generateGoogleMapData() {
-    try {
-        let response = await $.get('/map/data?province=' + s_provinsi + '&city=' + s_kota + '&type=' + s_tipe + '&position=' + s_posisi);
-        let payload = response['payload'];
-        removeMultiMarker();
-        if (payload.length > 0) {
-            createGoogleMapMarker(payload);
-        }
-
-    } catch (e) {
-        console.log(e);
+  try {
+    $("#map-loading").css("visibility", "visible");
+    let response = await $.get(
+      "/map/data?province=" +
+        s_provinsi +
+        "&city=" +
+        s_kota +
+        "&type=" +
+        s_tipe +
+        "&position=" +
+        s_posisi
+    );
+    let payload = response["payload"];
+    removeMultiMarker();
+    if (payload.length > 0) {
+      createGoogleMapMarker(payload);
     }
+    $("#map-loading").css("visibility", "hidden");
+  } catch (e) {
+    console.log(e);
+    $("#map-loading").css("visibility", "hidden");
+  }
 }
 
 
