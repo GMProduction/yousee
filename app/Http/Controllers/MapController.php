@@ -26,41 +26,34 @@ class MapController extends CustomController
             $city = \request('city');
             $type = \request('type');
             $position = \request('position');
-            $item = Item::with('vendorAll');
-            if ($city && $city !== 'undefined'){
+
+            // Select only columns needed for the map markers to reduce payload size
+            $item = Item::select([
+                'id', 'name', 'latitude', 'longitude', 'type_id', 'city_id', 'vendor_id', 'address', 'location'
+            ])->with([
+                'type:id,icon,name',
+                'city:id,name',
+                'vendorAll:id,name'
+            ]);
+
+            if ($city && $city !== 'undefined') {
                 $item = $item->where('city_id', $city);
             }
-            if ($province && $province !== 'undefined'){
+            if ($province && $province !== 'undefined') {
                 $item = $item->whereHas('city', function ($q) use ($province) {
-                    return $q->where('province_id',$province);
+                    return $q->where('province_id', $province);
                 });
             }
-            if ($type && $type !== 'undefined'){
+            if ($type && $type !== 'undefined') {
                 $item = $item->where('type_id', $type);
             }
-            if ($position && $position !== 'undefined'){
+            if ($position && $position !== 'undefined') {
                 $item = $item->where('position', $position);
             }
-            $data = $item->get();
-//            $geo_json_data = $data->map(function ($place) {
-//                return [
-//                    'type' => 'Feature',
-//                    'properties' => $place,
-//                    'geometry' => [
-//                        'type' => 'Point',
-//                        'coordinates' => [
-//                            $place->longitude,
-//                            $place->latitude,
-//
-//                        ],
-//                    ],
-//                ];
-//            });
 
-//            return $this->jsonResponse('success', 200, [
-//                'type' => 'FeatureCollection',
-//                'features' => $geo_json_data
-//            ]);
+            // Using cursor or chunking if data is extremely large, 
+            // but for 10k records, selecting columns is already a huge win.
+            $data = $item->get();
 
             return $this->jsonResponse('success', 200, $data);
         } catch (\Exception $e) {

@@ -125,44 +125,51 @@ async function generateGoogleMapData() {
 
 
 var multi_marker = [];
+var markerCluster;
 
 function removeMultiMarker() {
-    for (i = 0; i < multi_marker.length; i++) {
-        multi_marker[i].setMap(null);
-    }
+  for (i = 0; i < multi_marker.length; i++) {
+    multi_marker[i].setMap(null);
+  }
+  multi_marker = [];
+  if (markerCluster) {
+    markerCluster.clearMarkers();
+  }
 }
 
 function createGoogleMapMarker(payload = []) {
-    var bounds = new google.maps.LatLngBounds();
-    payload.forEach(function (v, k) {
-        var marker = new google.maps.Marker({
-            position: new google.maps.LatLng(v['latitude'], v['longitude']),
-            map: map_container,
-            icon: v['type']['icon'],
-            title: v['name'],
-            // label: {
-            //     text: v['name'],
-            //     className: 'marker-position',
-            //     color: "#377D71"
-            // }
-        });
-        multi_marker.push(marker);
-        let infowindow = new google.maps.InfoWindow({
-            content: windowContent(v, k, role),
-        });
+  var bounds = new google.maps.LatLngBounds();
 
-        marker.addListener('click', function () {
-            infowindow.open({
-                anchor: marker,
-                map_container,
-                shouldFocus: false,
-            });
-
-        });
-        bounds.extend(marker.position);
+  multi_marker = payload.map(function (v, k) {
+    var marker = new google.maps.Marker({
+      position: new google.maps.LatLng(v["latitude"], v["longitude"]),
+      icon: v["type"]["icon"],
+      title: v["name"],
     });
-    map_container.fitBounds(bounds);
 
+    let infowindow = new google.maps.InfoWindow({
+      content: windowContent(v, k, role),
+    });
+
+    marker.addListener("click", function () {
+      infowindow.open({
+        anchor: marker,
+        map: map_container,
+        shouldFocus: false,
+      });
+    });
+    bounds.extend(marker.position);
+    return marker;
+  });
+
+  markerCluster = new markerClusterer.MarkerClusterer({
+    map: map_container,
+    markers: multi_marker,
+  });
+
+  if (payload.length > 0) {
+    map_container.fitBounds(bounds);
+  }
 }
 
 function windowContent(data, key, role = 'presence') {

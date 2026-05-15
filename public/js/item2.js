@@ -35,6 +35,14 @@ $(document).on("change", "#province", function () {
   );
 });
 
+function refreshAll() {
+  datatableItem();
+  // Only refresh map if the map tab is active to save resources
+  if ($("#pills-peta-tab").hasClass("active")) {
+    generateGoogleMapData().then((r) => {});
+  }
+}
+
 $(document).on("change", "#f-provinsi", function (ev) {
   s_provinsi = $(this).val();
   if (s_provinsi === "") {
@@ -50,31 +58,27 @@ $(document).on("change", "#f-provinsi", function (ev) {
   }
   let text = ev.currentTarget.options[ev.currentTarget.selectedIndex].text;
   pillSearch("provinsi", text);
-  datatableItem();
-  generateGoogleMapData().then((r) => {});
+  refreshAll();
 });
 $(document).on("change", "#f-kota", function (ev) {
   s_kota = $(this).val();
   let text = ev.currentTarget.options[ev.currentTarget.selectedIndex].text;
   pillSearch("kota", text);
-  datatableItem();
-  generateGoogleMapData().then((r) => {});
+  refreshAll();
 });
 
 $(document).on("change", "#f-tipe", function (ev) {
   s_tipe = $(this).val();
   let text = ev.currentTarget.options[ev.currentTarget.selectedIndex].text;
   pillSearch("tipe", text);
-  datatableItem();
-  generateGoogleMapData().then((r) => {});
+  refreshAll();
 });
 
 $(document).on("change", "#f-posisi", function (ev) {
   s_posisi = $(this).val();
   let text = ev.currentTarget.options[ev.currentTarget.selectedIndex].text;
   pillSearch("posisi", text);
-  datatableItem();
-  generateGoogleMapData().then((r) => {});
+  refreshAll();
 });
 
 function pillSearch(a, text) {
@@ -117,8 +121,7 @@ $(document).on("click", "#removePill", function () {
   parent.removeChild(child);
   $("#f-" + id).val("");
   window["s_" + id] = "";
-  datatableItem();
-  generateGoogleMapData().then((r) => {});
+  refreshAll();
 });
 
 $(document).on("click", "#addData, #editData", async function () {
