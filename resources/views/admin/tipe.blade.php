@@ -111,7 +111,7 @@
             let id = $(this).data('id');
             let data = $(this).data('row');
             $('#form #name').val('');
-            $('#form #id').val(id);
+            $('#form #id').val(id || '');
             let img = null;
             if (id) {
                 $('#form #name').val(data.name);

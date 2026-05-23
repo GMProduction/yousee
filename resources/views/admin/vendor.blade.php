@@ -170,7 +170,7 @@
             let data = $(this).data('row');
             $('#form .form-control').val('');
             $('#form textarea').val('');
-            $('#form #id').val(id);
+            $('#form #id').val(id || '');
             if (id) {
                 $('#form #name').val(data.name);
                 $('#form #address').val(data.address);
