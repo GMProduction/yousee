@@ -58,6 +58,7 @@ Route::prefix('data')->middleware('auth')->group(
                 Route::get('card', [\App\Http\Controllers\ItemController::class, 'cardItem']);
                 Route::post('delete/{id}', [\App\Http\Controllers\ItemController::class, 'delete']);
                 Route::post('post-item', [\App\Http\Controllers\ItemController::class, 'postItem']);
+                Route::post('check-duplicate', [\App\Http\Controllers\ItemController::class, 'checkDuplicate']);
                 Route::get('url-street-view/{id}', [\App\Http\Controllers\ItemController::class, 'getUrlStreetView']);
                 Route::get('by-id/{id}', [\App\Http\Controllers\ItemController::class, 'getItemByID']);
                 Route::post('show-data', [\App\Http\Controllers\ItemController::class, 'changeShowLandingPage']);

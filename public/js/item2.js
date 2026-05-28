@@ -1,5 +1,5 @@
 let image1, image2, image3;
-var s_provinsi, s_kota, s_tipe, s_posisi;
+var s_provinsi, s_kota, s_tipe, s_posisi, s_duplicate = "";
 
 var center = {
   lat: -7.57797433093528,
@@ -81,6 +81,20 @@ $(document).on("change", "#f-posisi", function (ev) {
   refreshAll();
 });
 
+$(document).on("change", "#f-duplicate", function (ev) {
+  s_duplicate = $(this).is(":checked") ? "1" : "";
+  if (s_duplicate) {
+    pillSearch("duplicate", "Hanya Duplikat");
+  } else {
+    let parent = document.getElementById("pillSearch");
+    let child = document.getElementById("pillduplicate");
+    if (child) {
+      parent.removeChild(child);
+    }
+  }
+  refreshAll();
+});
+
 function pillSearch(a, text) {
   let pill = $("#pillSearch");
   let child = document.getElementById("pill" + a);
@@ -118,9 +132,16 @@ $(document).on("click", "#removePill", function () {
   let id = $(this).data("id");
   let parent = document.getElementById("pillSearch");
   let child = document.getElementById("pill" + id);
-  parent.removeChild(child);
-  $("#f-" + id).val("");
-  window["s_" + id] = "";
+  if (child) {
+    parent.removeChild(child);
+  }
+  if (id === "duplicate") {
+    $("#f-duplicate").prop("checked", false);
+    s_duplicate = "";
+  } else {
+    $("#f-" + id).val("");
+    window["s_" + id] = "";
+  }
   refreshAll();
 });
 
@@ -243,6 +264,7 @@ function datatableItem() {
       city: s_kota,
       type: s_tipe,
       position: s_posisi,
+      duplicate: s_duplicate,
     };
 
     var url = "/data/item/datatable";
@@ -461,6 +483,7 @@ function datatableItemPresence() {
     city: s_kota,
     type: s_tipe,
     position: s_posisi,
+    duplicate: s_duplicate,
   };
   let stringData = JSON.stringify(formData);
   var url = "/data/item/datatable";
@@ -566,34 +589,62 @@ function saveItem() {
   let form = $("#form");
   form.submit(async function (e) {
     e.preventDefault(e);
-    let formData = new FormData(this);
-    // if ($('#image1').val()) {
-    //     let img = await handleImageUpload($('#image1'));
-    //     formData.append('image1', img, img.name)
-    // }
-    // if ($('#image2').val()) {
-    //     let img = await handleImageUpload($('#image2'));
-    //     formData.append('image2', img, img.name)
-    // }
-    // if ($('#image3').val()) {
-    //     let img = await handleImageUpload($('#image3'));
-    //     formData.append('image3', img, img.name)
-    // }
-    let data = {
-      form_data: formData,
-      image: {
-        image1: "image1",
-        image2: "image2",
-        image3: "image3",
-      },
+
+    let address = $("#form #address").val();
+    let width = $("#form #width").val();
+    let height = $("#form #height").val();
+    let vendor_id = $("#form #vendor").val();
+    let id = $("#form #id").val();
+
+    const proceedToSave = () => {
+      let formData = new FormData(form[0]);
+      let data = {
+        form_data: formData,
+        image: {
+          image1: "image1",
+          image2: "image2",
+          image3: "image3",
+        },
+      };
+      saveDataAjaxWImage(
+        "Simpan Data",
+        "form",
+        data,
+        "/data/item/post-item",
+        afterSave
+      );
     };
-    saveDataAjaxWImage(
-      "Simpan Data",
-      "form",
-      data,
-      "/data/item/post-item",
-      afterSave
-    );
+
+    if (address && width && height && vendor_id) {
+      $.post("/data/item/check-duplicate", {
+        _token: $('meta[name="_token"]').attr("content"),
+        address: address,
+        width: width,
+        height: height,
+        vendor_id: vendor_id,
+        id: id
+      }, function (res) {
+        if (res.duplicate) {
+          swal({
+            title: "Peringatan: Data Duplikat",
+            text: res.message + "\n\nApakah Anda yakin tetap ingin menyimpan data ini?",
+            icon: "warning",
+            buttons: ["Batal", "Ya, Tetap Simpan"],
+            dangerMode: true,
+          }).then((willSave) => {
+            if (willSave) {
+              proceedToSave();
+            }
+          });
+        } else {
+          proceedToSave();
+        }
+      }).fail(function () {
+        proceedToSave();
+      });
+    } else {
+      proceedToSave();
+    }
     return false;
   });
 }

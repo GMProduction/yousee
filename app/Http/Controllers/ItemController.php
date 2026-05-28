@@ -21,11 +21,65 @@ class ItemController extends CustomController
      */
     public function datatable()
     {
-        $province = \request('province');
-        $city     = \request('city');
-        $type     = \request('type');
-        $position = \request('position');
-        $item     = Item::with(['vendorAll', 'city', 'itemRent']);
+        $province  = \request('province');
+        $city      = \request('city');
+        $type      = \request('type');
+        $position  = \request('position');
+        $duplicate = \request('duplicate');
+        $item      = Item::with(['vendorAll', 'city', 'itemRent']);
+
+        if ($duplicate) {
+            // Cari candidate id yang memiliki vendor_id, width, dan height yang sama dengan titik lain
+            $candidates = Item::select('id', 'vendor_id', 'width', 'height', 'address')
+                ->whereIn('id', function($q) {
+                    $q->select('a.id')
+                      ->from('items as a')
+                      ->join('items as b', function($join) {
+                          $join->on('a.vendor_id', '=', 'b.vendor_id')
+                               ->on('a.width', '=', 'b.width')
+                               ->on('a.height', '=', 'b.height')
+                               ->on('a.id', '<>', 'b.id');
+                      })
+                      ->whereNull('a.deleted_at')
+                      ->whereNull('b.deleted_at');
+                })
+                ->get();
+
+            $duplicateIds = [];
+            $count = count($candidates);
+            for ($i = 0; $i < $count; $i++) {
+                $itemA = $candidates[$i];
+                $addr1 = strtolower(trim($itemA->address));
+                $w1 = str_replace([',', ' '], '', $itemA->width);
+                $h1 = str_replace([',', ' '], '', $itemA->height);
+
+                for ($j = 0; $j < $count; $j++) {
+                    if ($i === $j) continue;
+                    $itemB = $candidates[$j];
+
+                    if ($itemA->vendor_id !== $itemB->vendor_id) continue;
+
+                    $w2 = str_replace([',', ' '], '', $itemB->width);
+                    $h2 = str_replace([',', ' '], '', $itemB->height);
+                    if ($w1 !== $w2 || $h1 !== $h2) continue;
+
+                    $addr2 = strtolower(trim($itemB->address));
+
+                    if ($addr1 === $addr2) {
+                        $duplicateIds[] = $itemA->id;
+                        break;
+                    }
+
+                    similar_text($addr1, $addr2, $percent);
+                    if ($percent >= 80) {
+                        $duplicateIds[] = $itemA->id;
+                        break;
+                    }
+                }
+            }
+
+            $item = $item->whereIn('id', $duplicateIds);
+        }
 
         if ($city) {
             $item = $item->where('city_id', $city);
@@ -185,6 +239,61 @@ class ItemController extends CustomController
             ],
             200
         );
+    }
+
+    public function checkDuplicate()
+    {
+        $address = \request('address');
+        $width = \request('width');
+        $height = \request('height');
+        $vendor_id = \request('vendor_id');
+        $id = \request('id');
+
+        if (!$address || !$width || !$height || !$vendor_id) {
+            return response()->json(['duplicate' => false]);
+        }
+
+        // Normalisasi ukuran input: hilangkan koma dan spasi
+        $cleanWidth = str_replace([',', ' '], '', $width);
+        $cleanHeight = str_replace([',', ' '], '', $height);
+
+        // Cari item dari database dengan vendor yang sama
+        $items = Item::where('vendor_id', $vendor_id);
+        if ($id) {
+            $items = $items->where('id', '!=', $id);
+        }
+        $items = $items->get();
+
+        foreach ($items as $item) {
+            // Normalisasi ukuran dari DB
+            $dbWidth = str_replace([',', ' '], '', $item->width);
+            $dbHeight = str_replace([',', ' '], '', $item->height);
+
+            // Jika ukuran cocok (lebar & tinggi)
+            if ($cleanWidth == $dbWidth && $cleanHeight == $dbHeight) {
+                // Perbandingan alamat (case-insensitive & trim)
+                $addr1 = strtolower(trim($address));
+                $addr2 = strtolower(trim($item->address));
+
+                if ($addr1 === $addr2) {
+                    return response()->json([
+                        'duplicate' => true,
+                        'message' => "Data duplikat terdeteksi! Kode: {$item->name}, Alamat: {$item->address}"
+                    ]);
+                }
+
+                // Cek kemiripan string menggunakan similar_text
+                similar_text($addr1, $addr2, $percent);
+                if ($percent >= 80) {
+                    return response()->json([
+                        'duplicate' => true,
+                        'message' => "Data mirip terdeteksi! Kode: {$item->name}, Alamat: {$item->address} (Kemiripan " . round($percent, 1) . "%)"
+                    ]);
+                }
+            }
+        }
+
+        return response()->json(['duplicate' => false]);
     }
 
     public function getUrlStreetView($id)
