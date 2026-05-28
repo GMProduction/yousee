@@ -171,9 +171,9 @@
                         <!-- Will be populated via AJAX -->
                     </div>
 
-                    <div class="d-flex justify-content-between align-items-center mt-4">
-                        <button class="btn btn-outline-primary" id="dup-prev-btn" disabled>Sebelumnya</button>
-                        <button class="btn btn-outline-primary" id="dup-next-btn" disabled>Selanjutnya</button>
+                    <div class="d-flex justify-content-between align-items-center mt-4 px-3 pb-3">
+                        <button class="btn btn-outline-primary ms-2 mb-2" id="dup-prev-btn" disabled>Sebelumnya</button>
+                        <button class="btn btn-outline-primary me-2 mb-2" id="dup-next-btn" disabled>Selanjutnya</button>
                     </div>
                 </div>
             </div>
@@ -200,7 +200,7 @@
     {{-- @include('admin.map', ['data' => 'script']) --}}
 
     {{--    <script src="{{ asset('js/map-control.js') }}"></script> --}}
-    <script src="{{ asset('js/item_duplicate.js?v=2') }}"></script>
+    <script src="{{ asset('js/item_duplicate.js?v=4') }}"></script>
 
     <script>
         $(document).ready(function() {

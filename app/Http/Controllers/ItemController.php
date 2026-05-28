@@ -412,84 +412,111 @@ class ItemController extends CustomController
             $grouped[$key][] = $item;
         }
 
-        // Cari semua pasangan duplikat
-        $pairs = [];
+        // Cari semua kelompok duplikat (clusters)
+        $groups = [];
         foreach ($grouped as $key => $groupItems) {
             $groupCount = count($groupItems);
             if ($groupCount <= 1) continue;
 
-            // Lakukan perbandingan N^2 pada kelompok kecil ini
-            for ($i = 0; $i < $groupCount; $i++) {
-                $itemA = $groupItems[$i];
-                $addr1 = strtolower(trim($itemA->address ?? ''));
+            // List of clusters. Each cluster is an array of items.
+            $clusters = [];
 
-                for ($j = $i + 1; $j < $groupCount; $j++) {
-                    $itemB = $groupItems[$j];
-                    $addr2 = strtolower(trim($itemB->address ?? ''));
+            foreach ($groupItems as $item) {
+                $addr1 = strtolower(trim($item->address ?? ''));
+                $matchedClusterIndex = -1;
 
-                    $isDuplicate = false;
-                    $percent = 0;
-                    if ($addr1 === $addr2) {
-                        $isDuplicate = true;
-                        $percent = 100.0;
-                    } else {
-                        similar_text($addr1, $addr2, $percent);
-                        if ($percent >= 80) {
-                            $isDuplicate = true;
+                // Cek apakah item ini mirip dengan salah satu item di cluster yang sudah ada
+                foreach ($clusters as $cIdx => $cluster) {
+                    foreach ($cluster as $existingItem) {
+                        $addr2 = strtolower(trim($existingItem->address ?? ''));
+
+                        $isSimilar = false;
+                        if ($addr1 === $addr2) {
+                            $isSimilar = true;
+                        } else {
+                            similar_text($addr1, $addr2, $percent);
+                            if ($percent >= 80) {
+                                $isSimilar = true;
+                            }
+                        }
+
+                        if ($isSimilar) {
+                            $matchedClusterIndex = $cIdx;
+                            break 2; // Pecahkan loop cluster dan loop existingItem
                         }
                     }
+                }
 
-                    if ($isDuplicate) {
-                        $pairs[] = [
-                            'item_a' => [
-                                'id' => $itemA->id,
-                                'name' => $itemA->name ?? '-',
-                                'type' => $itemA->type ? $itemA->type->name : '-',
-                                'province' => $itemA->city && $itemA->city->province ? $itemA->city->province->name : '-',
-                                'city' => $itemA->city ? $itemA->city->name : '-',
-                                'address' => $itemA->address,
-                                'width' => $itemA->width,
-                                'height' => $itemA->height,
-                                'vendor' => $itemA->vendorAll ? $itemA->vendorAll->name : '-',
-                                'latitude' => $itemA->latitude,
-                                'longitude' => $itemA->longitude,
-                                'image1' => $itemA->image1 ? url($itemA->image1) : '',
-                            ],
-                            'item_b' => [
-                                'id' => $itemB->id,
-                                'name' => $itemB->name ?? '-',
-                                'type' => $itemB->type ? $itemB->type->name : '-',
-                                'province' => $itemB->city && $itemB->city->province ? $itemB->city->province->name : '-',
-                                'city' => $itemB->city ? $itemB->city->name : '-',
-                                'address' => $itemB->address,
-                                'width' => $itemB->width,
-                                'height' => $itemB->height,
-                                'vendor' => $itemB->vendorAll ? $itemB->vendorAll->name : '-',
-                                'latitude' => $itemB->latitude,
-                                'longitude' => $itemB->longitude,
-                                'image1' => $itemB->image1 ? url($itemB->image1) : '',
-                            ],
-                            'similarity' => round($percent, 1) . '%'
-                        ];
-                    }
+                if ($matchedClusterIndex !== -1) {
+                    $clusters[$matchedClusterIndex][] = $item;
+                } else {
+                    $clusters[] = [$item];
+                }
+            }
+
+            // Simpan hanya cluster yang memiliki anggota > 1 (ada duplikat)
+            foreach ($clusters as $cluster) {
+                if (count($cluster) > 1) {
+                    $groups[] = $cluster;
                 }
             }
         }
 
-        // Paginate pairs: page starts at 1
-        $totalPairs = count($pairs);
+        // Paginate groups: page starts at 1
+        $totalGroups = count($groups);
         $page = intval(\request('page', 1));
         if ($page < 1) $page = 1;
 
-        $pair = null;
-        if ($totalPairs > 0 && isset($pairs[$page - 1])) {
-            $pair = $pairs[$page - 1];
+        $group = null;
+        if ($totalGroups > 0 && isset($groups[$page - 1])) {
+            $rawGroup = $groups[$page - 1];
+            
+            // Format items inside the group
+            $formattedItems = [];
+            foreach ($rawGroup as $item) {
+                $formattedItems[] = [
+                    'id' => $item->id,
+                    'name' => $item->name ?? '-',
+                    'type' => $item->type ? $item->type->name : '-',
+                    'province' => $item->city && $item->city->province ? $item->city->province->name : '-',
+                    'city' => $item->city ? $item->city->name : '-',
+                    'address' => $item->address,
+                    'width' => $item->width,
+                    'height' => $item->height,
+                    'vendor' => $item->vendorAll ? $item->vendorAll->name : '-',
+                    'latitude' => $item->latitude,
+                    'longitude' => $item->longitude,
+                    'image1' => $item->image1 ? url($item->image1) : '',
+                ];
+            }
+
+            // Calculate similarity percentage relative to the first item
+            $addr0 = strtolower(trim($rawGroup[0]->address ?? ''));
+            $similarityDetails = [];
+            $totalPercent = 0;
+            for ($k = 1; $k < count($rawGroup); $k++) {
+                $addrK = strtolower(trim($rawGroup[$k]->address ?? ''));
+                if ($addr0 === $addrK) {
+                    $percent = 100.0;
+                } else {
+                    similar_text($addr0, $addrK, $percent);
+                }
+                $totalPercent += $percent;
+                $similarityDetails[] = round($percent, 1) . '%';
+            }
+            $avgPercent = count($similarityDetails) > 0 ? round($totalPercent / count($similarityDetails), 1) : 100;
+            $similarityText = count($similarityDetails) === 1 ? $similarityDetails[0] : $avgPercent . '% (Rata-rata)';
+
+            $group = [
+                'items' => $formattedItems,
+                'similarity' => $similarityText
+            ];
         }
 
         return response()->json([
-            'pair' => $pair,
+            'group' => $group,
             'current_page' => $page,
-            'total_pages' => $totalPairs,
+            'total_pages' => $totalGroups,
         ]);
     }
 

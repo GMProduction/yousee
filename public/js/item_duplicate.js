@@ -724,7 +724,7 @@ $(document).on("shown.bs.tab", "#pills-tab button", function (e) {
 function loadDuplicatePairs(page) {
   currentDupPage = page;
   const container = $("#dup-pairs-container");
-  container.html('<div class="col-12 text-center text-muted py-5"><div class="spinner-border text-primary mb-2" role="status"></div><br><span>Memuat pasangan duplikat...</span></div>');
+  container.html('<div class="col-12 text-center text-muted py-5"><div class="spinner-border text-primary mb-2" role="status"></div><br><span>Memuat kelompok duplikat...</span></div>');
   
   $("#dup-prev-btn").prop("disabled", true);
   $("#dup-next-btn").prop("disabled", true);
@@ -732,16 +732,16 @@ function loadDuplicatePairs(page) {
   $.get("/data/item/duplicate-pairs", { page: page }, function (res) {
     container.empty();
     
-    const pair = res.pair;
+    const group = res.group;
     const total = res.total_pages;
     
-    if (!pair || total === 0) {
+    if (!group || total === 0) {
       $("#dup-progress-text").html("0 dari 0");
       container.html('<div class="col-12 text-center text-muted py-5"><span class="material-symbols-outlined text-success" style="font-size: 48px;">check_circle</span><h5 class="mt-2 fw-bold">Semua data bersih!</h5><p class="text-muted">Tidak ada titik koordinat yang terdeteksi duplikat.</p></div>');
       return;
     }
 
-    $("#dup-progress-text").html("Pasangan " + page + " dari " + total);
+    $("#dup-progress-text").html("Kelompok " + page + " dari " + total);
     
     if (page > 1) {
       $("#dup-prev-btn").prop("disabled", false);
@@ -752,8 +752,8 @@ function loadDuplicatePairs(page) {
 
     const renderCard = (item, typeLabel) => {
       let imgHtml = item.image1 ? 
-          '<img src="' + item.image1 + '" class="card-img-top" style="object-fit: cover; height: 180px; width: 100%;" alt="Gambar Vendor">' :
-          '<div class="d-flex align-items-center justify-content-center bg-light text-muted card-img-top" style="height: 180px; width: 100%;"><span class="d-flex flex-column align-items-center"><i class="material-symbols-outlined mb-1" style="font-size: 32px">image</i>Tanpa Gambar</span></div>';
+          '<img src="' + item.image1 + '" class="card-img-top" style="object-fit: contain; width: 100%; height: auto; max-height: 400px; background-color: #f8f9fa;" alt="Gambar Vendor">' :
+          '<div class="d-flex align-items-center justify-content-center bg-light text-muted card-img-top" style="height: 200px; width: 100%;"><span class="d-flex flex-column align-items-center"><i class="material-symbols-outlined mb-1" style="font-size: 32px">image</i>Tanpa Gambar</span></div>';
 
       return (
         '<div class="col-md-6">' +
@@ -770,8 +770,8 @@ function loadDuplicatePairs(page) {
         '      <p class="mb-1"><strong>Vendor:</strong> ' + item.vendor + '</p>' +
         '      <p class="mb-2" style="color: #666;"><strong>Koordinat:</strong> ' + item.latitude + ', ' + item.longitude + '</p>' +
         '      <div class="d-flex gap-2 justify-content-end border-top pt-3 mt-3">' +
-        '        <button class="btn btn-sm btn-danger btn-delete-dup" data-id="' + item.id + '" style="border-radius: 4px; display: inline-flex; align-items: center; gap: 4px; padding: 4px 10px; font-size: 11px;"><i class="material-symbols-outlined" style="font-size: 14px">delete</i> Hapus</button>' +
-        '        <button class="btn btn-sm btn-utama-soft btn-resolve-dup" data-id="' + item.id + '" style="border-radius: 4px; display: inline-flex; align-items: center; gap: 4px; padding: 4px 10px; font-size: 11px;"><i class="material-symbols-outlined" style="font-size: 14px">check</i> Bukan Duplikat</button>' +
+        '        <button class="btn btn-sm btn-danger btn-delete-dup" data-id="' + item.id + '" style="border-radius: 4px; display: inline-flex; align-items: center; gap: 4px; padding: 6px 12px; font-size: 11px; font-weight: bold; color: #fff !important;"><i class="material-symbols-outlined" style="font-size: 14px; color: #fff !important; font-weight: bold;">delete</i> Hapus</button>' +
+        '        <button class="btn btn-sm btn-utama-soft btn-resolve-dup" data-id="' + item.id + '" style="border-radius: 4px; display: inline-flex; align-items: center; gap: 4px; padding: 6px 12px; font-size: 11px; font-weight: bold;"><i class="material-symbols-outlined" style="font-size: 14px; font-weight: bold;">check</i> Bukan Duplikat</button>' +
         '      </div>' +
         '    </div>' +
         '  </div>' +
@@ -780,13 +780,16 @@ function loadDuplicatePairs(page) {
     };
 
     container.append(
-      '<div class="col-12 text-center mb-2"><span class="badge bg-warning text-dark fs-6" style="border-radius: 200px; padding: 6px 16px; font-weight: 500;">Tingkat Kemiripan Alamat: ' + pair.similarity + '</span></div>'
+      '<div class="col-12 text-center mb-2"><span class="badge bg-warning text-dark fs-6" style="border-radius: 200px; padding: 6px 16px; font-weight: 500;">Tingkat Kemiripan Alamat: ' + group.similarity + '</span></div>'
     );
-    container.append(renderCard(pair.item_a, "KANDIDAT A"));
-    container.append(renderCard(pair.item_b, "KANDIDAT B"));
+
+    group.items.forEach((item, index) => {
+      let candidateLabel = "KANDIDAT " + String.fromCharCode(65 + index); // KANDIDAT A, KANDIDAT B, KANDIDAT C...
+      container.append(renderCard(item, candidateLabel));
+    });
 
   }).fail(function () {
-    container.html('<div class="col-12 text-center text-danger py-5">Gagal memuat data pasangan duplikat.</div>');
+    container.html('<div class="col-12 text-center text-danger py-5">Gagal memuat data kelompok duplikat.</div>');
   });
 }
 
