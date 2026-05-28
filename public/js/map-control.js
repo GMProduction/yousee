@@ -287,5 +287,46 @@ function generateDetail(data) {
     //
     // navigator.clipboard.writeText(copyText.value);
     const text = 'Apakah '+data['type']['name']+' yang berlokasi di '+data['city']['name']+' '+data['address']+' '+data['location']+' tersedia ?';
-    $('.sendWa').attr('href','https://wa.me/'+num+'?text='+encodeURI(text)).attr('target','_blank')
+    $('.sendWa').attr('href','https://wa.me/'+num+'?text='+encodeURI(text)).attr('target','_blank');
+
+    // Load duplicate coordinates
+    loadDuplicates(data['id']);
 }
+
+function loadDuplicates(itemId) {
+    const tbody = $('#detail-duplicate-body');
+    tbody.html('<tr><td colspan="7" class="text-center">Loading...</td></tr>');
+    
+    // Switch to first tab (Detail) by default when a new detail is loaded
+    $('#pills-single-detail-tab').tab('show');
+    
+    $.get('/data/item/by-id/' + itemId + '/duplicates', function(res) {
+        tbody.empty();
+        if (res.length === 0) {
+            tbody.html('<tr><td colspan="7" class="text-center text-muted">Tidak ada data duplikat ditemukan.</td></tr>');
+            return;
+        }
+        
+        res.forEach(function(item) {
+            tbody.append(
+                '<tr>' +
+                '  <td>' + item.name + '</td>' +
+                '  <td>' + item.type + '</td>' +
+                '  <td>' + item.city + '</td>' +
+                '  <td>' + item.address + '</td>' +
+                '  <td>' + item.height + ' x ' + item.width + '</td>' +
+                '  <td><span class="badge bg-warning text-dark">' + item.similarity + '</span></td>' +
+                '  <td><button class="btn btn-sm btn-utama-soft view-duplicate-detail" data-id="' + item.id + '" style="border-radius: 4px; display: inline-flex; align-items: center; gap: 4px; padding: 2px 8px; font-size: 12px;"><i class="material-symbols-outlined" style="font-size: 14px">visibility</i> Detail</button></td>' +
+                '</tr>'
+            );
+        });
+    }).fail(function() {
+        tbody.html('<tr><td colspan="7" class="text-center text-danger">Gagal memuat data duplikat.</td></tr>');
+    });
+}
+
+$(document).on('click', '.view-duplicate-detail', function() {
+    let id = $(this).data('id');
+    // Load the detail for this duplicate item in-place in the modal
+    generateSingleGoogleMapData(id.toString());
+});

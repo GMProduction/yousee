@@ -435,6 +435,12 @@
                                 Yousee
                             </button>
                         </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link genostab-custom" id="pills-single-duplicate-tab"
+                                data-bs-toggle="pill" data-bs-target="#pills-single-duplicate" type="button"
+                                role="tab" aria-controls="pills-single-duplicate" aria-selected="false">Duplikat
+                            </button>
+                        </li>
                     </ul>
 
                     <div class="tab-content" id="pills-single-tabContent">
@@ -605,6 +611,29 @@
                                         class="ms-2 material-symbols-outlined menu-icon text-white">download</i></a>
                             </div>
 
+                        </div>
+                        <div class="tab-pane fade" id="pills-single-duplicate" role="tabpanel"
+                            aria-labelledby="pills-single-duplicate-tab">
+                            <div class="table-responsive pt-3">
+                                <table class="table table-sm table-striped table-hover" id="detail-duplicate-table" style="width: 100%">
+                                    <thead>
+                                        <tr>
+                                            <th>Kode</th>
+                                            <th>Tipe</th>
+                                            <th>Area</th>
+                                            <th>Alamat</th>
+                                            <th>Ukuran (T x L)</th>
+                                            <th>Kemiripan</th>
+                                            <th>Aksi</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="detail-duplicate-body">
+                                        <tr>
+                                            <td colspan="7" class="text-center">Loading...</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
 

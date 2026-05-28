@@ -30,51 +30,54 @@ class ItemController extends CustomController
         $item      = Item::with(['vendorAll', 'city', 'itemRent']);
 
         if ($duplicate) {
-            // Cari candidate id yang memiliki vendor_id, width, dan height yang sama dengan titik lain
-            $candidates = Item::select('id', 'vendor_id', 'width', 'height', 'address')
-                ->whereIn('id', function($q) {
-                    $q->select('a.id')
-                      ->from('items as a')
-                      ->join('items as b', function($join) {
-                          $join->on('a.vendor_id', '=', 'b.vendor_id')
-                               ->on('a.width', '=', 'b.width')
-                               ->on('a.height', '=', 'b.height')
-                               ->on('a.id', '<>', 'b.id');
-                      })
-                      ->whereNull('a.deleted_at')
-                      ->whereNull('b.deleted_at');
-                })
-                ->get();
+            // Ambil semua item aktif untuk diproses
+            $allItems = Item::select('id', 'vendor_id', 'width', 'height', 'address')->get();
+            
+            // Group items by vendor, normalized width, and normalized height
+            $grouped = [];
+            foreach ($allItems as $itemA) {
+                $v = $itemA->vendor_id;
+                $w = floatval(str_replace([',', ' '], '', $itemA->width ?? '0'));
+                $h = floatval(str_replace([',', ' '], '', $itemA->height ?? '0'));
+                $addr = strtolower(trim($itemA->address ?? ''));
+                if ($addr === '') continue;
+
+                $key = $v . '_' . $w . '_' . $h;
+                $grouped[$key][] = [
+                    'id' => $itemA->id,
+                    'address' => $addr
+                ];
+            }
 
             $duplicateIds = [];
-            $count = count($candidates);
-            for ($i = 0; $i < $count; $i++) {
-                $itemA = $candidates[$i];
-                $addr1 = strtolower(trim($itemA->address));
-                $w1 = str_replace([',', ' '], '', $itemA->width);
-                $h1 = str_replace([',', ' '], '', $itemA->height);
+            foreach ($grouped as $key => $groupItems) {
+                $groupCount = count($groupItems);
+                if ($groupCount <= 1) continue;
 
-                for ($j = 0; $j < $count; $j++) {
-                    if ($i === $j) continue;
-                    $itemB = $candidates[$j];
+                for ($i = 0; $i < $groupCount; $i++) {
+                    $itemA = $groupItems[$i];
+                    $addr1 = $itemA['address'];
+                    $isDuplicate = false;
 
-                    if ($itemA->vendor_id !== $itemB->vendor_id) continue;
+                    for ($j = 0; $j < $groupCount; $j++) {
+                        if ($i === $j) continue;
+                        $itemB = $groupItems[$j];
+                        $addr2 = $itemB['address'];
 
-                    $w2 = str_replace([',', ' '], '', $itemB->width);
-                    $h2 = str_replace([',', ' '], '', $itemB->height);
-                    if ($w1 !== $w2 || $h1 !== $h2) continue;
+                        if ($addr1 === $addr2) {
+                            $isDuplicate = true;
+                            break;
+                        }
 
-                    $addr2 = strtolower(trim($itemB->address));
-
-                    if ($addr1 === $addr2) {
-                        $duplicateIds[] = $itemA->id;
-                        break;
+                        similar_text($addr1, $addr2, $percent);
+                        if ($percent >= 80) {
+                            $isDuplicate = true;
+                            break;
+                        }
                     }
 
-                    similar_text($addr1, $addr2, $percent);
-                    if ($percent >= 80) {
-                        $duplicateIds[] = $itemA->id;
-                        break;
+                    if ($isDuplicate) {
+                        $duplicateIds[] = $itemA['id'];
                     }
                 }
             }
@@ -314,6 +317,63 @@ class ItemController extends CustomController
     public function getItemByID($id)
     {
         return Item::findOrFail($id);
+    }
+
+    public function getDuplicates($id)
+    {
+        $targetItem = Item::findOrFail($id);
+        
+        $addr1 = strtolower(trim($targetItem->address ?? ''));
+        if ($addr1 === '') {
+            return response()->json([]);
+        }
+
+        $w1 = floatval(str_replace([',', ' '], '', $targetItem->width ?? '0'));
+        $h1 = floatval(str_replace([',', ' '], '', $targetItem->height ?? '0'));
+        $v1 = $targetItem->vendor_id;
+
+        // Cari item lain (bukan targetItem itu sendiri) dengan vendor yang sama
+        $allItems = Item::with(['city', 'type', 'vendorAll'])
+            ->where('vendor_id', $v1)
+            ->where('id', '!=', $id)
+            ->get();
+
+        $duplicates = [];
+        foreach ($allItems as $itemB) {
+            $w2 = floatval(str_replace([',', ' '], '', $itemB->width ?? '0'));
+            $h2 = floatval(str_replace([',', ' '], '', $itemB->height ?? '0'));
+            if ($w1 !== $w2 || $h1 !== $h2) continue;
+
+            $addr2 = strtolower(trim($itemB->address ?? ''));
+            if ($addr2 === '') continue;
+
+            $isDup = false;
+            $percent = 0;
+            if ($addr1 === $addr2) {
+                $isDup = true;
+                $percent = 100.0;
+            } else {
+                similar_text($addr1, $addr2, $percent);
+                if ($percent >= 80) {
+                    $isDup = true;
+                }
+            }
+
+            if ($isDup) {
+                $duplicates[] = [
+                    'id' => $itemB->id,
+                    'name' => $itemB->name,
+                    'address' => $itemB->address,
+                    'city' => $itemB->city ? $itemB->city->name : '-',
+                    'type' => $itemB->type ? $itemB->type->name : '-',
+                    'width' => $itemB->width,
+                    'height' => $itemB->height,
+                    'similarity' => round($percent, 1) . '%'
+                ];
+            }
+        }
+
+        return response()->json($duplicates);
     }
 
     public function changeShowLandingPage()

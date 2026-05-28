@@ -61,6 +61,7 @@ Route::prefix('data')->middleware('auth')->group(
                 Route::post('check-duplicate', [\App\Http\Controllers\ItemController::class, 'checkDuplicate']);
                 Route::get('url-street-view/{id}', [\App\Http\Controllers\ItemController::class, 'getUrlStreetView']);
                 Route::get('by-id/{id}', [\App\Http\Controllers\ItemController::class, 'getItemByID']);
+                Route::get('by-id/{id}/duplicates', [\App\Http\Controllers\ItemController::class, 'getDuplicates']);
                 Route::post('show-data', [\App\Http\Controllers\ItemController::class, 'changeShowLandingPage']);
                 Route::get('generate-slug', [\App\Http\Controllers\ItemController::class, 'generateSlug']);
             }
