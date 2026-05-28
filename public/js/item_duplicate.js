@@ -712,3 +712,144 @@ async function getUrl(id) {
   });
   return url;
 }
+
+let currentDupPage = 1;
+
+$(document).on("shown.bs.tab", "#pills-tab button", function (e) {
+  if (e.target.id === "pills-cek-duplikat-tab") {
+    loadDuplicatePairs(1);
+  }
+});
+
+function loadDuplicatePairs(page) {
+  currentDupPage = page;
+  const container = $("#dup-pairs-container");
+  container.html('<div class="col-12 text-center text-muted py-5"><div class="spinner-border text-primary mb-2" role="status"></div><br><span>Memuat pasangan duplikat...</span></div>');
+  
+  $("#dup-prev-btn").prop("disabled", true);
+  $("#dup-next-btn").prop("disabled", true);
+
+  $.get("/data/item/duplicate-pairs", { page: page }, function (res) {
+    container.empty();
+    
+    const pair = res.pair;
+    const total = res.total_pages;
+    
+    if (!pair || total === 0) {
+      $("#dup-progress-text").html("0 dari 0");
+      container.html('<div class="col-12 text-center text-muted py-5"><span class="material-symbols-outlined text-success" style="font-size: 48px;">check_circle</span><h5 class="mt-2 fw-bold">Semua data bersih!</h5><p class="text-muted">Tidak ada titik koordinat yang terdeteksi duplikat.</p></div>');
+      return;
+    }
+
+    $("#dup-progress-text").html("Pasangan " + page + " dari " + total);
+    
+    if (page > 1) {
+      $("#dup-prev-btn").prop("disabled", false);
+    }
+    if (page < total) {
+      $("#dup-next-btn").prop("disabled", false);
+    }
+
+    const renderCard = (item, typeLabel) => {
+      let imgHtml = item.image1 ? 
+          '<img src="' + item.image1 + '" class="card-img-top" style="object-fit: cover; height: 180px; width: 100%;" alt="Gambar Vendor">' :
+          '<div class="d-flex align-items-center justify-content-center bg-light text-muted card-img-top" style="height: 180px; width: 100%;"><span class="d-flex flex-column align-items-center"><i class="material-symbols-outlined mb-1" style="font-size: 32px">image</i>Tanpa Gambar</span></div>';
+
+      return (
+        '<div class="col-md-6">' +
+        '  <div class="card h-100 shadow-sm border" style="border-radius: 8px; overflow: hidden;">' +
+        '    <div class="card-header bg-light d-flex justify-content-between align-items-center py-2 px-3">' +
+        '      <span class="fw-bold text-primary">' + typeLabel + ' (' + item.name + ')</span>' +
+        '      <span class="badge bg-primary" style="font-size: 11px;">' + item.type + '</span>' +
+        '    </div>' +
+        imgHtml +
+        '    <div class="card-body p-3" style="font-size: 13px; line-height: 1.5; color: #333;">' +
+        '      <p class="mb-1 text-primary fw-bold"><i class="material-symbols-outlined align-middle me-1" style="font-size: 14px">location_on</i>' + item.province + ', ' + item.city + '</p>' +
+        '      <p class="mb-1"><strong>Alamat:</strong> ' + item.address + '</p>' +
+        '      <p class="mb-1"><strong>Ukuran:</strong> ' + item.height + ' x ' + item.width + '</p>' +
+        '      <p class="mb-1"><strong>Vendor:</strong> ' + item.vendor + '</p>' +
+        '      <p class="mb-2" style="color: #666;"><strong>Koordinat:</strong> ' + item.latitude + ', ' + item.longitude + '</p>' +
+        '      <div class="d-flex gap-2 justify-content-end border-top pt-3 mt-3">' +
+        '        <button class="btn btn-sm btn-danger btn-delete-dup" data-id="' + item.id + '" style="border-radius: 4px; display: inline-flex; align-items: center; gap: 4px; padding: 4px 10px; font-size: 11px;"><i class="material-symbols-outlined" style="font-size: 14px">delete</i> Hapus</button>' +
+        '        <button class="btn btn-sm btn-utama-soft btn-resolve-dup" data-id="' + item.id + '" style="border-radius: 4px; display: inline-flex; align-items: center; gap: 4px; padding: 4px 10px; font-size: 11px;"><i class="material-symbols-outlined" style="font-size: 14px">check</i> Bukan Duplikat</button>' +
+        '      </div>' +
+        '    </div>' +
+        '  </div>' +
+        '</div>'
+      );
+    };
+
+    container.append(
+      '<div class="col-12 text-center mb-2"><span class="badge bg-warning text-dark fs-6" style="border-radius: 200px; padding: 6px 16px; font-weight: 500;">Tingkat Kemiripan Alamat: ' + pair.similarity + '</span></div>'
+    );
+    container.append(renderCard(pair.item_a, "KANDIDAT A"));
+    container.append(renderCard(pair.item_b, "KANDIDAT B"));
+
+  }).fail(function () {
+    container.html('<div class="col-12 text-center text-danger py-5">Gagal memuat data pasangan duplikat.</div>');
+  });
+}
+
+$(document).on("click", "#dup-prev-btn", function () {
+  if (currentDupPage > 1) {
+    loadDuplicatePairs(currentDupPage - 1);
+  }
+});
+
+$(document).on("click", "#dup-next-btn", function () {
+  loadDuplicatePairs(currentDupPage + 1);
+});
+
+// Resolve duplicate action
+$(document).on("click", ".btn-resolve-dup", function () {
+  const id = $(this).data("id");
+  swal({
+    title: "Konfirmasi",
+    text: "Tandai koordinat ini sebagai bukan duplikat? Titik ini tidak akan dideteksi sebagai duplikat lagi.",
+    icon: "info",
+    buttons: ["Batal", "Ya, Solve"],
+  }).then((willResolve) => {
+    if (willResolve) {
+      $.post("/data/item/resolve-duplicate", {
+        _token: $('meta[name="_token"]').attr("content"),
+        id: id
+      }, function (res) {
+        if (res.status === "success") {
+          swal("Berhasil!", "Titik koordinat berhasil ditandai bukan duplikat.", "success");
+          loadDuplicatePairs(1);
+          refreshAll();
+        } else {
+          swal("Gagal!", "Gagal menyimpan perubahan.", "error");
+        }
+      }).fail(function () {
+        swal("Gagal!", "Gagal menghubungi server.", "error");
+      });
+    }
+  });
+});
+
+// Delete duplicate action
+$(document).on("click", ".btn-delete-dup", function () {
+  const id = $(this).data("id");
+  let data = {
+    _token: $('meta[name="_token"]').attr("content"),
+  };
+  
+  swal({
+    title: "Konfirmasi Hapus",
+    text: "Apakah Anda yakin ingin menghapus koordinat ini?",
+    icon: "warning",
+    buttons: ["Batal", "Ya, Hapus"],
+    dangerMode: true,
+  }).then((willDelete) => {
+    if (willDelete) {
+      $.post("/data/item/delete/" + id, data, function (res) {
+        swal("Berhasil!", "Titik koordinat berhasil dihapus.", "success");
+        loadDuplicatePairs(1);
+        refreshAll();
+      }).fail(function () {
+        swal("Gagal!", "Gagal menghubungi server.", "error");
+      });
+    }
+  });
+});

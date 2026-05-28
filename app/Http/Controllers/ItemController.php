@@ -31,7 +31,7 @@ class ItemController extends CustomController
 
         if ($duplicate) {
             // Ambil semua item aktif untuk diproses
-            $allItems = Item::select('id', 'vendor_id', 'width', 'height', 'address')->get();
+            $allItems = Item::select('id', 'vendor_id', 'width', 'height', 'address')->where('is_duplicate_resolved', 0)->get();
             
             // Group items by vendor, normalized width, and normalized height
             $grouped = [];
@@ -262,7 +262,7 @@ class ItemController extends CustomController
         $cleanHeight = str_replace([',', ' '], '', $height);
 
         // Cari item dari database dengan vendor yang sama
-        $items = Item::where('vendor_id', $vendor_id);
+        $items = Item::where('vendor_id', $vendor_id)->where('is_duplicate_resolved', 0);
         if ($id) {
             $items = $items->where('id', '!=', $id);
         }
@@ -390,6 +390,116 @@ class ItemController extends CustomController
         ]);
 
         return 'succees';
+    }
+
+    public function getDuplicatePairs()
+    {
+        // Ambil semua item aktif yang belum diselesaikan duplikatnya
+        $allItems = Item::with(['city.province', 'type', 'vendorAll'])
+            ->where('is_duplicate_resolved', 0)
+            ->get();
+
+        // Group items in memory by vendor, width, and height
+        $grouped = [];
+        foreach ($allItems as $item) {
+            $v = $item->vendor_id;
+            $w = floatval(str_replace([',', ' '], '', $item->width ?? '0'));
+            $h = floatval(str_replace([',', ' '], '', $item->height ?? '0'));
+            $addr = strtolower(trim($item->address ?? ''));
+            if ($addr === '') continue;
+
+            $key = $v . '_' . $w . '_' . $h;
+            $grouped[$key][] = $item;
+        }
+
+        // Cari semua pasangan duplikat
+        $pairs = [];
+        foreach ($grouped as $key => $groupItems) {
+            $groupCount = count($groupItems);
+            if ($groupCount <= 1) continue;
+
+            // Lakukan perbandingan N^2 pada kelompok kecil ini
+            for ($i = 0; $i < $groupCount; $i++) {
+                $itemA = $groupItems[$i];
+                $addr1 = strtolower(trim($itemA->address ?? ''));
+
+                for ($j = $i + 1; $j < $groupCount; $j++) {
+                    $itemB = $groupItems[$j];
+                    $addr2 = strtolower(trim($itemB->address ?? ''));
+
+                    $isDuplicate = false;
+                    $percent = 0;
+                    if ($addr1 === $addr2) {
+                        $isDuplicate = true;
+                        $percent = 100.0;
+                    } else {
+                        similar_text($addr1, $addr2, $percent);
+                        if ($percent >= 80) {
+                            $isDuplicate = true;
+                        }
+                    }
+
+                    if ($isDuplicate) {
+                        $pairs[] = [
+                            'item_a' => [
+                                'id' => $itemA->id,
+                                'name' => $itemA->name ?? '-',
+                                'type' => $itemA->type ? $itemA->type->name : '-',
+                                'province' => $itemA->city && $itemA->city->province ? $itemA->city->province->name : '-',
+                                'city' => $itemA->city ? $itemA->city->name : '-',
+                                'address' => $itemA->address,
+                                'width' => $itemA->width,
+                                'height' => $itemA->height,
+                                'vendor' => $itemA->vendorAll ? $itemA->vendorAll->name : '-',
+                                'latitude' => $itemA->latitude,
+                                'longitude' => $itemA->longitude,
+                                'image1' => $itemA->image1 ? url($itemA->image1) : '',
+                            ],
+                            'item_b' => [
+                                'id' => $itemB->id,
+                                'name' => $itemB->name ?? '-',
+                                'type' => $itemB->type ? $itemB->type->name : '-',
+                                'province' => $itemB->city && $itemB->city->province ? $itemB->city->province->name : '-',
+                                'city' => $itemB->city ? $itemB->city->name : '-',
+                                'address' => $itemB->address,
+                                'width' => $itemB->width,
+                                'height' => $itemB->height,
+                                'vendor' => $itemB->vendorAll ? $itemB->vendorAll->name : '-',
+                                'latitude' => $itemB->latitude,
+                                'longitude' => $itemB->longitude,
+                                'image1' => $itemB->image1 ? url($itemB->image1) : '',
+                            ],
+                            'similarity' => round($percent, 1) . '%'
+                        ];
+                    }
+                }
+            }
+        }
+
+        // Paginate pairs: page starts at 1
+        $totalPairs = count($pairs);
+        $page = intval(\request('page', 1));
+        if ($page < 1) $page = 1;
+
+        $pair = null;
+        if ($totalPairs > 0 && isset($pairs[$page - 1])) {
+            $pair = $pairs[$page - 1];
+        }
+
+        return response()->json([
+            'pair' => $pair,
+            'current_page' => $page,
+            'total_pages' => $totalPairs,
+        ]);
+    }
+
+    public function resolveDuplicate()
+    {
+        $id = \request('id');
+        $item = Item::findOrFail($id);
+        $item->update(['is_duplicate_resolved' => 1]);
+
+        return response()->json(['status' => 'success', 'message' => 'Coordinate resolved successfully']);
     }
 
     public function generateSlug()

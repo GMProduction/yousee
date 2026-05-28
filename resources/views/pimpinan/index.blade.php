@@ -66,6 +66,11 @@
                         aria-selected="true">View List
                     </button>
                 </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link genostab" id="pills-cek-duplikat-tab" data-bs-toggle="pill" data-bs-target="#pills-cek-duplikat"
+                        type="button" role="tab" aria-controls="pills-cek-duplikat" aria-selected="false">Cek Duplikat
+                    </button>
+                </li>
 
 
             </ul>
@@ -136,6 +141,23 @@
                     {{-- @include('admin.map', ['data' => 'content']) --}}
                     <div id="main-map" style="width: 100%; height: 500px; height: calc(100vh - 200px)"></div>
                 </div>
+                <div class="tab-pane fade" id="pills-cek-duplikat" role="tabpanel" aria-labelledby="pills-cek-duplikat-tab">
+                    <div class="panel">
+                        <div class="title d-flex justify-content-between align-items-center mb-3">
+                            <p class="fw-bold fs-5 mb-0">Audit Duplikat Data</p>
+                            <span id="dup-progress-text" class="badge bg-secondary fs-6">Memuat data...</span>
+                        </div>
+                        
+                        <div id="dup-pairs-container" class="row justify-content-center g-3 pt-3">
+                            <!-- Will be populated via AJAX -->
+                        </div>
+
+                        <div class="d-flex justify-content-between align-items-center mt-4">
+                            <button class="btn btn-outline-primary" id="dup-prev-btn" disabled>Sebelumnya</button>
+                            <button class="btn btn-outline-primary" id="dup-next-btn" disabled>Selanjutnya</button>
+                        </div>
+                    </div>
+                </div>
             </div>
             {{-- <div id="main-map" style="width: 100%; height: calc(100vh - 200px)"></div> --}}
 
@@ -149,7 +171,7 @@
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAs_QwyMszHel8sTA19mwfeVYgvvBPK0-0&callback=initMap&v=weekly"
         async></script>
     <script src="{{ asset('js/number_formater.js') }}"></script>
-    <script src="{{ asset('js/item_duplicate.js') }}"></script>
+    <script src="{{ asset('js/item_duplicate.js?v=2') }}"></script>
     <script>
         $(document).ready(function() {
             getSelect('f-provinsi', '/data/province', 'name', null, 'Semua Provinsi');

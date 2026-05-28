@@ -70,6 +70,11 @@
                         type="button" role="tab" aria-controls="pills-peta" aria-selected="false">Maps
                     </button>
                 </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link genostab" id="pills-cek-duplikat-tab" data-bs-toggle="pill" data-bs-target="#pills-cek-duplikat"
+                        type="button" role="tab" aria-controls="pills-cek-duplikat" aria-selected="false">Cek Duplikat
+                    </button>
+                </li>
 
             </ul>
             <div>
@@ -155,6 +160,23 @@
                     </div>
                 </div>
             </div>
+            <div class="tab-pane fade" id="pills-cek-duplikat" role="tabpanel" aria-labelledby="pills-cek-duplikat-tab">
+                <div class="panel">
+                    <div class="title d-flex justify-content-between align-items-center mb-3">
+                        <p class="fw-bold fs-5 mb-0">Audit Duplikat Data</p>
+                        <span id="dup-progress-text" class="badge bg-secondary fs-6">Memuat data...</span>
+                    </div>
+                    
+                    <div id="dup-pairs-container" class="row justify-content-center g-3 pt-3">
+                        <!-- Will be populated via AJAX -->
+                    </div>
+
+                    <div class="d-flex justify-content-between align-items-center mt-4">
+                        <button class="btn btn-outline-primary" id="dup-prev-btn" disabled>Sebelumnya</button>
+                        <button class="btn btn-outline-primary" id="dup-next-btn" disabled>Selanjutnya</button>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <!-- Modal -->
@@ -178,7 +200,7 @@
     {{-- @include('admin.map', ['data' => 'script']) --}}
 
     {{--    <script src="{{ asset('js/map-control.js') }}"></script> --}}
-    <script src="{{ asset('js/item_duplicate.js') }}"></script>
+    <script src="{{ asset('js/item_duplicate.js?v=2') }}"></script>
 
     <script>
         $(document).ready(function() {
