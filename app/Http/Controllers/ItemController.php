@@ -26,6 +26,7 @@ class ItemController extends CustomController
         $type      = \request('type');
         $position  = \request('position');
         $duplicate = \request('duplicate');
+        \Log::info('Datatable request received. URL: ' . \request()->fullUrl() . ' | params: ' . json_encode(\request()->all()));
         $item      = Item::with(['vendorAll', 'city', 'itemRent']);
 
         if ($duplicate) {

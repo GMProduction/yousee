@@ -1,3 +1,4 @@
+console.log("item2.js v10 loaded");
 let image1, image2, image3;
 var s_provinsi, s_kota, s_tipe, s_posisi, s_duplicate = "";
 
@@ -83,6 +84,7 @@ $(document).on("change", "#f-posisi", function (ev) {
 
 $(document).on("change", "#f-duplicate", function (ev) {
   s_duplicate = $(this).is(":checked") ? "1" : "";
+  console.log("f-duplicate changed to: " + s_duplicate);
   if (s_duplicate) {
     pillSearch("duplicate", "Hanya Duplikat");
   } else {
