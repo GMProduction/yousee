@@ -238,17 +238,25 @@ async function generateSingleGoogleMapData(id) {
 }
 
 function generateDetail(data) {
+    let vendor = data['vendor_all'] || {};
+    let vendorName = vendor['name'] || '';
+    let vendorBrand = vendor['brand'] || '';
+    let vendorAddress = vendor['address'] || '';
+    let vendorEmail = vendor['email'] || '';
+    let vendorPhone = vendor['picPhone'] || '';
+    let vendorPic = vendor['picName'] || '';
+
     $('#detail-title-tipe').html(data['type']['name']);
-    $('#detail-title-nama').html('( ' + data['name'] + ' )');
+    $('#detail-title-nama').html('( ' + (vendorName || '-') + ' )');
     // $('#single-map-container-street-view').html(data['url']);
-    $('#detail-vendor').val(data['vendor_all']['name']+' ('+data['vendor_all']['brand']+')');
-    $('#detail-vendor-address').val(data['vendor_all']['address']);
-    $('#detail-vendor-email').val(data['vendor_all']['email']);
-    $('#detail-vendor-phone').val(data['vendor_all']['picPhone']);
-    $('#detail-vendor-phone-pic').val(data['vendor_all']['picPhone']);
-    $('#detail-vendor-pic').val(data['vendor_all']['picName']);
-    $('#detail-provinsi').val(data['city']['province']['name']);
-    $('#detail-kota').val(data['city']['name']);
+    $('#detail-vendor').val(vendorName + (vendorBrand ? ' (' + vendorBrand + ')' : ''));
+    $('#detail-vendor-address').val(vendorAddress);
+    $('#detail-vendor-email').val(vendorEmail);
+    $('#detail-vendor-phone').val(vendorPhone);
+    $('#detail-vendor-phone-pic').val(vendorPhone);
+    $('#detail-vendor-pic').val(vendorPic);
+    $('#detail-provinsi').val(data['city'] && data['city']['province'] ? data['city']['province']['name'] : '');
+    $('#detail-kota').val(data['city'] ? data['city']['name'] : '');
     $('#detail-alamat').val(data['address']);
     $('#detail-lokasi').val(data['location']);
     $('#detail-coordinate').val(data['latitude'] + ', ' + data['longitude']);
@@ -273,20 +281,22 @@ function generateDetail(data) {
     $('#dwnld-gbr3').attr('href', data['image3']);
     $('#dwnld-gbr3').attr('download', data['image3']);
 
-    let picPhone = data['vendor_all']['picPhone'];
-    let splitNumber = picPhone.split('/')
-    let num = splitNumber[0].split(' ').join('')
-    const first = num.substring(0, 1);
-    if (first == 0){
-        num = '62'+num.substring(1)
+    let num = '';
+    if (vendorPhone) {
+        let splitNumber = vendorPhone.split('/');
+        num = splitNumber[0].split(' ').join('');
+        const first = num.substring(0, 1);
+        if (first == 0){
+            num = '62'+num.substring(1);
+        }
+        console.log('firstfirstfirst', first);
+        console.log('2222222222', num);
     }
-    console.log('firstfirstfirst',first)
-    console.log('2222222222',num)
     // console.log(window.location.hostname);
     // const img = data['image1'];
     //
     // navigator.clipboard.writeText(copyText.value);
-    const text = 'Apakah '+data['type']['name']+' yang berlokasi di '+data['city']['name']+' '+data['address']+' '+data['location']+' tersedia ?';
+    const text = 'Apakah '+data['type']['name']+' yang berlokasi di '+(data['city'] ? data['city']['name'] : '')+' '+data['address']+' '+data['location']+' tersedia ?';
     $('.sendWa').attr('href','https://wa.me/'+num+'?text='+encodeURI(text)).attr('target','_blank');
 
     // Load duplicate coordinates
