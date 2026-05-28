@@ -64,13 +64,7 @@ class ItemController extends CustomController
                         $itemB = $groupItems[$j];
                         $addr2 = $itemB['address'];
 
-                        if ($addr1 === $addr2) {
-                            $isDuplicate = true;
-                            break;
-                        }
-
-                        similar_text($addr1, $addr2, $percent);
-                        if ($percent >= 80) {
+                        if ($this->isAddressDuplicate($addr1, $addr2)) {
                             $isDuplicate = true;
                             break;
                         }
@@ -275,20 +269,11 @@ class ItemController extends CustomController
 
             // Jika ukuran cocok (lebar & tinggi)
             if ($cleanWidth == $dbWidth && $cleanHeight == $dbHeight) {
-                // Perbandingan alamat (case-insensitive & trim)
+                // Perbandingan alamat menggunakan isAddressDuplicate
                 $addr1 = strtolower(trim($address));
                 $addr2 = strtolower(trim($item->address));
 
-                if ($addr1 === $addr2) {
-                    return response()->json([
-                        'duplicate' => true,
-                        'message' => "Data duplikat terdeteksi! Kode: {$item->name}, Alamat: {$item->address}"
-                    ]);
-                }
-
-                // Cek kemiripan string menggunakan similar_text
-                similar_text($addr1, $addr2, $percent);
-                if ($percent >= 80) {
+                if ($this->isAddressDuplicate($addr1, $addr2, $percent)) {
                     return response()->json([
                         'duplicate' => true,
                         'message' => "Data mirip terdeteksi! Kode: {$item->name}, Alamat: {$item->address} (Kemiripan " . round($percent, 1) . "%)"
@@ -347,17 +332,7 @@ class ItemController extends CustomController
             $addr2 = strtolower(trim($itemB->address ?? ''));
             if ($addr2 === '') continue;
 
-            $isDup = false;
-            $percent = 0;
-            if ($addr1 === $addr2) {
-                $isDup = true;
-                $percent = 100.0;
-            } else {
-                similar_text($addr1, $addr2, $percent);
-                if ($percent >= 80) {
-                    $isDup = true;
-                }
-            }
+            $isDup = $this->isAddressDuplicate($addr1, $addr2, $percent);
 
             if ($isDup) {
                 $duplicates[] = [
@@ -430,17 +405,7 @@ class ItemController extends CustomController
                     foreach ($cluster as $existingItem) {
                         $addr2 = strtolower(trim($existingItem->address ?? ''));
 
-                        $isSimilar = false;
-                        if ($addr1 === $addr2) {
-                            $isSimilar = true;
-                        } else {
-                            similar_text($addr1, $addr2, $percent);
-                            if ($percent >= 80) {
-                                $isSimilar = true;
-                            }
-                        }
-
-                        if ($isSimilar) {
+                        if ($this->isAddressDuplicate($addr1, $addr2)) {
                             $matchedClusterIndex = $cIdx;
                             break 2; // Pecahkan loop cluster dan loop existingItem
                         }
@@ -496,11 +461,7 @@ class ItemController extends CustomController
             $totalPercent = 0;
             for ($k = 1; $k < count($rawGroup); $k++) {
                 $addrK = strtolower(trim($rawGroup[$k]->address ?? ''));
-                if ($addr0 === $addrK) {
-                    $percent = 100.0;
-                } else {
-                    similar_text($addr0, $addrK, $percent);
-                }
+                $this->isAddressDuplicate($addr0, $addrK, $percent);
                 $totalPercent += $percent;
                 $similarityDetails[] = round($percent, 1) . '%';
             }
@@ -546,5 +507,56 @@ class ItemController extends CustomController
             DB::rollBack();
             return 'error: ' . $er->getMessage();
         }
+    }
+
+    private function isAddressDuplicate($addr1, $addr2, &$percent = 0)
+    {
+        $addr1 = strtolower(trim($addr1));
+        $addr2 = strtolower(trim($addr2));
+
+        if ($addr1 === '' || $addr2 === '') {
+            $percent = 0;
+            return false;
+        }
+
+        if ($addr1 === $addr2) {
+            $percent = 100.0;
+            return true;
+        }
+
+        // Clean common punctuation for comparison
+        $clean1 = str_replace(['.', ',', '-', ' '], '', $addr1);
+        $clean2 = str_replace(['.', ',', '-', ' '], '', $addr2);
+        if ($clean1 === $clean2) {
+            $percent = 100.0;
+            return true;
+        }
+
+        // Split by comma to extract the street/specific location name (first segment)
+        $parts1 = explode(',', $addr1);
+        $parts2 = explode(',', $addr2);
+
+        $firstSegment1 = trim($parts1[0]);
+        $firstSegment2 = trim($parts2[0]);
+
+        // Clean dots and double spaces in first segments
+        $firstSegment1 = preg_replace('/\s+/', ' ', str_replace('.', '', $firstSegment1));
+        $firstSegment2 = preg_replace('/\s+/', ' ', str_replace('.', '', $firstSegment2));
+
+        // Check similarity of the first segment (street/building name)
+        similar_text($firstSegment1, $firstSegment2, $firstPercent);
+        if ($firstPercent < 75) {
+            $percent = $firstPercent;
+            return false;
+        }
+
+        // Jika segmen pertama mirip, cek kemiripan keseluruhan alamat
+        similar_text($addr1, $addr2, $overallPercent);
+        $percent = $overallPercent;
+        if ($overallPercent >= 80) {
+            return true;
+        }
+
+        return false;
     }
 }
