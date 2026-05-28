@@ -734,6 +734,11 @@ function loadDuplicatePairs(page) {
     
     const group = res.group;
     const total = res.total_pages;
+
+    if (total > 0 && !group) {
+      loadDuplicatePairs(total);
+      return;
+    }
     
     if (!group || total === 0) {
       $("#dup-progress-text").html("0 dari 0");
@@ -819,7 +824,7 @@ $(document).on("click", ".btn-resolve-dup", function () {
       }, function (res) {
         if (res.status === "success") {
           swal("Berhasil!", "Titik koordinat berhasil ditandai bukan duplikat.", "success");
-          loadDuplicatePairs(1);
+          loadDuplicatePairs(currentDupPage);
           refreshAll();
         } else {
           swal("Gagal!", "Gagal menyimpan perubahan.", "error");
@@ -848,7 +853,7 @@ $(document).on("click", ".btn-delete-dup", function () {
     if (willDelete) {
       $.post("/data/item/delete/" + id, data, function (res) {
         swal("Berhasil!", "Titik koordinat berhasil dihapus.", "success");
-        loadDuplicatePairs(1);
+        loadDuplicatePairs(currentDupPage);
         refreshAll();
       }).fail(function () {
         swal("Gagal!", "Gagal menghubungi server.", "error");

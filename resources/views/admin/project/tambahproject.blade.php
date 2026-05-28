@@ -629,7 +629,7 @@
     {{--    <script src="{{ asset('css/summernote/summernote.js') }}"></script> --}}
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
 
-    <script src="{{ asset('js/item_duplicate.js?v=4') }}"></script>
+    <script src="{{ asset('js/item_duplicate.js?v=5') }}"></script>
 
     <script>
         let param, prov, pic_id;
