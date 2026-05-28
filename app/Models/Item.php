@@ -33,7 +33,8 @@ class Item extends Model
         'side',
         'trafic',
         'isShow',
-        'slug'
+        'slug',
+        'is_duplicate_resolved'
     ];
 
     protected $with = ['type', 'city', 'createdByUser', 'lastUpdate'];
