@@ -149,7 +149,7 @@
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAs_QwyMszHel8sTA19mwfeVYgvvBPK0-0&callback=initMap&v=weekly"
         async></script>
     <script src="{{ asset('js/number_formater.js') }}"></script>
-    <script src="{{ asset('js/item2.js?v=3') }}"></script>
+    <script src="{{ asset('js/item2.js?v=10') }}"></script>
     <script>
         $(document).ready(function() {
             getSelect('f-provinsi', '/data/province', 'name', null, 'Semua Provinsi');
