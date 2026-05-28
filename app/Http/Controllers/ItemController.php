@@ -365,9 +365,14 @@ class ItemController extends CustomController
                     'name' => $itemB->name,
                     'address' => $itemB->address,
                     'city' => $itemB->city ? $itemB->city->name : '-',
+                    'province' => $itemB->city && $itemB->city->province ? $itemB->city->province->name : '-',
                     'type' => $itemB->type ? $itemB->type->name : '-',
                     'width' => $itemB->width,
                     'height' => $itemB->height,
+                    'vendor' => $itemB->vendorAll ? $itemB->vendorAll->name : '-',
+                    'latitude' => $itemB->latitude,
+                    'longitude' => $itemB->longitude,
+                    'image1' => $itemB->image1 ? url($itemB->image1) : '',
                     'similarity' => round($percent, 1) . '%'
                 ];
             }

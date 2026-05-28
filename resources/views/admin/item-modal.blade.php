@@ -614,25 +614,8 @@
                         </div>
                         <div class="tab-pane fade" id="pills-single-duplicate" role="tabpanel"
                             aria-labelledby="pills-single-duplicate-tab">
-                            <div class="table-responsive pt-3">
-                                <table class="table table-sm table-striped table-hover" id="detail-duplicate-table" style="width: 100%">
-                                    <thead>
-                                        <tr>
-                                            <th>Kode</th>
-                                            <th>Tipe</th>
-                                            <th>Area</th>
-                                            <th>Alamat</th>
-                                            <th>Ukuran (T x L)</th>
-                                            <th>Kemiripan</th>
-                                            <th>Aksi</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="detail-duplicate-body">
-                                        <tr>
-                                            <td colspan="7" class="text-center">Loading...</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                            <div id="detail-duplicate-container" class="pt-3" style="max-height: 650px; overflow-y: auto;">
+                                <div class="text-center text-muted">Loading...</div>
                             </div>
                         </div>
                     </div>

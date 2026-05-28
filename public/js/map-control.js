@@ -304,34 +304,54 @@ function generateDetail(data) {
 }
 
 function loadDuplicates(itemId) {
-    const tbody = $('#detail-duplicate-body');
-    tbody.html('<tr><td colspan="7" class="text-center">Loading...</td></tr>');
+    const container = $('#detail-duplicate-container');
+    container.html('<div class="text-center text-muted py-3">Loading...</div>');
     
     // Switch to first tab (Detail) by default when a new detail is loaded
     $('#pills-single-detail-tab').tab('show');
     
     $.get('/data/item/by-id/' + itemId + '/duplicates', function(res) {
-        tbody.empty();
+        container.empty();
         if (res.length === 0) {
-            tbody.html('<tr><td colspan="7" class="text-center text-muted">Tidak ada data duplikat ditemukan.</td></tr>');
+            container.html('<div class="text-center text-muted py-3">Tidak ada data duplikat ditemukan.</div>');
             return;
         }
         
         res.forEach(function(item) {
-            tbody.append(
-                '<tr>' +
-                '  <td>' + item.name + '</td>' +
-                '  <td>' + item.type + '</td>' +
-                '  <td>' + item.city + '</td>' +
-                '  <td>' + item.address + '</td>' +
-                '  <td>' + item.height + ' x ' + item.width + '</td>' +
-                '  <td><span class="badge bg-warning text-dark">' + item.similarity + '</span></td>' +
-                '  <td><button class="btn btn-sm btn-utama-soft view-duplicate-detail" data-id="' + item.id + '" style="border-radius: 4px; display: inline-flex; align-items: center; gap: 4px; padding: 2px 8px; font-size: 12px;"><i class="material-symbols-outlined" style="font-size: 14px">visibility</i> Detail</button></td>' +
-                '</tr>'
+            let imgHtml = item.image1 ? 
+                '<img src="' + item.image1 + '" class="img-fluid rounded-start" style="object-fit: cover; height: 100%; width: 100%; min-height: 120px;" alt="Gambar Vendor">' :
+                '<div class="d-flex align-items-center justify-content-center bg-light text-muted rounded-start" style="height: 100%; min-height: 120px; font-size: 11px; width: 100%;"><span class="d-flex flex-column align-items-center"><i class="material-symbols-outlined mb-1" style="font-size: 24px">image</i>Tanpa Gambar</span></div>';
+
+            container.append(
+                '<div class="card mb-3 shadow-sm border" style="border-radius: 8px; overflow: hidden; background: #fff;">' +
+                '  <div class="row g-0">' +
+                '    <div class="col-sm-4 d-flex align-items-stretch" style="background: #f8f9fa;">' +
+                imgHtml +
+                '    </div>' +
+                '    <div class="col-sm-8">' +
+                '      <div class="card-body p-3" style="font-size: 12px; line-height: 1.5; color: #333;">' +
+                '        <div class="d-flex justify-content-between align-items-center mb-2">' +
+                '          <span class="badge bg-primary" style="font-size: 10px; border-radius: 4px;">' + item.type + '</span>' +
+                '          <span class="badge bg-warning text-dark" style="font-size: 10px; border-radius: 4px;">Kemiripan: ' + item.similarity + '</span>' +
+                '        </div>' +
+                '        <p class="mb-1 fw-bold text-primary" style="font-size: 13px;"><i class="material-symbols-outlined align-middle me-1" style="font-size: 14px">location_on</i>' + item.province + ', ' + item.city + '</p>' +
+                '        <p class="mb-1" style="color: #555;"><strong>Alamat:</strong> ' + item.address + '</p>' +
+                '        <p class="mb-1"><strong>Ukuran:</strong> ' + item.height + ' x ' + item.width + '</p>' +
+                '        <p class="mb-1"><strong>Vendor:</strong> ' + item.vendor + '</p>' +
+                '        <p class="mb-2" style="color: #666;"><strong>Koordinat:</strong> ' + item.latitude + ', ' + item.longitude + '</p>' +
+                '        <div class="d-flex justify-content-end">' +
+                '          <button class="btn btn-sm btn-utama-soft view-duplicate-detail" data-id="' + item.id + '" style="border-radius: 4px; display: inline-flex; align-items: center; gap: 4px; padding: 4px 10px; font-size: 11px;">' +
+                '            <i class="material-symbols-outlined" style="font-size: 14px">visibility</i> Lihat Detail' +
+                '          </button>' +
+                '        </div>' +
+                '      </div>' +
+                '    </div>' +
+                '  </div>' +
+                '</div>'
             );
         });
     }).fail(function() {
-        tbody.html('<tr><td colspan="7" class="text-center text-danger">Gagal memuat data duplikat.</td></tr>');
+        container.html('<div class="text-center text-danger py-3">Gagal memuat data duplikat.</div>');
     });
 }
 
