@@ -47,7 +47,7 @@
             font-weight: bold;
         }
     </style>
-    <script src="{{ asset('js/map-control.js?v=2') }}"></script>
+    <script src="{{ asset('js/map-control.js?v=3') }}"></script>
 @endsection
 @section('content')
     <div class="">
