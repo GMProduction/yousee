@@ -625,3 +625,33 @@
         </div>
     </div>
 </div>
+
+<div class="modal fade" id="modalcheckduplicate" tabindex="-1" aria-labelledby="modalcheckduplicateLabel" aria-hidden="true" style="z-index: 1060;">
+    <div class="modal-dialog modal-xl modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header bg-warning text-dark">
+                <h5 class="modal-title fw-bold d-flex align-items-center" id="modalcheckduplicateLabel">
+                    <span class="material-symbols-outlined me-2">warning</span>
+                    Peringatan: Data Duplikat Terdeteksi
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" style="background-color: #f8f9fa;">
+                <div class="alert alert-warning border-warning d-flex align-items-center mb-3">
+                    <span class="material-symbols-outlined me-2">info</span>
+                    <div>
+                        <strong>Perhatian:</strong> Alamat dan ukuran titik yang Anda masukkan terdeteksi mirip dengan data yang sudah terdaftar di sistem. Silakan tinjau kembali data pembanding di bawah ini.
+                    </div>
+                </div>
+                <div class="row g-3 justify-content-center" id="check-dup-list-container">
+                    <!-- Dinamis terisi oleh JS -->
+                </div>
+            </div>
+            <div class="modal-footer bg-light">
+                <button type="button" class="btn btn-secondary text-dark" id="btn-cancel-duplicate" style="border-radius: 4px; padding: 8px 16px;">Batal & Perbaiki</button>
+                <button type="button" class="btn btn-danger" id="btn-force-save-duplicate" style="border-radius: 4px; padding: 8px 16px;">Ya, Tetap Simpan</button>
+            </div>
+        </div>
+    </div>
+</div>
+

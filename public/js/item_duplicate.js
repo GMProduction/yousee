@@ -626,36 +626,65 @@ function saveItem() {
         vendor_id: vendor_id,
         id: id
       }, function (res) {
-        if (res.duplicate) {
-          swal({
-            title: "Peringatan: Data Duplikat",
-            text: res.message + "\n\nApakah Anda yakin tetap ingin menyimpan data ini?",
-            icon: "warning",
-            buttons: {
-              cancel: "Batal",
-              view: {
-                text: "Lihat Detail Duplikat",
-                value: "view"
-              },
-              confirm: {
-                text: "Ya, Tetap Simpan",
-                value: "save"
-              }
-            },
-            dangerMode: true,
-          }).then((value) => {
-            if (value === "save") {
-              proceedToSave();
-            } else if (value === "view") {
-              $("#modaltambahtitik").modal("hide");
-              generateSingleGoogleMapData(res.duplicate_id.toString()).then(() => {
-                $("#simple-modal-detail").modal("show");
-                $("#simple-modal-detail").one("hidden.bs.modal", function () {
-                  $("#modaltambahtitik").modal("show");
-                });
-              });
+        if (res.duplicate && res.duplicate_items && res.duplicate_items.length > 0) {
+          // Hide tambah titik modal temporarily
+          $("#modaltambahtitik").modal("hide");
+
+          // Populate the duplicate items modal
+          const container = $("#check-dup-list-container");
+          container.empty();
+
+          res.duplicate_items.forEach((item, index) => {
+            let candidateLabel = "KANDIDAT DUPLIKAT " + String.fromCharCode(65 + index) + " (" + item.name + ")";
+            let imgHtml = item.image1 ? 
+                '<img src="' + item.image1 + '" class="card-img-top" style="object-fit: contain; width: 100%; height: auto; max-height: 300px; background-color: #f8f9fa;" alt="Gambar Vendor">' :
+                '<div class="d-flex align-items-center justify-content-center bg-light text-muted card-img-top" style="height: 180px; width: 100%;"><span class="d-flex flex-column align-items-center"><i class="material-symbols-outlined mb-1" style="font-size: 32px">image</i>Tanpa Gambar</span></div>';
+
+            container.append(
+              '<div class="col-md-6">' +
+              '  <div class="card h-100 shadow-sm border" style="border-radius: 8px; overflow: hidden; background: #fff;">' +
+              '    <div class="card-header bg-light d-flex justify-content-between align-items-center py-2 px-3">' +
+              '      <span class="fw-bold text-primary">' + candidateLabel + '</span>' +
+              '      <span class="badge bg-primary" style="font-size: 11px;">' + item.type + '</span>' +
+              '    </div>' +
+              imgHtml +
+              '    <div class="card-body p-3" style="font-size: 13px; line-height: 1.5; color: #333;">' +
+              '      <p class="mb-1 text-primary fw-bold"><i class="material-symbols-outlined align-middle me-1" style="font-size: 14px">location_on</i>' + item.province + ', ' + item.city + '</p>' +
+              '      <p class="mb-1"><strong>Alamat:</strong> ' + item.address + '</p>' +
+              '      <p class="mb-1"><strong>Ukuran:</strong> ' + item.height + ' x ' + item.width + '</p>' +
+              '      <p class="mb-1"><strong>Vendor:</strong> ' + item.vendor + '</p>' +
+              '      <p class="mb-2" style="color: #666;"><strong>Koordinat:</strong> ' + item.latitude + ', ' + item.longitude + '</p>' +
+              '      <p class="mb-0 text-danger fw-bold text-end">Kemiripan: ' + item.similarity + '</p>' +
+              '    </div>' +
+              '  </div>' +
+              '</div>'
+            );
+          });
+
+          let forceSaved = false;
+
+          // When click Cancel
+          $("#btn-cancel-duplicate").off("click").on("click", function() {
+            $("#modalcheckduplicate").modal("hide");
+          });
+
+          // When click Force Save
+          $("#btn-force-save-duplicate").off("click").on("click", function() {
+            forceSaved = true;
+            $("#modalcheckduplicate").modal("hide");
+            proceedToSave();
+          });
+
+          // Handle modal close event to return to form
+          $("#modalcheckduplicate").off("hidden.bs.modal").on("hidden.bs.modal", function () {
+            if (!forceSaved) {
+              $("#modaltambahtitik").modal("show");
             }
           });
+
+          // Show the duplicate warning modal
+          $("#modalcheckduplicate").modal("show");
+
         } else {
           proceedToSave();
         }

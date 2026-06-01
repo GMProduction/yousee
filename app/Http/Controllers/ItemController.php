@@ -259,12 +259,15 @@ class ItemController extends CustomController
         $cleanHeight = str_replace([',', ' '], '', $height);
 
         // Cari item dari database dengan vendor yang sama
-        $items = Item::where('vendor_id', $vendor_id)->where('is_duplicate_resolved', 0);
+        $items = Item::with(['city.province', 'type', 'vendorAll'])
+            ->where('vendor_id', $vendor_id)
+            ->where('is_duplicate_resolved', 0);
         if ($id) {
             $items = $items->where('id', '!=', $id);
         }
         $items = $items->get();
 
+        $duplicateItems = [];
         foreach ($items as $item) {
             // Normalisasi ukuran dari DB
             $dbWidth = str_replace([',', ' '], '', $item->width);
@@ -277,17 +280,36 @@ class ItemController extends CustomController
                 $addr2 = strtolower(trim($item->address));
 
                 if ($this->isAddressDuplicate($addr1, $addr2, $percent)) {
-                    return response()->json([
-                        'duplicate' => true,
-                        'duplicate_id' => $item->id,
-                        'message' => "Data mirip terdeteksi! Kode: {$item->name}, Alamat: {$item->address} (Kemiripan " . round($percent, 1) . "%)"
-                    ]);
+                    $duplicateItems[] = [
+                        'id' => $item->id,
+                        'name' => $item->name ?? '-',
+                        'type' => $item->type ? $item->type->name : '-',
+                        'province' => $item->city && $item->city->province ? $item->city->province->name : '-',
+                        'city' => $item->city ? $item->city->name : '-',
+                        'address' => $item->address,
+                        'width' => $item->width,
+                        'height' => $item->height,
+                        'vendor' => $item->vendorAll ? $item->vendorAll->name : '-',
+                        'latitude' => $item->latitude,
+                        'longitude' => $item->longitude,
+                        'image1' => $item->image1 ? url($item->image1) : '',
+                        'similarity' => round($percent, 1) . '%'
+                    ];
                 }
             }
         }
 
+        if (count($duplicateItems) > 0) {
+            return response()->json([
+                'duplicate' => true,
+                'message' => "Data mirip terdeteksi! Terdapat " . count($duplicateItems) . " titik yang mirip.",
+                'duplicate_items' => $duplicateItems
+            ]);
+        }
+
         return response()->json(['duplicate' => false]);
     }
+
 
     public function getUrlStreetView($id)
     {
