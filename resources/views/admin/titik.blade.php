@@ -52,7 +52,7 @@
         }
     </style>
 
-    <script src="{{ asset('js/map-control.js?v=5') }}"></script>
+    <script src="{{ asset('js/map-control.js?v=7') }}"></script>
 @endsection
 @section('content')
     <div>
@@ -200,7 +200,7 @@
     {{-- @include('admin.map', ['data' => 'script']) --}}
 
     {{--    <script src="{{ asset('js/map-control.js') }}"></script> --}}
-    <script src="{{ asset('js/item_duplicate.js?v=7') }}"></script>
+    <script src="{{ asset('js/item_duplicate.js?v=9') }}"></script>
 
     <script>
         $(document).ready(function() {

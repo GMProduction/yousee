@@ -615,7 +615,7 @@
 @endsection
 
 @section('morejs')
-    <script src="{{ asset('js/map-control.js?v=5') }}"></script>
+    <script src="{{ asset('js/map-control.js?v=7') }}"></script>
     <script
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAs_QwyMszHel8sTA19mwfeVYgvvBPK0-0&callback=initMap&v=weekly"
         async></script>
@@ -629,7 +629,7 @@
     {{--    <script src="{{ asset('css/summernote/summernote.js') }}"></script> --}}
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
 
-    <script src="{{ asset('js/item_duplicate.js?v=7') }}"></script>
+    <script src="{{ asset('js/item_duplicate.js?v=9') }}"></script>
 
     <script>
         let param, prov, pic_id;

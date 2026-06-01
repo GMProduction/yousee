@@ -193,8 +193,12 @@ $(document).on("click", "#detailData", async function () {
   let id = $(this).data("id");
   // const data = await $.get("/data/item/by-id/"+id);
   // console.log(data)
-  await generateSingleGoogleMapData(id.toString());
+  $("#detail-modal-loading").css("display", "flex").show();
+  $("#single-map-container").empty();
+  $("#single-map-container-street-view").html('<div class="fw-bold">Street View Container</div>');
   $("#simple-modal-detail").modal("show");
+  await generateSingleGoogleMapData(id.toString());
+});
   //
   // let url = await getUrl(data.id);
   //

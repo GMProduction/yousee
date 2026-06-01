@@ -393,6 +393,14 @@
     aria-hidden="true">
     <div class="modal-dialog modal-xl modal-fullscreen-lg-down" style="min-height: 900px !important;">
         <div class="modal-content ps-3 pe-3 pb-3 pt-3" style="min-height: 900px !important;">
+            <!-- Loading Overlay -->
+            <div id="detail-modal-loading" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255, 255, 255, 0.85); z-index: 1050; display: flex; align-items: center; justify-content: center; border-radius: 5px; min-height: 500px;">
+                <div class="text-center">
+                    <div class="spinner-border text-primary" role="status" style="width: 3rem; height: 3rem;"></div>
+                    <h5 class="mt-3 fw-bold text-primary">Memuat Detail Titik...</h5>
+                </div>
+            </div>
+
             <div class="d-flex justify-content-between align-items-center mb-3">
                 <p class="fw-bold mb-0">Detail <span id="detail-title-tipe"></span> <span id="detail-title-nama"></span></p>
                 <a href="#" id="btn-view-website" target="_blank" class="btn-utama sml rnd flex" style="text-decoration: none; font-weight: bold; display: inline-flex; align-items: center; gap: 6px; padding: 6px 14px;">

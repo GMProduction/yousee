@@ -203,14 +203,18 @@ function windowContent(data, key, role = 'presence') {
 }
 
 async function openDetail(element) {
-    event.preventDefault()
+    event.preventDefault();
     let id = element.dataset.id;
-    await generateSingleGoogleMapData(id);
+    $('#detail-modal-loading').css('display', 'flex').show();
+    $('#single-map-container').empty();
+    $('#single-map-container-street-view').html('<div class="fw-bold">Street View Container</div>');
     $('#simple-modal-detail').modal('show');
+    await generateSingleGoogleMapData(id);
 }
 
 async function generateSingleGoogleMapData(id) {
     try {
+        $('#detail-modal-loading').show();
         let payload = id;
         if (typeof id == 'string'){
             let response = await $.get('/map/data/' + id);
@@ -232,8 +236,10 @@ async function generateSingleGoogleMapData(id) {
             title: payload['name'],
         });
         generateDetail(payload);
+        $('#detail-modal-loading').fadeOut(200);
     } catch (e) {
         console.log(e);
+        $('#detail-modal-loading').hide();
     }
 }
 
@@ -376,6 +382,9 @@ function loadDuplicates(itemId) {
 
 $(document).on('click', '.view-duplicate-detail', function() {
     let id = $(this).data('id');
+    $('#detail-modal-loading').css('display', 'flex').show();
+    $('#single-map-container').empty();
+    $('#single-map-container-street-view').html('<div class="fw-bold">Street View Container</div>');
     // Load the detail for this duplicate item in-place in the modal
     generateSingleGoogleMapData(id.toString());
 });
