@@ -47,7 +47,7 @@
             font-weight: bold;
         }
     </style>
-    <script src="{{ asset('js/map-control.js?v=7') }}"></script>
+    <script src="{{ asset('js/map-control.js?v=8') }}"></script>
 @endsection
 @section('content')
     <div class="">
@@ -171,7 +171,7 @@
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAs_QwyMszHel8sTA19mwfeVYgvvBPK0-0&callback=initMap&v=weekly"
         async></script>
     <script src="{{ asset('js/number_formater.js') }}"></script>
-    <script src="{{ asset('js/item_duplicate.js?v=9') }}"></script>
+    <script src="{{ asset('js/item_duplicate.js?v=10') }}"></script>
     <script>
         $(document).ready(function() {
             getSelect('f-provinsi', '/data/province', 'name', null, 'Semua Provinsi');

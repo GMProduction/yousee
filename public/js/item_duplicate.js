@@ -259,7 +259,6 @@ $(document).on("click", "#detailData", async function () {
   // }
   // showStreetView(url);
   // $("#modaldetail").modal("show");
-});
 
 function datatableItem() {
     let formData = {

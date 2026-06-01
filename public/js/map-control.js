@@ -380,11 +380,13 @@ function loadDuplicates(itemId) {
     });
 }
 
-$(document).on('click', '.view-duplicate-detail', function() {
-    let id = $(this).data('id');
-    $('#detail-modal-loading').css('display', 'flex').show();
-    $('#single-map-container').empty();
-    $('#single-map-container-street-view').html('<div class="fw-bold">Street View Container</div>');
-    // Load the detail for this duplicate item in-place in the modal
-    generateSingleGoogleMapData(id.toString());
+document.addEventListener("DOMContentLoaded", function() {
+    $(document).on('click', '.view-duplicate-detail', function() {
+        let id = $(this).data('id');
+        $('#detail-modal-loading').css('display', 'flex').show();
+        $('#single-map-container').empty();
+        $('#single-map-container-street-view').html('<div class="fw-bold">Street View Container</div>');
+        // Load the detail for this duplicate item in-place in the modal
+        generateSingleGoogleMapData(id.toString());
+    });
 });
