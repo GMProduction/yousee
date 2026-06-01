@@ -203,6 +203,9 @@ class ItemController extends CustomController
             Arr::set($data, 'image3', $stringImg);
         }
 
+        $slug = $this->createSlug($data['type_id'], $data['city_id'], $data['address']);
+        Arr::set($data, 'slug', $slug);
+
         if (\request('id')) {
             $item = Item::find(\request('id'));
             Arr::set($data, 'last_update_by', auth()->id());
@@ -276,6 +279,7 @@ class ItemController extends CustomController
                 if ($this->isAddressDuplicate($addr1, $addr2, $percent)) {
                     return response()->json([
                         'duplicate' => true,
+                        'duplicate_id' => $item->id,
                         'message' => "Data mirip terdeteksi! Kode: {$item->name}, Alamat: {$item->address} (Kemiripan " . round($percent, 1) . "%)"
                     ]);
                 }
@@ -492,21 +496,61 @@ class ItemController extends CustomController
 
     public function generateSlug()
     {
-        DB::beginTransaction();
         try {
-            $item = Item::all();
-            foreach ($item as $d) {
-                $address = Str::slug($d->address);
-                $type    = Str::slug($d->type->name);
-                $slug    = $type . '-' . $address . '-' . $d->id;
-                $d->update(['slug' => $slug]);
-            }
-            DB::commit();
+            DB::statement("
+                UPDATE items
+                JOIN types ON items.type_id = types.id
+                JOIN cities ON items.city_id = cities.id
+                SET items.slug = CONCAT(
+                    'sewa-', 
+                    LOWER(REPLACE(types.name, ' ', '-')), '-',
+                    LOWER(
+                        REPLACE(
+                            CASE 
+                                WHEN cities.name LIKE 'Kota %' THEN SUBSTRING(cities.name, 6)
+                                WHEN cities.name LIKE 'Kabupaten %' THEN SUBSTRING(cities.name, 11)
+                                ELSE cities.name 
+                            END, 
+                            ' ', '-'
+                        )
+                    ), '-',
+                    LOWER(REPLACE(REPLACE(REPLACE(items.address, '.', ''), ',', ''), ' ', '-'))
+                )
+                WHERE items.slug IS NULL OR items.slug = ''
+            ");
             return 'success';
         } catch (\Exception $er) {
-            DB::rollBack();
             return 'error: ' . $er->getMessage();
         }
+    }
+
+    private function createSlug($typeId, $cityId, $address)
+    {
+        $type = type::find($typeId);
+        $city = \App\Models\City::find($cityId);
+        
+        $slugParts = ['sewa'];
+        if ($type) {
+            $slugParts[] = strtolower(str_replace(' ', '-', $type->name));
+        }
+        if ($city) {
+            $cityName = $city->name;
+            if (stripos($cityName, 'Kota ') === 0) {
+                $cityName = substr($cityName, 5);
+            } elseif (stripos($cityName, 'Kabupaten ') === 0) {
+                $cityName = substr($cityName, 10);
+            }
+            $slugParts[] = strtolower(str_replace(' ', '-', $cityName));
+        }
+        
+        // Remove periods and commas, replace spaces with dashes, lowercase it
+        $addressClean = str_replace(['.', ','], '', $address);
+        $slugParts[] = strtolower(str_replace(' ', '-', $addressClean));
+        
+        $slug = implode('-', $slugParts);
+        // Clean multiple consecutive dashes
+        $slug = preg_replace('/-+/', '-', $slug);
+        return trim($slug, '-');
     }
 
     private function isAddressDuplicate($addr1, $addr2, &$percent = 0)

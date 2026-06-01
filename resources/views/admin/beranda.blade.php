@@ -86,7 +86,7 @@
 
     {{-- @include('admin.map', ['data' => 'script']) --}}
 
-    <script src="{{ asset('js/item_duplicate.js?v=5') }}"></script>
+    <script src="{{ asset('js/item_duplicate.js?v=6') }}"></script>
     <script>
         $(document).ready(function() {
             onTabChange();

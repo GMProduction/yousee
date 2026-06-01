@@ -631,11 +631,29 @@ function saveItem() {
             title: "Peringatan: Data Duplikat",
             text: res.message + "\n\nApakah Anda yakin tetap ingin menyimpan data ini?",
             icon: "warning",
-            buttons: ["Batal", "Ya, Tetap Simpan"],
+            buttons: {
+              cancel: "Batal",
+              view: {
+                text: "Lihat Detail Duplikat",
+                value: "view"
+              },
+              confirm: {
+                text: "Ya, Tetap Simpan",
+                value: "save"
+              }
+            },
             dangerMode: true,
-          }).then((willSave) => {
-            if (willSave) {
+          }).then((value) => {
+            if (value === "save") {
               proceedToSave();
+            } else if (value === "view") {
+              $("#modaltambahtitik").modal("hide");
+              generateSingleGoogleMapData(res.duplicate_id.toString()).then(() => {
+                $("#simple-modal-detail").modal("show");
+                $("#simple-modal-detail").one("hidden.bs.modal", function () {
+                  $("#modaltambahtitik").modal("show");
+                });
+              });
             }
           });
         } else {
