@@ -229,6 +229,7 @@ class ItemController extends CustomController
             $item->update($data);
         } else {
             Arr::set($data, 'created_by', auth()->id());
+            Arr::set($data, 'isShow', 1);
             $item = Item::create($data);
         }
 
