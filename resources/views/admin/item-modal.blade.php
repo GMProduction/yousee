@@ -393,7 +393,13 @@
     aria-hidden="true">
     <div class="modal-dialog modal-xl modal-fullscreen-lg-down" style="min-height: 900px !important;">
         <div class="modal-content ps-3 pe-3 pb-3 pt-3" style="min-height: 900px !important;">
-            <p class="fw-bold">Detail <span id="detail-title-tipe"></span> <span id="detail-title-nama"></span></p>
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <p class="fw-bold mb-0">Detail <span id="detail-title-tipe"></span> <span id="detail-title-nama"></span></p>
+                <a href="#" id="btn-view-website" target="_blank" class="btn-utama sml rnd flex" style="text-decoration: none; font-weight: bold; display: inline-flex; align-items: center; gap: 6px; padding: 6px 14px;">
+                    <i class="material-symbols-outlined text-white" style="font-size: 16px; color: white !important;">open_in_new</i>
+                    Lihat di Website
+                </a>
+            </div>
             <div class="d-flex">
                 <div class="w-50">
                     <div id="single-map-container" style="width: 100%"></div>

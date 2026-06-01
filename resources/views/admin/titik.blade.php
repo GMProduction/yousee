@@ -52,7 +52,7 @@
         }
     </style>
 
-    <script src="{{ asset('js/map-control.js?v=4') }}"></script>
+    <script src="{{ asset('js/map-control.js?v=5') }}"></script>
 @endsection
 @section('content')
     <div>

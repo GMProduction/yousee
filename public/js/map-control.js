@@ -248,6 +248,25 @@ function generateDetail(data) {
 
     $('#detail-title-tipe').html(data['type']['name']);
     $('#detail-title-nama').html('( ' + (vendorName || '-') + ' )');
+
+    if (data['slug']) {
+        $('#btn-view-website').attr('href', 'https://www.yousee-indonesia.com/id/listing/' + data['slug']).show();
+    } else {
+        let typeSlug = (data['type'] && data['type']['name'] ? data['type']['name'] : '').toLowerCase().replace(/\s+/g, '-');
+        let city = data['city'] ? data['city']['name'] : '';
+        if (city.toLowerCase().indexOf('kota ') === 0) {
+            city = city.substring(5);
+        } else if (city.toLowerCase().indexOf('kabupaten ') === 0) {
+            city = city.substring(10);
+        }
+        let citySlug = city.toLowerCase().replace(/\s+/g, '-');
+        let addressClean = (data['address'] || '').replace(/[.,]/g, '');
+        let addressSlug = addressClean.toLowerCase().replace(/\s+/g, '-');
+        let fallbackSlug = 'sewa-' + typeSlug + '-' + citySlug + '-' + addressSlug;
+        fallbackSlug = fallbackSlug.replace(/-+/g, '-').replace(/-$/, '').replace(/^-/, '');
+        $('#btn-view-website').attr('href', 'https://www.yousee-indonesia.com/id/listing/' + fallbackSlug).show();
+    }
+
     // $('#single-map-container-street-view').html(data['url']);
     $('#detail-vendor').val(vendorName + (vendorBrand ? ' (' + vendorBrand + ')' : ''));
     $('#detail-vendor-address').val(vendorAddress);
