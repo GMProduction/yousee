@@ -203,11 +203,12 @@ class ItemController extends CustomController
             Arr::set($data, 'image3', $stringImg);
         }
 
-        $slug = $this->createSlug($data['type_id'], $data['city_id'], $data['address']);
+        $id = \request('id');
+        $slug = $this->createSlug($data['type_id'], $data['city_id'], $data['address'], $id);
         Arr::set($data, 'slug', $slug);
 
-        if (\request('id')) {
-            $item = Item::find(\request('id'));
+        if ($id) {
+            $item = Item::find($id);
             Arr::set($data, 'last_update_by', auth()->id());
 
             if ($image1 && $item->image1) {
@@ -518,35 +519,71 @@ class ItemController extends CustomController
 
     public function generateSlug()
     {
+        DB::beginTransaction();
         try {
-            DB::statement("
-                UPDATE items
-                JOIN types ON items.type_id = types.id
-                JOIN cities ON items.city_id = cities.id
-                SET items.slug = CONCAT(
-                    'sewa-', 
-                    LOWER(REPLACE(types.name, ' ', '-')), '-',
-                    LOWER(
-                        REPLACE(
-                            CASE 
-                                WHEN cities.name LIKE 'Kota %' THEN SUBSTRING(cities.name, 6)
-                                WHEN cities.name LIKE 'Kabupaten %' THEN SUBSTRING(cities.name, 11)
-                                ELSE cities.name 
-                            END, 
-                            ' ', '-'
-                        )
-                    ), '-',
-                    LOWER(REPLACE(REPLACE(REPLACE(items.address, '.', ''), ',', ''), ' ', '-'))
-                )
-                WHERE items.slug IS NULL OR items.slug = ''
-            ");
+            // Get all existing non-empty slugs to prevent collisions
+            $existingSlugs = Item::whereNotNull('slug')
+                ->where('slug', '!=', '')
+                ->pluck('slug')
+                ->toArray();
+            
+            // Convert to associative array for O(1) lookup
+            $usedSlugs = array_fill_keys($existingSlugs, true);
+
+            // Fetch all items that need a slug
+            $items = Item::with(['type', 'city'])
+                ->where(function($q) {
+                    $q->whereNull('slug')->orWhere('slug', '');
+                })
+                ->get();
+
+            foreach ($items as $item) {
+                // Generate base slug
+                $slugParts = ['sewa'];
+                if ($item->type) {
+                    $slugParts[] = strtolower(str_replace(' ', '-', $item->type->name));
+                }
+                if ($item->city) {
+                    $cityName = $item->city->name;
+                    if (stripos($cityName, 'Kota ') === 0) {
+                        $cityName = substr($cityName, 5);
+                    } elseif (stripos($cityName, 'Kabupaten ') === 0) {
+                        $cityName = substr($cityName, 10);
+                    }
+                    $slugParts[] = strtolower(str_replace(' ', '-', $cityName));
+                }
+                
+                $addressClean = str_replace(['.', ','], '', $item->address);
+                $slugParts[] = strtolower(str_replace(' ', '-', $addressClean));
+                
+                $baseSlug = implode('-', $slugParts);
+                $baseSlug = preg_replace('/-+/', '-', $baseSlug);
+                $baseSlug = trim($baseSlug, '-');
+
+                $slug = $baseSlug;
+                $counter = 1;
+                while (isset($usedSlugs[$slug])) {
+                    $slug = $baseSlug . '-' . $counter;
+                    $counter++;
+                }
+
+                // Mark as used
+                $usedSlugs[$slug] = true;
+
+                // Update the item
+                $item->slug = $slug;
+                $item->save();
+            }
+
+            DB::commit();
             return 'success';
         } catch (\Exception $er) {
+            DB::rollBack();
             return 'error: ' . $er->getMessage();
         }
     }
 
-    private function createSlug($typeId, $cityId, $address)
+    private function createSlug($typeId, $cityId, $address, $itemId = null)
     {
         $type = type::find($typeId);
         $city = \App\Models\City::find($cityId);
@@ -569,10 +606,28 @@ class ItemController extends CustomController
         $addressClean = str_replace(['.', ','], '', $address);
         $slugParts[] = strtolower(str_replace(' ', '-', $addressClean));
         
-        $slug = implode('-', $slugParts);
+        $baseSlug = implode('-', $slugParts);
         // Clean multiple consecutive dashes
-        $slug = preg_replace('/-+/', '-', $slug);
-        return trim($slug, '-');
+        $baseSlug = preg_replace('/-+/', '-', $baseSlug);
+        $baseSlug = trim($baseSlug, '-');
+
+        // Check uniqueness and append suffix if duplicate exists
+        $slug = $baseSlug;
+        $counter = 1;
+        
+        while (true) {
+            $query = Item::where('slug', $slug);
+            if ($itemId) {
+                $query->where('id', '!=', $itemId);
+            }
+            if (!$query->exists()) {
+                break;
+            }
+            $slug = $baseSlug . '-' . $counter;
+            $counter++;
+        }
+        
+        return $slug;
     }
 
     private function isAddressDuplicate($addr1, $addr2, &$percent = 0)
