@@ -11,6 +11,14 @@ async function saveData(title, form, url, resposeSuccess, image = null) {
     })
         .then(async (res) => {
             if (res) {
+                swal({
+                    title: "Menyimpan...",
+                    text: "Mohon tunggu sebentar, data sedang diproses.",
+                    icon: "info",
+                    buttons: false,
+                    closeOnClickOutside: false,
+                    closeOnEsc: false
+                });
                 if (image) {
                     if ($('#' + image).val()) {
                         let image1 = await handleImageUpload($('#' + image));
@@ -98,6 +106,14 @@ function saveDataObjectFormData(title, form_data, url, resposeSuccess) {
     })
         .then((res) => {
             if (res) {
+                swal({
+                    title: "Menyimpan...",
+                    text: "Mohon tunggu sebentar, data sedang diproses.",
+                    icon: "info",
+                    buttons: false,
+                    closeOnClickOutside: false,
+                    closeOnEsc: false
+                });
                 $.ajax({
                     type: "POST",
                     data: form_data,
@@ -147,16 +163,8 @@ function saveDataObjectFormData(title, form_data, url, resposeSuccess) {
     return false;
 }
 
-function saveDataAjaxWImage(title, form, form_data, url, resposeSuccess) {
+async function saveDataAjaxWImage(title, form, form_data, url, resposeSuccess) {
     var dataForm = form_data['form_data'];
-    if (form_data['image']) {
-        $.each(form_data['image'], async function (k, v) {
-            if ($('#' + form + ' #' + v).val()) {
-                let icon = await handleImageUpload($('#' + v));
-                dataForm.append(v, icon, icon.name);
-            }
-        })
-    }
     swal({
         title: title,
         text: "Apa kamu yakin ?",
@@ -164,8 +172,26 @@ function saveDataAjaxWImage(title, form, form_data, url, resposeSuccess) {
         buttons: true,
         primariMode: true,
     })
-        .then((res) => {
+        .then(async (res) => {
             if (res) {
+                swal({
+                    title: "Menyimpan...",
+                    text: "Mohon tunggu sebentar, data sedang diproses dan gambar sedang diunggah.",
+                    icon: "info",
+                    buttons: false,
+                    closeOnClickOutside: false,
+                    closeOnEsc: false
+                });
+
+                if (form_data['image']) {
+                    for (const v of Object.values(form_data['image'])) {
+                        if ($('#' + form + ' #' + v).val()) {
+                            let icon = await handleImageUpload($('#' + v));
+                            dataForm.append(v, icon, icon.name);
+                        }
+                    }
+                }
+
                 $.ajax({
                     type: "POST",
                     data: dataForm,
