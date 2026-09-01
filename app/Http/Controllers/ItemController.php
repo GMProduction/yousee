@@ -759,17 +759,12 @@ class ItemController extends CustomController
     }
 
     /**
-     * Sinkronisasi massal data trafik yang 0 atau null menggunakan estimasi geospasial
+     * Sinkronisasi massal seluruh data trafik menggunakan estimasi geospasial
      */
     public function syncTraffic()
     {
         try {
             $items = Item::with('type')
-                ->where(function ($q) {
-                    $q->whereNull('trafic')
-                      ->orWhere('trafic', 0)
-                      ->orWhere('trafic', '');
-                })
                 ->whereNull('deleted_at')
                 ->get();
 
@@ -791,7 +786,7 @@ class ItemController extends CustomController
                 $updatedCount++;
             }
 
-            return $this->jsonResponse('Berhasil menyinkronkan ' . $updatedCount . ' data trafik titik.', 200, [
+            return $this->jsonResponse('Berhasil menyinkronkan seluruh ' . $updatedCount . ' data trafik titik.', 200, [
                 'updated_count' => $updatedCount
             ]);
         } catch (\Exception $e) {
