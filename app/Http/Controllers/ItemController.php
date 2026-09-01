@@ -182,7 +182,20 @@ class ItemController extends CustomController
         Arr::set($data, 'longitude', $str_arr[1]);
         Arr::set($data, 'qty', \request('qty'));
         Arr::set($data, 'side', \request('side'));
-        Arr::set($data, 'trafic', \request('trafic'));
+        
+        $inputTrafic = intval(\request('trafic'));
+        if ($inputTrafic <= 0) {
+            $typeObj = type::find($data['type_id']);
+            $typeName = $typeObj ? $typeObj->name : '';
+            $inputTrafic = self::calculateSmartTraffic(
+                $typeName,
+                $data['width'] ?? '0',
+                $data['height'] ?? '0',
+                $data['address'] ?? '',
+                $data['location'] ?? ''
+            );
+        }
+        Arr::set($data, 'trafic', $inputTrafic);
 
         if ($image1) {
             $image     = $this->generateImageName('image1');
@@ -681,4 +694,86 @@ class ItemController extends CustomController
 
         return false;
     }
+
+    /**
+     * Menghitung estimasi trafik otomatis berdasarkan tipe, ukuran, dan lokasi (0 API Call)
+     */
+    public static function calculateSmartTraffic($typeName, $width, $height, $address, $location)
+    {
+        $baseTraffic = 15000;
+
+        // 1. FACTOR: MEDIA TYPE
+        $typeMult = 1.0;
+        $tName = strtolower($typeName ?? '');
+        if (str_contains($tName, 'videotron') || str_contains($tName, 'megatron') || str_contains($tName, 'led')) {
+            $typeMult = 2.5;
+        } elseif (str_contains($tName, 'billboard')) {
+            $typeMult = 1.8;
+        }
+
+        // 2. FACTOR: SIZE (m2)
+        $w = floatval(str_replace([',', ' '], '', $width ?? '0'));
+        $h = floatval(str_replace([',', ' '], '', $height ?? '0'));
+        $area = $w * $h;
+        $sizeMult = 1.0;
+        if ($area > 100) {
+            $sizeMult = 1.5;
+        } elseif ($area > 50) {
+            $sizeMult = 1.25;
+        }
+
+        // 3. FACTOR: LOCATION KEYWORDS
+        $locMult = 1.0;
+        $fullAddr = strtolower(($address ?? '') . ' ' . ($location ?? ''));
+        if (str_contains($fullAddr, 'sudirman') || str_contains($fullAddr, 'thamrin') || str_contains($fullAddr, 'gatot')) {
+            $locMult = 2.0;
+        } elseif (str_contains($fullAddr, 'tol') || str_contains($fullAddr, 'arteri')) {
+            $locMult = 1.5;
+        } elseif (str_contains($fullAddr, 'alun')) {
+            $locMult = 1.3;
+        }
+
+        return (int) round($baseTraffic * $typeMult * $sizeMult * $locMult);
+    }
+
+    /**
+     * Sinkronisasi massal data trafik yang 0 atau null menggunakan estimasi geospasial
+     */
+    public function syncTraffic()
+    {
+        try {
+            $items = Item::with('type')
+                ->where(function ($q) {
+                    $q->whereNull('trafic')
+                      ->orWhere('trafic', 0)
+                      ->orWhere('trafic', '');
+                })
+                ->whereNull('deleted_at')
+                ->get();
+
+            $updatedCount = 0;
+            foreach ($items as $item) {
+                $typeName = $item->type->name ?? '';
+                $trafficVal = self::calculateSmartTraffic(
+                    $typeName,
+                    $item->width,
+                    $item->height,
+                    $item->address,
+                    $item->location
+                );
+
+                $item->update([
+                    'trafic' => $trafficVal
+                ]);
+                $updatedCount++;
+            }
+
+            return $this->jsonResponse('Berhasil menyinkronkan ' . $updatedCount . ' data trafik titik.', 200, [
+                'updated_count' => $updatedCount
+            ]);
+        } catch (\Exception $e) {
+            return $this->jsonResponse('Gagal sinkronisasi: ' . $e->getMessage(), 500);
+        }
+    }
 }
+

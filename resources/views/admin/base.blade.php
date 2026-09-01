@@ -140,6 +140,13 @@
                     </li>
                 @endif
 
+                <li class="nav-item">
+                    <a class="nav-link menu @if ($sidebar == 'geospasial') active @endif" href="/admin/geospasial-v2" target="_blank">
+                        <i class="material-symbols-outlined menu-icon">public</i>
+                        <p class="menu-text">Geospasial V2</p>
+                    </a>
+                </li>
+
                 <li class="nav-item text-center mt-3 mb-3">
 
                     <a class="title1-role " href="#"> Login Sebagai </a> <br>

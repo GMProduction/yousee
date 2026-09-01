@@ -1000,3 +1000,34 @@ $(document).on("click", ".btn-delete-dup", function () {
     }
   });
 });
+
+$(document).on("click", "#btnSyncTraffic", function () {
+  swal({
+    title: "Sinkronisasi Trafik",
+    text: "Hitung dan isi estimasi trafik geospasial otomatis untuk seluruh titik iklan yang masih bernilai 0 / kosong?",
+    icon: "info",
+    buttons: ["Batal", "Mulai Sinkronisasi"],
+  }).then((willSync) => {
+    if (willSync) {
+      let btn = $("#btnSyncTraffic");
+      let originalHtml = btn.html();
+      btn.prop("disabled", true).html('<span class="spinner-border spinner-border-sm me-1" role="status" aria-hidden="true"></span> Memproses...');
+
+      $.post("/data/item/sync-traffic", {
+        _token: $('meta[name="_token"]').attr("content"),
+      }, function (res) {
+        btn.prop("disabled", false).html(originalHtml);
+        if (res.status === 200) {
+          swal("Berhasil!", res.message, "success");
+          datatableItem();
+        } else {
+          swal("Gagal!", res.message || "Terjadi kesalahan.", "error");
+        }
+      }).fail(function (xhr) {
+        btn.prop("disabled", false).html(originalHtml);
+        swal("Gagal!", xhr.responseJSON ? xhr.responseJSON.message : "Gagal menghubungi server.", "error");
+      });
+    }
+  });
+});
+

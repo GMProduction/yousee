@@ -66,6 +66,7 @@ Route::prefix('data')->middleware('auth')->group(
                 Route::post('resolve-duplicate', [\App\Http\Controllers\ItemController::class, 'resolveDuplicate']);
                 Route::post('show-data', [\App\Http\Controllers\ItemController::class, 'changeShowLandingPage']);
                 Route::get('generate-slug', [\App\Http\Controllers\ItemController::class, 'generateSlug']);
+                Route::post('sync-traffic', [\App\Http\Controllers\ItemController::class, 'syncTraffic']);
             }
         );
     }

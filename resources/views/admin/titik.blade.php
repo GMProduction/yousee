@@ -136,10 +136,15 @@
         <div class="tab-content">
             <div class="tab-pane fade show active" id="pills-tabel" role="tabpanel" aria-labelledby="pills-tabel-tab">
                 <div class="panel">
-                    <div class="title">
-                        <p>Titik yang baru dimasukan</p>
-                        <a class="btn-utama-soft sml rnd " id="addData">Titik Baru <i
-                                class="material-symbols-outlined menu-icon ms-2">add_circle</i></a>
+                    <div class="title d-flex justify-content-between align-items-center">
+                        <p class="mb-0">Titik yang baru dimasukan</p>
+                        <div>
+                            <button type="button" class="btn btn-sm btn-outline-info rounded-pill me-2 px-3" id="btnSyncTraffic" title="Hitung dan sinkronkan estimasi trafik geospasial untuk titik yang masih 0">
+                                <i class="material-symbols-outlined align-middle me-1" style="font-size: 16px;">sync</i> Sinkronkan Trafik
+                            </button>
+                            <a class="btn-utama-soft sml rnd " id="addData">Titik Baru <i
+                                    class="material-symbols-outlined menu-icon ms-2">add_circle</i></a>
+                        </div>
                     </div>
                     @include('admin.item-table')
 
@@ -200,7 +205,7 @@
     {{-- @include('admin.map', ['data' => 'script']) --}}
 
     {{--    <script src="{{ asset('js/map-control.js') }}"></script> --}}
-    <script src="{{ asset('js/item_duplicate.js?v=11') }}"></script>
+    <script src="{{ asset('js/item_duplicate.js?v=12') }}"></script>
 
     <script>
         $(document).ready(function() {
