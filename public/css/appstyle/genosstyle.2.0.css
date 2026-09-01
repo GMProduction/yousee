@@ -562,6 +562,36 @@ input.form-control {
   color: #be2d2d;
 }
 
+.btn-warning-soft {
+  all: unset;
+  transition: all 0.5s;
+  display: flex;
+  text-align: center;
+  border: none;
+  background-color: #ffe8cc;
+  color: #e8590c;
+  border-radius: 5px;
+  padding: 10px;
+  font-weight: bold;
+  align-items: center;
+  cursor: pointer;
+}
+.btn-warning-soft a {
+  display: block;
+}
+.btn-warning-soft.sml {
+  padding: 3px 10px;
+  font-size: 0.8rem;
+}
+.btn-warning-soft.rnd {
+  border-radius: 10px;
+}
+.btn-warning-soft:hover {
+  transition: all 0.5s;
+  background-color: #ffd8a8;
+  color: #d9480f;
+}
+
 .btn-success {
   all: unset;
   transition: all 0.5s;
