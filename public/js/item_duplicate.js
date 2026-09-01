@@ -446,6 +446,52 @@ function datatableItem() {
           },
         },
       ],
+      drawCallback: function (settings) {
+        var api = this.api();
+        var pageInfo = api.page.info();
+        var wrapper = $(api.table().container());
+        
+        // Remove existing jump-page element if any to avoid duplication
+        wrapper.find(".dt-jump-page").remove();
+
+        if (pageInfo.pages > 1) {
+          var jumpHtml = $(
+            '<div class="dt-jump-page d-inline-flex align-items-center ms-3" style="font-size: 13px;">' +
+              '<span class="me-1 text-muted">Ke hal:</span>' +
+              '<input type="number" class="form-control form-control-sm text-center jump-input" min="1" max="' +
+              pageInfo.pages +
+              '" value="' +
+              (pageInfo.page + 1) +
+              '" style="width: 60px; height: 31px; display: inline-block; padding: 2px 4px;">' +
+              '<span class="ms-1 text-muted">/' +
+              pageInfo.pages +
+              "</span>" +
+              '<button type="button" class="btn btn-sm btn-outline-primary ms-1 jump-btn" style="height: 31px; padding: 2px 8px; font-size: 12px;">Go</button>' +
+            "</div>"
+          );
+
+          var paginateContainer = wrapper.find(".dataTables_paginate");
+          paginateContainer.addClass("d-flex align-items-center justify-content-end flex-wrap gap-1");
+          paginateContainer.append(jumpHtml);
+
+          var doJump = function () {
+            var val = parseInt(jumpHtml.find(".jump-input").val(), 10);
+            if (!isNaN(val) && val >= 1 && val <= pageInfo.pages) {
+              api.page(val - 1).draw("page");
+            } else {
+              jumpHtml.find(".jump-input").val(pageInfo.page + 1);
+            }
+          };
+
+          jumpHtml.find(".jump-btn").on("click", doJump);
+          jumpHtml.find(".jump-input").on("keypress", function (e) {
+            if (e.which === 13) {
+              e.preventDefault();
+              doJump();
+            }
+          });
+        }
+      },
     });
   }
 
@@ -584,6 +630,52 @@ function datatableItemPresence() {
         },
       },
     ],
+    drawCallback: function (settings) {
+      var api = this.api();
+      var pageInfo = api.page.info();
+      var wrapper = $(api.table().container());
+
+      // Remove existing jump-page element if any to avoid duplication
+      wrapper.find(".dt-jump-page").remove();
+
+      if (pageInfo.pages > 1) {
+        var jumpHtml = $(
+          '<div class="dt-jump-page d-inline-flex align-items-center ms-3" style="font-size: 13px;">' +
+            '<span class="me-1 text-muted">Ke hal:</span>' +
+            '<input type="number" class="form-control form-control-sm text-center jump-input" min="1" max="' +
+            pageInfo.pages +
+            '" value="' +
+            (pageInfo.page + 1) +
+            '" style="width: 60px; height: 31px; display: inline-block; padding: 2px 4px;">' +
+            '<span class="ms-1 text-muted">/' +
+            pageInfo.pages +
+            "</span>" +
+            '<button type="button" class="btn btn-sm btn-outline-primary ms-1 jump-btn" style="height: 31px; padding: 2px 8px; font-size: 12px;">Go</button>' +
+          "</div>"
+        );
+
+        var paginateContainer = wrapper.find(".dataTables_paginate");
+        paginateContainer.addClass("d-flex align-items-center justify-content-end flex-wrap gap-1");
+        paginateContainer.append(jumpHtml);
+
+        var doJump = function () {
+          var val = parseInt(jumpHtml.find(".jump-input").val(), 10);
+          if (!isNaN(val) && val >= 1 && val <= pageInfo.pages) {
+            api.page(val - 1).draw("page");
+          } else {
+            jumpHtml.find(".jump-input").val(pageInfo.page + 1);
+          }
+        };
+
+        jumpHtml.find(".jump-btn").on("click", doJump);
+        jumpHtml.find(".jump-input").on("keypress", function (e) {
+          if (e.which === 13) {
+            e.preventDefault();
+            doJump();
+          }
+        });
+      }
+    },
   });
 }
 
