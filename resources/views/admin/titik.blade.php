@@ -139,9 +139,9 @@
                     <div class="title d-flex justify-content-between align-items-center">
                         <p class="mb-0">Titik yang baru dimasukan</p>
                         <div>
-                            <button type="button" class="btn btn-sm btn-outline-info rounded-pill me-2 px-3" id="btnSyncTraffic" title="Hitung dan sinkronkan estimasi trafik geospasial untuk titik yang masih 0">
-                                <i class="material-symbols-outlined align-middle me-1" style="font-size: 16px;">sync</i> Sinkronkan Trafik
-                            </button>
+                            <a class="btn-utama-soft sml rnd me-2" role="button" id="btnSyncTraffic" title="Hitung dan sinkronkan estimasi trafik geospasial untuk titik yang masih 0">
+                                Sinkronkan Trafik <i class="material-symbols-outlined menu-icon ms-2">sync</i>
+                            </a>
                             <a class="btn-utama-soft sml rnd " id="addData">Titik Baru <i
                                     class="material-symbols-outlined menu-icon ms-2">add_circle</i></a>
                         </div>

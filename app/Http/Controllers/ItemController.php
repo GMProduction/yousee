@@ -698,20 +698,24 @@ class ItemController extends CustomController
     /**
      * Menghitung estimasi trafik otomatis berdasarkan tipe, ukuran, dan lokasi (0 API Call)
      */
-    public static function calculateSmartTraffic($typeName, $width, $height, $address, $location)
+    /**
+     * Menghitung estimasi trafik persis seperti algoritma bawaan Geospasial (calculateSmartProfile)
+     */
+    public static function calculateSmartTraffic($typeName, $width, $height, $address, $location, $itemId = 0)
     {
+        // Base Traffic (Minimum daily views for any billboard)
         $baseTraffic = 15000;
 
-        // 1. FACTOR: MEDIA TYPE
+        // 1. FACTOR: MEDIA TYPE (Premium media is usually in busier spots)
         $typeMult = 1.0;
         $tName = strtolower($typeName ?? '');
         if (str_contains($tName, 'videotron') || str_contains($tName, 'megatron') || str_contains($tName, 'led')) {
-            $typeMult = 2.5;
+            $typeMult = 2.5; // High traffic density usually
         } elseif (str_contains($tName, 'billboard')) {
             $typeMult = 1.8;
         }
 
-        // 2. FACTOR: SIZE (m2)
+        // 2. FACTOR: SIZE (Larger media = Wider visibility range)
         $w = floatval(str_replace([',', ' '], '', $width ?? '0'));
         $h = floatval(str_replace([',', ' '], '', $height ?? '0'));
         $area = $w * $h;
@@ -722,7 +726,7 @@ class ItemController extends CustomController
             $sizeMult = 1.25;
         }
 
-        // 3. FACTOR: LOCATION KEYWORDS
+        // 3. FACTOR: LOCATION KEYWORDS (Simple heuristic)
         $locMult = 1.0;
         $fullAddr = strtolower(($address ?? '') . ' ' . ($location ?? ''));
         if (str_contains($fullAddr, 'sudirman') || str_contains($fullAddr, 'thamrin') || str_contains($fullAddr, 'gatot')) {
@@ -733,7 +737,25 @@ class ItemController extends CustomController
             $locMult = 1.3;
         }
 
-        return (int) round($baseTraffic * $typeMult * $sizeMult * $locMult);
+        // 4. DAILY FLUCTUATION (Simulate Day-of-Week)
+        $dayOfWeek = (int) date('w'); // 0=Sun, 6=Sat
+        $dayFactor = 1.0;
+        if ($dayOfWeek === 6) {
+            $dayFactor = 1.15; // Saturday busy
+        } elseif ($dayOfWeek === 0) {
+            $dayFactor = 0.85; // Sunday quiet
+        }
+
+        // Daily Random Noise (Consistent for the day + item ID)
+        $dateStr = date('Y-m-d');
+        $seed = 0;
+        foreach (str_split($dateStr) as $char) {
+            $seed += ord($char);
+        }
+        $seed += (int) $itemId;
+        $randomFactor = 0.90 + (($seed % 20) / 100.0); // 0.90 to 1.10
+
+        return (int) floor($baseTraffic * $typeMult * $sizeMult * $locMult * $dayFactor * $randomFactor);
     }
 
     /**
@@ -759,7 +781,8 @@ class ItemController extends CustomController
                     $item->width,
                     $item->height,
                     $item->address,
-                    $item->location
+                    $item->location,
+                    $item->id
                 );
 
                 $item->update([

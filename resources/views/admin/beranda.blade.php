@@ -62,10 +62,15 @@
     </div>
 
     <div class="panel">
-        <div class="title">
-            <p>Titik yang baru dimasukan</p>
-            <a class="btn-utama-soft sml rnd " id="addData">Titik Baru <i class="material-symbols-outlined menu-icon ms-2"
-                    data-toggle="modal" data-bs-backdrop="static">add_circle</i></a>
+        <div class="title d-flex justify-content-between align-items-center">
+            <p class="mb-0">Titik yang baru dimasukan</p>
+            <div>
+                <a class="btn-utama-soft sml rnd me-2" role="button" id="btnSyncTraffic" title="Hitung dan sinkronkan estimasi trafik geospasial untuk titik yang masih 0">
+                    Sinkronkan Trafik <i class="material-symbols-outlined menu-icon ms-2">sync</i>
+                </a>
+                <a class="btn-utama-soft sml rnd " id="addData">Titik Baru <i class="material-symbols-outlined menu-icon ms-2"
+                        data-toggle="modal" data-bs-backdrop="static">add_circle</i></a>
+            </div>
         </div>
 
         @include('admin.item-table')
