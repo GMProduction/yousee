@@ -192,7 +192,7 @@
 
 @section('morejs')
     <script
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAs_QwyMszHel8sTA19mwfeVYgvvBPK0-0&callback=initMap&v=weekly"
+        src="https://maps.googleapis.com/maps/api/js?key={{ config('services.google.maps_key') }}&callback=initMap&v=weekly"
         async></script>
     <script src="https://unpkg.com/@googlemaps/markerclusterer/dist/index.min.js"></script>
     {{--    <script src="{{ asset('js/number_formater.js') }}"></script> --}}

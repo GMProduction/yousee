@@ -617,7 +617,7 @@
 @section('morejs')
     <script src="{{ asset('js/map-control.js?v=8') }}"></script>
     <script
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAs_QwyMszHel8sTA19mwfeVYgvvBPK0-0&callback=initMap&v=weekly"
+        src="https://maps.googleapis.com/maps/api/js?key={{ config('services.google.maps_key') }}&callback=initMap&v=weekly"
         async></script>
     <script src="https://cdn.datatables.net/select/1.7.0/js/dataTables.select.min.js"></script>
     <script src="https://cdn.datatables.net/rowreorder/1.4.1/js/dataTables.rowReorder.min.js"></script>
