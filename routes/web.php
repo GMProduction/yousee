@@ -166,6 +166,15 @@ Route::prefix('admin')->middleware(\App\Http\Middleware\AdminMiddleware::class)-
             Route::delete('/{id}/delete', [CalonVendorAdminController::class, 'hapus'])->name('hapus');
             Route::get('/data', [CalonVendorAdminController::class, 'data'])->name('data');
         });
+
+        Route::get('/geospasial', function () {
+            return view('admin.geospasial');
+        })->name('admin.geospasial');
+
+        Route::prefix('geospasial-v2')->group(function () {
+            Route::get('/', [\App\Http\Controllers\GeospasialController::class, 'index'])->name('admin.geospasial_v2');
+            Route::get('/data', [\App\Http\Controllers\GeospasialController::class, 'getData'])->name('admin.geospasial_v2.data');
+        });
     }
 );
 
