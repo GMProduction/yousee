@@ -205,7 +205,7 @@
     {{-- @include('admin.map', ['data' => 'script']) --}}
 
     {{--    <script src="{{ asset('js/map-control.js') }}"></script> --}}
-    <script src="{{ asset('js/item_duplicate.js?v=12') }}"></script>
+    <script src="{{ asset('js/item_duplicate.js?v=13') }}"></script>
 
     <script>
         $(document).ready(function() {

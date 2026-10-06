@@ -654,7 +654,7 @@
                 <div class="alert alert-warning border-warning d-flex align-items-center mb-3">
                     <span class="material-symbols-outlined me-2">info</span>
                     <div>
-                        <strong>Perhatian:</strong> Alamat dan ukuran titik yang Anda masukkan terdeteksi mirip dengan data yang sudah terdaftar di sistem. Silakan tinjau kembali data pembanding di bawah ini.
+                        <strong>Perhatian:</strong> Titik yang Anda masukkan terdeteksi mirip atau berada dalam radius 200 meter dengan jenis media yang sama dari data yang sudah terdaftar di sistem. Silakan tinjau kembali data pembanding di bawah ini.
                     </div>
                 </div>
                 <div class="row g-3 justify-content-center" id="check-dup-list-container">

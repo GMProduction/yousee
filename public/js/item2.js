@@ -596,6 +596,8 @@ function saveItem() {
     let width = $("#form #width").val();
     let height = $("#form #height").val();
     let vendor_id = $("#form #vendor").val();
+    let latlong = $("#form #latlong").val();
+    let type_id = $("#form #type").val();
     let id = $("#form #id").val();
 
     const proceedToSave = () => {
@@ -617,13 +619,15 @@ function saveItem() {
       );
     };
 
-    if (address && width && height && vendor_id) {
+    if (vendor_id && (address || latlong)) {
       $.post("/data/item/check-duplicate", {
         _token: $('meta[name="_token"]').attr("content"),
         address: address,
         width: width,
         height: height,
         vendor_id: vendor_id,
+        latlong: latlong,
+        type_id: type_id,
         id: id
       }, function (res) {
         if (res.duplicate && res.duplicate_items && res.duplicate_items.length > 0) {

@@ -171,7 +171,7 @@
         src="https://maps.googleapis.com/maps/api/js?key={{ config('services.google.maps_key') }}&callback=initMap&v=weekly"
         async></script>
     <script src="{{ asset('js/number_formater.js') }}"></script>
-    <script src="{{ asset('js/item_duplicate.js?v=11') }}"></script>
+    <script src="{{ asset('js/item_duplicate.js?v=13') }}"></script>
     <script>
         $(document).ready(function() {
             getSelect('f-provinsi', '/data/province', 'name', null, 'Semua Provinsi');

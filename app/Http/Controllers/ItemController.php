@@ -31,47 +31,39 @@ class ItemController extends CustomController
 
         if ($duplicate) {
             // Ambil semua item aktif untuk diproses
-            $allItems = Item::select('id', 'vendor_id', 'width', 'height', 'address')->where('is_duplicate_resolved', 0)->get();
+            $allItems = Item::with('type')
+                ->select('id', 'vendor_id', 'width', 'height', 'address', 'latitude', 'longitude', 'type_id')
+                ->where('is_duplicate_resolved', 0)
+                ->get();
             
-            // Group items by vendor, normalized width, and normalized height
-            $grouped = [];
+            // Group items by vendor
+            $byVendor = [];
             foreach ($allItems as $itemA) {
-                $v = $itemA->vendor_id;
-                $w = floatval(str_replace([',', ' '], '', $itemA->width ?? '0'));
-                $h = floatval(str_replace([',', ' '], '', $itemA->height ?? '0'));
-                $addr = strtolower(trim($itemA->address ?? ''));
-                if ($addr === '') continue;
-
-                $key = $v . '_' . $w . '_' . $h;
-                $grouped[$key][] = [
-                    'id' => $itemA->id,
-                    'address' => $addr
-                ];
+                if (!$itemA->vendor_id) continue;
+                $byVendor[$itemA->vendor_id][] = $itemA;
             }
 
             $duplicateIds = [];
-            foreach ($grouped as $key => $groupItems) {
+            foreach ($byVendor as $vendorId => $groupItems) {
                 $groupCount = count($groupItems);
                 if ($groupCount <= 1) continue;
 
                 for ($i = 0; $i < $groupCount; $i++) {
                     $itemA = $groupItems[$i];
-                    $addr1 = $itemA['address'];
                     $isDuplicate = false;
 
                     for ($j = 0; $j < $groupCount; $j++) {
                         if ($i === $j) continue;
                         $itemB = $groupItems[$j];
-                        $addr2 = $itemB['address'];
 
-                        if ($this->isAddressDuplicate($addr1, $addr2)) {
+                        if ($this->isItemDuplicate($itemA, $itemB)) {
                             $isDuplicate = true;
                             break;
                         }
                     }
 
                     if ($isDuplicate) {
-                        $duplicateIds[] = $itemA['id'];
+                        $duplicateIds[] = $itemA->id;
                     }
                 }
             }
@@ -259,19 +251,27 @@ class ItemController extends CustomController
 
     public function checkDuplicate()
     {
-        $address = \request('address');
-        $width = \request('width');
-        $height = \request('height');
+        $address   = \request('address');
+        $width     = \request('width');
+        $height    = \request('height');
         $vendor_id = \request('vendor_id');
-        $id = \request('id');
+        $latlong   = \request('latlong');
+        $latitude  = \request('latitude');
+        $longitude = \request('longitude');
+        $type_id   = \request('type_id');
+        $id        = \request('id');
 
-        if (!$address || !$width || !$height || !$vendor_id) {
+        if (!$vendor_id || (!$address && !$latlong && (!$latitude || !$longitude))) {
             return response()->json(['duplicate' => false]);
         }
 
-        // Normalisasi ukuran input: hilangkan koma dan spasi
-        $cleanWidth = str_replace([',', ' '], '', $width);
-        $cleanHeight = str_replace([',', ' '], '', $height);
+        if ($latlong && ($latitude === null || $longitude === null)) {
+            $parts = explode(',', str_replace(' ', '', $latlong));
+            if (count($parts) >= 2) {
+                $latitude = $parts[0];
+                $longitude = $parts[1];
+            }
+        }
 
         // Cari item dari database dengan vendor yang sama
         $items = Item::with(['city.province', 'type', 'vendorAll'])
@@ -282,42 +282,48 @@ class ItemController extends CustomController
         }
         $items = $items->get();
 
+        $inputItem = (object) [
+            'id' => $id,
+            'vendor_id' => $vendor_id,
+            'width' => $width,
+            'height' => $height,
+            'address' => $address,
+            'latitude' => $latitude,
+            'longitude' => $longitude,
+            'type_id' => $type_id,
+        ];
+        if ($type_id) {
+            $inputItem->type = type::find($type_id);
+        }
+
         $duplicateItems = [];
         foreach ($items as $item) {
-            // Normalisasi ukuran dari DB
-            $dbWidth = str_replace([',', ' '], '', $item->width);
-            $dbHeight = str_replace([',', ' '], '', $item->height);
-
-            // Jika ukuran cocok (lebar & tinggi)
-            if ($cleanWidth == $dbWidth && $cleanHeight == $dbHeight) {
-                // Perbandingan alamat menggunakan isAddressDuplicate
-                $addr1 = strtolower(trim($address));
-                $addr2 = strtolower(trim($item->address));
-
-                if ($this->isAddressDuplicate($addr1, $addr2, $percent)) {
-                    $duplicateItems[] = [
-                        'id' => $item->id,
-                        'name' => $item->name ?? '-',
-                        'type' => $item->type ? $item->type->name : '-',
-                        'province' => $item->city && $item->city->province ? $item->city->province->name : '-',
-                        'city' => $item->city ? $item->city->name : '-',
-                        'address' => $item->address,
-                        'width' => $item->width,
-                        'height' => $item->height,
-                        'vendor' => $item->vendorAll ? $item->vendorAll->name : '-',
-                        'latitude' => $item->latitude,
-                        'longitude' => $item->longitude,
-                        'image1' => $item->image1 ? url($item->image1) : '',
-                        'similarity' => round($percent, 1) . '%'
-                    ];
-                }
+            $reason = '';
+            $similarityText = '';
+            if ($this->isItemDuplicate($inputItem, $item, $reason, $similarityText)) {
+                $duplicateItems[] = [
+                    'id' => $item->id,
+                    'name' => $item->name ?? '-',
+                    'type' => $item->type ? $item->type->name : '-',
+                    'province' => $item->city && $item->city->province ? $item->city->province->name : '-',
+                    'city' => $item->city ? $item->city->name : '-',
+                    'address' => $item->address,
+                    'width' => $item->width,
+                    'height' => $item->height,
+                    'vendor' => $item->vendorAll ? $item->vendorAll->name : '-',
+                    'latitude' => $item->latitude,
+                    'longitude' => $item->longitude,
+                    'image1' => $item->image1 ? url($item->image1) : '',
+                    'similarity' => $similarityText,
+                    'reason' => $reason
+                ];
             }
         }
 
         if (count($duplicateItems) > 0) {
             return response()->json([
                 'duplicate' => true,
-                'message' => "Data mirip terdeteksi! Terdapat " . count($duplicateItems) . " titik yang mirip.",
+                'message' => "Data mirip terdeteksi! Terdapat " . count($duplicateItems) . " titik yang terindikasi sama.",
                 'duplicate_items' => $duplicateItems
             ]);
         }
@@ -347,35 +353,25 @@ class ItemController extends CustomController
 
     public function getDuplicates($id)
     {
-        $targetItem = Item::findOrFail($id);
+        $targetItem = Item::with(['city.province', 'type', 'vendorAll'])->findOrFail($id);
         
-        $addr1 = strtolower(trim($targetItem->address ?? ''));
-        if ($addr1 === '') {
+        $v1 = $targetItem->vendor_id;
+        if (!$v1) {
             return response()->json([]);
         }
 
-        $w1 = floatval(str_replace([',', ' '], '', $targetItem->width ?? '0'));
-        $h1 = floatval(str_replace([',', ' '], '', $targetItem->height ?? '0'));
-        $v1 = $targetItem->vendor_id;
-
         // Cari item lain (bukan targetItem itu sendiri) dengan vendor yang sama
-        $allItems = Item::with(['city', 'type', 'vendorAll'])
+        $allItems = Item::with(['city.province', 'type', 'vendorAll'])
             ->where('vendor_id', $v1)
             ->where('id', '!=', $id)
+            ->where('is_duplicate_resolved', 0)
             ->get();
 
         $duplicates = [];
         foreach ($allItems as $itemB) {
-            $w2 = floatval(str_replace([',', ' '], '', $itemB->width ?? '0'));
-            $h2 = floatval(str_replace([',', ' '], '', $itemB->height ?? '0'));
-            if ($w1 !== $w2 || $h1 !== $h2) continue;
-
-            $addr2 = strtolower(trim($itemB->address ?? ''));
-            if ($addr2 === '') continue;
-
-            $isDup = $this->isAddressDuplicate($addr1, $addr2, $percent);
-
-            if ($isDup) {
+            $reason = '';
+            $similarityText = '';
+            if ($this->isItemDuplicate($targetItem, $itemB, $reason, $similarityText)) {
                 $duplicates[] = [
                     'id' => $itemB->id,
                     'name' => $itemB->name,
@@ -389,7 +385,8 @@ class ItemController extends CustomController
                     'latitude' => $itemB->latitude,
                     'longitude' => $itemB->longitude,
                     'image1' => $itemB->image1 ? url($itemB->image1) : '',
-                    'similarity' => round($percent, 1) . '%'
+                    'similarity' => $similarityText,
+                    'reason' => $reason
                 ];
             }
         }
@@ -415,22 +412,16 @@ class ItemController extends CustomController
             ->where('is_duplicate_resolved', 0)
             ->get();
 
-        // Group items in memory by vendor, width, and height
-        $grouped = [];
+        // Group items in memory by vendor
+        $groupedByVendor = [];
         foreach ($allItems as $item) {
-            $v = $item->vendor_id;
-            $w = floatval(str_replace([',', ' '], '', $item->width ?? '0'));
-            $h = floatval(str_replace([',', ' '], '', $item->height ?? '0'));
-            $addr = strtolower(trim($item->address ?? ''));
-            if ($addr === '') continue;
-
-            $key = $v . '_' . $w . '_' . $h;
-            $grouped[$key][] = $item;
+            if (!$item->vendor_id) continue;
+            $groupedByVendor[$item->vendor_id][] = $item;
         }
 
         // Cari semua kelompok duplikat (clusters)
         $groups = [];
-        foreach ($grouped as $key => $groupItems) {
+        foreach ($groupedByVendor as $vendorId => $groupItems) {
             $groupCount = count($groupItems);
             if ($groupCount <= 1) continue;
 
@@ -438,25 +429,36 @@ class ItemController extends CustomController
             $clusters = [];
 
             foreach ($groupItems as $item) {
-                $addr1 = strtolower(trim($item->address ?? ''));
-                $matchedClusterIndex = -1;
+                $matchedClusterIndices = [];
 
-                // Cek apakah item ini mirip dengan salah satu item di cluster yang sudah ada
+                // Cek apakah item ini duplikat dengan salah satu item di cluster yang sudah ada
                 foreach ($clusters as $cIdx => $cluster) {
                     foreach ($cluster as $existingItem) {
-                        $addr2 = strtolower(trim($existingItem->address ?? ''));
-
-                        if ($this->isAddressDuplicate($addr1, $addr2)) {
-                            $matchedClusterIndex = $cIdx;
-                            break 2; // Pecahkan loop cluster dan loop existingItem
+                        if ($this->isItemDuplicate($item, $existingItem)) {
+                            $matchedClusterIndices[] = $cIdx;
+                            break; // Pecahkan loop existingItem
                         }
                     }
                 }
 
-                if ($matchedClusterIndex !== -1) {
-                    $clusters[$matchedClusterIndex][] = $item;
-                } else {
+                if (empty($matchedClusterIndices)) {
                     $clusters[] = [$item];
+                } else {
+                    // Gabungkan ke cluster pertama yang cocok
+                    $firstIdx = $matchedClusterIndices[0];
+                    $clusters[$firstIdx][] = $item;
+
+                    // Jika item ini menjembatani beberapa cluster yang sudah ada, satukan cluster tersebut
+                    if (count($matchedClusterIndices) > 1) {
+                        for ($m = count($matchedClusterIndices) - 1; $m >= 1; $m--) {
+                            $mergeIdx = $matchedClusterIndices[$m];
+                            foreach ($clusters[$mergeIdx] as $mItem) {
+                                $clusters[$firstIdx][] = $mItem;
+                            }
+                            unset($clusters[$mergeIdx]);
+                        }
+                        $clusters = array_values($clusters);
+                    }
                 }
             }
 
@@ -496,18 +498,30 @@ class ItemController extends CustomController
                 ];
             }
 
-            // Calculate similarity percentage relative to the first item
-            $addr0 = strtolower(trim($rawGroup[0]->address ?? ''));
+            // Hitung detail kesamaan antar item
             $similarityDetails = [];
-            $totalPercent = 0;
             for ($k = 1; $k < count($rawGroup); $k++) {
-                $addrK = strtolower(trim($rawGroup[$k]->address ?? ''));
-                $this->isAddressDuplicate($addr0, $addrK, $percent);
-                $totalPercent += $percent;
-                $similarityDetails[] = round($percent, 1) . '%';
+                $item0 = $rawGroup[0];
+                $itemK = $rawGroup[$k];
+                $reason = '';
+                $simText = '';
+                if ($this->isItemDuplicate($item0, $itemK, $reason, $simText)) {
+                    if ($simText !== '') {
+                        $similarityDetails[] = $simText;
+                    }
+                } else {
+                    // Cek hubungan dengan item sebelumnya jika tidak langsung cocok dengan item0
+                    for ($prev = 1; $prev < $k; $prev++) {
+                        if ($this->isItemDuplicate($rawGroup[$prev], $itemK, $reason, $simText)) {
+                            if ($simText !== '') {
+                                $similarityDetails[] = $simText;
+                            }
+                            break;
+                        }
+                    }
+                }
             }
-            $avgPercent = count($similarityDetails) > 0 ? round($totalPercent / count($similarityDetails), 1) : 100;
-            $similarityText = count($similarityDetails) === 1 ? $similarityDetails[0] : $avgPercent . '% (Rata-rata)';
+            $similarityText = !empty($similarityDetails) ? implode('; ', array_unique($similarityDetails)) : 'Terindikasi Duplikat';
 
             $group = [
                 'items' => $formattedItems,
@@ -642,6 +656,186 @@ class ItemController extends CustomController
         }
         
         return $slug;
+    }
+
+    private static $cachedTypes = null;
+
+    public static function parseCoordinate($val)
+    {
+        if ($val === null || $val === '') {
+            return null;
+        }
+        $clean = trim(str_replace([' ', ','], ['', '.'], strval($val)));
+        if (!is_numeric($clean)) {
+            return null;
+        }
+        return floatval($clean);
+    }
+
+    public static function calculateDistanceInMeters($lat1, $lon1, $lat2, $lon2)
+    {
+        $lat1 = self::parseCoordinate($lat1);
+        $lon1 = self::parseCoordinate($lon1);
+        $lat2 = self::parseCoordinate($lat2);
+        $lon2 = self::parseCoordinate($lon2);
+
+        if ($lat1 === null || $lon1 === null || $lat2 === null || $lon2 === null) {
+            return null;
+        }
+
+        // Abaikan koordinat default / kosong (0, 0)
+        if (($lat1 == 0.0 && $lon1 == 0.0) || ($lat2 == 0.0 && $lon2 == 0.0)) {
+            return null;
+        }
+
+        $earthRadius = 6371000; // Radius bumi dalam meter
+
+        $latFrom = deg2rad($lat1);
+        $lonFrom = deg2rad($lon1);
+        $latTo   = deg2rad($lat2);
+        $lonTo   = deg2rad($lon2);
+
+        $latDelta = $latTo - $latFrom;
+        $lonDelta = $lonTo - $lonFrom;
+
+        $angle = 2 * asin(sqrt(pow(sin($latDelta / 2), 2) +
+            cos($latFrom) * cos($latTo) * pow(sin($lonDelta / 2), 2)));
+
+        return $angle * $earthRadius;
+    }
+
+    private function getTypeName($typeId)
+    {
+        if (self::$cachedTypes === null) {
+            self::$cachedTypes = type::all()->pluck('name', 'id')->toArray();
+        }
+        return self::$cachedTypes[$typeId] ?? '';
+    }
+
+    private function isSameType($typeIdA, $typeIdB, $typeNameA = null, $typeNameB = null)
+    {
+        if (!empty($typeIdA) && !empty($typeIdB) && $typeIdA == $typeIdB) {
+            return true;
+        }
+
+        if (empty($typeNameA) && !empty($typeIdA)) {
+            $typeNameA = $this->getTypeName($typeIdA);
+        }
+        if (empty($typeNameB) && !empty($typeIdB)) {
+            $typeNameB = $this->getTypeName($typeIdB);
+        }
+
+        if (!empty($typeNameA) && !empty($typeNameB)) {
+            $a = strtolower(trim($typeNameA));
+            $b = strtolower(trim($typeNameB));
+            if ($a === $b) {
+                return true;
+            }
+            // Kelompok videotron / megatron / led
+            $isDigitalA = str_contains($a, 'videotron') || str_contains($a, 'megatron') || str_contains($a, 'led');
+            $isDigitalB = str_contains($b, 'videotron') || str_contains($b, 'megatron') || str_contains($b, 'led');
+            if ($isDigitalA && $isDigitalB) {
+                return true;
+            }
+            // Kelompok billboard / minibillboard
+            $isBbA = str_contains($a, 'billboard');
+            $isBbB = str_contains($b, 'billboard');
+            if ($isBbA && $isBbB) {
+                return true;
+            }
+            // Kelompok baliho
+            $isBalihoA = str_contains($a, 'baliho');
+            $isBalihoB = str_contains($b, 'baliho');
+            if ($isBalihoA && $isBalihoB) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Memeriksa apakah dua item dianggap duplikat.
+     * Kriteria 1: Radius <= 200 meter dan jenisnya sama (meskipun alamat, orientasi, ukuran berbeda).
+     * Kriteria 2: Ukuran (lebar & tinggi) sama dan alamat mirip (>= 80% atau nama jalan mirip).
+     * Keduanya harus memiliki vendor yang sama.
+     */
+    private function isItemDuplicate($itemA, $itemB, &$reason = '', &$similarityText = '')
+    {
+        // Harus vendor yang sama
+        $vA = is_object($itemA) ? ($itemA->vendor_id ?? null) : ($itemA['vendor_id'] ?? null);
+        $vB = is_object($itemB) ? ($itemB->vendor_id ?? null) : ($itemB['vendor_id'] ?? null);
+        if (empty($vA) || empty($vB) || $vA != $vB) {
+            return false;
+        }
+
+        // Jangan bandingkan item dengan dirinya sendiri
+        $idA = is_object($itemA) ? ($itemA->id ?? null) : ($itemA['id'] ?? null);
+        $idB = is_object($itemB) ? ($itemB->id ?? null) : ($itemB['id'] ?? null);
+        if (!empty($idA) && !empty($idB) && $idA == $idB) {
+            return false;
+        }
+
+        $isDup = false;
+        $reasons = [];
+        $simParts = [];
+
+        // 1. CEK RADIUS & JENIS: dalam radius 200 meter dan jenisnya sama
+        $latA = is_object($itemA) ? ($itemA->latitude ?? null) : ($itemA['latitude'] ?? null);
+        $lonA = is_object($itemA) ? ($itemA->longitude ?? null) : ($itemA['longitude'] ?? null);
+        $latB = is_object($itemB) ? ($itemB->latitude ?? null) : ($itemB['latitude'] ?? null);
+        $lonB = is_object($itemB) ? ($itemB->longitude ?? null) : ($itemB['longitude'] ?? null);
+
+        $distance = self::calculateDistanceInMeters($latA, $lonA, $latB, $lonB);
+
+        $typeIdA = is_object($itemA) ? ($itemA->type_id ?? null) : ($itemA['type_id'] ?? null);
+        $typeIdB = is_object($itemB) ? ($itemB->type_id ?? null) : ($itemB['type_id'] ?? null);
+        $typeNameA = is_object($itemA) && isset($itemA->type) && $itemA->type ? ($itemA->type->name ?? '') : (is_object($itemA) ? ($itemA->type_name ?? '') : ($itemA['type_name'] ?? ''));
+        $typeNameB = is_object($itemB) && isset($itemB->type) && $itemB->type ? ($itemB->type->name ?? '') : (is_object($itemB) ? ($itemB->type_name ?? '') : ($itemB['type_name'] ?? ''));
+
+        $sameType = $this->isSameType($typeIdA, $typeIdB, $typeNameA, $typeNameB);
+
+        if ($distance !== null && $distance <= 200 && $sameType) {
+            $isDup = true;
+            $distMeters = round($distance);
+            $typeLabel = $typeNameA ?: ($typeNameB ?: $this->getTypeName($typeIdA) ?: 'Jenis Sama');
+            $reasons[] = "Radius {$distMeters}m & Jenis Sama ({$typeLabel})";
+            $simParts[] = "Radius {$distMeters}m ({$typeLabel})";
+        }
+
+        // 2. CEK UKURAN & ALAMAT: ukuran sama dan alamat mirip
+        $wA = is_object($itemA) ? ($itemA->width ?? '0') : ($itemA['width'] ?? '0');
+        $hA = is_object($itemA) ? ($itemA->height ?? '0') : ($itemA['height'] ?? '0');
+        $wB = is_object($itemB) ? ($itemB->width ?? '0') : ($itemB['width'] ?? '0');
+        $hB = is_object($itemB) ? ($itemB->height ?? '0') : ($itemB['height'] ?? '0');
+
+        $w1 = floatval(str_replace([',', ' '], '', $wA));
+        $h1 = floatval(str_replace([',', ' '], '', $hA));
+        $w2 = floatval(str_replace([',', ' '], '', $wB));
+        $h2 = floatval(str_replace([',', ' '], '', $hB));
+
+        $addrA = is_object($itemA) ? ($itemA->address ?? '') : ($itemA['address'] ?? '');
+        $addrB = is_object($itemB) ? ($itemB->address ?? '') : ($itemB['address'] ?? '');
+        $addr1 = strtolower(trim($addrA));
+        $addr2 = strtolower(trim($addrB));
+
+        if ($w1 > 0 && $h1 > 0 && $w1 === $w2 && $h1 === $h2 && $addr1 !== '' && $addr2 !== '') {
+            $addrPercent = 0;
+            if ($this->isAddressDuplicate($addr1, $addr2, $addrPercent)) {
+                $isDup = true;
+                $roundedAddrPercent = round($addrPercent, 1);
+                $reasons[] = "Ukuran sama & Alamat mirip ({$roundedAddrPercent}%)";
+                $simParts[] = "{$roundedAddrPercent}% (Alamat)";
+            }
+        }
+
+        if ($isDup) {
+            $reason = implode(' | ', $reasons);
+            $similarityText = implode(' | ', $simParts);
+            return true;
+        }
+
+        return false;
     }
 
     private function isAddressDuplicate($addr1, $addr2, &$percent = 0)
